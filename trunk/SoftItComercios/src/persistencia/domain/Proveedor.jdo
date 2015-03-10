@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+   <package name="persistencia.domain">
+  <class name="Proveedor" identity-type="datastore"> 
+	
+	<field name="id" />
+	<field name="codigo" />	
+	<field name="nombre"> 
+		<extension vendor-name="triactive" key="length" value="max 255"/> 
+	</field>	
+
+	<field name="telefono"> 
+		<extension vendor-name="triactive" key="length" value="max 255"/> 
+	</field>	
+
+	<field name="direccion"> 
+		<extension vendor-name="triactive" key="length" value="max 255"/> 
+	</field>	
+
+	<field name = "localidad" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field" value="proveedor"/>
+    </field>
+	
+	 <!-- relaciones 1 a N -->
+ 	<field name = "productos">
+      	<collection element-type = "Producto">
+      		<extension vendor-name= "triactive" key ="owner-field" value="proveedor"/>
+      	</collection>
+     </field>
+     </class>
+    </package>
+</jdo>	

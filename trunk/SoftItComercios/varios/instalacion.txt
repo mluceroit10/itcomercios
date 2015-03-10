@@ -1,0 +1,5 @@
+para instalar el programa tengo que:
+1 instalar la maquina virtual
+2 instalar mysql y crear la base de datos psoftcomerciodb
+3 ejecutar mi instalador
+

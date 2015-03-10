@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+   <package name="persistencia.domain">
+    <class name="FacturaProveedor" identity-type="datastore" 
+    persistence-capable-superclass="Factura"> 
+	
+	<field name="fecha" />
+    <field name = "proveedor" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field"/>
+    </field>
+    </class>
+    </package>
+</jdo>

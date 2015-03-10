@@ -1,0 +1,5 @@
+es necesario crear nuevos campos en BD.
+no hay cambios de reportes.
+ni carga de datos auxiliar.
+
+cambiar el .jar

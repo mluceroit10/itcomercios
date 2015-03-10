@@ -1,0 +1,400 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperReport
+  PUBLIC "-//JasperReports//DTD Report Design//EN"
+  "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+  
+  <jasperReport name="LibroIva"
+  		printOrder="Horizontal"
+  		orientation="Landscape"
+  		pageWidth="842"
+                pageHeight="595"
+                columnWidth="780"
+                columnSpacing="0"
+                leftMargin="30"
+                rightMargin="30"
+                topMargin="30"
+                bottomMargin="30" >
+               
+                
+	<reportFont name="Arial_Normal" isDefault="true" fontName="Arial" size="10" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<reportFont name="Arial_Bold" isDefault="false" fontName="Arial" size="12" isBold="true" pdfFontName="Helvetica-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<reportFont name="Arial_Italic" isDefault="false" fontName="Arial" size="12" isItalic="true" pdfFontName="Helvetica-Oblique" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+    <parameter name="Institucion" class="java.lang.String"/>
+    <parameter name="InstDireccion" class="java.lang.String"/>
+    <parameter name="InstIva" class="java.lang.String"/>
+    <parameter name="Titulo" class="java.lang.String"/>
+    <parameter name="FechaLI" class="java.lang.String"/>
+    <parameter name="TotalNeto" class="java.lang.String"/>
+    <parameter name="TotalIva" class="java.lang.String"/>
+    <parameter name="TotalTotal" class="java.lang.String"/>
+    <field name="Fecha" class="java.lang.String"/>
+    <field name="Tipo" class="java.lang.String"/>
+    <field name="L" class="java.lang.String"/>
+    <field name="PV" class="java.lang.String"/>
+    <field name="Nro" class="java.lang.String"/>
+    <field name="Cliente" class="java.lang.String"/>
+    <field name="Categ" class="java.lang.String"/>
+    <field name="Cuit" class="java.lang.String"/>
+    <field name="Neto" class="java.lang.String"/>
+    <field name="Iva" class="java.lang.String"/>
+    <field name="Total" class="java.lang.String"/>
+
+
+    <pageHeader>
+    <band height="100">
+        <rectangle>
+             <reportElement x="0" y="0" width="360" height="70" forecolor="#331100" backcolor="#ffffff"/>
+	     <graphicElement stretchType="NoStretch"/>
+        </rectangle>
+        <textField isBlankWhenNull="true">
+		<reportElement x="0" y="8" width="360" height="20"/>
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<textFieldExpression class="java.lang.String">$P{Institucion}</textFieldExpression>
+	</textField>
+	
+	 <textField isBlankWhenNull="true">
+		<reportElement x="0" y="28" width="360" height="20"/>
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Normal"/>
+		</textElement>
+		<textFieldExpression class="java.lang.String">$P{InstDireccion}</textFieldExpression>
+	</textField>
+
+	 <textField isBlankWhenNull="true">
+		<reportElement x="0" y="48" width="360" height="20"/>
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Normal"/>
+		</textElement>
+		<textFieldExpression class="java.lang.String">$P{InstIva}</textFieldExpression>
+	</textField>
+
+	<staticText>
+		<reportElement x="320" y="8" width="300" height="20" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>LIBRO IVA VENTAS</text>
+	</staticText>
+
+	  
+	<textField isBlankWhenNull="true">
+	      <reportElement x="480" y="48" width="200" height="20"/>
+	      <textElement textAlignment="Center" lineSpacing="Single">
+	      <font reportFont="Arial_Bold"/>
+	      </textElement>
+	      <textFieldExpression class="java.lang.String">"Periodo:"+ $P{FechaLI}</textFieldExpression>
+	</textField>
+	<textField isBlankWhenNull="true">
+	      <reportElement x="680" y="48" width="80" height="20"/>
+	      <textElement textAlignment="Center" lineSpacing="Single">
+	      <font reportFont="Arial_Bold"/>
+	      </textElement>
+              <textFieldExpression class="java.lang.String">"Pag:"+$V{PAGE_NUMBER}</textFieldExpression>
+    </textField>
+       	  <rectangle>
+            <reportElement x="0" y="80" width="60" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="60" y="80" width="35" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="95" y="80" width="20" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+          </rectangle>
+          <rectangle>
+            <reportElement x="115" y="80" width="30" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	    </rectangle>
+          <rectangle>
+            <reportElement x="145" y="80" width="55" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="200" y="80" width="160" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="360" y="80" width="90" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="450" y="80" width="80" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="530" y="80" width="80" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="610" y="80" width="80" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="690" y="80" width="80" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	<staticText>
+		<reportElement x="0" y="85" width="60" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>FECHA</text>
+	</staticText>
+	<staticText>
+		<reportElement x="60" y="85" width="35" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>TIPO</text>
+	</staticText>
+	<staticText>
+		<reportElement x="95" y="85" width="20" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>L</text>
+	</staticText>
+	<staticText>
+		<reportElement x="115" y="85" width="30" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>PV</text>
+	</staticText>
+	<staticText>
+		<reportElement x="145" y="85" width="55" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>NRO.</text>
+	</staticText>
+	<staticText>
+		<reportElement x="200" y="85" width="160" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>CLIENTE</text>
+	</staticText>
+	<staticText>
+		<reportElement x="360" y="85" width="90" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>CATEGORIA</text>
+	</staticText>
+	<staticText>
+		<reportElement x="450" y="85" width="80" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>CUIT</text>
+	</staticText>
+	<staticText>
+		<reportElement x="530" y="85" width="80" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>NETO</text>
+	</staticText>
+	<staticText>
+		<reportElement x="610" y="85" width="80" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>IVA</text>
+	</staticText>
+	<staticText>
+		<reportElement x="690" y="85" width="80" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_Bold"/>
+		</textElement>
+		<text>TOTAL</text>
+	</staticText>
+    </band>
+    </pageHeader>
+    <columnHeader>
+         <band height="0"/>
+    </columnHeader>
+    <detail>
+	<band height="16">
+	  <rectangle>
+            <reportElement x="0" y="0" width="60" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="60" y="0" width="35" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="95" y="0" width="20" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+          </rectangle>
+          <rectangle>
+            <reportElement x="115" y="0" width="30" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	    </rectangle>
+          <rectangle>
+            <reportElement x="145" y="0" width="55" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="200" y="0" width="160" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="360" y="0" width="90" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="450" y="0" width="80" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="530" y="0" width="80" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+          <rectangle>
+            <reportElement x="610" y="0" width="80" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+	  <rectangle>
+            <reportElement x="690" y="0" width="80" height="16" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	  </rectangle>
+
+	  <textField isStretchWithOverflow="true">
+	    	<reportElement x="0" y="2" width="60" height="12"/>
+		<textElement textAlignment="Center"/>
+		<textFieldExpression class="java.lang.String">
+		    $F{Fecha}
+		</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+	    	<reportElement x="60" y="2" width="35" height="12"/>
+		<textElement textAlignment="Center"/>
+		<textFieldExpression class="java.lang.String">
+                    $F{Tipo}
+		</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+	    	<reportElement x="95" y="2" width="20" height="12"/>
+			<textElement textAlignment="Center"/>
+			<textFieldExpression class="java.lang.String">
+				$F{L}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+	    	<reportElement x="115" y="2" width="30" height="12"/>
+			<textElement textAlignment="Center"/>
+			<textFieldExpression class="java.lang.String">
+				$F{PV}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+	    	<reportElement x="145" y="2" width="55" height="12"/>
+			<textElement textAlignment="Center"/>
+			<textFieldExpression class="java.lang.String">
+				$F{Nro}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+	    	<reportElement x="202" y="2" width="156" height="12"/>
+			<textElement textAlignment="Left"/>
+			<textFieldExpression class="java.lang.String">
+				$F{Cliente}
+			</textFieldExpression>
+	    </textField>
+
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="362" y="2" width="86" height="12" />
+			<textElement textAlignment="Left"/>
+			<textFieldExpression class="java.lang.String">
+				$F{Categ}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="450" y="2" width="80" height="12" positionType="Float"/>
+			<textElement textAlignment="Center"/>
+            <textFieldExpression class="java.lang.String">
+				$F{Cuit}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="530" y="2" width="78" height="12" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$F{Neto}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="610" y="2" width="78" height="12" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$F{Iva}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="690" y="2" width="78" height="12" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$F{Total}
+			</textFieldExpression>
+	    </textField>
+	</band>
+    </detail>
+    <summary>
+	<band height="18">
+	    <rectangle>
+             <reportElement x="0" y="0" width="530" height="18" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="NoStretch"/>
+	    </rectangle>
+	    <rectangle>
+             <reportElement x="530" y="0" width="80" height="18" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="NoStretch"/>
+	    </rectangle>
+            <rectangle>
+             <reportElement x="610" y="0" width="80" height="18" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="NoStretch"/>
+	    </rectangle>
+            <rectangle>
+             <reportElement x="690" y="0" width="80" height="18" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="NoStretch"/>
+	    </rectangle>
+	    	    
+
+	    <staticText>
+	    	<reportElement x="0" y="3" width="500" height="14" />
+			<textElement textAlignment="Right" lineSpacing="Single">
+			<font reportFont="Arial_Bold"/>
+			</textElement>
+			<text>TOTALES: </text>
+	    </staticText>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="530" y="3" width="78" height="14" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$P{TotalNeto}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="610" y="3" width="78" height="14" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$P{TotalIva}
+			</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+			<reportElement x="690" y="3" width="78" height="14" positionType="Float"/>
+			<textElement textAlignment="Right"/>
+            <textFieldExpression class="java.lang.String">
+				$P{TotalTotal}
+			</textFieldExpression>
+	    </textField>
+        </band>
+    </summary>
+    
+</jasperReport>

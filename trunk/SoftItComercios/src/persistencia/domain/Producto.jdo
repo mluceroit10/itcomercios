@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+   <package name="persistencia.domain">
+
+	<class name="Producto" identity-type="datastore">
+      
+    <field name="id" />   
+    <field name="nombre"> 
+		<extension vendor-name="triactive" key="length" value="max 255"/> 
+	</field>	
+	<field name="codigo" />   
+  	<field name="stockActual" />
+  	<field name="stockMinimo" />
+    <field name="precioEntrada" />
+    <field name="precioEntCIva" />
+    <field name="precioVentaSinIva" />
+    <field name="precioVentaConIva" />
+    <field name="precioKilos" />    
+    <field name="ganancia" />   
+    <field name="stockKilosAct" />   
+    <field name="stockKilosMin" />   
+    
+    <field name = "proveedor" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field" value="productos"/>
+    </field>	
+	
+      
+  	
+	</class>
+    </package>
+</jdo>
+	
+	

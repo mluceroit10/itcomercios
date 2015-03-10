@@ -1,0 +1,6 @@
+copiar la libreria del mysql 5
+modificar el archivo de ejecucion quitar las dos libs mysql viejas y poner la actual
+y modificar para que se invoque el java version 6.
+cambiar en el archivo de configuracion inicial para que tome el mysql con la contraseña root
+crear la BD a maño, y correr un script de creacion de tablas.
+nada mas!
