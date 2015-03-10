@@ -1,0 +1,39 @@
+
+/***** REQUISITOS MINIMOS DE INSTALACION *****/
+
+- Sistema Operativo: Windows 98/ 2000/ NT/ Millenium/ XP/ Vista/ Seven(7).
+
+- Procesador Intel Pentium II o AMD semejante (o superior).
+
+- Como mínimo 128 MB de RAM (Se recomienda tener 256 MB).
+
+- Espacio de 170 MB libre en el Disco Duro.
+
+- Teclado y Mouse.
+
+
+
+/***** SISTEMA ADMINISTRATIVO *****/
+
+Pasos para instalar el Sistema Administrativo itComercios:
+
+1 - Verificar la existencia y número de versión de Java (puede ser 5 o 6).
+    De no existir, el CD proporciona en la carpeta "Instaladores/Java" el instalador de la Maquina Virtual "jdk-6u25-windows-i586.exe" la cual debe ser instalada exactamente en c:\
+
+2 - Verificar la existencia y el número de versión de MYSQL, debe ser exactamente 4.0.15. Se debe encontrar instalado en la raiz del disco, es decir "c:\mysql".
+    De no existir, el CD proporciona en la carpeta "Instaladores/MYSQL" el instalador contenido en el "mysql-4[1].0.15-win.zip" el cual debe ser instalado exactamente en c:\
+-recordar correc mysqladmin, y q el proceso nysql-nt se ejecute siempre al iniciar la compu
+
+3 - Dentro de la carpeta "Instaladores" ingrese dentro de la carpeta "Sistema Administrativo", ejecute el archivo Instalador_Soft_itComercios.exe.
+    Instala el proyecto en el directorio c:\
+
+4 - Para crear la base de datos debera ejecutar el archivo crearBaseDatos.bat, que se encuentra dentro de la carpeta "C:\SoftItComercios".
+-boorar la ultima linea de carga en la tabla jdo, comercio se crea 2 veces
+
+
+
+Ejecución del Sistema Administrativo:
+
+1 - El programa se puede ejecutar mediante los accesos directos del Escritorio o el Menú Inicio, o desde la carpeta "C:\SoftItComercios".
+
+2 - Debera ejecutar el archivo "Ejecutar_itComercios para dejar activo el programa.

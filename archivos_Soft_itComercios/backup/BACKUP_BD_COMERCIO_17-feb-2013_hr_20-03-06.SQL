@@ -1,0 +1,540 @@
+-- MySQL dump 9.09
+--
+-- Host: localhost    Database: proyectociro
+---------------------------------------------------------
+-- Server version	4.0.15-nt
+
+--
+-- Table structure for table `jdo_table`
+--
+
+CREATE TABLE jdo_table (
+  TABLE_ID int(11) NOT NULL default '0',
+  NEXT_ID int(11) NOT NULL default '0',
+  JAVA_NAME varchar(128) binary NOT NULL default '',
+  TABLE_NAME varchar(64) binary NOT NULL default '',
+  PRIMARY KEY  (TABLE_ID),
+  UNIQUE KEY JAVA_NAME (JAVA_NAME),
+  UNIQUE KEY TABLE_NAME (TABLE_NAME)
+) TYPE=InnoDB;
+
+--
+-- Dumping data for table `jdo_table`
+--
+
+INSERT INTO jdo_table VALUES (1,1,'persistencia.domain.Oid','OID');
+INSERT INTO jdo_table VALUES (2,6,'persistencia.domain.Localidad','LOCALIDAD');
+INSERT INTO jdo_table VALUES (3,1,'persistencia.domain.Provincia','PROVINCIA');
+INSERT INTO jdo_table VALUES (4,1,'persistencia.domain.Distribuidora','DISTRIBUIDORA');
+INSERT INTO jdo_table VALUES (5,51,'persistencia.domain.Cliente','CLIENTE');
+INSERT INTO jdo_table VALUES (6,25,'persistencia.domain.Producto','PRODUCTO');
+INSERT INTO jdo_table VALUES (7,5,'persistencia.domain.Proveedor','PROVEEDOR');
+INSERT INTO jdo_table VALUES (8,7,'persistencia.domain.PlanillaES','PLANILLA_ES');
+INSERT INTO jdo_table VALUES (9,80,'persistencia.domain.MovimientoCaja','MOVIMIENTO_CAJA');
+INSERT INTO jdo_table VALUES (10,127,'persistencia.domain.ItemFactura','ITEM_FACTURA');
+INSERT INTO jdo_table VALUES (11,0,'persistencia.domain.Factura','FACTURA');
+INSERT INTO jdo_table VALUES (12,125,'persistencia.domain.FacturaCliente','FACTURA_CLIENTE');
+INSERT INTO jdo_table VALUES (13,2,'persistencia.domain.FacturaProveedor','FACTURA_PROVEEDOR');
+INSERT INTO jdo_table VALUES (14,1,'persistencia.domain.Zona','ZONA');
+INSERT INTO jdo_table VALUES (15,3,'persistencia.domain.NotaCredito','NOTA_CREDITO');
+INSERT INTO jdo_table VALUES (16,3,'persistencia.domain.Vendedor','VENDEDOR');
+
+--
+-- Table structure for table `oid`
+--
+
+CREATE TABLE oid (
+  OID_ID bigint(20) NOT NULL default '0',
+  OID bigint(20) default NULL,
+  PRIMARY KEY  (OID_ID)
+) TYPE=InnoDB;
+
+--
+-- Dumping data for table `oid`
+--
+
+INSERT INTO oid VALUES (35184372088832,1005);
+
+--
+-- Table structure for table `provincia`
+--
+
+CREATE TABLE provincia (
+  PROVINCIA_ID bigint(20) NOT NULL default '0',
+  ID bigint(20) default NULL,
+  NOMBRE varchar(20) binary default NULL,
+  PRIMARY KEY  (PROVINCIA_ID)
+) TYPE=InnoDB;
+
+--
+-- Dumping data for table `provincia`
+--
+
+INSERT INTO provincia VALUES (105553116266496,131073,'Córdoba');
+INSERT INTO provincia VALUES (105553116266497,131074,'Buenos Aires');
+INSERT INTO provincia VALUES (105553116266498,131075,'Santa Fe');
+
+--
+-- Table structure for table `localidad`
+--
+
+CREATE TABLE localidad (
+  LOCALIDAD_ID bigint(20) NOT NULL default '0',
+  COD_POSTAL int(11) NOT NULL default '0',
+  ID bigint(20) default NULL,
+  NOMBRE varchar(255) binary default NULL,
+  PROVINCIA_ID bigint(20) default NULL,
+  PRIMARY KEY  (LOCALIDAD_ID),
+  KEY LOCALIDAD_N1 (PROVINCIA_ID),
+  CONSTRAINT `0_1709` FOREIGN KEY (`PROVINCIA_ID`) REFERENCES `provincia` (`PROVINCIA_ID`)
+) TYPE=InnoDB;
+
+--
+-- Dumping data for table `localidad`
+--
+
+INSERT INTO localidad VALUES (70368744177664,5800,131077,'Río Cuarto',105553116266496);
+INSERT INTO localidad VALUES (70368744177665,5847,131078,'Coronel Moldes',105553116266496);
+INSERT INTO localidad VALUES (70368744177666,2301,131080,'Ramona',105553116266498);
+INSERT INTO localidad VALUES (70368744177667,2550,131079,'Bell Ville',105553116266496);
+INSERT INTO localidad VALUES (70368744210432,0,790019,'Vicuña Mackenna',105553116266496);
+INSERT INTO localidad VALUES (70368744243200,0,1012519,'Brinkmann',105553116266496);
+INSERT INTO localidad VALUES (70368744243201,0,1012604,'Rosario',105553116266498);
+INSERT INTO localidad VALUES (70368744275968,5800,2755243,'Cordoba Capital',105553116266496);
+INSERT INTO localidad VALUES (70368744308736,5800,3475091,'Higueras',105553116266496);
+INSERT INTO localidad VALUES (70368744308737,1440,3486957,'Capital Federal',105553116266497);
+INSERT INTO localidad VALUES (70368744341504,0,6502247,'Malena',105553116266496);
+
+--
+-- Table structure for table `cliente`
+--
+
+CREATE TABLE cliente (
+  CLIENTE_ID bigint(20) NOT NULL default '0',
+  CUIT varchar(255) binary default NULL,
+  DIRECCION varchar(255) binary default NULL,
+  ID bigint(20) default NULL,
+  ING_BRUTOS_CL varchar(255) binary default NULL,
+  IVA_CL varchar(255) binary default NULL,
+  LOCALIDAD_ID bigint(20) default NULL,
+  NOMBRE varchar(255) binary default NULL,
+  TELEFONO varchar(255) binary default NULL,
+  VENDEDOR_ID bigint(20) default NULL,
+  ZONA_ID bigint(20) default NULL,
+  PRIMARY KEY  (CLIENTE_ID),
+  KEY CLIENTE_N1 (LOCALIDAD_ID),
+  KEY CLIENTE_N2 (ZONA_ID),
+  KEY CLIENTE_N3 (VENDEDOR_ID),
+  CONSTRAINT `0_1737` FOREIGN KEY (`VENDEDOR_ID`) REFERENCES `vendedor` (`VENDEDOR_ID`),
+  CONSTRAINT `0_1738` FOREIGN KEY (`ZONA_ID`) REFERENCES `zona` (`ZONA_ID`),
+  CONSTRAINT `0_1711` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
+) TYPE=InnoDB;
+
+--
+-- Dumping data for table `cliente`
+--
+
+INSERT INTO cliente VALUES (175921860444161,'27-14940329-4','Av 25 de Mayo y Utreras',131085,'','Resp. Inscripto',70368744177665,'Heredia Norma Beatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444162,'27-12556368-1','Santa María de Oro 142',131086,'209277905','Resp. Inscripto',70368744177665,'Zanotti Patricia Mabel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444163,'27-05816129-8','Moreno 16',131087,'','Resp. Inscripto',70368744177665,'Villegas Rosa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444164,'20-06647447-0','Ameghino y Dixon',131088,'','Resp. Inscripto',70368744177665,'Morano Federico Alfredo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444165,'20-16404004-7','Roque Saenz Peña 289',131089,'202981244','Resp. Inscripto',70368744177665,'Angeli Sergio Javier','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444167,'20-08008991-1','Aristizabal 572',131091,'209342308','Resp. Inscripto',70368744177665,'Moiso Juan Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444168,'20-06647447-0','Sarmiento y 9 de Julio',131092,'0209038125','Resp. Inscripto',70368744177665,'Morano Federico Alfredo_','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444169,'27-22347367-4','Roque Saenz Peña 320',131093,'280265527','Monotributo',70368744177665,'López Mónica María','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444170,'20-18046657-7','Mitre 787',131094,'','Monotributo',70368744177665,'Airaudo Miguel Ceferino','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444171,'27-11347521-3','Cabrera 24',131095,'','Monotributo',70368744177665,'Cabral María del Carmen','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444172,'27-16121932-6','Almirante Brown 317',131096,'','Monotributo',70368744177665,'Moyano Lucia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444173,'27-29484837-6','Saavedra 235',131097,'','Monotributo',70368744177665,'Furlan Mariela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444174,'20-12556343-1','Pje. Arcomano 48',131098,'','Monotributo',70368744177665,'Villarruel Raúl Enrique','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444175,'27-05450717-3','Mitre Y Cincuentenario',131099,'209443392','Resp. Inscripto',70368744177665,'Besso Nori Esther','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444177,'23-26925798-9','Juan Jose Paso Y Albertio',131101,'','Monotributo',70368744177665,'Vasquez Martin Amadeo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444178,'23-14864994-4','Av. 9 De Julio 699',131102,'','Monotributo',70368744177665,'Dalio Maria Silvia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444179,'','',131103,'','Consumidor Final',70368744177665,'Achabal Carmen','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444180,'','',131104,'','Consumidor Final',70368744177665,'Gregorat','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444181,'','',131105,'','Consumidor Final',70368744177665,'Valderas Walter','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444182,'20-13078898-0','9 De Julio 368',131106,'','Monotributo',70368744177665,'Paschetta Javier Ignacio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444183,'20-17485133-7','Monteagudo 128',131107,'','Monotributo',70368744177665,'Airaudo Julio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444184,'','',131108,'','Consumidor Final',70368744177665,'Dominguez Miroslava','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444185,'','',131109,'','Consumidor Final',70368744177665,'Roggero','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444186,'27-26210442-2','Santa Maria De Oro Y Cabrera',131110,'','Monotributo',70368744177665,'Arocena Nancy Verónica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444190,'20-22077512-8','Ameguino 794',131114,'','Resp. Inscripto',70368744177665,'Rostagño Ariel Antonio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444192,'','',131116,'','Consumidor Final',70368744177665,'Nicolay Cacho','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444193,'','',131117,'','Consumidor Final',70368744177665,'Gastaldi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444194,'','',131118,'','Consumidor Final',70368744177665,'Escudero Basilio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444196,'27-17160850-9','Santa Maria De Oro 555',131120,'','Resp. Inscripto',70368744177665,'Centeno Gabriela Alejandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444198,'20-13344933-8','Chacabuco 98',131122,'','Monotributo',70368744177664,'Doblas Jose Osmar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444199,'','Tucumán 1050',131123,'','Consumidor Final',70368744177664,'Sanchez Omar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444202,'27-18559031-9','Luis Pasteur 1411',131126,'','Monotributo',70368744177664,'Strazzi Gabriela Beatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444203,'27-24352484-4','Tucumán 1650',131127,'','Monotributo',70368744177664,'Irusta Patricia Rosana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444204,'','Entre Rios',131128,'','Consumidor Final',70368744177664,'Moreno Claudia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444205,'20-12281513-4','Fray Benitto Tessitore 160',131129,'','Monotributo',70368744177664,'Macho Miguel Angel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444206,'','Pirovano',131130,'','Monotributo',70368744177664,'Valfre Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444207,'','Pirovano',131131,'','Consumidor Final',70368744177664,'Doponso Maria Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444208,'','Rafael Obligado 1165',131132,'','Consumidor Final',70368744177664,'Ruiz Marcela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444209,'','Rafael Obligado',131133,'','Consumidor Final',70368744177664,'Gomez','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444210,'','Salta',131134,'','Consumidor Final',70368744177664,'Pizzería Belen','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444211,'23-32015494-4','Yapeyu 120',131135,'','Monotributo',70368744177664,'Giraudo Natalia Cecilia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444212,'','Las Heras y Corrientes',131136,'','Consumidor Final',70368744177664,'Pizzería La Sabrosona','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444213,'','Aristobulo Del Valle 441',131137,'','Consumidor Final',70368744177664,'Varela Carolina Mirta','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444214,'27-10566212-8','H Irigoyen 235',131138,'','Monotributo',70368744177664,'Milanessio Mirta Rosa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444216,'','Ituzaingo y Paunero',131140,'','Consumidor Final',70368744177664,'Rotisería','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444217,'','Santiago del Estero',131141,'','Consumidor Final',70368744177664,'Pizería Taty','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444219,'20-06641523-7','Rio Colorado 511',131143,'','Monotributo',70368744177664,'Elaskar Walter Juan','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444221,'27-22843735-8','Estrada Norte 357',131145,'','Monotributo',70368744177664,'Alfonso Ester Lidia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444222,'','Dinkeldein',131146,'','Monotributo',70368744177664,'Solardo Leonor','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444223,'','',131147,'','Consumidor Final',70368744177664,'Moreira Ivana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444224,'27-12467858-2','Roberto Payro 913',131148,'','Monotributo',70368744177664,'Sosa Nilda Ramona','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444225,'20-16486067-2','Roberto Pairo 1290',131149,'','Monotributo',70368744177664,'Pereyra Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444227,'','Calle Publica',131151,'','Consumidor Final',70368744177664,'Zabala','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444228,'','Vuelta de Obligado',131152,'','Consumidor Final',70368744177664,'Ponce','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444229,'27-21013846-9','Cardarelli 2302',131153,'','Monotributo',70368744177664,'Sosa Gladys Isabel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444230,'27-28716672-4','Gobernador Bustos Y Juarez Celman',131154,'','Monotributo',70368744177664,'Esmoris Valeria Noemi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444231,'27-26163823-7','M T de Alvear 1598',131155,'','Monotributo',70368744177664,'Girardi Romina Pamela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860444233,'20-25136638-2','M T de Alvear 1994',131157,'','Monotributo',70368744177664,'Caceres Jorge Eduardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476928,'20-06649564-8','Rosso Pierino 705',788885,'','Monotributo',70368744177664,'Aguirre Luis Alberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476929,'27-05495828-0','Victor Hugo 1400',789505,'','Monotributo',70368744177664,'Aguayo Heddy Rosa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476930,'27-32906663-6','Paso De Los Andes 1224',789672,'','Monotributo',70368744177664,'Arias Carina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476931,'27-29402478-1','La Rioja 2269',789842,'','Monotributo',70368744177664,'Abregu Malvina Soledad','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476932,'20-16121931-3','Hipolito Irugoyen 464',790037,'','Resp. Inscripto',70368744210432,'Aguilera Gerardo Eduardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476933,'27-28579813-8','Geronimo Del Barco 2516',790215,'','Monotributo',70368744177664,'Angonova Sandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476934,'20-08401140-2','Montevideo 1329',790392,'','Monotributo',70368744177664,'Norabueno Alfredo Armando','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476935,'27-22190196-2','Ituzaingo 1162',791226,'','Monotributo',70368744177664,'Barrios Maria Ester','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476936,'20-21407548-3','San Martin 40',791408,'','Monotributo',70368744177665,'Chiecher Roberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476937,'20-31451257-0','Catamarca 634',791591,'','Monotributo',70368744177664,'Cipriani Mauricio German','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476938,'30-70965800-6','Saavedra 27',793603,'','Resp. Inscripto',70368744177665,'Cartuja S.a.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476939,'20-06651486-3','Republica Arabe Siria 735',793790,'','Monotributo',70368744177664,'Cattaneo Hugo Ramon','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476940,'30-71110095-0','Dante Aluguieri 581',796190,'','Resp. Inscripto',70368744177665,'Carnes El Pichon S.a.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476941,'20-06655201-3','Hernandes 547',797931,'','Monotributo',70368744177665,'Crespi Miguel Angel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476942,'20-06614559-0','Suipacha 136',798124,'','Monotributo',70368744177664,'Castro Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476943,'27-26175739-2','Pje. Antonio Saenz 3132',799200,'','Monotributo',70368744177664,'Colombo Natalia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476944,'20-21416977-1','Lopez De Vega 1471',800645,'','Monotributo',70368744177664,'Castagneris Jorge','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476945,'23-20080150-4','Roma 1701',800844,'','Monotributo',70368744177664,'Coria Claudia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476946,'27-23913498-5','Pringles 547',801046,'','Monotributo',70368744177664,'Conde Veronica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476947,'27-23899138-8','Eduardo Jenner 1336',801251,'','Monotributo',70368744177664,'Chiaramello Liliana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476948,'23-13949772-4','Lopez De Vega 1470',804435,'','Monotributo',70368744177664,'Cabrera Elba','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476949,'20-12630550-9','Martin Fierro 474',804644,'','Monotributo',70368744177664,'Constantino Ricardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476950,'27-12762712-1','Ranqueles 930',807143,'','Monotributo',70368744177664,'Cuello Monica Noemi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476951,'27-21638738-6','Moreno 560',807354,'','Monotributo',70368744210432,'Cornejo Maria Rosana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476952,'30-71092941-2','Av. Italia 1321',807568,'','Resp. Inscripto',70368744177664,'Dos Banderas S.r.l.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476953,'20-08556193-7','Luis Sahores 232',807786,'','Resp. Inscripto',70368744210432,'Destassi Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476954,'20-26385487-0','Antonio Lucero 1330',808006,'','Monotributo',70368744177664,'Davis Matias','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476955,'27-21507260-1','San Martin 176',812186,'','Resp. Inscripto',70368744177664,'El Toboso','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476956,'30-70760498-7','Av. Italia Esq. Aramburu',813789,'','Resp. Inscripto',70368744177664,'El Lomo Y Cia. S.r.l.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476957,'23-24096928-9','Tristan Burgos 396',815625,'','Resp. Inscripto',70368744177664,'Farias Santiago','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476958,'27-27630626-5','Santa Maria De Oro 878',816654,'','Monotributo',70368744177664,'Flesia Alejandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476959,'20-29114162-6','9 De Julio',816877,'','Resp. Inscripto',70368744210432,'Fiori Franco','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476960,'27-17733523-7','Moreno 2415',817103,'','Monotributo',70368744177664,'Funes Maria Eusebia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476961,'20-25349516-3','9 De Julio 681',822117,'','Resp. Inscripto',70368744177665,'Goicochea Juan Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476962,'27-11860505-0','Antonio Lucero 1381',828024,'','Monotributo',70368744177664,'Gauchat Maria Rosa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476963,'20-06562490-0','Chile 214',828255,'','Monotributo',70368744177664,'Gaspero Juan Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476964,'27-21969008-3','Julio Roca Esq. Italia',830630,'','Monotributo',70368744210432,'Gil Claudia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476965,'17-21153703-0','A. Rodriguez 563',832377,'','Monotributo',70368744210432,'Gonzales Liliana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476966,'27-29176607-8','Perez Bulnes 2063',834801,'','Monotributo',70368744177664,'Gonzales Lorena','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476967,'20-21013357-8','La Rioja 1743',835040,'','Monotributo',70368744177664,'Gonzales Walter','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476968,'20-216945501-9','Laprida Y Pte. Peron',835281,'','Monotributo',70368744177664,'Gnc Altamirano','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476969,'27-24442816-4','Colombia 531',835525,'','Monotributo',70368744177664,'Gatto Daniela Carina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476970,'27-25671709-9','Julio Roca 553',840064,'','Monotributo',70368744210432,'Insaurralde Elisa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476971,'27-10437037-9','Entre Rios 1100',840311,'','Monotributo',70368744177664,'Jaime Nelida','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476972,'20-27695321-5','Morelli 180',842630,'','Monotributo',70368744210432,'Jaurejiberry Ignacio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476973,'27-22347367-4','Roque Saenz Peña 320',846338,'','Monotributo',70368744177665,'Lopez Monica Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476974,'27-10525683-9','Pje. La Forgee 3051',846588,'','Monotributo',70368744177664,'Lencina Ana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476975,'20-17562911-5','San Martin 1047',848927,'','Monotributo',70368744210432,'Lopez Ceferino','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476976,'27-14876788-8','Gral. Bustos 2979',849181,'','Monotributo',70368744177664,'Lopez Monica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476977,'27-13955217-8','La Rioja 2050',850380,'','Monotributo',70368744177664,'Luna Silvia Beatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476978,'27-94009928-0','San Martin 420',852303,'','Resp. Inscripto',70368744210432,'Li Saihua','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476979,'20-27695333-9','Hipolito Irigoyen 263',853042,'','Resp. Inscripto',70368744210432,'Lucero Carlos Adrian','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476980,'27-24464954-4','Alfonso Coronel 1384',862029,'','Monotributo',70368744210432,'Mercado Marisa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476981,'27-27695400-3','A. Rodriguez',864000,'','Monotributo',70368744210432,'Mercado Gabriela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476983,'20-05528599-4','Belgrano 1142',865763,'','Resp. Inscripto',70368744210432,'Montiel Hector Ramón','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476984,'27-21999024-9','Alberto Soria 350',867284,'','Monotributo',70368744177664,'Noriega Silvia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476985,'27-17576973-6','Julio Borda 715',872091,'','Monotributo',70368744177664,'Palomino Bibiana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476986,'27-14365017-6','Yapeyu 1412',872364,'','Monotributo',70368744177664,'Paez Noelia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476987,'30-71115811-8','Sto. Cabral 1091',875712,'','Monotributo',70368744177664,'Pizza Sport S.a.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476988,'27-18511786-9','Marcelo T. Alvear 1936',875989,'','Monotributo',70368744177664,'Pendito Estella Maris','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476989,'27-16991606-9','Publicitarios Argentinos 551',884595,'','Monotributo',70368744177664,'Rama Maria Alejandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476990,'20-27296505-7','Av. Ide Y Jorge Newbery',886710,'','Monotributo',70368744210432,'Riera Lucas','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476991,'20-10724240-7','Señorita Cejas Y Sta. Maria De Oro',890425,'','Monotributo',70368744177664,'Rojo Victor','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476992,'20-33269135-0','Yamanas 2310',890712,'','Monotributo',70368744177664,'Rojo Ariel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476993,'27-06173637-4','Rio Grande 607',891000,'','Monotributo',70368744177664,'Rincon Miriam','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476994,'20-24464985-9','Pascual Biseglia 790',895071,'','Monotributo',70368744210432,'Riera Mauro Alberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476995,'27-30658503-2','Geronimo Del Barco 2358',904345,'','Monotributo',70368744177664,'Serradell Ivana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476996,'20-26417371-0','Dr. Carlos Rodriguez 2036',906557,'','Monotributo',70368744177664,'Sosa Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476997,'30-71135791-9','San Martin Esq. Vicente Baggione',906853,'','Resp. Inscripto',70368744177665,'Super El Flaco','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476998,'27-12630563-5','Salta 56',914624,'','Monotributo',70368744177664,'Salvi Marta Beatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860476999,'27-24557844-5','Amadeo Sabattini 894',916870,'','Monotributo',70368744210432,'Torres Deolinda Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477000,'20-20786888-5','Juana M. Gorritti 996',918291,'','Monotributo',70368744177664,'Virga Marcelo Oscar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477001,'20-16020533-5','Colon 1500',931297,'','Monotributo',70368744210432,'Viotti Dionicio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477002,'20-94745143-0','9 De Julio 526',932452,'','Resp. Inscripto',70368744177665,'Yao Zongrui','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477004,'','Santa Maria De Oro 450',936938,'','Monotributo',70368744177664,'Paez Mario','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477005,'','Santa Maria De Oro Esq. Señorita Cejas',938551,'','Consumidor Final',70368744177664,'Tisera Jorge','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477006,'','Belisario Roldan 1305',942366,'','Consumidor Final',70368744177664,'Burgos Jesica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477007,'','Montevideo 1300',943268,'','Consumidor Final',70368744177664,'Boriglio Patricia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477008,'','Santa Maria De Oro 1000',943583,'','Consumidor Final',70368744177664,'Puig','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477009,'','Santa Maria De Oro 830',943901,'','Consumidor Final',70368744177664,'Guall Alejandro','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477010,'','Adelia Maria 730',944220,'','Consumidor Final',70368744177664,'Lujan Miriam','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477011,'','Catamarca 887',944541,'','Consumidor Final',70368744177664,'Tejeda Edit','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477012,'','Salta 910',944864,'','Consumidor Final',70368744177664,'Aguilera','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860477013,'','Intendente Daguerre 911',945190,'','Consumidor Final',70368744177664,'Curdi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509696,'','Ranqueles 930',1248467,'','Consumidor Final',70368744177664,'Dulcich','0358-154181736',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509697,'','Av. Argentina 600',1250043,'','Consumidor Final',70368744177664,'Irusta Marcela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509699,'','Francisco Zarco 1005',1267342,'','Consumidor Final',70368744177664,'Cuello Antonio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509700,'','Quenón 1843',1272739,'','Consumidor Final',70368744177664,'Constantino Ruben','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509701,'','Marcos Lloveras Esq. Perez Bulnes',1275627,'','Consumidor Final',70368744177664,'Torres','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509702,'','Blas Parera 1464',1282692,'','Monotributo',70368744177664,'Busso Silvia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509703,'','Comisario Consigli 544',1298022,'','Consumidor Final',70368744177664,'Sosa Angela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509704,'','Dr. Carlos Rodriguez 2030',1300315,'','Consumidor Final',70368744177664,'Perez Fanny','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509705,'23-35276107-9','Alejandro Aguado 1076',1305556,'','Monotributo',70368744177664,'Godoy Jonattan David','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509706,'','Guardias Nacionales Esq. Com. Consigli',1308533,'','Consumidor Final',70368744177664,'Santamarino','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509707,'23-94778633-4','Leyes Obreras 485',1320115,'','Monotributo',70368744177664,'Funes Maritza','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509709,'','Ficco 439',1323327,'','Consumidor Final',70368744177664,'Barbero Rosana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509710,'','Quenna 954',1325711,'','Consumidor Final',70368744177664,'Lucero Gladys','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509711,'','Rafael Obligado 1527',1344503,'','Consumidor Final',70368744177664,'Diaz Sandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509712,'','Anchorena 14',1349119,'','Consumidor Final',70368744177664,'Moyano Jorge','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509714,'27-17866891-4','Pje. Ms. De Loria',1355695,'','Monotributo',70368744177664,'Moreno Delia Isabel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509715,'','Chile 1100',1359527,'','Consumidor Final',70368744177664,'Diaz Silvana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509716,'','Berta Perazzi 1221',1361991,'','Consumidor Final',70368744177664,'Rocco Andrea','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509717,'','Malabia 620',1387742,'','Consumidor Final',70368744177664,'Giordana Ana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509718,'27-12767694-7','Rafael Obligado 1200',1389528,'','Monotributo',70368744177664,'Castro Dolores','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509719,'','Tucuman 1000',1407268,'','Consumidor Final',70368744177664,'Tobares Olga','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509721,'','Chacabuco 300',1411961,'','Consumidor Final',70368744177664,'Travaglia Norma','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509722,'','Baigorria 1069',1417208,'','Consumidor Final',70368744177664,'Marquez Liso','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509723,'','Colombia 478',1424480,'','Consumidor Final',70368744177664,'Vieyra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509724,'','Pje. Chasque 200',1427054,'','Consumidor Final',70368744177664,'Benitez Pedro','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509725,'','Cuba 1041',1447582,'','Consumidor Final',70368744177664,'Lopez Carolina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509726,'20-268661589-0','Pje. Chasque 1756',1450919,'','Monotributo',70368744177664,'Cobos Leandro Jonas','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509727,'27-32392108-9','Costa Rica 550',1452426,'','Monotributo',70368744177664,'Zarate Daniela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509728,'27-16856216-6','Calle Publica',1466593,'','Monotributo',70368744177664,'Romero Susana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509729,'','I.p.v. Roberto Payro 1240',1476763,'','Consumidor Final',70368744177664,'Bellandi Miguel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509730,'','Antartida Argentina 890',1484321,'','Consumidor Final',70368744177664,'Peñaloza Veatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509731,'','Isabel La Catolica 880',1487749,'','Consumidor Final',70368744177664,'Lopez Analia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509732,'','Isabel La Catolica 1018',1489297,'','Consumidor Final',70368744177664,'Omisolo Veronica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509733,'23-21013275-9','Rio Segundo 845',1493144,'','Monotributo',70368744177664,'Navarro Claudio Gustavo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509734,'','Guardias Nacionales',1497779,'','Consumidor Final',70368744177664,'Arias Marcelo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509735,'','Rio Segundo 1937',1510935,'','Consumidor Final',70368744177664,'Suarez','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509736,'','Tristan Burgos 450',1518728,'','Consumidor Final',70368744177664,'Rodriguez Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509737,'27-18061261-6','Juarez Celman 725',1532601,'','Monotributo',70368744177664,'Repezza Elena','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509738,'20-17370744-5','Gregorio Ramirez 1075',1548313,'','Monotributo',70368744210432,'Escudero Juan Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860509739,'27-17370709-1','San Martin 1455',1550309,'','Monotributo',70368744210432,'Etchetto Mabel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542464,'','Av. 25 De Mayo',2122538,'','Consumidor Final',70368744177665,'Pizzarro','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542465,'','Av. 25 De Mayo',2122962,'','Consumidor Final',70368744177665,'Ceballos Walter','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542466,'','S/n',2241726,'','Consumidor Final',70368744177665,'Cardetti','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542467,'30-71191653-5','Pje. Tomas Garzón 780',2265370,'','Resp. Inscripto',70368744210432,'Furmar S.r.l.','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542468,'','Pje. Chamorro',2268997,'','Consumidor Final',70368744177665,'Pergolini','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542469,'','S/n',2307669,'','Consumidor Final',70368744210432,'Sosa Ricardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542470,'','S/n',2310234,'','Consumidor Final',70368744210432,'Bazan Leonel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542471,'','S/n',2313207,'','Consumidor Final',70368744210432,'Gimenez Elba','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542472,'','S/n',2330572,'','Consumidor Final',70368744210432,'Debia Luisa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542473,'','S/n',2336508,'','Consumidor Final',70368744210432,'Panaderia Ortiz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542474,'','S/n',2340348,'','Consumidor Final',70368744210432,'Garoni Diego','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542475,'','S/n',2342149,'','Consumidor Final',70368744210432,'Kiosco Favio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860542476,'20-22077502-0','Roque Saenz Peña 342',2344331,'','Monotributo',70368744177665,'Zufiaurre Mariano German','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860575232,'','S/n',2363847,'','Consumidor Final',70368744210432,'Juarez Alberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860608000,'','Humahuaca 860',2566761,'','Consumidor Final',70368744177664,'Lucero Paola','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640768,'','S/ N',3020493,'','Consumidor Final',70368744177665,'Arocena Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640769,'','S/n',3040237,'','Consumidor Final',70368744177665,'Condorito','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640770,'','S/n',3075944,'','Consumidor Final',70368744177665,'Nolazco','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640771,'','S/ N',3087234,'','Exento',70368744177665,'Hogar De Ancianos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640772,'','S/ N',3125747,'','Consumidor Final',70368744210432,'Manfredy Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640773,'','S/n',3131950,'','Consumidor Final',70368744210432,'Ceballos Sergio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640774,'','S/n',3155173,'','Consumidor Final',70368744210432,'Alturria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640775,'','S/n',3161758,'','Consumidor Final',70368744210432,'Bassan Leonor','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640776,'','S/n',3180163,'','Consumidor Final',70368744210432,'Delfino Norma','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640777,'','S/ N',3184385,'','Consumidor Final',70368744210432,'Etchenique Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640778,'','S/ N',3220141,'','Consumidor Final',70368744210432,'Alfonso Carmen','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640779,'','S/n',3230766,'','Consumidor Final',70368744210432,'Avila Adriana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640780,'','S/n',3238011,'','Consumidor Final',70368744210432,'Paredes Osvaldo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860640781,'','S/n',3250199,'','Consumidor Final',70368744177665,'Budini Mariela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673536,'','Hipolito Hirigoyen 1380',3475119,'','Consumidor Final',70368744308736,'Gutierrez Jimena','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673537,'20-21998426-0','Quirico Porreca 785',3475607,'','Monotributo',70368744177664,'Depetriz Celso','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673538,'','Lavalle 361',3476096,'','Consumidor Final',70368744308736,'Sosa Graciela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673539,'','Pje. Amadeo Escudero Casa 55',3476818,'','Consumidor Final',70368744308736,'Ferraro Olga','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673540,'','Isabel La Catolica 963',3477533,'','Consumidor Final',70368744177664,'Lazaro Daniela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673541,'','Colombia 827',3478251,'','Consumidor Final',70368744177664,'Niz Erica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673542,'','Mozart Y Soco Soco',3478743,'','Consumidor Final',70368744177664,'Calderon','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673543,'','Republica Iran 10',3479236,'','Consumidor Final',70368744308736,'Sainz Natalia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673544,'','Eduardo Jenner 1328',3479732,'','Consumidor Final',70368744177664,'Garcia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673545,'','Cardarelli 2255',3480231,'','Consumidor Final',70368744177664,'Cuello Samuel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673546,'','Laguna Blanca 267',3480733,'','Consumidor Final',70368744177664,'Guayanes Daniela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673547,'20-38018043-0','Garibaldi Y R. Pairo',3481243,'','Monotributo',70368744177664,'Delgado Facundo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673548,'','Brochero 673',3481752,'','Consumidor Final',70368744177664,'Allende Karina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673549,'','León Pallere 555',3649936,'','Consumidor Final',70368744177664,'Amiri Carina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673550,'','Chacabuco 220',3681624,'','Consumidor Final',70368744177664,'Ronco Noelia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860673551,'','---',3772522,'','Consumidor Final',70368744177664,'Llanos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706304,'','Muñiz 1507',4300159,'','Consumidor Final',70368744177664,'Cabral Walter','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706305,'','Sabattini 3900',4305708,'','Consumidor Final',70368744177664,'Torres Humberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706306,'','Sarmiento 3265',4309831,'','Consumidor Final',70368744177664,'Moreno Marcela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706307,'','Laprida 1103',4316169,'','Consumidor Final',70368744177664,'Barbero Miguel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706308,'','Isabel De Guevara 449',4320260,'','Consumidor Final',70368744177664,'Sta. Rita','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706309,'','Salta 56',4324143,'','Consumidor Final',70368744177664,'Rufino','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706310,'','Laprida 906',4328503,'','Consumidor Final',70368744177664,'Rafael','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706311,'','Isla De Los Estados 233',4332910,'','Consumidor Final',70368744177664,'Barrera Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706312,'','C. Balmaceda Y Las Postas',4337835,'','Consumidor Final',70368744177664,'Martinez Carina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706313,'27-11689784-4','Leopoldo Lugones 2721',4342496,'','Monotributo',70368744177664,'Guardia Graciela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706314,'','Moreno Y Juan De Garay',4350929,'','Consumidor Final',70368744177664,'Gatica Maria Elsa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706315,'','J. De Dios Lopez 140',4358978,'','Consumidor Final',70368744177664,'Calderon Micaela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706316,'','Fernando Fade (c) 116',4370163,'','Consumidor Final',70368744177664,'Rovetta Romina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706317,'','Union De Los Argentinos Y San Lorenzo',4375157,'','Consumidor Final',70368744177664,'Andrada Rosana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706318,'','Fray Ludovico Cuaranta 373',4375965,'','Consumidor Final',70368744177664,'Gladys','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706319,'','Union De Los Argentinos 21',4383639,'','Consumidor Final',70368744177664,'Gonzales','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706320,'27-11311039-0','Gobernador Guzman 1673',4386382,'','Monotributo',70368744177664,'Vilma Miranda','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860706321,'','Union De Los Argentinos 31',4401292,'','Consumidor Final',70368744177664,'Palacios Graciela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739072,'27-14132497-2','Paso De Los Andes 689',4593391,'','Monotributo',70368744177664,'Arias Marta','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739073,'20-17314115-8','Buenos Aires 645',4606298,'','Resp. Inscripto',70368744177664,'Arias Walter Luis','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739074,'27-30766630-3','Vuelta De Obligado 900',4812391,'','Monotributo',70368744177664,'Romero Anabela Soledad','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739075,'27-22580207-1','Republica Arabe De Siria 2224',4859505,'','Monotributo',70368744177664,'Martinez Sandra Fabiana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739076,'20-22104124-1','Thomson Y Cuba',4864115,'','Monotributo',70368744177664,'Giacinto Gustavo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739077,'20-06563040-1','Francisco Muñiz 804',4867717,'','Monotributo',70368744177664,'Cornejo Ramón','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739078,'20-13221899-5','Francisco Muñiz 1732',4871640,'','Monotributo',70368744177664,'Laurenco Daniel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739079,'','Achalay 1847',4875755,'','Consumidor Final',70368744177664,'Portales Liliana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739080,'27-12326075-4','Francisco Muñiz 1364',4880501,'','Monotributo',70368744177664,'Gimenez Olga','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860739081,'20-13955277-7','Francisco Muñiz 1211',4884913,'','Monotributo',70368744177664,'Sarmiento Paolo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771840,'','Rotonda Seminario',4917811,'','Consumidor Final',70368744177664,'Jorge Alba','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771841,'20-16164145-7','Suipacha Y Estrada',4922799,'','Monotributo',70368744177664,'Ferrero Sergio','154232511',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771842,'','Goudar Y Lugones',4929170,'','Consumidor Final',70368744177664,'Roco Patricia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771843,'','Juana Azurduy Y Padilla',4935878,'','Consumidor Final',70368744177664,'Hernandez','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771844,'','Trejo Y Sanabria 955',4940369,'','Consumidor Final',70368744177664,'Luna Elsa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771845,'','Perón Y Roque Saenz Peña',4947107,'','Consumidor Final',70368744177664,'Milanecio Jorge','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771846,'','12 De Agosto 976',4952513,'','Consumidor Final',70368744177664,'Garay Sandra','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771847,'','Pje. Publico 3575',4964717,'','Consumidor Final',70368744177664,'Sosa Yohama','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771848,'','Guodar 3387',4976468,'','Consumidor Final',70368744177664,'Gimenez Damian','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860771849,'','Remedios De Escalada Y Dilkendein',4985053,'','Consumidor Final',70368744177664,'Diaz Silvana (2)','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804608,'20-26546551-0','Pizzarro 625',5579651,'','Monotributo',70368744177664,'Luque Alejandro','03583-482012',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804609,'','Tupungato 346',5596446,'','Consumidor Final',70368744177664,'Pinto Vilma','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804610,'','Diego Velazquez 7',5602128,'','Consumidor Final',70368744177664,'Dardanelli Valeria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804611,'20-338859983-0','Cungreso Tucuman 349',5622496,'','Monotributo',70368744308736,'Mercadito Esteban','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804612,'20-30030003-1','Las Heras 132',5632515,'','Monotributo',70368744308736,'Gomez Victor Angel','0358-4167784',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804613,'','Piñero 1148',5663588,'','Consumidor Final',70368744177664,'Flores Estella Maris','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804614,'','Martin Fierro 250',5669399,'','Consumidor Final',70368744308736,'Camallo Fernando','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804615,'','Ruben Dario 207',5701448,'','Consumidor Final',70368744177664,'Quispe Erica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804616,'','Jose Deramo 416',5720099,'','Consumidor Final',70368744177664,'Romero Leo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804617,'','Ypv- Bda Norte. Mb: H Dto:2 Pb.',5745928,'','Consumidor Final',70368744177664,'Cufre Rodolfo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804618,'20-08625256-3','Pte. Peron 412',5854628,'','Monotributo',70368744177664,'Gatica Roque Antonio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860804619,'','720',6059912,'','Consumidor Final',70368744177664,'Avila Roberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860837376,'27-20808620-6','Santa Maria De Oro 142',6220816,'','Monotributo',70368744177665,'Lerda Sonia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860837377,'20-94206784-5','San Martin 675',6263220,'','Resp. Inscripto',70368744177664,'Cheng Peng','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860837378,'20-94032697-7','O\'higgins 2453',6263833,'','Resp. Inscripto',70368744177664,'Cheng Ciyeng','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860837379,'23-25471260-4','Buenos Aires Y Cabrera',6264457,'','Resp. Inscripto',70368744177664,'Tabares Patricia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860837380,'20-21864173-4','Goudard Y Biassi',6273742,'','Monotributo',70368744177664,'Allendez Eduardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860870144,'','Maipu Y Molina',6293603,'','Consumidor Final',70368744177664,'Gianini Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860870145,'','Ruta Nac. 8',6297883,'','Consumidor Final',70368744177664,'Rondan Maria Francisca','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860870146,'27-14370843-3','Colon 1276',6419031,'','Resp. Inscripto',70368744210432,'Drago Elsa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860870147,'27-23939361-1','Augusto Cacciavillianni S/n',6502273,'','Monotributo',70368744210432,'Gallardo Nelida Beatriz','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860902912,'','S/n',6574417,'','Consumidor Final',70368744210432,'Tapia Silvina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935680,'','Andres Terzaga 945',6712545,'','Consumidor Final',70368744177664,'Paez Sergio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935681,'','Pje. Aconquija 3475',6729488,'','Consumidor Final',70368744177664,'Noelia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935682,'','Santa Rosa 364',6753672,'','Consumidor Final',70368744177664,'Correa Carolina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935683,'','Liniers 1969',6758011,'','Consumidor Final',70368744177664,'Jorge Fabro','154179460',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935684,'','Cuaranta 373',6788834,'','Consumidor Final',70368744177664,'Canciano','154280332',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935685,'','Almirante Brown 1463',6808560,'','Consumidor Final',70368744177664,'Gonzales Cesar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935686,'','Sta. Maria De Oro 59',6820350,'','Consumidor Final',70368744177664,'Juan Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935687,'','Perito Moreno 2720',6836492,'','Consumidor Final',70368744177664,'Veronica Ochoa','154360212',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935688,'','Roma 2360',6853659,'','Consumidor Final',70368744177664,'Varela Paulina','154174508',NULL,NULL);
+INSERT INTO cliente VALUES (175921860935689,'27-31705104-8','Mosconi Esq. Jose Hernandez',6874576,'','Monotributo',70368744177664,'Vila Veronica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968448,'','Leopoldo Lugones 1585',7461449,'','Consumidor Final',70368744177664,'Piola Gloria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968449,'','Moreno 1594',7480045,'','Consumidor Final',70368744177664,'Quiroga Juana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968450,'','Pje Chasque 1324',7619729,'','Consumidor Final',70368744177664,'Amaya Dayana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968451,'','Av. Marcelo T. De Alvear 781',7632491,'','Consumidor Final',70368744177664,'Campo Celeste','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968452,'','Antartida Argentina 1095',7648608,'','Consumidor Final',70368744177664,'Benitez Melina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921860968453,'27-21407004-4','Av. Marcelo T. De Alvear 1789',7670865,'','Monotributo',70368744177664,'Bringas Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861001216,'','27 De Noviembre Y Guemez',8127170,'','Consumidor Final',70368744308736,'Arias Nelida','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861033984,'20-16655699-7','Intendente Juan Sosa 136',8577297,'','Monotributo',70368744177665,'Arocena Rafael David','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861033985,'','Alberdi',8647293,'','Consumidor Final',70368744177665,'Piovera- El Paso','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861066752,'20-06655358-3','Av. Carlos Yde 1850',8913106,'','Monotributo',70368744210432,'Campos Cosme Miguel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861066753,'','---',8936167,'','Consumidor Final',70368744210432,'Abuelo Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861066754,'','--',8980267,'','Consumidor Final',70368744210432,'Lucero Liliana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099520,'','Montevideo 1776',9192266,'','Consumidor Final',70368744177664,'Arevalo Juan','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099521,'20-12863138-1','Elias Moyano 1813',9204653,'','Monotributo',70368744177664,'Farias Raul','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099522,'','Maipu Esq. Molina',9222294,'','Consumidor Final',70368744177664,'Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099523,'20-17356075-4','Coronel Olmedo 2915',9257654,'','Monotributo',70368744177664,'Fernandez Daniela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099524,'','Pje. Drago 3125',9263594,'','Consumidor Final',70368744177664,'Rapachi Sosa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099525,'','Jose Biassi 1026',9272222,'','Consumidor Final',70368744177664,'Luna Estefania','154162747',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099526,'','Union De Lo Argentinos 21',9294053,'','Consumidor Final',70368744177664,'Patricia Rosana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861099527,'','Moreno Esq. Juan De Garay',9319643,'','Consumidor Final',70368744177664,'Gatica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861132288,'','Tucuman 650',9948075,'','Consumidor Final',70368744177664,'Sanches Omar 2','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861165056,'27-30029686-1','Marcelo T. De Alvear 1799',10513158,'','Monotributo',70368744177664,'Perez Jimena','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861165057,'','Piñero Werfiel 1148',10526557,'','Consumidor Final',70368744177664,'Torres Victor','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861165058,'','Pje. Juarez Avila 889',10537983,'','Consumidor Final',70368744177664,'Romero Ariel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861165059,'20-13738621-7','Muñiz 815',10544067,'','Monotributo',70368744177664,'Basilico Daniel Omar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861165060,'27-27018180-0','Av. Argentina 49',10544768,'','Monotributo',70368744177664,'Adorno Alicia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861197824,'20-16991735-4','Pje. Decouvette 1452',13856858,'','Monotributo',70368744177664,'Garcia Raul','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861197825,'','Adelia Maria 132',13912946,'','Consumidor Final',70368744177664,'Cisneros Dario','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861197826,'','Velez Sarfield Y San Martin',14010185,'','Consumidor Final',70368744308736,'Canigianni Vanina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861197827,'','---',14355785,'','Consumidor Final',70368744210432,'Balmaceda Hector','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861230592,'20-10821774-6','Potrerillo 612',16756044,'','Monotributo',70368744177664,'Giacomuzzi Pedro','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861230593,'','Roma 1334',16775916,'','Consumidor Final',70368744177664,'Lorena Farino','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263360,'','Remedios De Escalada 1130',17060343,'','Consumidor Final',70368744177664,'Moreno Gabriela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263361,'','Leopoldo Lugones 2647',17070699,'','Consumidor Final',70368744177664,'Palliero Elba','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263362,'20-16650828-3','Roberto Pairo 1089',17303062,'','Monotributo',70368744177664,'Bufarini Eduardo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263363,'','Colombia 1196',17424516,'','Consumidor Final',70368744177664,'Noriega Maria Ines','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263364,'','Padilla',17454414,'','Consumidor Final',70368744177664,'Fernandez','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263365,'','Brochero 776',17517323,'','Consumidor Final',70368744177664,'Pereyra Ana Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861263366,'','Pampa 2300',17672224,'','Consumidor Final',70368744177664,'Luna','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861296128,'','Los Ceibos S/n',22406729,'','Consumidor Final',70368744308736,'Quiroga Macarena','154319520',NULL,NULL);
+INSERT INTO cliente VALUES (175921861296129,'','Paul Groussac Y Laguna Blanca',22453096,'','Consumidor Final',70368744177664,'Despensa Mili','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861296130,'20-17576707-0','La Pampa 736',22539958,'','Monotributo',70368744177664,'Cipriani Victor','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861296131,'20-94026504-6','Av. Marcelo T. De Alvear 1378',22583060,'','Resp. Inscripto',70368744177664,'Lin Weiqin','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861296132,'','Garibaldi 504',22651097,'','Consumidor Final',70368744177664,'Corbalan Manuel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861328896,'27-21694008-9','Laprida 1787',27551372,'','Monotributo',70368744177664,'Cejas Andrea','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861328897,'','--',27842674,'','Consumidor Final',70368744210432,'Cabanay','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861361664,'','Tejerina Norte 440',29120540,'','Consumidor Final',70368744177664,'Principe Maximiliano','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861361665,'','Guardias Nacionales 1950',29121263,'','Consumidor Final',70368744177664,'Gigena Maria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861361666,'27-177733915-5','Pje. Esperanza 2026',29121997,'','Monotributo',70368744177664,'Ferraro Adriana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861361667,'','Rio Colorado 475',29122972,'','Consumidor Final',70368744177664,'Leyria Nicolas','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861394432,'27-30477163-7','Eduardo Jenner 810',29596890,'','Monotributo',70368744177664,'Canton Ivana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861394433,'','Segurola 1017',29685472,'','Consumidor Final',70368744177664,'Humero Paola','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861394434,'','Mariano Fragueiro 1200- I.p.v.',29705482,'','Consumidor Final',70368744177664,'Ledesma Yamila','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861427200,'','Egidio Sosa 489',31157758,'','Consumidor Final',70368744177664,'Muñoz Graciela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861427201,'','Remedios De Escalada 1184',31164895,'','Consumidor Final',70368744177664,'Machado Jose','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861427202,'27-94658534-9','Sarmiento 2273',31215210,'','Resp. Inscripto',70368744177664,'Lin Yioafang','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861459968,'20-11865208-9','San Luis Y Uruguay',33852988,'','Monotributo',70368744177664,'Campo Roberto','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861459969,'','Calle 3: 681 (unrc)',33938190,'','Consumidor Final',70368744177664,'Aliberti Ana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861459970,'23-26163715-4','Colombia 1025',34035147,'','Monotributo',70368744177664,'Aguero Eloisa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861492736,'','Coronel Videla 916',34810364,'','Consumidor Final',70368744177664,'Lucero Yanina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861492737,'27-18823870-5','Entre Rios',34817858,'','Resp. Inscripto',70368744177664,'Lin Xuixiang','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861492738,'27-16274158-1','Guayaquil 190',34825923,'','Monotributo',70368744177664,'Liviero Adriana Sara','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861525504,'','Nahuel Huapi 1880',36781907,'','Consumidor Final',70368744177664,'Alaniz Yesica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861525505,'','Rio Juramento 585',36835326,'','Consumidor Final',70368744177664,'Guardia Elena','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861525506,'','Rosario Sta Fe 414',36839002,'','Consumidor Final',70368744177664,'Darosa Marta','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861525507,'27-12762721-0','Rio Segundo 713',36845608,'','Monotributo',70368744177664,'Cruceño Susana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861525508,'27-18609808-6','Suipacha 357',36852964,'','Monotributo',70368744177664,'Liviero Laura','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861558272,'27-27502850-4','Felipe Neri Guerra 550',37474501,'','Monotributo',70368744177664,'Gonzales Mirta Noemi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861558273,'','Juan Brandino 887',37524586,'','Consumidor Final',70368744177664,'Celalles Lucas','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861558274,'','Mariano Fragueiro 1200- Ipv',37585840,'','Consumidor Final',70368744177664,'Ledesma 2','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861591040,'','Trabajo Y Prevision 1026',39526710,'','Consumidor Final',70368744177664,'Cabañas Natalia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861591041,'27-31705119-6','Alte. Brown 1871',39704602,'','Monotributo',70368744177664,'Avila Rita Vanesa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861591042,'','Guraldes Ricardo 1895',39712801,'','Consumidor Final',70368744177664,'Rivero Ivana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861591043,'','Pje. Aconquija 3582',39718046,'','Consumidor Final',70368744177664,'Casteig Analia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861591044,'','Pje. Drego 3551',39727035,'','Consumidor Final',70368744177664,'Urquiza Silvia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861623808,'','Juan Brandino 905',42178977,'','Consumidor Final',70368744177664,'Avila Cecilia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861623809,'','Nicolas Falcone 1385',42196217,'','Consumidor Final',70368744177664,'Susana Guides','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861623810,'','Segurola 1017',42306867,'','Consumidor Final',70368744177664,'Humere','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861623811,'','Pampas 2300',42357287,'','Consumidor Final',70368744177664,'Perez Carlos','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861656576,'','Fray Donatti 365',42735333,'','Consumidor Final',70368744177664,'Digenaro Erica','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861656577,'','Alem 1400',42755783,'','Consumidor Final',70368744177664,'Becerra Debora','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861656578,'','Cuaranta 202',42811155,'','Consumidor Final',70368744177664,'Vega','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861656579,'20-18840203-9','Pedro Goyena 364',42945286,'','Resp. Inscripto',70368744177664,'Cheng Xingfa','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861656580,'','Cm.',43663891,'','Consumidor Final',70368744177665,'Bar El Divorcio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861689344,'','Roma 1516',45096504,'','Consumidor Final',70368744177664,'Salvi Yanina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861722112,'','Colombia 1196',46955324,'','Consumidor Final',70368744177664,'Muñoz Julia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861754880,'27-03495910-8','Matias Nolazco 49',48069007,'','Monotributo',70368744177664,'Pascualina Rinaldi','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861754881,'','Paso De Los Andes 1224',48109749,'','Consumidor Final',70368744177664,'Frencia Mayco','154314769',NULL,NULL);
+INSERT INTO cliente VALUES (175921861787648,'','S',54708707,'','Resp. Inscripto',70368744177664,'Cristian','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861787649,'20-26462482-8','Independencia 403',54842208,'','Monotributo',70368744177665,'Gonzales Adrian','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861820416,'23-31744889-9','Av. Ide Y Jorge Newbery',55277650,'','Resp. Inscripto',70368744210432,'Mobilia Gonzalo','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861853184,'23-26925817-9','Arturo M. Bas 1238',55707728,'','Monotributo',70368744177664,'Romanello Ariel','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861853185,'','Firtroy 1086',55719443,'','Consumidor Final',70368744177664,'Carballo Cecilia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861853186,'','Islas Giorgias 150',55809305,'','Consumidor Final',70368744177664,'Allende Susana','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861853187,'27-94013689-5','Estrada 1974',55843321,'','Resp. Inscripto',70368744177664,'Li Jinhua','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861885952,'','Antartida Arg. Y Guemez',57363800,'','Consumidor Final',70368744308736,'Serpez Alejandro','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861918720,'','Serrano',58931600,'','Consumidor Final',70368744177664,'Macho Noelia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861951488,'','Adelia Maria 356',59939850,'','Consumidor Final',70368744177664,'Rojo Natalia','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861984256,'','Miguel Angel 888',61165678,'','Consumidor Final',70368744177664,'Abregu Carla','',NULL,NULL);
+INSERT INTO cliente VALUES (175921861984257,'','Mariano Soler 544',61242191,'','Consumidor Final',70368744308736,'Garavaglia Ruben','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862017024,'','Av. Argentina 436',61356936,'','Consumidor Final',70368744177664,'Escudero Oscar','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862049792,'','S/n',62787828,'','Consumidor Final',70368744210432,'Pazzini Margarita','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862049793,'','Sobremonte Y Sucre',62877406,'','Consumidor Final',70368744177664,'Rotiseria','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862049794,'','---',62945393,'','Consumidor Final',70368744210432,'Avila Horacio','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862082560,'27-23436338-2','Pte. Peron Oeste 1832',63282862,'','Monotributo',70368744177664,'Llabres Mariela','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862082561,'','Indio Felipe Rosas Y Boedo',63291903,'','Consumidor Final',70368744177664,'Villarruel Yanina','',NULL,NULL);
+INSERT INTO cliente VALUES (175921862082562,'','Tejerina 623',63298131,'','Consumidor Final',70368744177664,'Flores Veronica','',NULL,NULL);

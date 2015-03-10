@@ -1,0 +1,20 @@
+abrir consola y verificar el java java -version
+si no hay
+
+instalar jdk1.4.1-02 
+si hubiera version posterior desinstalar.
+
+instalar el mysql admin 
+y la consola mysql crear la bd proyectociro
+instalar el programa en el c
+elegir carpeta destino de archivos
+o crear por defecto c:\archivosSistOpCiro y agregarla a los accesos directos
+verificar conf.ini
+y nada mas
+
+
+2 instalacion desinstalar java 4 e instalar java 6  
+instalar el proyecto. 
+volver a crear la bd
+crear acceso directo al escritorio
+y borrar de los accesos el desinstalador del programa

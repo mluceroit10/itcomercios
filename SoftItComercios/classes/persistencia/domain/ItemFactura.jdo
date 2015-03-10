@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE jdo SYSTEM "file:/javax/jdo/jdo.dtd">
+
+<jdo>
+   <package name="persistencia.domain">
+  <class name="ItemFactura" identity-type="datastore"> 
+	
+	<field name="id" />
+	<field name="cantidad" /> 
+    <field name="kilos" />
+	<field name = "producto" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field" />
+    </field>
+
+	<field name = "factura" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field" value="items"/>
+    </field>
+    <field name="prUnit" /> 
+	<field name="descuento" />
+    <field name="prTotal" /> 	
+     </class>
+    </package>
+</jdo>	
