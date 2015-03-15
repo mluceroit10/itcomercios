@@ -1,0 +1,1 @@
+Sistema para el manejo comercial, realizado para ejecución en una máquina
