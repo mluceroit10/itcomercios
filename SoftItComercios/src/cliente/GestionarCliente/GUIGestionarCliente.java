@@ -28,7 +28,8 @@ public class GUIGestionarCliente extends JDialog {
     private JPanel jpGestion = null;	    private JPanel jpBuscador = null;
     private JButton jbIngresar = null;		private JButton jbModif = null;
     private JButton jbEliminar = null;    	private JButton jbAceptar = null;
-    private JButton jbCancelar = null;		private JButton jbImprimir;	    
+    private JButton jbCancelar = null;		private JButton jbImprimir;	  
+    private JButton jbDeudas = null;	  
     private JLabel jlNombre;
     private JTextField jtfNombre = null;    
     private ModeloTabla modTabla = null;
@@ -125,6 +126,7 @@ public class GUIGestionarCliente extends JDialog {
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
             jpDatos.add(getJSPDatos(), null);
+            jpDatos.add(getJBDeudas(), null);
             jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
@@ -133,7 +135,7 @@ public class GUIGestionarCliente extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(10,20,680,310));
+                jspDatos.setBounds(new Rectangle(10,20,680,280));
                 jspDatos.setViewportView(getJTDatos());
         }
         return jspDatos;
@@ -221,6 +223,18 @@ public class GUIGestionarCliente extends JDialog {
         }
         return jbECuenta;
     }
+    
+    public JButton getJBDeudas() {
+        if (jbDeudas == null) {
+        	jbDeudas = new JButton();
+        	jbDeudas.setName("Deudas");
+        	jbDeudas.setText("Deudas");
+        	jbDeudas.setBounds(new java.awt.Rectangle(590,305,100,25));
+        	jbDeudas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        	jbDeudas.setInputMap(0, map);
+        }
+        return jbDeudas;
+    }
 
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
@@ -262,6 +276,7 @@ public class GUIGestionarCliente extends JDialog {
         jbAceptar.addActionListener(lis);
         jbCancelar.addActionListener(lis);
         jbECuenta.addActionListener(lis);
+        jbDeudas.addActionListener(lis);
     }
 
     public void repaint() {

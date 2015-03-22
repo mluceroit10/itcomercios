@@ -79,9 +79,9 @@ public class MediadorModificarProducto implements ActionListener,KeyListener {
                     if( tipoPrecioEntr.compareTo("CON IVA")==0)
                     	conIva=true;
                     
-                    int cod = Integer.parseInt(codigo);
+                 //   int cod = Integer.parseInt(codigo);
             		Producto prod = new Producto();
-            		prod.setCodigo(new Long(cod));
+            		prod.setCodigo(new Long(codigo));
             		prod.setNombre(nombre);
             		prod.setPrecioKilos(kilosD);
             		prod.setStockMinimo(Integer.parseInt(stockM));

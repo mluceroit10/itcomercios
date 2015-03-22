@@ -20,10 +20,12 @@ import persistencia.domain.Comercio;
 import persistencia.domain.FacturaCliente;
 import persistencia.domain.ItemFactura;
 import persistencia.domain.Producto;
+import server.GestionarCliente.ControlCliente;
 import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
 import server.GestionarProducto.ControlProducto;
 import cliente.GestionarCliente.MediadorGestionarCliente;
+import cliente.GestionarFacturaCliente.MediadorFacturarCliente;
 import cliente.Principal.GUIReport;
 
 import common.Utils;
@@ -34,6 +36,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     private ControlFacturaCliente controlFactCliente;
     private ControlComercio controlComercio;
 	private MediadorGestionarCliente medGestionarCliente;
+	private ControlCliente controlCliente;
 	public Cliente cliente;
 	public Vector productos = new Vector();
 	public Vector cantProd = new Vector();
@@ -47,12 +50,14 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 	private Comercio dist=null;
 	private boolean mostrar=false;
 	String loc="";
+	JFrame guiPpalPadre=null;
 	
     public MediadorRemitoCliente(JFrame guiPadre) throws Exception {
     	try{
     		controlFactCliente = new ControlFacturaCliente();
     		controlProducto = new ControlProducto();
     		controlComercio = new ControlComercio();
+    		controlCliente = new ControlCliente();
     	}catch(Exception ex){
     		Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. Constructor");
     	}
@@ -61,9 +66,12 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		Utils.advertenciaUsr(guiRemitoCte,"Debe completar los datos del Comercio para Facturar.");
     	}else{
     		mostrar=true;
+    		guiPpalPadre=guiPadre;
     		Long nroFacturaObt=dist.getNroRemito();
     		guiRemitoCte = new GUIRemitoCliente(guiPadre);
-    		guiRemitoCte.getJTFBusqueda().setEnabled(false);
+    		cliente=controlCliente.obtenerClienteDefecto();
+    		this.actualizarCliente();
+    	//	guiRemitoCte.getJTFBusqueda().setEnabled(false);
     		todosProductos = controlProducto.obtenerProductos();
     		guiRemitoCte.nroRemito=nroFacturaObt;
     		guiRemitoCte.setActionListeners(this);
@@ -86,7 +94,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		this.guiRemitoCte.getJTFCodigo().setText(cod_Prod);
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
-    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
     			double importeProd=pr.getPrecioVentaSinIva();
     			double importeCIva=(importeProd*0.21)+importeProd;
     			importeProd=Utils.redondear(importeCIva,2);
@@ -119,14 +127,17 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 	 fc.setAnulada(false);
                      fc.setCliente(cliente);
                      fc.setFechaImpresion(fecha);
+                     fc.setFechaPago(fecha);
                      fc.setImporteTotal(importeTotal);
+                     fc.setImporteAbonado(importeTotal);
                      fc.setNroFactura(guiRemitoCte.nroRemito);
                      fc.setTipoFactura("RemitoCliente");
-                     fc.setCondVenta("");
+                     fc.setCondVenta("CONTADO");
                      fc.setIva("");
                      fc.setRemitoNro("");
                      fc.setIngrBrutos("");
                      fc.setLugar(loc);
+                     fc.setDiaBuscar(fecha.getDate());
                      Set items= new HashSet();
                 	 for(int k=0;k<productos.size();k++){
                 		 ItemFactura itNew = new ItemFactura();
@@ -147,8 +158,12 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 	 fc.setItems(items);
                 	 this.controlFactCliente.agregarFacturaClienteTotal(fc,"Remito",loc,0);
                      this.guiRemitoCte.dispose();
-                     new GUIReport(guiRemitoCte,4,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,Utils.nroFact(guiRemitoCte.nroRemito),fecha,
-                             dist, cliente,"","","","","",0,"",importeTotal);
+                     if(guiRemitoCte.getJCheckImprimir().isSelected()){
+                    	 new GUIReport(guiRemitoCte,4,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,Utils.nroFact(guiRemitoCte.nroRemito),fecha,
+                    			 dist, cliente,"","","","","",0,"",importeTotal);
+                     }
+                     MediadorRemitoCliente msprod = new MediadorRemitoCliente(guiPpalPadre);
+                     msprod.show();
                  }
              } catch(Exception ex) {
             	 Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. Confirmar Remito");
@@ -165,7 +180,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 if(cod.length()>0){
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
-                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar una Cantidad.");
                		}else if(pr.isPrecioKilos() && kilos.length()==0){
@@ -327,7 +342,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 			if(guiRemitoCte.codProd.size()==1){
 				String cod_Prod =(String) guiRemitoCte.codProd.elementAt(0);
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
-				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
 				this.guiRemitoCte.getJTFCodigo().setText(cod_Prod);
 				double importeProd=pr.getPrecioVentaSinIva();
     			double importeCIva=(importeProd*0.21)+importeProd;

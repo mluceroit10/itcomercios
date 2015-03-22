@@ -307,62 +307,96 @@ public class JasperReports{
 		}
 	}
 	
-	public static JasperPrint generarBalance(Vector entradas, Vector salidas,int nroPl,Date fecha,double saldoAnt,double saldoNuevo) throws Exception{//7
+	public static JasperPrint generarBalance(Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPl,Date fecha,double saldoAnt,double saldoNuevo) throws Exception{//7
 		JasperPrint jasperPrint;
 		try{
-			int capacidad=salidas.size();
-			if(entradas.size()>salidas.size())
-				capacidad=entradas.size();
-			double totalE=0;
-			double totalS=0;
-			Object[][] values = new Object[capacidad][4];;
-			for (int i = 0; i < capacidad; i++) {
+			double totalE=ingR;
+			double totalS=0; 
+			
+			int capacidad=movEntrada.size()+facts.size()+movSalidas.size()+6; //6=tit-rem-subt-esp-tit-sub
+			int indRenglon=0;
+			Object[][] values = new Object[capacidad][2];
+			Object[] tempTE = {"DETALLE DE ENTRADAS","TOTALES"};
+			values[indRenglon] = tempTE;
+			indRenglon++;
+			Object[] tempRemitos = {"Total de ventas",Utils.ordenarDosDecimales(ingR)};
+			values[indRenglon] = tempRemitos;
+			indRenglon++;
+			for (int i = 0; i < facts.size(); i++) {
 				String importeE="";
+				FacturaCliente fc= (FacturaCliente)facts.elementAt(i);
+				totalE +=fc.getImporteTotal();
+				importeE=Utils.ordenarDosDecimales(fc.getImporteTotal());
+				String nroFact="";
+				if(fc.getTipoFactura().compareTo("FacturaCliente-A")==0)
+					nroFact=" FC tipo A Nº: "+Utils.nroFact(fc.getNroFactura());
+				if(fc.getTipoFactura().compareTo("FacturaCliente-B")==0)
+					nroFact=" FC tipo B Nº: "+Utils.nroFact(fc.getNroFactura());
+				/*	if(mE.getFactura().getTipoFactura().compareTo("RemitoCliente")==0)
+				 nroFact=" RC Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());*/
+				Object[] tempE = {Utils.getStrUtilDate(fc.getFechaImpresion()) +" "+ fc.getCliente().getNombre()+nroFact,importeE};
+				values[indRenglon] = tempE;
+				indRenglon++;
+			}
+			
+			for (int i = 0; i < movEntrada.size(); i++) {
+				String importeE="";
+				MovimientoCaja mE=(MovimientoCaja)movEntrada.elementAt(i);
+				totalE +=mE.getImporte();
+				importeE=Utils.ordenarDosDecimales(mE.getImporte());
+				String nroFact="";
+				if(mE.isConFactura()) {
+					if(((Factura)mE.getFactura()).getTipoFactura().compareTo("FacturaCliente-A")==0)
+						nroFact=" FC tipo A Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());
+					if(((Factura)mE.getFactura()).getTipoFactura().compareTo("FacturaCliente-B")==0)
+						nroFact=" FC tipo B Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());
+				/*	if(mE.getFactura().getTipoFactura().compareTo("RemitoCliente")==0)
+						nroFact=" RC Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());*/
+				}
+				Object[] tempE = {Utils.getStrUtilDate(mE.getFecha()) +" "+ mE.getDescripcion() + nroFact,importeE};
+				values[indRenglon] = tempE;
+				indRenglon++;
+			}
+			
+			Object[] tempFE = {"TOTAL DE ENTRADAS",Utils.ordenarDosDecimales(Utils.redondear(totalE,2))};
+			values[indRenglon] = tempFE;
+			indRenglon++;
+			Object[] temp = {"",""};
+			values[indRenglon] = temp;
+			indRenglon++;
+			
+			Object[] tempTS = {"DETALLE DE SALIDAS","TOTALES"};
+			values[indRenglon] = tempTS;
+			indRenglon++;
+			for (int i = 0; i < movSalidas.size(); i++) {
 				String importeS="";
-				MovimientoCaja mE=new MovimientoCaja();
-				mE.setDescripcion("");
-				MovimientoCaja mS=new MovimientoCaja();
-				mS.setDescripcion("");
-				if(i<entradas.size()){
-					mE= (MovimientoCaja)entradas.elementAt(i);
-					totalE +=mE.getImporte();
-					importeE=Utils.ordenarDosDecimales(mE.getImporte());
-					String nroFact="";
-					if(mE.isConFactura()) {
-						if(((Factura)mE.getFactura()).getTipoFactura().compareTo("FacturaCliente-A")==0)
-							nroFact=" FC tipo A Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());
-						if(((Factura)mE.getFactura()).getTipoFactura().compareTo("FacturaCliente-B")==0)
-							nroFact=" FC tipo B Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());
-						if(mE.getFactura().getTipoFactura().compareTo("RemitoCliente")==0)
-							nroFact=" RC Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());
-					}
-					mE.setDescripcion(Utils.getStrUtilDate(mE.getFecha()) +" "+ mE.getDescripcion() + nroFact);
+				MovimientoCaja mS= (MovimientoCaja)movSalidas.elementAt(i);
+				totalS +=mS.getImporte();
+				importeS=Utils.ordenarDosDecimales(mS.getImporte());
+				String nroFact="";
+				if(mS.isConFactura()) {
+					if(mS.getFactura().getTipoFactura().compareTo("FacturaProveedor")==0)
+						nroFact=" FP Nº: "+Utils.nroFact(mS.getFactura().getNroFactura());
 				}
-				if(i<salidas.size()){
-					mS= (MovimientoCaja)salidas.elementAt(i);
-					totalS +=mS.getImporte();
-					importeS=Utils.ordenarDosDecimales(mS.getImporte());
-					String nroFact="";
-					if(mS.isConFactura()) {
-						if(mS.getFactura().getTipoFactura().compareTo("FacturaProveedor")==0)
-							nroFact=" FP Nº: "+Utils.nroFact(mS.getFactura().getNroFactura());
-					}
-					mS.setDescripcion(Utils.getStrUtilDate(mS.getFecha()) +" "+ mS.getDescripcion() + nroFact);
-				}
-				Object[] temp = {mE.getDescripcion(),
-						importeE,
-						mS.getDescripcion(),
-						importeS};
-				values[i] = temp;
+				Object[] tempS = {Utils.getStrUtilDate(mS.getFecha()) +" "+ mS.getDescripcion() + nroFact,importeS};
+				values[indRenglon] = tempS;
+				indRenglon++;
 			}
-			if(capacidad==0){
-				values = new Object[1][4];;
-				Object[] temp = {"NO se registraron INGRESOS ni EGRESOS para generar esta planilla","","",""};
-				values[0] = temp;
-			}
-			String[] fieldXml = { "Ingreso","MontoI","Egreso","MontoE"};
+			Object[] tempFS = {"TOTAL DE SALIDAS",Utils.ordenarDosDecimales(Utils.redondear(totalS,2))};
+			values[indRenglon] = tempFS;
+			
+			
+			String[] fieldXml = { "Descripcion","Monto"};
 			double suma1=saldoAnt+totalE;
-			Object[][] param = { {"NroPlanilla",String.valueOf(nroPl)},{"Fecha",Utils.getStrUtilDate(fecha)},{"TotalI" ,Utils.ordenarDosDecimales(totalE)},{"TotalE",Utils.ordenarDosDecimales(totalS)},{"SaldoAnt",Utils.ordenarDosDecimales(saldoAnt)},{"Suma1",Utils.ordenarDosDecimales(suma1)},{"SaldoFec",Utils.ordenarDosDecimales(suma1)},{"Suma2",Utils.ordenarDosDecimales(saldoNuevo)},{"Institucion",Utils.Institucion()}};
+			String fe = Utils.getStrUtilDate(fecha);
+			String dia=fe.substring(0,2);
+			String mes=fe.substring(3,5);
+			String anio=fe.substring(6,10);
+			Object[][] param = { {"NroPlanilla",String.valueOf(nroPl)},
+					{"Dia",dia},{"Mes",mes},{"Anio",anio},
+					{"TotalI" ,Utils.ordenarDosDecimales(totalE)},{"TotalE",Utils.ordenarDosDecimales(totalS)},
+					{"SaldoAnt",Utils.ordenarDosDecimales(saldoAnt)},{"Suma1",Utils.ordenarDosDecimales(suma1)},
+					{"Suma2",Utils.ordenarDosDecimales(saldoNuevo)},{"Institucion",Utils.Institucion()}};
 			jasperPrint=generarReporte("PlanillaDeCaja", param, fieldXml, values);
 			return jasperPrint;
 		}catch (Exception ex){
@@ -615,7 +649,7 @@ public class JasperReports{
 		}
 	}
 	
-	public static JasperPrint listarDeudaClientes(Comercio dist,String titulo, Vector cliente, Vector favor, Vector debe){//16 
+	public static JasperPrint listarDeudaClientes(Comercio dist,String titulo, Vector cliente,Vector fechas, Vector favor, Vector debe){//16 
 		JasperPrint jasperPrint;
 		try{
 			Date hoy= new Date();
@@ -626,12 +660,13 @@ public class JasperReports{
 			Object[][] values = new Object[cliente.size()][5];;
 			for (int i = 0; i < cliente.size(); i++) {
 				String cte = (String)cliente.elementAt(i);
+				String fuf = (String)fechas.elementAt(i);
 				String fav = (String)favor.elementAt(i);
 				String deb = (String)debe.elementAt(i);
-				Object[] temp = {cte,fav,deb};
+				Object[] temp = {cte,fuf,fav,deb};
 				values[i] = temp;
 			}
-			String[] fieldXml = {"Cliente","Favor","Debe"};
+			String[] fieldXml = {"Cliente","FUltFact","Favor","Debe"};
 			jasperPrint=generarReporte("ListadoDeudaclientes", param, fieldXml, values);
 			return jasperPrint;
 		}catch (Exception ex){

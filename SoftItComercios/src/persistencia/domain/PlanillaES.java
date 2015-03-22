@@ -13,6 +13,7 @@ public class PlanillaES {
 	private Date fechaP;
 	private double saldo;
 	private Set movimientosCaja = new HashSet();
+	private Set facturas = new HashSet();
 	private String periodo;
 	
 	public PlanillaES(){
@@ -65,6 +66,14 @@ public class PlanillaES {
 
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
+	}
+
+	public Set getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(Set facturas) {
+		this.facturas = facturas;
 	}
 	
 }

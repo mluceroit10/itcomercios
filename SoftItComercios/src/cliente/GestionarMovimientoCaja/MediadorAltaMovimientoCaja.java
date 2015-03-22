@@ -107,7 +107,7 @@ public class MediadorAltaMovimientoCaja implements ActionListener {
 		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Cliente-Tipo B")==0)) {
     		buscarFacturaCliente("FacturaCliente-B",Utils.getMes(hoy),Utils.getAnio(hoy));//discr tipo B
 		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Remito Cliente")==0)) {
-    		buscarRemitoCliente(Utils.getMes(hoy),Utils.getAnio(hoy));  //discr tipo Remito  
+    		buscarRemitoCliente(Utils.getDia(hoy),Utils.getMes(hoy),Utils.getAnio(hoy));  //discr tipo Remito  
 		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Proveedor")==0)) {
 			buscarFacturaProveedor(Utils.getMes(hoy),Utils.getAnio(hoy));  
     	} else if (source == guiMovimientoCaja.getJBCancelar()) {
@@ -163,11 +163,11 @@ public class MediadorAltaMovimientoCaja implements ActionListener {
         }
     }
     
-    private void buscarRemitoCliente(int mesL,int anioL) {
+    private void buscarRemitoCliente(int diaL,int mesL,int anioL) {
         if (medListarRemitosCte== null) {
-        	medListarRemitosCte= new MediadorListarRemitosCliente(this,mesL,anioL,guiMovimientoCaja);
+        	medListarRemitosCte= new MediadorListarRemitosCliente(this,diaL,mesL,anioL,guiMovimientoCaja);
         } else {
-        	medListarRemitosCte= new MediadorListarRemitosCliente(this,mesL,anioL,guiMovimientoCaja);
+        	medListarRemitosCte= new MediadorListarRemitosCliente(this,diaL,mesL,anioL,guiMovimientoCaja);
         }
         if (factura != null){
             this.guiMovimientoCaja.getJTFFactura().setText(Utils.nroFact(factura.getNroFactura()));

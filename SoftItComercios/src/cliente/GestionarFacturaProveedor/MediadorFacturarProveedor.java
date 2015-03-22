@@ -81,7 +81,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     		this.guiFacturarProv.getJTFCodigo().setText(cod_Prod);
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
-    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
     			this.guiFacturarProv.getJTFImporte().setText(String.valueOf(pr.getPrecioEntrada()));
     			if(pr.isPrecioKilos()){
     				this.guiFacturarProv.getJTFCantidad().setText("1");
@@ -125,6 +125,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 	 fp.setImporteAuxIva(impAuxiliar);
                 	 fp.setNroFactura(new Long(nroFact));
                      fp.setTipoFactura("FacturaProveedor");
+                     fp.setDiaBuscar(fecha.getDate());
                      Vector items = new Vector();
                 	 for(int k=0;k<productos.size();k++){
                 		 ItemFactura itNew = new ItemFactura();
@@ -164,7 +165,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 if(cod.length()>0){
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
-                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiFacturarProv,"Debe ingresar una Cantidad.");
                 		}else if(precioEntrada.length()==0){
@@ -268,7 +269,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
      	   String tipoPrecioEntr=(String) guiCP.getJCBTipoPrecioEntrada().getSelectedItem();
      	   
      	   try {
-     		   Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+     		   Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
      		   productos.add(pr);
      		   cambioPrecio.add("SI");
      		   prEntrConIva.add(tipoPrecioEntr);// poner q tipo de precioentr seleccionó
@@ -425,7 +426,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
 			if(guiFacturarProv.codProd.size()==1){
 				String cod_Prod =(String) guiFacturarProv.codProd.elementAt(0);
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
-				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
 				this.guiFacturarProv.getJTFCodigo().setText(cod_Prod);
 				this.guiFacturarProv.getJTFImporte().setText(String.valueOf(pr.getPrecioEntrada()));
     			

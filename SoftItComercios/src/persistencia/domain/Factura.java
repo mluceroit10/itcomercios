@@ -16,7 +16,7 @@ public class Factura {
 	private String lugar;
 	private boolean anulada;
 	private String periodo;
-	
+	private int diaBuscar;
 	private Set comprobantesPago=new HashSet();
 	
 	public Factura(){
@@ -101,6 +101,14 @@ public class Factura {
 
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
+	}
+
+	public int getDiaBuscar() {
+		return diaBuscar;
+	}
+
+	public void setDiaBuscar(int diaBuscar) {
+		this.diaBuscar = diaBuscar;
 	}
 	
 	

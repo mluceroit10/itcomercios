@@ -33,6 +33,7 @@ public class GUIGestionarProducto extends JDialog {
     private JButton jbCargar = null;    	private JButton jbModif = null;
     private JButton jbAceptar = null;   	private JButton jbBorrar = null;
     private JButton jbCancelar = null;		private JButton jbImprimir = null;
+    private JButton jbControlStock = null;
     private JLabel jlNombre = null;			private JLabel jlCodigo = null;
     private JTextField jtfNombre = null;	private JTextField jtfCodigo = null;
     public JScrollPane jspDatos = null;
@@ -101,6 +102,7 @@ public class GUIGestionarProducto extends JDialog {
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
             jpDatos.add(getJSPDatos(), null);
+            jpDatos.add(getJBControlStock(),null);
             jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
@@ -195,12 +197,25 @@ public class GUIGestionarProducto extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(10,20,680,310));
+                jspDatos.setBounds(new Rectangle(10,20,680,280));
                 jspDatos.setViewportView(getJTDatos());
+                
         }
         return jspDatos;
     }
 
+    public JButton getJBControlStock() {
+        if (jbControlStock == null) {
+        	jbControlStock = new JButton();
+        	jbControlStock.setName("Stock");
+        	jbControlStock.setText("Control Stock");
+            jbControlStock.setBounds(new Rectangle(570,305,120,25));
+            jbControlStock.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+            jbControlStock.setInputMap(0, map);
+        }
+        return jbControlStock;
+    }
+    
     public JTable getJTDatos() {
         if (jtDatos == null) {
             modTabla = new ModeloTabla(titulos, datos);
@@ -283,6 +298,7 @@ public class GUIGestionarProducto extends JDialog {
         jbImprimir.addActionListener(lis);
         jbBorrar.addActionListener(lis);
         jbCancelar.addActionListener(lis);
+        jbControlStock.addActionListener(lis);
     }
 
     public void setKeyListener(KeyListener lis) {

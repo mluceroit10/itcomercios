@@ -3,8 +3,8 @@ package common;
 public class RootAndIp {
 
 	/* Valores por default - verificar el config.ini */
-	private static String base="C:/SoftComercio/classes/";
-	private static String extras="C:/SoftComercio/extras";
+	private static String base="D:/desarrollos/it10-git/itcomercios/SoftItComercios/classes/";
+	private static String extras="D:/desarrollos/it10-git/itcomercios/SoftItComercios/extras";
 	private static String ip="localhost";
 	private static String url_db="jdbc:mysql://localhost/softcomerciodb";
 	private static String username = "root";

@@ -41,11 +41,13 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
 	private boolean flag=false;
 	private MediadorAltaMovimientoCaja medAltaMovCaja;
 	private boolean listarSinFact=false;
+	private int diaLI;
 	private int mesLI;
 	private int anioLI;
 	
-    public MediadorListarRemitosCliente(int mes, int anio,JFrame guiPadre) {
+    public MediadorListarRemitosCliente(int dia, int mes, int anio,JFrame guiPadre) {
     	try{
+    		diaLI=dia;
     		mesLI=mes;
     		anioLI=anio;
     		controlFactCte = new ControlFacturaCliente();
@@ -55,7 +57,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
         	Utils.manejoErrores(ex,"Error en MediadorListarRemitosCliente. Constructor");
         }
         listarSinFact=false;
-        this.guiTodasFactCte = new GUIListarRemitosCliente(mesLI,anioLI,guiPadre);
+        this.guiTodasFactCte = new GUIListarRemitosCliente(diaLI,mesLI,anioLI,guiPadre);
         this.guiTodasFactCte.setActionListeners(this);
         cargarDatos();
         this.guiTodasFactCte.setListSelectionListener(this);
@@ -64,9 +66,10 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
         Utils.show(guiTodasFactCte);
     }
     
-    public MediadorListarRemitosCliente(MediadorFacturarCliente medFC,int mes, int anio,JFrame guiPadre) {
+    public MediadorListarRemitosCliente(MediadorFacturarCliente medFC,int dia, int mes, int anio,JFrame guiPadre) {
     	this.medFecturarCliente = medFC;
     	try{
+    		diaLI=dia;
     		mesLI=mes;
     		anioLI=anio;
     		controlFactCte = new ControlFacturaCliente();
@@ -76,7 +79,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
         	Utils.manejoErrores(ex,"Error en MediadorListarRemitosCliente. Constructor");
         }
         listarSinFact=true;
-        this.guiTodasFactCte = new GUIListarRemitosCliente(mesLI,anioLI,guiPadre);
+        this.guiTodasFactCte = new GUIListarRemitosCliente(diaLI,mesLI,anioLI,guiPadre);
         this.guiTodasFactCte.setActionListeners(this);
         cargarDatos();
         this.guiTodasFactCte.setListSelectionListener(this);
@@ -84,9 +87,10 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
         Utils.show(guiTodasFactCte);
     }
     
-    public MediadorListarRemitosCliente(MediadorAltaMovimientoCaja medAMC,int mes, int anio,JDialog guiPadre) {
+    public MediadorListarRemitosCliente(MediadorAltaMovimientoCaja medAMC,int dia,int mes, int anio,JDialog guiPadre) {
     	this.medAltaMovCaja = medAMC;
     	try{
+    		diaLI=dia;
     		mesLI=mes;
     		anioLI=anio;
     		controlFactCte = new ControlFacturaCliente();
@@ -96,7 +100,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
         	Utils.manejoErrores(ex,"Error en MediadorListarRemitosCliente. Constructor");
         }
         listarSinFact=true;
-        this.guiTodasFactCte = new GUIListarRemitosCliente(mesLI,anioLI,guiPadre);
+        this.guiTodasFactCte = new GUIListarRemitosCliente(diaLI,mesLI,anioLI,guiPadre);
         this.guiTodasFactCte.setActionListeners(this);
         cargarDatos();
         this.guiTodasFactCte.setListSelectionListener(this);
@@ -140,7 +144,19 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     			Utils.manejoErrores(ex,"Error en MediadorListarRemitosCliente. ActionPerformed");
     		}
         }else if (source == guiTodasFactCte.getJBAnularFactura()){
-	         anularFactura();	
+	         anularFactura();
+        }else if (source == guiTodasFactCte.getJBCambiarPeriodo()){
+			String anioB = guiTodasFactCte.getJTFAnio().getText();
+			if(anioB.length()==0){
+				Utils.advertenciaUsr(guiTodasFactCte,"Por favor ingrese el Año.");
+			}else if(anioB.length()!=4){
+				Utils.advertenciaUsr(guiTodasFactCte,"El año debe ser un número de 4 dígitos.");
+			}else{
+				anioLI= Integer.parseInt(anioB);
+				mesLI = guiTodasFactCte.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
+				diaLI = guiTodasFactCte.getJCBDia().getSelectedIndex()+1; //para que el numero del indice de con el dia sumo 1
+				actualizarCampos();
+			} 	
         }else if (source == guiTodasFactCte.getJBCambiarPeriodo()){
         	String anioB = guiTodasFactCte.getJTFAnio().getText();
         	if(anioB.length()==0){
@@ -194,7 +210,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     
     public void cargarDatos() {
         try {
-            Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodo(listarSinFact,"RemitoCliente",mesLI,anioLI);
+            Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodo(listarSinFact,"RemitoCliente",diaLI,mesLI,anioLI);
             guiTodasFactCte.getJTFPeriodo().setText(mesLI+" - "+anioLI);
             guiTodasFactCte.datos = new Object[facturas.size()][guiTodasFactCte.titulos.length];
             int i = 0;
@@ -234,7 +250,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     
     public void actualizarCampos() {
     	 try {
-    		 Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(listarSinFact,"RemitoCliente",mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
+    		 Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(listarSinFact,"RemitoCliente",diaLI,mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
              guiTodasFactCte.datos = new Object[facturas.size()][guiTodasFactCte.titulos.length];
              for (int j = 0; j < facturas.size(); j++) {
             	 FacturaCliente r=(FacturaCliente)facturas.elementAt(j);

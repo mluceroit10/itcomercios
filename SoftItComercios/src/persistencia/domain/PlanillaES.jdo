@@ -20,7 +20,11 @@
 	<field name="periodo"> 
 		<extension vendor-name="triactive" key="length" value="max 255"/> 
 	</field>
-	
+	 <field name = "facturas">
+      	  <collection element-type = "FacturaCliente">
+      	    <extension vendor-name= "triactive" key ="owner-field" value="planilla" />
+      	  </collection>
+      </field>	  
       </class>
     </package>
 </jdo>

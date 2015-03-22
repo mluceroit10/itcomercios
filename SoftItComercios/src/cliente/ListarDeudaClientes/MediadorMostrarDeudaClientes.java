@@ -9,6 +9,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import persistencia.domain.Cliente;
 import persistencia.domain.Comercio;
 import persistencia.domain.Localidad;
 import server.GestionarCliente.ControlCliente;
@@ -24,25 +25,23 @@ public class MediadorMostrarDeudaClientes implements ActionListener,ListSelectio
     public ControlCliente controlCliente;
     public ControlFacturaCliente controlFactCte;
     private ControlComercio controlComercio;
-    private ControlLocalidad controlLocalidad;
     private GUIListarDeudaClientes guiDeudaCtes=null;
 	Vector todasFacturasCte= new Vector();
 	Vector clientes= new Vector();
+	Vector fechasUF = new Vector();
 	Vector saldoFavor = new Vector();
 	Vector adeudado= new Vector();
-	Localidad loc = null;
+	Localidad loc = null;  
 	
-	public MediadorMostrarDeudaClientes(Long idLoc,JDialog guiPadre) throws Exception {
+	public MediadorMostrarDeudaClientes(JDialog guiPadre) throws Exception {
        try{
     		controlCliente = new ControlCliente();
     		controlComercio = new ControlComercio();
     		controlFactCte = new ControlFacturaCliente();
-    		controlLocalidad = new ControlLocalidad();
         }catch(Exception ex){
         	Utils.manejoErrores(ex,"Error en MediadorListarDeudaCliente. Constructor");
         }
-        loc = controlLocalidad.buscarLocalidad(idLoc);
-        guiDeudaCtes = new GUIListarDeudaClientes(loc.getNombre(),guiPadre);
+        guiDeudaCtes = new GUIListarDeudaClientes(guiPadre);
         guiDeudaCtes.setActionListeners(this);
         guiDeudaCtes.setListSelectionListener(this);
     	cargarDatos();
@@ -55,9 +54,9 @@ public class MediadorMostrarDeudaClientes implements ActionListener,ListSelectio
     	if (source == guiDeudaCtes.getJBImprimir()) {
     		try{
     			if(cargarFilasSeleccionadas()){
-    				String titulo =" Estado de cuenta de los clientes de "+loc.getNombre();
+    				String titulo =" Estado de cuenta de los clientes ";
     				Comercio dist=controlComercio.obtenerComercio();
-    				new GUIReport(guiDeudaCtes,16,dist,titulo,clientes,saldoFavor,adeudado);
+    				new GUIReport(guiDeudaCtes,16,dist,titulo,clientes,fechasUF,saldoFavor,adeudado);
     			}
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorCuentaCliente. ActionPerformed");
@@ -82,14 +81,16 @@ public class MediadorMostrarDeudaClientes implements ActionListener,ListSelectio
     		}else{
     			result=true;
     			clientes= new Vector();
+    			fechasUF= new Vector();
     			saldoFavor = new Vector();
     			adeudado= new Vector();
     			int[] dattos=guiDeudaCtes.jtDatos.getSelectedRows();
     			
     			for(int i=0;i<dattos.length;i++){
     				clientes.add(guiDeudaCtes.datos[dattos[i]][0]);
-    				saldoFavor.add(guiDeudaCtes.datos[dattos[i]][1]);
-    				adeudado.add(guiDeudaCtes.datos[dattos[i]][2]);
+    				fechasUF.add(guiDeudaCtes.datos[dattos[i]][1]);
+    				saldoFavor.add(guiDeudaCtes.datos[dattos[i]][2]);
+    				adeudado.add(guiDeudaCtes.datos[dattos[i]][3]);
     	    	}
     		}
      	} catch (Exception ex){
@@ -101,24 +102,22 @@ public class MediadorMostrarDeudaClientes implements ActionListener,ListSelectio
     public void cargarDatos() {
     	try {
     		Vector clientesDeuda = new Vector();
-    		clientesDeuda = this.controlCliente.obtenerClientesDeLocalidadYDeuda(loc.getId());
-    		int ctes=clientesDeuda.size()/2;
-    		guiDeudaCtes.datos = new Object[ctes][guiDeudaCtes.titulos.length];
+    		clientesDeuda = this.controlCliente.obtenerClientesDeuda();
+    		guiDeudaCtes.datos = new Object[clientesDeuda.size()][guiDeudaCtes.titulos.length];
     		int i = 0;
-    		if(clientesDeuda!=null){
-    			for (int j = 0; j < clientesDeuda.size(); j=j+2) {
-    				String cte= (String) clientesDeuda.elementAt(j);
-    				String deuda = (String) clientesDeuda.elementAt(j+1);
-    				String saldoFavor="";
-    				String deudaCte="";
-    				if(deuda.indexOf("-")==-1)
-    					deudaCte=deuda;
-    				else
-    					saldoFavor=deuda.substring(1);
-    				Object[] temp = {cte,saldoFavor,deudaCte};
-    					guiDeudaCtes.datos[i] = temp;
-    					i++;
-    			}
+    		for (int j = 0; j < clientesDeuda.size(); j++) {
+    			Cliente cte = (Cliente) clientesDeuda.elementAt(j);
+    			String fecha = Utils.getStrUtilDate(cte.getFechaUF());
+    			double deuda = cte.getDeuda();
+				String saldoFavor="";
+				String deudaCte="";
+				if(deuda>0)// es nro positivo - adeuda
+					deudaCte=Utils.ordenarDosDecimales(deuda);
+				else					  //es nro negativo - a favor
+					saldoFavor=Utils.ordenarDosDecimales(-deuda);
+				
+    			Object[] temp = {cte.getNombre(),fecha,saldoFavor,deudaCte};
+    			guiDeudaCtes.datos[j] = temp;
     		}
     	}catch(Exception ex){
     		Utils.manejoErrores(ex,"Error en MediadorListarDeudaCliente. CargarDatos");

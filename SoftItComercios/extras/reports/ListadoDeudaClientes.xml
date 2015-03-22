@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <!DOCTYPE jasperReport
   PUBLIC "-//JasperReports//DTD Report Design//EN"
   "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
@@ -22,6 +22,7 @@
     <parameter name="FechaHoy" class="java.lang.String"/>
     <parameter name="Institucion" class="java.lang.String"/>
     <field name="Cliente" class="java.lang.String"/>
+    <field name="FUltFact" class="java.lang.String"/>
     <field name="Favor" class="java.lang.String"/>
     <field name="Debe" class="java.lang.String"/>
 
@@ -42,32 +43,39 @@
 		<textFieldExpression class="java.lang.String">$P{Titulo}</textFieldExpression>
 	  </textField>
 	<rectangle>
-		<reportElement x="10" y="40" width="505" height="20" forecolor="#331100" backcolor="#e8e8e8"/>
+		<reportElement x="0" y="40" width="535" height="20" forecolor="#331100" backcolor="#e8e8e8"/>
 		<graphicElement stretchType="NoStretch"/>
 	</rectangle>
-	<staticText>
-		<reportElement x="15" y="43" width="225" height="15" />
+<staticText>
+		<reportElement x="0" y="43" width="255" height="15" />
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
 		<text>CLIENTE</text>
 	</staticText>
 	<staticText>
-		<reportElement x="250" y="43" width="80" height="15" />
+		<reportElement x="255" y="43" width="70" height="15" />
+		<textElement textAlignment="Center" lineSpacing="Single">
+		<font reportFont="Arial_12"/>
+		</textElement>
+		<text>ULT. FACT.</text>
+	</staticText>
+	<staticText>
+		<reportElement x="325" y="43" width="70" height="15" />
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
 		<text>A FAVOR</text>
 	</staticText>
 <staticText>
-		<reportElement x="340" y="43" width="80" height="15" />
+		<reportElement x="395" y="43" width="70" height="15" />
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
 		<text>ADEUDA</text>
 	</staticText>
 	<staticText>
-		<reportElement x="430" y="43" width="80" height="15" />
+		<reportElement x="465" y="43" width="70" height="15" />
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
@@ -80,38 +88,49 @@
     </columnHeader>
     <detail>
 	<band height="20">
-	    <rectangle>
-                 <reportElement x="10" y="0" width="235" height="20" forecolor="#331100" backcolor="#ffffff"/>
-	         <graphicElement stretchType="NoStretch"/>
+	   <rectangle>
+                 <reportElement x="0" y="0" width="255" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
 	    </rectangle>
 	    <rectangle>
-                 <reportElement x="245" y="0" width="90" height="20" forecolor="#331100" backcolor="#ffffff"/>
-	         <graphicElement stretchType="NoStretch"/>
+                 <reportElement x="255" y="0" width="70" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
 	    </rectangle>
-                 <rectangle>
-                 <reportElement x="335" y="0" width="90" height="20" forecolor="#331100" backcolor="#ffffff"/>
-	         <graphicElement stretchType="NoStretch"/>
+	    <rectangle>
+                 <reportElement x="325" y="0" width="70" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
+	    </rectangle>
+            <rectangle>
+                 <reportElement x="395" y="0" width="70" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
 	    </rectangle>
              <rectangle>
-                 <reportElement x="425" y="0" width="90" height="20" forecolor="#331100" backcolor="#ffffff"/>
-	         <graphicElement stretchType="NoStretch"/>
+                 <reportElement x="465" y="0" width="70" height="20" forecolor="#331100" backcolor="#ffffff"/>
+	         <graphicElement stretchType="RelativeToBandHeight"/>
 	    </rectangle>
-	    <textField>
-		<reportElement x="15" y="2" width="225" height="18"/>
+ 	    <textField  isStretchWithOverflow="true">
+		<reportElement x="5" y="2" width="245" height="18"/>
 		<textElement textAlignment="Left"/>
 		<textFieldExpression class="java.lang.String">
 		$F{Cliente}
 		</textFieldExpression>
 	    </textField>
 	    <textField isStretchWithOverflow="true">
-		<reportElement x="250" y="2" width="80" height="18" />
+		<reportElement x="260" y="2" width="60" height="18" />
+		<textElement textAlignment="Right"/>
+		<textFieldExpression class="java.lang.String">
+		$F{FUltFact}
+		</textFieldExpression>
+	    </textField>
+	    <textField isStretchWithOverflow="true">
+		<reportElement x="330" y="2" width="60" height="18" />
 		<textElement textAlignment="Right"/>
 		<textFieldExpression class="java.lang.String">
 		$F{Favor}
 		</textFieldExpression>
 	    </textField>
 	    <textField isStretchWithOverflow="true">
-		<reportElement x="340" y="2" width="80" height="18" positionType="Float"/>
+		<reportElement x="400" y="2" width="60" height="18" positionType="Float"/>
 		<textElement textAlignment="Right"/>
                 <textFieldExpression class="java.lang.String">
 		$F{Debe}

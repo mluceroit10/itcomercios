@@ -19,4 +19,7 @@ public interface IControlCliente {
     public Vector obtenerMovimientosCajaDeFactura(Long id)throws Exception;
     public boolean clienteAsociado(Long id) throws Exception;
     public Vector obtenerFacturasDeCliente(String nombre)throws Exception;
+    public Cliente obtenerClienteDefecto() throws Exception ;
+    public Vector obtenerClientesDeuda()throws Exception;
+    
 }

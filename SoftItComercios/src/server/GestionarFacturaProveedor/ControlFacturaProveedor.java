@@ -36,6 +36,14 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 			Proveedor prov = cProv.buscarProveedorPersistentePorId(mp,p.getProveedor().getId());
 			mp.hacerPersistente(lnew);
 			lnew.setPeriodo(Utils.getMes(p.getFecha())+"-"+Utils.getAnio(p.getFecha()));
+			if(prov.getFechaUF()==null){
+				prov.setFechaUF(p.getFecha());
+			}else{
+				if(prov.getFechaUF().before(p.getFecha()))
+					prov.setFechaUF(p.getFecha());
+			}
+//			 SALDO PROVEEDOR CASO 1 ( + ) 
+			prov.setDeuda(Utils.redondear(prov.getDeuda() + p.getImporteTotal(),2));
 			for(int i=0;i<items.size();i++){
 				ItemFactura itF = (ItemFactura) items.elementAt(i);
 				ItemFactura itnew= Assemblers.crearItemFactura(itF);
@@ -75,6 +83,8 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 			Vector facturaProvCol=mp.getObjects(FacturaProveedor.class,filtro);
 			FacturaProveedor fp = (FacturaProveedor) facturaProvCol.elementAt(0);
 			fp.setAnulada(true);
+//			 SALDO PROVEEDOR CASO 2 ( - ) 
+			fp.getProveedor().setDeuda(Utils.redondear(fp.getProveedor().getDeuda()-fp.getImporteTotal(),2));
 			for(Iterator items=fp.getItems().iterator();items.hasNext();){
 				ItemFactura itF = (ItemFactura) items.next();
 				Producto pr= cProd.buscarProductoPersistentePorId(mp,itF.getProducto().getId());
@@ -82,6 +92,19 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 				pr.setStockActual(pr.getStockActual()-itF.getCantidad());
 				pr.setStockKilosAct(Utils.redondear(pr.getStockKilosAct()-itF.getKilos(),2));
 			}
+
+			if(fp.getFecha().equals(fp.getProveedor().getFechaUF())){
+				//Tengo que actualizar la fecha de la ultima facturacion
+				String filtroFP = " proveedor.id=="+fp.getProveedor().getId() +" && anulada==false && id!="+idF;
+    			Vector facturasProveedor= mp.getObjectsOrdered(FacturaProveedor.class,filtroFP,"fecha descending");
+    			if(facturasProveedor.size()>0){
+    				FacturaProveedor b = (FacturaProveedor)facturasProveedor.elementAt(0);
+    				fp.getProveedor().setFechaUF(Utils.crearFecha(b.getFecha()));
+    			}else{
+    				fp.getProveedor().setFechaUF(null);
+    			}
+			}
+			
 			mp.commit();
 		} catch(Exception e) {
 			e.printStackTrace();

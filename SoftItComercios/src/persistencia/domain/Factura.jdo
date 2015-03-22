@@ -34,7 +34,7 @@
 	<field name="periodo"> 
 		<extension vendor-name="triactive" key="length" value="max 255"/> 
 	</field>
-	
+		<field name="diaBuscar" />
 	 </class>
     </package>
 </jdo>	

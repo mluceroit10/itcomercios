@@ -49,6 +49,12 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 			Cliente cte = cCte.buscarClientePersistentePorId(mp,fc.getCliente().getId());
 			mp.hacerPersistente(lnew);
 			lnew.setPeriodo(Utils.getMes(fc.getFechaImpresion())+"-"+Utils.getAnio(fc.getFechaImpresion()));
+			if(cte.getFechaUF()==null){
+				cte.setFechaUF(fc.getFechaImpresion());
+			}else{
+				if(cte.getFechaUF().before(fc.getFechaImpresion()))
+						cte.setFechaUF(fc.getFechaImpresion());
+			}
 			for(Iterator items=fc.getItems().iterator();items.hasNext();){
 				ItemFactura itF = (ItemFactura) items.next();
 				ItemFactura itnew= Assemblers.crearItemFactura(itF);
@@ -94,7 +100,7 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 			}
 			lnew.setCliente(cte);
 			if(fc.getCondVenta().compareTo("CONTADO")==0){
-				MovimientoCaja mimovDTO = new MovimientoCaja();
+			/*	MovimientoCaja mimovDTO = new MovimientoCaja();
 				mimovDTO.setCodigo(nroMC);
 				mimovDTO.setFecha(fc.getFechaImpresion());
 				mimovDTO.setImporte(fc.getImporteTotal());
@@ -110,8 +116,14 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 				mimovDTO.setPeriodo(Utils.getMes(fc.getFechaImpresion())+"-"+Utils.getAnio(fc.getFechaImpresion()));
 				mp.hacerPersistente(mimovDTO);
 				lnew.setFechaPago(fc.getFechaImpresion());
-				lnew.setImporteAbonado(fc.getImporteTotal());
+				lnew.setImporteAbonado(fc.getImporteTotal());*/
+			}else{
+				// SALDO CLIENTE CASO 1 y 2 y la omision del 5  ( + ) 
+				cte.setDeuda(Utils.redondear(cte.getDeuda() + fc.getImporteTotal(),2));
 			}
+			if(rem!=null){		//Estoy facturando un remito
+				rem.setRemitoNro("Facturado");
+			} 
 			mp.commit();
 		} finally {
 			mp.rollback();
@@ -128,12 +140,25 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 			Vector FacturaClienteCol=mp.getObjects(FacturaCliente.class,filtro);
 				FacturaCliente fc = (FacturaCliente) FacturaClienteCol.elementAt(0);
 				fc.setAnulada(true);
+//				 SALDO CLIENTE CASO 3 y 4 ( - ) 
+				fc.getCliente().setDeuda(Utils.redondear(fc.getCliente().getDeuda()-fc.getImporteTotal(),2));
 				for(Iterator items=fc.getItems().iterator();items.hasNext();){
 					ItemFactura itF = (ItemFactura) items.next();
 					Producto pr= cProd.buscarProductoPersistentePorId(mp,itF.getProducto().getId());
 					// incremento el stock por cada producto de la factura que haya sido anulado
 						pr.setStockActual(pr.getStockActual()+itF.getCantidad());
 						pr.setStockKilosAct(Utils.redondear(pr.getStockKilosAct()+itF.getKilos(),2));
+				}
+				if(fc.getFechaImpresion().equals(fc.getCliente().getFechaUF())){
+					//Tengo que actualizar la fecha de la ultima facturacion
+					String filtroFC = " cliente.id=="+fc.getCliente().getId() +" && anulada==false && id!="+idF;
+	    			Vector FacturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtroFC,"fechaImpresion descending");
+	    			if(FacturaClientes.size()>0){
+	    				FacturaCliente b = (FacturaCliente)FacturaClientes.elementAt(0);
+	    				fc.getCliente().setFechaUF(Utils.crearFecha( b.getFechaImpresion()));
+	    			}else{
+	    				fc.getCliente().setFechaUF(null);
+	    			}
 				}
 				mp.commit();
 		} catch(Exception e) {
@@ -158,22 +183,20 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 		return existen;
 	}
 		
-	public Vector obtenerFacturaClientesPeriodo(boolean listarRemitosSinFact,String tipoF,int mesLI,int anioLI)throws Exception{
+	public Vector obtenerFacturaClientesPeriodo(boolean listarRemitosSinFact,String tipoF,int diaLI,int mesLI,int anioLI)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Vector FacturaClientes2 = new Vector();
 		try {
 			mp.initPersistencia();
 			String filtro = "tipoFactura==\""+tipoF+"\" && periodo==\""+mesLI+"-"+anioLI+"\"";
+			if(diaLI!=0)
+				filtro +=" && diaBuscar=="+diaLI;
 			Vector FacturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
 			for(int i=0; i<FacturaClientes.size();i++){
 				FacturaCliente b = (FacturaCliente)FacturaClientes.elementAt(i);
 				boolean agregar=true;
 				if(listarRemitosSinFact){
-					//existeFacturaDeRemito
-					String filtroRem = " remitoNro == \"" +b.getNroFactura()+ "\"";
-					Vector facturaClienteRem= mp.getObjects(FacturaCliente.class,filtroRem);
-	    			if (facturaClienteRem.size()==1)
-	    				agregar=false;
+					filtro +=" && remitoNro==\"\" && anulada==false";
 				}	
 				if(agregar){
 					FacturaCliente a= Assemblers.crearFacturaCliente(b);
@@ -202,22 +225,20 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 		return FacturaClientes2;
 	}
 	
-	public Vector obtenerFacturaClientesPeriodoFiltros(boolean listarRemitosSinFact,String tipoF,int mesLI,int anioLI,String fecha,String numero,String cliente)throws Exception{
+	public Vector obtenerFacturaClientesPeriodoFiltros(boolean listarRemitosSinFact,String tipoF,int diaLI,int mesLI,int anioLI,String fecha,String numero,String cliente)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Vector FacturaClientes2 = new Vector();
 		try {
 			mp.initPersistencia();
 			String filtro = "tipoFactura==\""+tipoF+"\"  && cliente.nombre.toLowerCase().indexOf(\""+cliente.toLowerCase()+"\")>= 0 && periodo==\""+mesLI+"-"+anioLI+"\"";
+			if(diaLI!=0)
+				filtro +=" && diaBuscar=="+diaLI;
 			Vector FacturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
 			for(int i=0; i<FacturaClientes.size();i++){
 				FacturaCliente b = (FacturaCliente)FacturaClientes.elementAt(i);
 				boolean agregar=true;
 				if(listarRemitosSinFact){
-					//existeFacturaDeRemito
-					String filtroRem = " remitoNro == \"" +b.getNroFactura()+ "\"";
-					Vector facturaClienteRem= mp.getObjects(FacturaCliente.class,filtroRem);
-	    			if (facturaClienteRem.size()==1)
-	    				agregar=false;
+					filtro +=" && remitoNro==\"\" && anulada==false";
 				}	
 				if(agregar && (Utils.comienza(String.valueOf(b.getNroFactura()),numero) && 
 						 Utils.comienza(common.Utils.getStrUtilDate(b.getFechaImpresion()), fecha))){

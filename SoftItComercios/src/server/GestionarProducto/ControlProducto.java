@@ -157,7 +157,7 @@ public class ControlProducto implements IControlProducto{
 		return a;
 	}
 	
-	public Producto buscarProductoCodigo(int codigo) throws Exception {
+	public Producto buscarProductoCodigo(Long codigo) throws Exception {
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Producto a = new Producto();
 		try {

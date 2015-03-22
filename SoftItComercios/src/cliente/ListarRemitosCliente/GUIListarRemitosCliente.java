@@ -42,6 +42,7 @@ public class GUIListarRemitosCliente extends JDialog {
     public String[] titulos = {"ID","Fecha","Nro de Remito","Cliente","Importe Total", "Importe Abonado", "Fecha de Pago","Cod. Movs. Caja","Anulada"};
     public Object[][] datos;
 	private JButton jbAnular;
+	private int diaLI;
 	private int mesLI;
 	private int anioLI;
 	private JLabel jlPeriodo= null;			    private JTextField jtfPeriodo = null;
@@ -49,9 +50,12 @@ public class GUIListarRemitosCliente extends JDialog {
     private JLabel jlMes = null;				private JComboBox jcbMes;
 	private JLabel jlAnio = null;				private JTextField jtfAnio;
 	private InputMap map = new InputMap();
-    	
-    public GUIListarRemitosCliente(int mes,int anio,JFrame guiPadre) {
+	private JLabel jlDia;
+	private JComboBox jcbDia;
+	
+    public GUIListarRemitosCliente(int dia,int mes,int anio,JFrame guiPadre) {
     	super(guiPadre);
+    	diaLI=dia;
     	mesLI=mes;
 		anioLI=anio;
 		datos = new Object[0][titulos.length];
@@ -65,8 +69,9 @@ public class GUIListarRemitosCliente extends JDialog {
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "released");
     }
     
-    public GUIListarRemitosCliente(int mes,int anio,JDialog guiPadre) {
+    public GUIListarRemitosCliente(int dia,int mes,int anio,JDialog guiPadre) {
     	super(guiPadre);
+    	diaLI=dia;
     	mesLI=mes;
 		anioLI=anio;
 		datos = new Object[0][titulos.length];
@@ -318,7 +323,7 @@ public class GUIListarRemitosCliente extends JDialog {
     public JButton getJBCambiarPeriodo() {
 		if (jbCambiarPeriodo == null) {
 			jbCambiarPeriodo = new JButton();
-			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(450,20,115,20));
+			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(550,20,115,20));
 			jbCambiarPeriodo.setText("Cambiar Período");
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
@@ -330,17 +335,61 @@ public class GUIListarRemitosCliente extends JDialog {
     public JTextField getJTFPeriodo() {
 		if (jtfPeriodo == null) {
 			jtfPeriodo = new JTextField();
-			jtfPeriodo.setBounds(new java.awt.Rectangle(85,20,70,20));
+			jtfPeriodo.setBounds(new java.awt.Rectangle(85,20,90,20));
 			jtfPeriodo.setDisabledTextColor(Utils.colorTextoDisabled);
 			jtfPeriodo.setEnabled(false);
 		}
 		return jtfPeriodo;
 	}
     
+
+    public JComboBox getJCBDia() {
+		if (jcbDia == null) {
+			jcbDia = new JComboBox();
+			jcbDia.setBounds(new java.awt.Rectangle(255,20,60,20));
+			jcbDia.setBackground(new Color(255,255,255));
+			jcbDia.setForeground(java.awt.Color.black);
+			
+			jcbDia.addItem("01");
+			jcbDia.addItem("02");
+			jcbDia.addItem("03");
+			jcbDia.addItem("04");
+			jcbDia.addItem("05");
+			jcbDia.addItem("06");
+			jcbDia.addItem("07");
+			jcbDia.addItem("08");
+			jcbDia.addItem("09");
+			jcbDia.addItem("10");
+			jcbDia.addItem("11");
+			jcbDia.addItem("12");
+			jcbDia.addItem("13");
+			jcbDia.addItem("14");
+			jcbDia.addItem("15");
+			jcbDia.addItem("16");
+			jcbDia.addItem("17");
+			jcbDia.addItem("18");
+			jcbDia.addItem("19");
+			jcbDia.addItem("20");
+			jcbDia.addItem("21");
+			jcbDia.addItem("22");
+			jcbDia.addItem("23");
+			jcbDia.addItem("24");
+			jcbDia.addItem("25");
+			jcbDia.addItem("26");
+			jcbDia.addItem("27");
+			jcbDia.addItem("28");
+			jcbDia.addItem("29");
+			jcbDia.addItem("30");
+			jcbDia.addItem("31");
+			jcbDia.setSelectedIndex(diaLI-1);
+		}
+		return jcbDia;
+	}
+    
     public JComboBox getJCBMes() {
 		if (jcbMes == null) {
 			jcbMes = new JComboBox();
-			jcbMes.setBounds(new java.awt.Rectangle(255,20,60,20));
+			jcbMes.setBounds(new java.awt.Rectangle(355,20,60,20));
 			jcbMes.setBackground(new Color(255,255,255));
 			jcbMes.setForeground(java.awt.Color.black);
 			jcbMes.addItem("01");
@@ -363,7 +412,7 @@ public class GUIListarRemitosCliente extends JDialog {
 	public JTextField getJTFAnio() {
 		if (jtfAnio == null) {
 			jtfAnio = new JTextField();
-			jtfAnio.setBounds(new java.awt.Rectangle(370,20,60,20));
+			jtfAnio.setBounds(new java.awt.Rectangle(470,20,60,20));
 			jtfAnio.setDocument(new LimitadorNroMax(jtfAnio,4));
 			jtfAnio.setText(String.valueOf(anioLI));
 		}
@@ -374,20 +423,25 @@ public class GUIListarRemitosCliente extends JDialog {
 		jlPeriodo = new JLabel("Período:");
 		jlPeriodo.setHorizontalAlignment(JLabel.RIGHT);
 		jlPeriodo.setBounds(new Rectangle(20,20,60,20));
+		jlDia = new JLabel("Dia:");
+		jlDia.setBounds(new Rectangle(200,20,50,20));
+		jlDia.setHorizontalAlignment(SwingConstants.RIGHT);
+		
 		jlMes = new JLabel("Mes:");
-		jlMes.setBounds(new Rectangle(200,20,50,20));
+		jlMes.setBounds(new Rectangle(300,20,50,20));
 		jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
 		jlAnio = new JLabel("Año:");
-		jlAnio.setBounds(new Rectangle(325,20,40,20));
+		jlAnio.setBounds(new Rectangle(425,20,40,20));
 		jlAnio.setHorizontalAlignment(SwingConstants.RIGHT);
 		jpDatos.add(jlPeriodo);
+		jpDatos.add(jlDia);
 		jpDatos.add(jlMes);
 		jpDatos.add(jlAnio);
 		jpDatos.add(getJTFPeriodo());
+		jpDatos.add(getJCBDia());
 		jpDatos.add(getJCBMes());
 		jpDatos.add(getJTFAnio());
 		jpDatos.add(getJBCambiarPeriodo());
 	}
-	
 }
 

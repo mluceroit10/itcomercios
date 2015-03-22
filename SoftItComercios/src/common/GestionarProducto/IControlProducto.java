@@ -14,7 +14,7 @@ public interface IControlProducto {
 	public Vector obtenerProductosFiltros(String cod,String nombre)throws Exception;
 	public boolean existeProductoCodigo(Long codigo) throws Exception;
 	public Producto buscarProducto(Long id) throws Exception;
-	public Producto buscarProductoCodigo(int codigo) throws Exception;
+	public Producto buscarProductoCodigo(Long codigo) throws Exception;
 	public boolean puedoEditar(Producto dto,Producto modificado)throws Exception;
 	public Producto buscarProductoPersistentePorId(ManipuladorPersistencia mp,Long id) throws Exception;
 	public Vector obtenerStockTodosProductos(String atOrden)throws Exception;

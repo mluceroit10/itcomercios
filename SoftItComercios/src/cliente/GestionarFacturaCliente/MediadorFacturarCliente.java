@@ -114,7 +114,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     		this.guiFacturarCte.getJTFCodigo().setText(cod_Prod);
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
-    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
     			double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
     				double importeCIva=(importeProd*0.21)+importeProd;
@@ -181,10 +181,15 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     					fc.setNroFactura(guiFacturarCte.nroFactura);
     					fc.setTipoFactura("FacturaCliente-"+tipo);
     					fc.setCondVenta(condVta);
+    					if(condVta.compareTo("CONTADO")==0){
+    						fc.setFechaPago(fecha);
+    	                    fc.setImporteAbonado(importeTotal);
+    					}
     					fc.setIva(iva);
     					fc.setRemitoNro(remitoNro);
     					fc.setIngrBrutos(ingrBrutos);
     					fc.setLugar(loc);
+    					fc.setDiaBuscar(fecha.getDate());
     					Set items= new HashSet();
     					for(int k=0;k<productos.size();k++){
     						ItemFactura itNew = new ItemFactura();
@@ -225,7 +230,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 if(cod.length()>0){
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
-                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar una Cantidad.");
                 		}else if(pr.isPrecioKilos() && kilos.length()==0){
@@ -348,6 +353,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
         this.guiFacturarCte.getJTFIngrBrutos().setText(remito.getCliente().getIngBrutosCl());
         this.guiFacturarCte.getJCTipoIva().setText(remito.getCliente().getIvaCl());
         this.guiFacturarCte.getJTFRemitoNro().setText(String.valueOf(remito.getNroFactura()));
+        this.guiFacturarCte.getJCCondVta().setEnabled(false);
        	java.util.Set items=remito.getItems();
 		for(Iterator j=items.iterator();j.hasNext();){
 			ItemFactura pr= (ItemFactura) j.next();
@@ -388,7 +394,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     	guiFacturarCte.actualizarNroFactura();
     	guiFacturarCte.getJTFBusqueda().setEnabled(false);
 		guiFacturarCte.getJBEliminarProd().setEnabled(false);
-		guiFacturarCte.getJBBuscarC().setEnabled(false);
+		//guiFacturarCte.getJBBuscarC().setEnabled(false);
     	}
     }
     
@@ -462,7 +468,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 			if(guiFacturarCte.codProd.size()==1){
 				String cod_Prod =(String) guiFacturarCte.codProd.elementAt(0);
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
-				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(Integer.parseInt(cod));
+				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
 				this.guiFacturarCte.getJTFCodigo().setText(cod_Prod);
 				double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
@@ -496,9 +502,10 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 
 	private void buscarRemito() throws Exception {
 		java.util.Date hoy= new java.util.Date();
+		int diaL=Utils.getDia(hoy);
 		int mesL=Utils.getMes(hoy);
 		int anioL=Utils.getAnio(hoy);
-		new MediadorListarRemitosCliente(this,mesL,anioL,guiPadreCtrl);
+		new MediadorListarRemitosCliente(this,diaL,mesL,anioL,guiPadreCtrl);
 		if (remito != null){
         	this.cargarRemito(remito);
         }

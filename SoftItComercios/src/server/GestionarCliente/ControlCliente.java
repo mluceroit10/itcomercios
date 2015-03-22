@@ -71,6 +71,8 @@ public class ControlCliente implements IControlCliente{
 			cliente.setIngBrutosCl(modificado.getIngBrutosCl());
 			cliente.setIvaCl(modificado.getIvaCl());
 			cliente.setLocalidad(loc);
+			cliente.setDeuda(modificado.getDeuda());
+			cliente.setFechaUF(modificado.getFechaUF());
 			mp.commit();
 		} finally {
 			mp.rollback();
@@ -125,6 +127,29 @@ public class ControlCliente implements IControlCliente{
 				Localidad loc= Assemblers.crearLocalidad(b.getLocalidad());
 				a.setLocalidad(loc);
 				Clientes2.add(a);
+			}
+			mp.commit();
+		}  finally{
+			mp.rollback();
+		}
+		return Clientes2;
+	}
+	
+	public Vector obtenerClientesDeuda()throws Exception{
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		Vector Clientes2 = new Vector();
+		try {
+			mp.initPersistencia();
+			Vector clientes=null;
+			clientes = mp.getAllOrdered(Cliente.class,"fechaUF ascending");
+			for(int i=0; i<clientes.size();i++){
+				Cliente b = (Cliente)clientes.elementAt(i);
+				if(!this.esClienteDefecto(b)){
+					Cliente a= Assemblers.crearCliente(b);
+					Localidad loc= Assemblers.crearLocalidad(b.getLocalidad());
+					a.setLocalidad(loc);
+					Clientes2.add(a);
+				}
 			}
 			mp.commit();
 		}  finally{
@@ -301,4 +326,33 @@ public class ControlCliente implements IControlCliente{
 		}
 		return FacturaClientes2;
 	}	
+	
+	public boolean esClienteDefecto(Cliente c) throws Exception {
+		if (c.getNombre().compareTo("-")==0 && c.getIvaCl().compareTo("Consumidor Final")==0){
+			return true;
+		}
+		return false;
+	}
+	
+	public Cliente obtenerClienteDefecto() throws Exception {
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		Cliente a = new Cliente();
+		try {
+			mp.initPersistencia();
+			String filtro = "nombre == \"-\" && ivaCl==\"Consumidor Final\" ";
+			Collection ClienteCol= mp.getObjects(Cliente.class,filtro);
+			if (ClienteCol.size()>=1){
+				Cliente b = (Cliente)(ClienteCol.toArray())[0];
+				a= Assemblers.crearCliente(b);
+				Localidad loc= Assemblers.crearLocalidad(b.getLocalidad());
+				a.setLocalidad(loc);
+				Provincia prov= Assemblers.crearProvincia(b.getLocalidad().getProvincia());
+				loc.setProvincia(prov);
+			}
+			mp.commit();
+		} finally {
+			mp.rollback();
+		}
+		return a;
+	}
 }

@@ -26,6 +26,8 @@ public class Assemblers {
 		cte.setDireccion(objD.getDireccion());
 		cte.setIvaCl(objD.getIvaCl());
 		cte.setIngBrutosCl(objD.getIngBrutosCl());
+		cte.setDeuda(objD.getDeuda());
+		cte.setFechaUF(objD.getFechaUF());
 		return cte;
 	}
 	
@@ -60,6 +62,7 @@ public class Assemblers {
 		fc.setIva(objD.getIva());
 		fc.setRemitoNro(objD.getRemitoNro());
 		fc.setIngrBrutos(objD.getIngrBrutos());
+		fc.setDiaBuscar(objD.getDiaBuscar());
 		return fc;
 	}
 	
@@ -73,6 +76,7 @@ public class Assemblers {
 		fp.setLugar(objD.getLugar());
 		fp.setAnulada(objD.isAnulada());
 		fp.setFecha(objD.getFecha());
+		fp.setDiaBuscar(objD.getDiaBuscar());
 		return fp;
 	}
 	
@@ -144,6 +148,8 @@ public class Assemblers {
 		pr.setNombre(objD.getNombre());
 		pr.setTelefono(objD.getTelefono());
 		pr.setDireccion(objD.getDireccion());
+		pr.setDeuda(objD.getDeuda());
+		pr.setFechaUF(objD.getFechaUF());
 		return pr;
 	}
 	

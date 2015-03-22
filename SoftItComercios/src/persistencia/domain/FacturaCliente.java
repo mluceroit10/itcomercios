@@ -12,6 +12,7 @@ public class FacturaCliente extends Factura{
 	private String remitoNro;
 	private String ingrBrutos;
 	private Cliente cliente=null;
+	private PlanillaES planilla;
 	
 	public Cliente getCliente() {
 		return cliente;
@@ -60,6 +61,12 @@ public class FacturaCliente extends Factura{
 	}
 	public void setIngrBrutos(String ingrBrutos) {
 		this.ingrBrutos = ingrBrutos;
+	}
+	public PlanillaES getPlanilla() {
+		return planilla;
+	}
+	public void setPlanilla(PlanillaES planilla) {
+		this.planilla = planilla;
 	}
 	
 }

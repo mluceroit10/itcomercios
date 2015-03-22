@@ -19,6 +19,7 @@ import server.GestionarCliente.ControlCliente;
 import cliente.CuentaCliente.MediadorCuentaCliente;
 import cliente.GestionarFacturaCliente.MediadorFacturarCliente;
 import cliente.GestionarRemitoCliente.MediadorRemitoCliente;
+import cliente.ListarDeudaClientes.MediadorMostrarDeudaClientes;
 import cliente.Principal.GUIReport;
 
 import common.Utils;
@@ -117,6 +118,8 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
            eliminar();
         } else if ((((Component)e.getSource()).getName().compareTo("Modificar")) == 0){
             modificar();
+        } else if ((((Component)e.getSource()).getName().compareTo("Deudas")) == 0){
+            mostrarDeudas();
         } else if ((((Component)e.getSource()).getName().compareTo("Imprimir")) == 0){
         	try{
         		Vector clientes ;
@@ -285,4 +288,15 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
 		return c;
 		
 	}
+	
+
+	public void mostrarDeudas(){
+    	try {
+    		MediadorMostrarDeudaClientes msprod = new MediadorMostrarDeudaClientes(guiCliente);
+	//		msprod.show();
+    	}catch(Exception ex){
+    		Utils.manejoErrores(ex,"Error en MediadorGestionarCliente. Modificar");
+    	}
+    }
+   
 }

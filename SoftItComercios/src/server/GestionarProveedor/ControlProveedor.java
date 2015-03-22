@@ -69,6 +69,8 @@ public class ControlProveedor implements IControlProveedor{
 			proveedor.setDireccion(modificado.getDireccion());
 			proveedor.setCodigo(modificado.getCodigo());
 			proveedor.setLocalidad(loc);
+			proveedor.setDeuda(modificado.getDeuda());
+			proveedor.setFechaUF(modificado.getFechaUF());
 			mp.commit();
 		} finally {
 			mp.rollback();

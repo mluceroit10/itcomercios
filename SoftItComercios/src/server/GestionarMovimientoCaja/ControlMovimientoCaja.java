@@ -44,8 +44,14 @@ public class ControlMovimientoCaja implements IControlMovimientoCaja{
 						FacturaCliente fcMod= (FacturaCliente) fact;
 						fcMod.setFechaPago(mc.getFecha());
     	    			fcMod.setImporteAbonado(mc.getImporte()+fcMod.getImporteAbonado());
+//    	    			 SALDO CLIENTE CASO 8 (-)
+    	    			fcMod.getCliente().setDeuda(Utils.redondear(fcMod.getCliente().getDeuda()-mc.getImporte(),2));
 					}
-					
+					if(mc.getTipoFactura().compareTo("Factura Proveedor")==0){
+						FacturaProveedor fpMod= (FacturaProveedor) fact;
+						// SALDO PROVEEDOR CASO 5 (-)
+    	    			fpMod.getProveedor().setDeuda(Utils.redondear(fpMod.getProveedor().getDeuda()-mc.getImporte(),2));
+					}
 				}
 				mp.commit();
 			} finally {
@@ -77,6 +83,15 @@ public class ControlMovimientoCaja implements IControlMovimientoCaja{
 						fecha = Utils.crearFecha2(mcAnt.getFecha());
 					}
 					fact.setFechaPago(fecha);
+					 //SALDO CLIENTE CASO 9 (-)
+						fact.getCliente().setDeuda(Utils.redondear(fact.getCliente().getDeuda()+mcaja.getImporte(),2));
+				}
+				if(mcaja.getTipoFactura().compareTo("Factura Proveedor")==0){
+					String filtroF = "id == " +mcaja.getFactura().getId();
+					Vector facturaClienteCol=mp.getObjectsSubc(Factura.class,filtroF);
+					FacturaProveedor fact =(FacturaProveedor) facturaClienteCol.elementAt(0);
+					// SALDO PROVEEDOR CASO 6 (-)
+					fact.getProveedor().setDeuda(Utils.redondear(fact.getProveedor().getDeuda()+mcaja.getImporte(),2));
 				}
 			}
 			mp.borrar(mcaja);

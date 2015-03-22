@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
@@ -17,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import persistencia.domain.FacturaCliente;
 import persistencia.domain.MovimientoCaja;
 import persistencia.domain.PlanillaES;
 import server.GestionarMovimientoCaja.ControlMovimientoCaja;
@@ -68,7 +68,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
                 	else anterior.setSaldo(0);
                  	Vector entr = this.entradas(miPESDto.getMovimientosCaja());
                 	Vector sal = this.salidas(miPESDto.getMovimientosCaja());
-                	new GUIReport(guiImprimirPlanillaES,7,entr,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
+             //   	new GUIReport(guiImprimirPlanillaES,7,entr,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
                 }
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorGestionarPlanillaES. ActionPerformed");
@@ -81,15 +81,19 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     			PlanillaES miplDTO = new PlanillaES();
     			miplDTO.setNroPlanilla(ultima.getNroPlanilla()+1);
     			miplDTO.setFecha(fecha);
-    			Vector mov=controlRealizarPlanillaES.obtenerMovimientosCajaParaPlanilla(ultima.getFecha(),fecha);
-    			Set s = new HashSet();
-    			s.addAll(mov);
-    			miplDTO.setMovimientosCaja(s);
-    			miplDTO.setSaldo(generarSaldo(mov,ultima.getSaldo()));
-    			this.controlRealizarPlanillaES.agregarPlanillaESTotal(miplDTO,mov);
+    			Vector mov=controlRealizarPlanillaES.obtenerMovimientosCajaParaPlanilla(fecha);
+				Vector remitos=controlRealizarPlanillaES.obtenerRemitosClienteParaPlanilla(fecha); //aca se deben obtener solo remitos no facturados
+				Vector fact=controlRealizarPlanillaES.obtenerFacturasClienteParaPlanilla(fecha);//aca se deben obtener solo fact cte de pago contado, incluir fact de remito
+				double egrCD=this.totalEgresosMovs(mov);
+				double ingFM=this.totalIngresosFactsMovs(fact,mov);
+				double ingR=this.totalIngresosRemitos(remitos);
+				double ingCD=Utils.redondear(ingFM+ingR,2);
+				double impCDiaria=generarSaldoCaja(ultima.getSaldo(),ingCD,egrCD);
+    			miplDTO.setSaldo(impCDiaria);
+    			this.controlRealizarPlanillaES.agregarPlanillaESTotal(miplDTO,mov,fact,remitos);
     			Vector entr = this.entradas(mov);
     			Vector sal = this.salidas(mov);
-    			new GUIReport(guiImprimirPlanillaES,7,entr,sal,ultima.getNroPlanilla()+1,fecha,ultima.getSaldo(),miplDTO.getSaldo());
+    			new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,ultima.getNroPlanilla()+1,fecha,ultima.getSaldo(),miplDTO.getSaldo());
     			guiImprimirPlanillaES.dispose();
     		}
     		catch(Exception ex) {
@@ -275,6 +279,51 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     	}
     	return sal;
     }
+    
+	private double generarSaldoCaja(double saldo,double ingresosCD, double egresosCD){
+		double total= Utils.redondear((saldo+ingresosCD) - egresosCD, 2);
+		return total;
+	}
+
+	private double totalIngresosFactsMovs(Vector fact,Vector movs){
+		double total=0;
+		for(int i=0;i<fact.size();i++){
+			FacturaCliente f= (FacturaCliente)fact.elementAt(i);
+			double numero=total+f.getImporteTotal();
+			total = Utils.redondear(numero, 2);
+		}
+		for(int j=0;j<movs.size();j++){
+			MovimientoCaja m= (MovimientoCaja)movs.elementAt(j);
+			if(m.getTipoMovimiento()==1){ //entrada
+				double numero=total+m.getImporte();
+				total = Utils.redondear(numero, 2);
+			}
+		}
+		return total;
+	}
+	
+	private double totalIngresosRemitos(Vector remitos){
+		double total=0;
+		for(int i=0;i<remitos.size();i++){
+			FacturaCliente f= (FacturaCliente)remitos.elementAt(i);
+			double numero=total+f.getImporteTotal();
+			total = Utils.redondear(numero, 2);
+		}
+		return total;
+	}
+
+	private double totalEgresosMovs(Vector movs){
+		double total=0;
+		for(int j=0;j<movs.size();j++){
+			MovimientoCaja m= (MovimientoCaja)movs.elementAt(j);
+			if(m.getTipoMovimiento()!=1){ //salida
+					double numero=total+m.getImporte();
+					total = Utils.redondear(numero, 2);
+			}
+		}
+		return total;
+	}
+
 }
 
 

@@ -167,7 +167,7 @@ public class GUIReport extends JDialog{
 				Utils.show(this);
 		}
 
-	public GUIReport(JDialog parent,int codRep,Vector entradas, Vector salidas,int nroPlanilla, Date fecha, double saldoAnt, double saldoActual) throws Exception {
+	public GUIReport(JDialog parent,int codRep,Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPlanilla, Date fecha, double saldoAnt, double saldoActual) throws Exception {
 		super(parent,true);
 		this.setSize(new java.awt.Dimension(700,570));
 		this.setResizable(false);
@@ -175,7 +175,7 @@ public class GUIReport extends JDialog{
 		this.setTitle("Vista Previa de Impresión");
 		JasperPrint report=null;
 		if(codRep==7){
-			report = JasperReports.generarBalance(entradas,salidas,nroPlanilla, fecha, saldoAnt,saldoActual);
+			report = JasperReports.generarBalance(movEntrada,facts,ingR,movSalidas,nroPlanilla, fecha, saldoAnt,saldoActual);
 		}
 		JRViewer jrv=null;
 		try {
@@ -211,7 +211,7 @@ public class GUIReport extends JDialog{
 		}
 	}	
 	
-	public GUIReport(JDialog parent,int codRep,Comercio dist, String titulo, Vector clientes,Vector saldoFavor,Vector adeudado) {
+	public GUIReport(JDialog parent,int codRep,Comercio dist, String titulo, Vector clientes,Vector fechas,Vector saldoFavor,Vector adeudado) {
 		super(parent,true);
 		this.setSize(new java.awt.Dimension(700,570));
 		this.setResizable(false);
@@ -220,7 +220,7 @@ public class GUIReport extends JDialog{
 		JasperPrint report=null;
 		String mensaje="No se puede efectuar la impresión";
 		if(codRep==16)
-			report = JasperReports.listarDeudaClientes(dist, titulo, clientes,saldoFavor,adeudado);
+			report = JasperReports.listarDeudaClientes(dist, titulo, clientes,fechas,saldoFavor,adeudado);
 		if(clientes.size()>0){
 			JRViewer jrv=null;
 			try {

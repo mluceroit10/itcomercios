@@ -54,6 +54,13 @@ public class MediadorGestionarProducto implements ActionListener, KeyListener, L
             modificar();
         } else if (source == guiProducto.getJBBorrar()) {
             eliminar();
+        }else if(source == guiProducto.getJBControlStock()){
+    		try{
+    			MediadorStockProductos msprod = new MediadorStockProductos(guiProducto);
+    			msprod.show();
+    		}catch (Exception p){
+    			p.printStackTrace();
+    		}	
         } else if (source == guiProducto.getJBImprimir()) {
         	try{
         		if (this.controlProducto.obtenerProductos().isEmpty()){

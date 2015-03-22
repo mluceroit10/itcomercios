@@ -10,7 +10,6 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -31,7 +30,7 @@ public class GUIStockProductos extends JDialog {
     public Vector proveedores= new Vector();
     private InputMap map = new InputMap();
     
-	public GUIStockProductos(JFrame guiPadre) {
+	public GUIStockProductos(JDialog guiPadre) {
 		super(guiPadre);
 		this.setSize(500,380);
 		this.setLocationRelativeTo(guiPadre);

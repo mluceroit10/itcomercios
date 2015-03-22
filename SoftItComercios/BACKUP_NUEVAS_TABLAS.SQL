@@ -23,10 +23,10 @@ CREATE TABLE jdo_table (
 --
 
 INSERT INTO jdo_table VALUES (1,2,'persistencia.domain.Oid','OID');
-INSERT INTO jdo_table VALUES (2,1,'persistencia.domain.Localidad','LOCALIDAD');
-INSERT INTO jdo_table VALUES (3,1,'persistencia.domain.Provincia','PROVINCIA');
-INSERT INTO jdo_table VALUES (4,1,'persistencia.domain.Distribuidora','DISTRIBUIDORA');
-INSERT INTO jdo_table VALUES (5,1,'persistencia.domain.Cliente','CLIENTE');
+INSERT INTO jdo_table VALUES (2,2,'persistencia.domain.Localidad','LOCALIDAD');
+INSERT INTO jdo_table VALUES (3,2,'persistencia.domain.Provincia','PROVINCIA');
+INSERT INTO jdo_table VALUES (4,2,'persistencia.domain.Comercio','COMERCIO');
+INSERT INTO jdo_table VALUES (5,2,'persistencia.domain.Cliente','CLIENTE');
 INSERT INTO jdo_table VALUES (6,1,'persistencia.domain.Producto','PRODUCTO');
 INSERT INTO jdo_table VALUES (7,1,'persistencia.domain.Proveedor','PROVEEDOR');
 INSERT INTO jdo_table VALUES (8,1,'persistencia.domain.PlanillaES','PLANILLA_ES');
@@ -50,7 +50,7 @@ CREATE TABLE oid (
 -- Dumping data for table `oid`
 --
 
-INSERT INTO oid VALUES (35184372088832,2);
+INSERT INTO oid VALUES (35184372088832,3);
 
 --
 -- Table structure for table `provincia`
@@ -64,6 +64,12 @@ CREATE TABLE provincia (
 ) TYPE=InnoDB;
 
 --
+-- Dumping data for table `provincia`
+--
+
+INSERT INTO provincia VALUES (105553116299264,196611,'Cordoba');
+
+--
 -- Table structure for table `localidad`
 --
 
@@ -75,8 +81,14 @@ CREATE TABLE localidad (
   PROVINCIA_ID bigint(20) default NULL,
   PRIMARY KEY  (LOCALIDAD_ID),
   KEY LOCALIDAD_N1 (PROVINCIA_ID),
-  CONSTRAINT `0_1750` FOREIGN KEY (`PROVINCIA_ID`) REFERENCES `provincia` (`PROVINCIA_ID`)
+  CONSTRAINT `0_3179` FOREIGN KEY (`PROVINCIA_ID`) REFERENCES `provincia` (`PROVINCIA_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `localidad`
+--
+
+INSERT INTO localidad VALUES (70368744210432,5800,196617,'Rio Cuarto',105553116299264);
 
 --
 -- Table structure for table `cliente`
@@ -94,8 +106,14 @@ CREATE TABLE cliente (
   TELEFONO varchar(255) binary default NULL,
   PRIMARY KEY  (CLIENTE_ID),
   KEY CLIENTE_N1 (LOCALIDAD_ID),
-  CONSTRAINT `0_1752` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
+  CONSTRAINT `0_3181` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `cliente`
+--
+
+INSERT INTO cliente VALUES (175921860476928,'','-',196642,'','Consumidor Final',70368744210432,'-','');
 
 --
 -- Table structure for table `proveedor`
@@ -111,8 +129,13 @@ CREATE TABLE proveedor (
   TELEFONO varchar(255) binary default NULL,
   PRIMARY KEY  (PROVEEDOR_ID),
   KEY PROVEEDOR_N1 (LOCALIDAD_ID),
-  CONSTRAINT `0_1756` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
+  CONSTRAINT `0_3183` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `proveedor`
+--
+
 
 --
 -- Table structure for table `producto`
@@ -136,8 +159,13 @@ CREATE TABLE producto (
   STOCK_KILOS_MIN double NOT NULL default '0',
   PRIMARY KEY  (PRODUCTO_ID),
   KEY PRODUCTO_N1 (PROVEEDOR_ID),
-  CONSTRAINT `0_2023` FOREIGN KEY (`PROVEEDOR_ID`) REFERENCES `proveedor` (`PROVEEDOR_ID`)
+  CONSTRAINT `0_3185` FOREIGN KEY (`PROVEEDOR_ID`) REFERENCES `proveedor` (`PROVEEDOR_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `producto`
+--
+
 
 --
 -- Table structure for table `factura`
@@ -157,6 +185,11 @@ CREATE TABLE factura (
 ) TYPE=InnoDB;
 
 --
+-- Dumping data for table `factura`
+--
+
+
+--
 -- Table structure for table `factura_cliente`
 --
 
@@ -172,9 +205,14 @@ CREATE TABLE factura_cliente (
   REMITO_NRO varchar(255) binary default NULL,
   PRIMARY KEY  (FACTURA_CLIENTE_ID),
   KEY FACTURA_CLIENTE_N1 (CLIENTE_ID),
-  CONSTRAINT `0_1761` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`CLIENTE_ID`),
-  CONSTRAINT `0_1762` FOREIGN KEY (`FACTURA_CLIENTE_ID`) REFERENCES `factura` (`FACTURA_ID`)
+  CONSTRAINT `0_3188` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`CLIENTE_ID`),
+  CONSTRAINT `0_3189` FOREIGN KEY (`FACTURA_CLIENTE_ID`) REFERENCES `factura` (`FACTURA_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `factura_cliente`
+--
+
 
 --
 -- Table structure for table `factura_proveedor`
@@ -186,9 +224,14 @@ CREATE TABLE factura_proveedor (
   PROVEEDOR_ID bigint(20) default NULL,
   PRIMARY KEY  (FACTURA_PROVEEDOR_ID),
   KEY FACTURA_PROVEEDOR_N1 (PROVEEDOR_ID),
-  CONSTRAINT `0_1764` FOREIGN KEY (`FACTURA_PROVEEDOR_ID`) REFERENCES `factura` (`FACTURA_ID`),
-  CONSTRAINT `0_1765` FOREIGN KEY (`PROVEEDOR_ID`) REFERENCES `proveedor` (`PROVEEDOR_ID`)
+  CONSTRAINT `0_3191` FOREIGN KEY (`FACTURA_PROVEEDOR_ID`) REFERENCES `factura` (`FACTURA_ID`),
+  CONSTRAINT `0_3192` FOREIGN KEY (`PROVEEDOR_ID`) REFERENCES `proveedor` (`PROVEEDOR_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `factura_proveedor`
+--
+
 
 --
 -- Table structure for table `planilla_es`
@@ -203,6 +246,11 @@ CREATE TABLE planilla_es (
   PERIODO varchar(255) binary default NULL,
   PRIMARY KEY  (PLANILLA_ES_ID)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `planilla_es`
+--
+
 
 --
 -- Table structure for table `movimiento_caja`
@@ -226,9 +274,14 @@ CREATE TABLE movimiento_caja (
   PRIMARY KEY  (MOVIMIENTO_CAJA_ID),
   KEY MOVIMIENTO_CAJA_N2 (PLANILLA_ID),
   KEY MOVIMIENTO_CAJA_N1 (FACTURA_ID),
-  CONSTRAINT `0_1768` FOREIGN KEY (`PLANILLA_ID`) REFERENCES `planilla_es` (`PLANILLA_ES_ID`),
-  CONSTRAINT `0_1769` FOREIGN KEY (`FACTURA_ID`) REFERENCES `factura` (`FACTURA_ID`)
+  CONSTRAINT `0_3195` FOREIGN KEY (`PLANILLA_ID`) REFERENCES `planilla_es` (`PLANILLA_ES_ID`),
+  CONSTRAINT `0_3196` FOREIGN KEY (`FACTURA_ID`) REFERENCES `factura` (`FACTURA_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `movimiento_caja`
+--
+
 
 --
 -- Table structure for table `item_factura`
@@ -247,9 +300,13 @@ CREATE TABLE item_factura (
   PRIMARY KEY  (ITEM_FACTURA_ID),
   KEY ITEM_FACTURA_N1 (PRODUCTO_ID),
   KEY ITEM_FACTURA_N2 (FACTURA_ID),
-  CONSTRAINT `0_1771` FOREIGN KEY (`PRODUCTO_ID`) REFERENCES `producto` (`PRODUCTO_ID`),
-  CONSTRAINT `0_1772` FOREIGN KEY (`FACTURA_ID`) REFERENCES `factura` (`FACTURA_ID`)
+  CONSTRAINT `0_3198` FOREIGN KEY (`PRODUCTO_ID`) REFERENCES `producto` (`PRODUCTO_ID`),
+  CONSTRAINT `0_3199` FOREIGN KEY (`FACTURA_ID`) REFERENCES `factura` (`FACTURA_ID`)
 ) TYPE=InnoDB;
+
+--
+-- Dumping data for table `item_factura`
+--
 
 
 --
@@ -271,8 +328,12 @@ CREATE TABLE comercio (
   TELEFONO varchar(255) binary default NULL,
   PRIMARY KEY  (COMERCIO_ID),
   KEY COMERCIO_N1 (LOCALIDAD_ID),
-  CONSTRAINT `0_1776` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
+  CONSTRAINT `0_3201` FOREIGN KEY (`LOCALIDAD_ID`) REFERENCES `localidad` (`LOCALIDAD_ID`)
 ) TYPE=InnoDB;
 
+--
+-- Dumping data for table `comercio`
+--
 
+INSERT INTO comercio VALUES (140737488388096,'','27-30310394-0','-',196626,'2015-03-11',70368744210432,'-',1,1,1,'');
 

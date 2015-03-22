@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.ButtonModel;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -32,7 +32,7 @@ public class MediadorStockProductos  implements ActionListener, ListSelectionLis
 	public String titulo="";
 	public boolean todos=true;
 	
-	public MediadorStockProductos(JFrame guiPadre) throws Exception {
+	public MediadorStockProductos(JDialog guiPadre) throws Exception {
     	try{
         	controlProducto = new ControlProducto();
         	controlProveedor = new ControlProveedor();

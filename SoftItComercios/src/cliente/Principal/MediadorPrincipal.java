@@ -15,15 +15,12 @@ import cliente.GestionarLocalidad.MediadorGestionarLocalidad;
 import cliente.GestionarMovimientoCaja.MediadorGestionarMovimientoCaja;
 import cliente.GestionarPlanillaES.MediadorGestionarPlanillaES;
 import cliente.GestionarProducto.MediadorGestionarProducto;
-import cliente.GestionarProducto.MediadorStockProductos;
 import cliente.GestionarProveedor.MediadorGestionarProveedor;
 import cliente.GestionarProvincia.MediadorGestionarProvincia;
 import cliente.GestionarRemitoCliente.MediadorRemitoCliente;
 import cliente.LibroIva.MediadorBuscarLibroIva;
-import cliente.ListarDeudaClientes.MediadorListarDeudaClientes;
 import cliente.ListarFacturasCliente.MediadorListarFacturasCliente;
 import cliente.ListarFacturasProveedor.MediadorListarFacturasProveedor;
-import cliente.ListarProductosFacturados.MediadorListarProductosFacturados;
 import cliente.ListarRemitosCliente.MediadorListarRemitosCliente;
 import cliente.backupDataBase.MediadorBackup;
 
@@ -33,6 +30,7 @@ import common.Utils;
 public class MediadorPrincipal implements ActionListener{
 	
 	private GUIPrincipal guiPrincipal;  
+	private boolean modoAvanzado=false; 
 	private Date hoy= new Date();
 	public MediadorPrincipal() throws Exception{ 
 		this.guiPrincipal = new GUIPrincipal();  
@@ -41,6 +39,7 @@ public class MediadorPrincipal implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		int diaL=Utils.getDia(hoy);
 		int mesL=Utils.getMes(hoy);
 		int anioL=Utils.getAnio(hoy);
 		Object source=e.getSource();
@@ -98,13 +97,13 @@ public class MediadorPrincipal implements ActionListener{
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
-    	}else if(this.guiPrincipal.getJButtonControlStock()==source){
+    /*	}else if(this.guiPrincipal.getJButtonControlStock()==source){
     		try{
     			MediadorStockProductos msprod = new MediadorStockProductos(guiPrincipal);
     			msprod.show();
     		}catch (Exception p){
     			p.printStackTrace();
-    		}	
+    		}	*/
     	}else if(this.guiPrincipal.getJButtonFacturaCliente()==source){
     		try{
     			MediadorFacturarCliente msprod = new MediadorFacturarCliente(guiPrincipal);
@@ -127,7 +126,7 @@ public class MediadorPrincipal implements ActionListener{
     		}	
     	}else if(this.guiPrincipal.getJButtonTodosRemitosCliente()==source){
     		try{
-    			new MediadorListarRemitosCliente(mesL,anioL,guiPrincipal);
+    			new MediadorListarRemitosCliente(diaL,mesL,anioL,guiPrincipal);
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
@@ -143,7 +142,7 @@ public class MediadorPrincipal implements ActionListener{
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
-    	}else if(this.guiPrincipal.getJButtonDeudasClientes()==source){
+    	/*}else if(this.guiPrincipal.getJButtonDeudasClientes()==source){
     		try{
     			MediadorListarDeudaClientes msprod = new MediadorListarDeudaClientes(guiPrincipal);
     			msprod.show();
@@ -156,7 +155,7 @@ public class MediadorPrincipal implements ActionListener{
     			msprod.show();
     		}catch (Exception p){
     			p.printStackTrace();
-    		}		
+    		}		*/
     	}else if(this.guiPrincipal.getJButtonLibroIva()==source){
     		try{
     			new MediadorBuscarLibroIva(guiPrincipal);
@@ -166,6 +165,22 @@ public class MediadorPrincipal implements ActionListener{
     	}else if(this.guiPrincipal.getBaseDatos()==source){
     		try{
     			new MediadorBackup(guiPrincipal);
+    		}catch (Exception p){
+    			p.printStackTrace();
+    		}
+    	}else if(this.guiPrincipal.getModoAvanzado()==source){
+    		try{
+    			if(!modoAvanzado){
+    				modoAvanzado=true;
+    				guiPrincipal.getModoAvanzado().setText("Modo Simple");
+    			guiPrincipal.mostrarModoAvanzado();
+    			guiPrincipal.setActionListenersModoAvanzado(this);
+    			}else{
+    				modoAvanzado=false;
+    				guiPrincipal.getModoAvanzado().setText("Modo Avanzado");
+    				guiPrincipal.mostrarModoSimple();
+        			guiPrincipal.setActionListenersModoSimple(this);
+    			}
     		}catch (Exception p){
     			p.printStackTrace();
     		}

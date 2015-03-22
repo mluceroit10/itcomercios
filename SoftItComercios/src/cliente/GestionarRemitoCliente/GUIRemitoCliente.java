@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -52,7 +53,7 @@ public class GUIRemitoCliente extends JDialog {
     public final String[] titulos ={"Código","Cant.","Kg.","Producto","Precio Unit.","Descuento %","Precio Total"};
     public Object[][] datos;
     public JTable tabla;					private ModeloTabla modTabla = null;
-    public Long nroRemito;
+    public Long nroRemito;					private JCheckBox jCheckImprimir;
     public Vector codProd= new Vector();
 	private JTextField jtfDescuento;
 	private JLabel jlDescuento;
@@ -165,11 +166,11 @@ public class GUIRemitoCliente extends JDialog {
             jpDatosRemito.add(jlNombreC, null);
             jpDatosRemito.add(jlCuit, null);
             jpDatosRemito.add(jlFechaRemito, null);
-            jpDatosRemito.add(getJBBuscarC(), null);
+        //    jpDatosRemito.add(getJBBuscarC(), null);
             jpDatosRemito.add(getJTFNombreC(), null);
             jpDatosRemito.add(getJtCuit(), null);
             jpDatosRemito.add(getJDateChooserFecha(),null);
-            
+            jpDatosRemito.add(getJCheckImprimir(), null);
         }
         return jpDatosRemito;
     }
@@ -301,8 +302,10 @@ public class GUIRemitoCliente extends JDialog {
     public JTextField getJTFITotal() {
         if (jtfITotal == null) {
         	jtfITotal = new JTextField();
-        	jtfITotal.setBounds(new Rectangle(600,205,100,22));
+        	jtfITotal.setBounds(new Rectangle(600,200,100,30));
         	jtfITotal.setDisabledTextColor(Utils.colorTextoDisabled);
+        	jtfITotal.setFont(new java.awt.Font("Dialog", java.awt.Font.PLAIN, 18));
+			jtfITotal.setHorizontalAlignment(SwingConstants.RIGHT);
         	jtfITotal.setEnabled(false);
         }
         return jtfITotal;
@@ -431,13 +434,25 @@ public class GUIRemitoCliente extends JDialog {
 		jpDatosRemito.add(jlNroRemito, null);
 	}
 	
+
+	public JCheckBox getJCheckImprimir() {
+		if (jCheckImprimir == null) {
+			jCheckImprimir = new JCheckBox();
+			jCheckImprimir.setBounds(new Rectangle(30,65,170,17));
+			jCheckImprimir.setText("Imprimir Comprobante");
+			jCheckImprimir.setName("Imprimir");
+			jCheckImprimir.setBackground(Utils.colorPanel);
+		}
+		return jCheckImprimir;
+	}
+	
 	public void setListSelectionListener(ListSelectionListener lis) {
 		tabla.getSelectionModel().addListSelectionListener(lis);
 	}
 	
 	public void setActionListeners(ActionListener lis) {
 		jbAgregarProd.addActionListener(lis);
-		jbBuscarC.addActionListener(lis);
+	//	jbBuscarC.addActionListener(lis);
 		jbEliminarProd.addActionListener(lis);
 		jbConfirmarRemito.addActionListener(lis);
 	}
@@ -449,7 +464,4 @@ public class GUIRemitoCliente extends JDialog {
 	public void setKeyListeners2(KeyListener lis) {
 		jtfBusqueda.addKeyListener(lis);
 	}
-    
-   
 }
-

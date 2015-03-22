@@ -166,8 +166,8 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
     
     public void cargarDatos() {
         try {
-            Vector facturasA = this.controlFactCte.obtenerFacturaClientesPeriodo(false,"FacturaCliente-A",mesLI,anioLI);
-            Vector facturasB = this.controlFactCte.obtenerFacturaClientesPeriodo(false,"FacturaCliente-B",mesLI,anioLI);
+            Vector facturasA = this.controlFactCte.obtenerFacturaClientesPeriodo(false,"FacturaCliente-A",0,mesLI,anioLI);
+            Vector facturasB = this.controlFactCte.obtenerFacturaClientesPeriodo(false,"FacturaCliente-B",0,mesLI,anioLI);
             Vector facturas=new Vector();
             if(tiposListar.compareTo("todos")==0){
             	facturas=facturasA;
@@ -215,8 +215,8 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
     
     public void actualizarCampos() {
     	 try {
-    		 Vector facturasA = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(false,"FacturaCliente-A",mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
-             Vector facturasB = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(false,"FacturaCliente-B",mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
+    		 Vector facturasA = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(false,"FacturaCliente-A",0,mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
+             Vector facturasB = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(false,"FacturaCliente-B",0,mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
              Vector facturas=new Vector();
              if(tiposListar.compareTo("todos")==0){
              	facturas=facturasA;

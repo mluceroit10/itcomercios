@@ -264,7 +264,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 			jcbTipoFact.setEnabled(false);
 			jcbTipoFact.addItem("Factura Cliente-Tipo A");
 			jcbTipoFact.addItem("Factura Cliente-Tipo B");
-			jcbTipoFact.addItem("Remito Cliente");
+			//jcbTipoFact.addItem("Remito Cliente");
 			jcbTipoFact.addItem("Factura Proveedor");
 		}
 		return jcbTipoFact;

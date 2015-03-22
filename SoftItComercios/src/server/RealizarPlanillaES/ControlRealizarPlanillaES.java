@@ -7,10 +7,14 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import persistencia.domain.Factura;
+import persistencia.domain.FacturaCliente;
+import persistencia.domain.FacturaProveedor;
 import persistencia.domain.MovimientoCaja;
 import persistencia.domain.PlanillaES;
 import server.Assemblers;
 import server.ManipuladorPersistencia;
+import server.GestionarFacturaCliente.ControlFacturaCliente;
 import server.GestionarMovimientoCaja.ControlMovimientoCaja;
 
 import common.Utils;
@@ -22,10 +26,11 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 	
 	public ControlRealizarPlanillaES() throws Exception{   }
 	
-	public void agregarPlanillaESTotal(PlanillaES p,Vector movimientos) throws Exception{
+	public void agregarPlanillaESTotal(PlanillaES p,Vector movimientos,Vector facts,Vector remitos) throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		PlanillaES lnew= Assemblers.crearPlanillaES(p);
 		ControlMovimientoCaja cMC = new ControlMovimientoCaja();
+		ControlFacturaCliente cFC = new ControlFacturaCliente();
 		try{
 			mp.initPersistencia();
 			mp.hacerPersistente(lnew);
@@ -35,6 +40,13 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 				MovimientoCaja mc=(MovimientoCaja)i.next();
 				MovimientoCaja mov = cMC.buscarMovimientoCajaPersistentePorId(mp,mc.getId());
 				mov.setPlanilla(lnew);
+			}
+			// setea facturas y remitos
+			facts.addAll(remitos);
+			for(int j = 0; j < facts.size();j++){
+				FacturaCliente fc=(FacturaCliente)facts.elementAt(j);
+				FacturaCliente f = cFC.buscarFacturaClientePersistentePorId(mp,fc.getId());
+				f.setPlanilla(lnew);
 			}
 			mp.commit();
 		} finally {
@@ -135,22 +147,84 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		}
 	}
 	
-	public Vector obtenerMovimientosCajaParaPlanilla(Date fechaD, Date fechaH)throws Exception{
+	public Vector obtenerMovimientosCajaParaPlanilla(Date fechaH)throws Exception{
 		Vector movimientos = new Vector();
-		ControlMovimientoCaja cMov= new ControlMovimientoCaja();
-		Vector todosMov=cMov.obtenerMovimientosCaja();
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
+			mp.initPersistencia();
+			String filtro = "planilla==null";
+			Vector todosMov= mp.getObjectsOrdered(MovimientoCaja.class,filtro,"codigo ascending");
 			for (Iterator i = todosMov.iterator(); i.hasNext(); ) {
 				MovimientoCaja b = (MovimientoCaja)i.next();
-				if( (b.getPlanilla()==null) && (b.getFecha().before(fechaH)|| b.getFecha().equals(fechaH))){
+				if((b.getFecha().before(fechaH)|| b.getFecha().equals(fechaH))){
 					MovimientoCaja a = Assemblers.crearMovimientoCaja(b);
+					Factura fact=null;
+					if (b.isConFactura()){
+						if((b.getTipoFactura().compareTo("Factura Cliente-Tipo A")==0)||(b.getTipoFactura().compareTo("Factura Cliente-Tipo B")==0)||(b.getTipoFactura().compareTo("Remito Cliente")==0)){
+							fact = Assemblers.crearFacturaCliente((FacturaCliente)b.getFactura());//fc;
+						}
+						if(b.getTipoFactura().compareTo("Factura Proveedor")==0){
+							fact = Assemblers.crearFacturaProveedor((FacturaProveedor)b.getFactura());//fp;
+						}	
+					}
+					a.setFactura(fact);
 					movimientos.add(a);
 				}	
 			}
+			mp.commit();
 		} catch(Exception e) {
 			e.printStackTrace();
+			mp.rollback();
 		}
 		return movimientos;
+	}
+	
+
+	public Vector obtenerFacturasClienteParaPlanilla(Date fechaH)throws Exception{
+		Vector facturas = new Vector();
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		try {
+			mp.initPersistencia();
+			String filtro = " tipoFactura!=\"RemitoCliente\" && condVenta==\"CONTADO\" && planilla==null";  
+			Vector facturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
+			for(int i=0; i<facturaClientes.size();i++){
+				FacturaCliente fc = (FacturaCliente)facturaClientes.elementAt(i);
+				//verif fechas
+				if(fc.getFechaImpresion().before(fechaH)|| fc.getFechaImpresion().equals(fechaH)){
+					FacturaCliente fcObt= Assemblers.crearFacturaCliente(fc);
+					fcObt.setCliente(Assemblers.crearCliente(fc.getCliente()));
+					facturas.add(fcObt);
+				}
+			}
+			mp.commit();
+		} catch(Exception e) {
+			e.printStackTrace();
+			mp.rollback();
+		}
+		return facturas;
+	}
+	
+	public Vector obtenerRemitosClienteParaPlanilla(Date fechaH)throws Exception{
+		Vector facturas = new Vector();
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		try {
+			mp.initPersistencia();
+			String filtro = " tipoFactura==\"RemitoCliente\" && remitoNro!=\"Facturado\" && planilla==null";  
+			Vector facturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
+			for(int i=0; i<facturaClientes.size();i++){
+				FacturaCliente fc = (FacturaCliente)facturaClientes.elementAt(i);
+				if(fc.getFechaImpresion().before(fechaH)|| fc.getFechaImpresion().equals(fechaH)){
+					FacturaCliente fcObt= Assemblers.crearFacturaCliente(fc);
+					fcObt.setCliente(Assemblers.crearCliente(fc.getCliente()));
+					facturas.add(fcObt);
+				}
+			}
+			mp.commit();
+		}catch(Exception e) {
+			e.printStackTrace();
+			mp.rollback();
+		}
+		return facturas;
 	}
 	
 	public void eliminarPlanillaES(Long id)throws Exception{
