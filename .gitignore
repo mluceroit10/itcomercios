@@ -216,5 +216,4 @@ pip-log.txt
 .mr.developer.cfg
 
 #Maria archivos a ignorar
-archivos_Soft_itComercios/
-classes/**
+*.class
