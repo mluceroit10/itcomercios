@@ -217,3 +217,5 @@ pip-log.txt
 
 #Maria archivos a ignorar
 *.class
+*.pdf
+*.class
