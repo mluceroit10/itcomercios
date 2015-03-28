@@ -7,11 +7,17 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import persistencia.domain.Cliente;
 import persistencia.domain.Factura;
 import persistencia.domain.FacturaCliente;
 import persistencia.domain.FacturaProveedor;
+import persistencia.domain.ItemFactura;
+import persistencia.domain.Localidad;
 import persistencia.domain.MovimientoCaja;
 import persistencia.domain.PlanillaES;
+import persistencia.domain.Producto;
+import persistencia.domain.Proveedor;
+import persistencia.domain.Provincia;
 import server.Assemblers;
 import server.ManipuladorPersistencia;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
@@ -42,9 +48,11 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 				mov.setPlanilla(lnew);
 			}
 			// setea facturas y remitos
-			facts.addAll(remitos);
-			for(int j = 0; j < facts.size();j++){
-				FacturaCliente fc=(FacturaCliente)facts.elementAt(j);
+			Vector facturaClienteCol=new Vector();
+			facturaClienteCol.addAll(remitos);
+			facturaClienteCol.addAll(facts);
+			for(int j = 0; j < facturaClienteCol.size();j++){
+				FacturaCliente fc=(FacturaCliente)facturaClienteCol.elementAt(j);
 				FacturaCliente f = cFC.buscarFacturaClientePersistentePorId(mp,fc.getId());
 				f.setPlanilla(lnew);
 			}
@@ -185,7 +193,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
 			mp.initPersistencia();
-			String filtro = " tipoFactura!=\"RemitoCliente\" && condVenta==\"CONTADO\" && planilla==null";  
+			String filtro = " (tipoFactura==\"FacturaCliente-A\" || tipoFactura==\"FacturaCliente-B\" ) && condVenta==\"CONTADO\" && planilla==null";  
 			Vector facturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
 			for(int i=0; i<facturaClientes.size();i++){
 				FacturaCliente fc = (FacturaCliente)facturaClientes.elementAt(i);
@@ -193,6 +201,18 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 				if(fc.getFechaImpresion().before(fechaH)|| fc.getFechaImpresion().equals(fechaH)){
 					FacturaCliente fcObt= Assemblers.crearFacturaCliente(fc);
 					fcObt.setCliente(Assemblers.crearCliente(fc.getCliente()));
+					Set elem = fc.getItems();
+					Set aelem = new HashSet();
+					for(Iterator j=elem.iterator();j.hasNext();){
+						ItemFactura itv= (ItemFactura) j.next();
+						ItemFactura it= Assemblers.crearItemFactura(itv);
+						Producto p= Assemblers.crearProducto(itv.getProducto());
+						Proveedor pr = Assemblers.crearProveedor(itv.getProducto().getProveedor());
+						p.setProveedor(pr);
+						it.setProducto(p);
+						aelem.add(it);
+					}
+					fcObt.setItems(aelem);
 					facturas.add(fcObt);
 				}
 			}
@@ -216,6 +236,18 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 				if(fc.getFechaImpresion().before(fechaH)|| fc.getFechaImpresion().equals(fechaH)){
 					FacturaCliente fcObt= Assemblers.crearFacturaCliente(fc);
 					fcObt.setCliente(Assemblers.crearCliente(fc.getCliente()));
+					Set elem = fc.getItems();
+					Set aelem = new HashSet();
+					for(Iterator j=elem.iterator();j.hasNext();){
+						ItemFactura itv= (ItemFactura) j.next();
+						ItemFactura it= Assemblers.crearItemFactura(itv);
+						Producto p= Assemblers.crearProducto(itv.getProducto());
+						Proveedor pr = Assemblers.crearProveedor(itv.getProducto().getProveedor());
+						p.setProveedor(pr);
+						it.setProducto(p);
+						aelem.add(it);
+					}
+					fcObt.setItems(aelem);
 					facturas.add(fcObt);
 				}
 			}
@@ -317,7 +349,33 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 					MovimientoCaja a = Assemblers.crearMovimientoCaja(b);
 					movimientos.add(a);
 				}
+				
 				p.setMovimientosCaja(movimientos);
+				Set facturas=new HashSet();
+				for (Iterator i = bm.getFacturas().iterator(); i.hasNext(); ) {
+					FacturaCliente b = (FacturaCliente)i.next();
+					FacturaCliente a = Assemblers.crearFacturaCliente(b);
+					Cliente cte= Assemblers.crearCliente(b.getCliente());
+					Localidad loc= Assemblers.crearLocalidad(b.getCliente().getLocalidad());
+					Provincia prv= Assemblers.crearProvincia(b.getCliente().getLocalidad().getProvincia());
+					loc.setProvincia(prv);
+					cte.setLocalidad(loc);
+					Set elem = b.getItems();
+					Set aelem = new HashSet();
+					for(Iterator j=elem.iterator();j.hasNext();){
+						ItemFactura itv= (ItemFactura) j.next();
+						ItemFactura it= Assemblers.crearItemFactura(itv);
+						Producto producto= Assemblers.crearProducto(itv.getProducto());
+						Proveedor pr = Assemblers.crearProveedor(itv.getProducto().getProveedor());
+						producto.setProveedor(pr);
+						it.setProducto(producto);
+						aelem.add(it);
+					}
+					a.setItems(aelem);
+					a.setCliente(cte);
+					facturas.add(a);
+				}
+				p.setFacturas(facturas);
 			}
 			mp.commit();
 		} finally {

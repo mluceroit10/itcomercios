@@ -312,7 +312,6 @@ public class JasperReports{
 		try{
 			double totalE=ingR;
 			double totalS=0; 
-			
 			int capacidad=movEntrada.size()+facts.size()+movSalidas.size()+6; //6=tit-rem-subt-esp-tit-sub
 			int indRenglon=0;
 			Object[][] values = new Object[capacidad][2];
@@ -332,8 +331,6 @@ public class JasperReports{
 					nroFact=" FC tipo A Nº: "+Utils.nroFact(fc.getNroFactura());
 				if(fc.getTipoFactura().compareTo("FacturaCliente-B")==0)
 					nroFact=" FC tipo B Nº: "+Utils.nroFact(fc.getNroFactura());
-				/*	if(mE.getFactura().getTipoFactura().compareTo("RemitoCliente")==0)
-				 nroFact=" RC Nº: "+Utils.nroFact(mE.getFactura().getNroFactura());*/
 				Object[] tempE = {Utils.getStrUtilDate(fc.getFechaImpresion()) +" "+ fc.getCliente().getNombre()+nroFact,importeE};
 				values[indRenglon] = tempE;
 				indRenglon++;
@@ -750,6 +747,32 @@ public class JasperReports{
 	public static void main(String[] args){
 		;
 	}
+
+	public static JasperPrint listarProductosFacturados(int nroPlanilla,int cantProdEncontrados, Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, java.sql.Date fecha) {
+			JasperPrint jasperPrint;
+			try{
+				//estado de cuenta neg deuda - pos a favor
+				System.setProperty("org.xml.sax.driver","org.apache.xerces.parsers.SAXParser");
+				Object[][] param = { {"Institucion",Utils.Institucion()},{"Titulo","Detalle de Stock Cierre de caja Nº "+nroPlanilla+" - "+Utils.getStrUtilDate(fecha)},{"Fecha",Utils.getStrUtilDate(fecha)}};  //dist.getNombre()
+				Object[][] values = new Object[cantProdEncontrados][5];
+				for (int i = 0; i < cantProdEncontrados; i++) {
+					String comprado=String.valueOf(cantidades[i])+" Un.";
+					String stock=String.valueOf(stUnid[i])+" Un.";
+					if(kilos[i]>0){
+						comprado=Utils.ordenarTresDecimales(kilos[i])+" Kg.";
+						stock=Utils.ordenarTresDecimales(stKilo[i])+" Kg.";
+					}
+					Object[] temp = {String.valueOf(codigos[i]),productos[i],proveedores[i],comprado,stock};
+					values[i] = temp;
+				}
+				String[] fieldXml = {"Codigo","Prod_Kilos","Proveedor","Cantidad","Kilos"};
+				jasperPrint=generarReporte("ListadoProductosFacturados", param, fieldXml, values);
+				return jasperPrint;
+			}catch (Exception ex){
+				Utils.manejoErrores(ex,"Error en JasperReports. ListadoProductosFacturados.");
+				return null;
+			}		
+		}
 
 	
 	

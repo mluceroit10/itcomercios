@@ -10,19 +10,23 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import persistencia.domain.FacturaCliente;
+import persistencia.domain.ItemFactura;
 import persistencia.domain.MovimientoCaja;
 import persistencia.domain.PlanillaES;
 import server.GestionarMovimientoCaja.ControlMovimientoCaja;
 import server.RealizarPlanillaES.ControlRealizarPlanillaES;
 import cliente.Principal.GUIReport;
 
+import common.RootAndIp;
 import common.Utils;
 import common.GestionarMovimientoCaja.IControlMovimientoCaja;
 import common.RealizarPlanillaES.IControlRealizarPlanillaES;
@@ -35,8 +39,16 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     private PlanillaES miPESDto;
     private int mesLI;
 	private int anioLI;
+	Long [] codigos;
+	String [] productos;
+	String [] proveedores;
+	int [] cantidades;
+	double [] kilos;
+	int [] stUnid;
+	double [] stKilo;
+	int cantProdEncontrados=0;
 	
-    public MediadorGestionarPlanillaES(int mes, int anio,JFrame guiPadre) {
+    public MediadorGestionarPlanillaES(int mes, int anio,JFrame guiPadre) throws Exception {
     	try{
     		mesLI=mes;
     		anioLI=anio;
@@ -68,7 +80,26 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
                 	else anterior.setSaldo(0);
                  	Vector entr = this.entradas(miPESDto.getMovimientosCaja());
                 	Vector sal = this.salidas(miPESDto.getMovimientosCaja());
+                	Set factsRem = miPESDto.getFacturas();
+                	Vector fact=new Vector();
+                	Vector remitos=new Vector();
+    				for (Iterator i = factsRem.iterator(); i.hasNext(); ) {
+    					FacturaCliente fc = (FacturaCliente)i.next();
+    					if(fc.getTipoFactura().compareTo("RemitoCliente")==0){
+    						remitos.add(fc);
+    					}else{
+    						fact.add(fc);
+    					}
+    				}
+    				double ingR=this.totalIngresosRemitos(remitos);
              //   	new GUIReport(guiImprimirPlanillaES,7,entr,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
+                	new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
+        			int prueba = JOptionPane.showConfirmDialog(guiImprimirPlanillaES,"Desea obtener el detalle de stock","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/productosFacturados.png"));
+            		if( prueba==0 ){
+            	 		this.organizarProductos(remitos,fact);
+            			new GUIReport(guiImprimirPlanillaES,19,miPESDto.getNroPlanilla(),cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,miPESDto.getFecha());
+            		}    
+            		
                 }
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorGestionarPlanillaES. ActionPerformed");
@@ -89,11 +120,16 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
 				double ingR=this.totalIngresosRemitos(remitos);
 				double ingCD=Utils.redondear(ingFM+ingR,2);
 				double impCDiaria=generarSaldoCaja(ultima.getSaldo(),ingCD,egrCD);
-    			miplDTO.setSaldo(impCDiaria);
+				miplDTO.setSaldo(impCDiaria);
     			this.controlRealizarPlanillaES.agregarPlanillaESTotal(miplDTO,mov,fact,remitos);
     			Vector entr = this.entradas(mov);
     			Vector sal = this.salidas(mov);
     			new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,ultima.getNroPlanilla()+1,fecha,ultima.getSaldo(),miplDTO.getSaldo());
+    			int prueba = JOptionPane.showConfirmDialog(guiImprimirPlanillaES,"Desea obtener el detalle de stock","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/productosFacturados.png"));
+        		if( prueba==0 ){
+        	 		this.organizarProductos(remitos,fact);
+        			new GUIReport(guiImprimirPlanillaES,19,ultima.getNroPlanilla()+1,cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,fecha);
+        		}    
     			guiImprimirPlanillaES.dispose();
     		}
     		catch(Exception ex) {
@@ -149,7 +185,49 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     	}
     }
     
-    public void cargarDatos() {
+    private void organizarProductos(Vector remitos, Vector fact) {
+    	Vector facturaClienteCol=remitos;
+		facturaClienteCol.addAll(fact);
+    	codigos= new Long [20*facturaClienteCol.size()];
+		productos= new String [20*facturaClienteCol.size()];
+		proveedores= new String [20*facturaClienteCol.size()];
+		cantidades= new int [20*facturaClienteCol.size()];
+		kilos= new double [20*facturaClienteCol.size()];
+		stUnid=new int [20*facturaClienteCol.size()];
+		stKilo=new double [20*facturaClienteCol.size()];
+		
+		cantProdEncontrados = 0;
+		for(int i=0;i<facturaClienteCol.size();i++){
+			FacturaCliente fc= (FacturaCliente)facturaClienteCol.elementAt(i);
+			Set prodFact = fc.getItems();
+			for(Iterator it=prodFact.iterator(); it.hasNext(); ){
+				ItemFactura item = (ItemFactura) it.next();
+				boolean encontrado=false;
+				int posEncontrado=0;
+				for(int k=0; k<cantProdEncontrados; k++){
+					if(codigos[k].equals(item.getProducto().getCodigo())){
+						encontrado=true;
+						posEncontrado=k;
+					}
+				}
+				if(encontrado){
+					cantidades[posEncontrado]=cantidades[posEncontrado]+item.getCantidad();
+					kilos[posEncontrado]=kilos[posEncontrado]+item.getKilos();
+				}else{
+					codigos[cantProdEncontrados]=item.getProducto().getCodigo();
+					productos[cantProdEncontrados]=item.getProducto().getNombre();
+					proveedores[cantProdEncontrados]=item.getProducto().getProveedor().getNombre();
+					stUnid[cantProdEncontrados]=item.getProducto().getStockActual();
+					stKilo[cantProdEncontrados]=item.getProducto().getStockKilosAct();
+					cantidades[cantProdEncontrados]=item.getCantidad();
+					kilos[cantProdEncontrados]=item.getKilos();
+					cantProdEncontrados++;
+				}
+			}
+		}
+	}
+
+	public void cargarDatos() {
         try {
             Vector planillas = this.controlRealizarPlanillaES.obtenerPlanillasES(mesLI,anioLI);
             guiImprimirPlanillaES.getJTFPeriodo().setText(mesLI+" - "+anioLI);

@@ -281,5 +281,29 @@ public class GUIReport extends JDialog{
 		}else{
 			Utils.advertenciaUsr(parent,mensaje);
 		}
+	}
+
+	public GUIReport(JDialog parent,int codRep, int nroPlanilla,int cantProdEncontrados,Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, Date fecha) {
+		super(parent,true);
+		this.setSize(new java.awt.Dimension(700,570));
+		this.setResizable(false);
+		this.setLocationRelativeTo(parent);
+		this.setTitle("Vista Previa de Impresión");
+		JasperPrint report=null;
+		String mensaje="No se puede efectuar la impresión, no hay productos disponibles";
+		if(codRep==19)
+			report = JasperReports.listarProductosFacturados(nroPlanilla,cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,fecha);
+		if(cantProdEncontrados>0){
+			JRViewer jrv=null;
+			try {
+				jrv = new JRViewer(report);
+			} catch (JRException ex) {
+				Utils.manejoErrores(ex,"Error en GUIReport. Reportes 17");
+			}
+			this.getContentPane().add(jrv);
+			Utils.show(this);
+		}else{
+			Utils.advertenciaUsr(parent,mensaje);
+		}
 	}	
 }

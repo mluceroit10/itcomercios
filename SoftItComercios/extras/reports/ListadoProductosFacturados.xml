@@ -73,14 +73,14 @@
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
-		<text>CANTIDAD</text>
+		<text>VENDIDO</text>
 	</staticText>
 	<staticText>
 		<reportElement x="460" y="43" width="60" height="15" />
 		<textElement textAlignment="Center" lineSpacing="Single">
 		<font reportFont="Arial_12"/>
 		</textElement>
-		<text>KILOS</text>
+		<text>STOCK</text>
 	</staticText>
 	</band>
     </pageHeader>
