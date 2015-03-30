@@ -39,7 +39,7 @@ public class GUIListarRemitosCliente extends JDialog {
     private JTextField jtfNombre = null;		private JTextField jtfCliente = null;
     public JScrollPane jspDatos = null;
     public JTable jtDatos = null;				private ModeloTabla modTabla = null;
-    public String[] titulos = {"ID","Fecha","Nro de Remito","Cliente","Importe Total", "Importe Abonado", "Fecha de Pago","Cod. Movs. Caja","Anulada"};
+    public String[] titulos = {"ID","Fecha","Nro de Remito","Cliente","Importe Total", "Anulada"};
     public Object[][] datos;
 	private JButton jbAnular;
 	private int diaLI;
@@ -238,7 +238,7 @@ public class GUIListarRemitosCliente extends JDialog {
 				private static final long serialVersionUID = 1L;
 				public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
 					Component returnComp = super.prepareRenderer(renderer, row,column);
-					String anulada=getValueAt(row,8).toString();
+					String anulada=getValueAt(row,5).toString();
 					if(anulada.compareTo("SI")==0){
 						returnComp.setBackground(Color.WHITE);
 						returnComp.setForeground(Color.RED);
@@ -269,14 +269,6 @@ public class GUIListarRemitosCliente extends JDialog {
             columna4.setMaxWidth(150); 
             columna4.setPreferredWidth(150);
             columna4.setCellRenderer(Utils.alinearDerecha());	
-            TableColumn columna5 = jtDatos.getColumn("Importe Abonado");
-            columna5.setPreferredWidth(100);
-            columna5.setMaxWidth(100);
-            columna5.setCellRenderer(Utils.alinearDerecha());	
-            TableColumn columna6 = jtDatos.getColumn("Fecha de Pago");
-            columna6.setPreferredWidth(90);
-            columna6.setMaxWidth(90); 
-            columna6.setCellRenderer(Utils.alinearCentro());	
             TableColumn columna7 = jtDatos.getColumn("Anulada");
             columna7.setPreferredWidth(50);
             columna7.setMaxWidth(50); 

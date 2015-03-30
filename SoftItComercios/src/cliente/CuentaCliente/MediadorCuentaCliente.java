@@ -131,27 +131,36 @@ public class MediadorCuentaCliente implements ActionListener,ListSelectionListen
     			debe.add(Utils.ordenarDosDecimales(fc.getImporteTotal()));
     			haber.add(" ");
     			saldo.add(Utils.ordenarDosDecimales(saldoI));
-    			String filtroMov="";
-    			Set movs= fc.getComprobantesPago();
-    			if(!movs.isEmpty()){
-    				for(Iterator it= movs.iterator(); it.hasNext();){
-    					MovimientoCaja mc=(MovimientoCaja)it.next();
-    					filtroMov+= " (codigo == "+mc.getCodigo()+")";
-    					if(i!=movs.size()-1)
-    						filtroMov+= " |";
+    			if(fc.getCondVenta().compareTo("CONTADO")==0){
+    				detalleIt.add("Pago Contado");
+					fecha.add(Utils.getStrUtilDate(fc.getFechaImpresion()));
+					haber.add(Utils.ordenarDosDecimales(fc.getImporteTotal()));
+					debe.add(" ");
+					saldoI =Utils.redondear(saldoI+fc.getImporteTotal(),2);
+					saldo.add(Utils.ordenarDosDecimales(saldoI));
+    			}else{
+    				String filtroMov="";
+    				Set movs= fc.getComprobantesPago();
+    				if(!movs.isEmpty()){
+    					for(Iterator it= movs.iterator(); it.hasNext();){
+    						MovimientoCaja mc=(MovimientoCaja)it.next();
+    						filtroMov+= " (codigo == "+mc.getCodigo()+")";
+    						if(i!=movs.size()-1)
+    							filtroMov+= " |";
+    					}
+    					Vector movim=controlCliente.obtenerMovimientosCajaDeFactura(fc.getId());
+    					for(int j=0;j<movim.size();j++){
+    						MovimientoCaja mc=(MovimientoCaja)movim.elementAt(j);
+    						String detalle=" - Registra pago "+mc.getFormaPago();
+    						if(mc.getFormaPago().compareTo("CHEQUE")==0) detalle += " nro: "+ mc.getNroCheque();
+    						detalleIt.add(detalle);
+    						fecha.add(Utils.getStrUtilDate(mc.getFecha()));
+    						haber.add(Utils.ordenarDosDecimales(mc.getImporte()));
+    						debe.add(" ");
+    						saldoI =Utils.redondear(saldoI+mc.getImporte(),2);
+    						saldo.add(Utils.ordenarDosDecimales(saldoI));
+    					}	
     				}
-    				Vector movim=controlCliente.obtenerMovimientosCajaDeFactura(fc.getId());
-    				for(int j=0;j<movim.size();j++){
-    					MovimientoCaja mc=(MovimientoCaja)movim.elementAt(j);
-    					String detalle=" - Registra pago "+mc.getFormaPago();
-    					if(mc.getFormaPago().compareTo("CHEQUE")==0) detalle += " nro: "+ mc.getNroCheque();
-    					detalleIt.add(detalle);
-    					fecha.add(Utils.getStrUtilDate(mc.getFecha()));
-    					haber.add(Utils.ordenarDosDecimales(mc.getImporte()));
-    					debe.add(" ");
-    					saldoI =Utils.redondear(saldoI+mc.getImporte(),2);
-    					saldo.add(Utils.ordenarDosDecimales(saldoI));
-    				}	
     			}
     			detalleIt.add(" ");
     			fecha.add(" ");

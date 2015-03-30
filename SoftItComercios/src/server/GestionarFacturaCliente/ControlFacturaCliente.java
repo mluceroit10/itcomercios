@@ -141,7 +141,9 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 				FacturaCliente fc = (FacturaCliente) FacturaClienteCol.elementAt(0);
 				fc.setAnulada(true);
 //				 SALDO CLIENTE CASO 3 y 4 ( - ) 
-				fc.getCliente().setDeuda(Utils.redondear(fc.getCliente().getDeuda()-fc.getImporteTotal(),2));
+				if(fc.getCondVenta().compareTo("CONTADO")!=0){
+					fc.getCliente().setDeuda(Utils.redondear(fc.getCliente().getDeuda()-fc.getImporteTotal(),2));
+				}
 				for(Iterator items=fc.getItems().iterator();items.hasNext();){
 					ItemFactura itF = (ItemFactura) items.next();
 					Producto pr= cProd.buscarProductoPersistentePorId(mp,itF.getProducto().getId());

@@ -193,7 +193,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
 			mp.initPersistencia();
-			String filtro = " (tipoFactura==\"FacturaCliente-A\" || tipoFactura==\"FacturaCliente-B\" ) && condVenta==\"CONTADO\" && planilla==null";  
+			String filtro = " anulada==false && (tipoFactura==\"FacturaCliente-A\" || tipoFactura==\"FacturaCliente-B\" ) && condVenta==\"CONTADO\" && planilla==null";  
 			Vector facturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
 			for(int i=0; i<facturaClientes.size();i++){
 				FacturaCliente fc = (FacturaCliente)facturaClientes.elementAt(i);
@@ -229,7 +229,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
 			mp.initPersistencia();
-			String filtro = " tipoFactura==\"RemitoCliente\" && remitoNro!=\"Facturado\" && planilla==null";  
+			String filtro = " anulada==false && tipoFactura==\"RemitoCliente\" && remitoNro!=\"Facturado\" && planilla==null";  
 			Vector facturaClientes= mp.getObjectsOrdered(FacturaCliente.class,filtro,"fechaImpresion ascending");
 			for(int i=0; i<facturaClientes.size();i++){
 				FacturaCliente fc = (FacturaCliente)facturaClientes.elementAt(i);
