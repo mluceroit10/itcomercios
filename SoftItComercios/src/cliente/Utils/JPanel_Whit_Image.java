@@ -16,10 +16,10 @@ package cliente.Utils;
 
 import java.awt.Graphics;
 import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
 public class JPanel_Whit_Image extends JPanel {
  
     private Image image;
@@ -56,7 +56,6 @@ public class JPanel_Whit_Image extends JPanel {
         repaint();
     }
 
-    @Override
     public void paint(Graphics g) {
         if (image != null) {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);

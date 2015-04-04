@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,6 +20,12 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
 
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -56,7 +63,7 @@ public class GUIMostrarLibroIva extends JDialog {
     
     private JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPFacturado(),null);
             jpPpal.add(getJBImprimir(),null);
@@ -68,11 +75,11 @@ public class GUIMostrarLibroIva extends JDialog {
  
     public JButton getJBImprimir() {
         if (jbImprimir == null) {
-        	jbImprimir = new JButton();
+        	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbImprimir.setBounds(new java.awt.Rectangle(245,460,100,30));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        	jbImprimir.setText("Imprimir");
         	jbImprimir.setName("Imprimir");
+        	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setInputMap(0, map);
         }
         return jbImprimir;
@@ -80,11 +87,11 @@ public class GUIMostrarLibroIva extends JDialog {
     
     public JButton getJBSalir() {
         if (jbSalir == null) {
-            jbSalir = new JButton();
+            jbSalir = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbSalir.setBounds(new java.awt.Rectangle(395,460,100,30));
             jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbSalir.setText("Salir");
             jbSalir.setName("Salir");
+            jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
         }
         return jbSalir;
@@ -92,22 +99,26 @@ public class GUIMostrarLibroIva extends JDialog {
     
     private JPanel getJPFacturado() {
         if (jpFacturado == null) {
-        	jpFacturado = new JPanel();
+        	jpFacturado = new TransparentPanel();
         	jpFacturado.setLayout(null);
         	jpFacturado.setBounds(new Rectangle(15,15,720,425));
-        	jpFacturado.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " Facturas del Mes "+mesLI+"/"+anioLI,
+        	jpFacturado.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " FACTURAS DEL MES "+mesLI+"/"+anioLI,
                     javax.swing.border.TitledBorder.CENTER,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,a, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	JLabel totales= new JLabel("TOTALES");
+        	totales.setForeground(Utils.colorTexto);
         	totales.setBounds(new Rectangle(150,400,70,22));
         	totales.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel neto= new JLabel("NETO:");
+        	neto.setForeground(Utils.colorTexto);
         	neto.setBounds(new Rectangle(250,400,50,22));
         	neto.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel iva= new JLabel("IVA:");
+        	iva.setForeground(Utils.colorTexto);
         	iva.setBounds(new Rectangle(400,400,50,22));
         	iva.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel total= new JLabel("TOTAL:");
+        	total.setForeground(Utils.colorTexto);
         	total.setBounds(new Rectangle(560,400,50,22));
         	total.setHorizontalAlignment(SwingConstants.RIGHT);
         	jpFacturado.add(totales,null);
@@ -118,8 +129,6 @@ public class GUIMostrarLibroIva extends JDialog {
         	jpFacturado.add(getJTFIva(),null);
         	jpFacturado.add(getJTFTotal(),null);
         	jpFacturado.add(getJSPDatos(), null);
-        	jpFacturado.setBackground(Utils.colorPanel);
-        	
         }
         return jpFacturado;
     } 

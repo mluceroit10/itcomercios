@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -21,6 +22,12 @@ import cliente.LimitadorNroGuion;
 import cliente.LimitadorNroMax;
 import cliente.LimitadorPrecio;
 import cliente.LimitadorPrecioGuion;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -76,7 +83,7 @@ public class GUIAltaModProducto extends JDialog {
 
     private JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.setSize(new java.awt.Dimension(575,460));
             jpPpal.add(getJPDatos(),null);
@@ -90,62 +97,75 @@ public class GUIAltaModProducto extends JDialog {
     private JPanel getJPDatos() {
         if (jpDatos == null) {
         	jlCodigo = new JLabel();
-            jlCodigo.setBounds(new Rectangle(10,30,120,15));
-            jlCodigo.setText("Código(*) ");
+            jlCodigo.setBounds(new Rectangle(10,30,140,15));
+            jlCodigo.setText("CODIGO (*)");
+            jlCodigo.setForeground(Utils.colorTexto);
             jlCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlNombre = new JLabel("Nombre  (*)");
-            jlNombre.setBounds(new Rectangle(10,62,120,15));
+            jlNombre = new JLabel("NOMBRE (*)");
+            jlNombre.setForeground(Utils.colorTexto);
+            jlNombre.setBounds(new Rectangle(10,62,140,15));
             jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
             jlStockA = new JLabel();
-            jlStockA.setBounds(new Rectangle(10,94,120,15));
-            jlStockA.setText("Stock Actual-Unid (*)");
+            jlStockA.setBounds(new Rectangle(10,94,140,15));
+            jlStockA.setText("STOCK ACTUAL UNID. (*)");
+            jlStockA.setForeground(Utils.colorTexto);
             jlStockA.setHorizontalAlignment(SwingConstants.RIGHT);
             jlStockM = new JLabel();
-            jlStockM.setBounds(new Rectangle(250,94,150,15));
-            jlStockM.setText("Stock Mínimo-Unid (*)");
+            jlStockM.setBounds(new Rectangle(250,94,170,15));
+            jlStockM.setText("STOCK MINIMO UNID. (*)");
+            jlStockM.setForeground(Utils.colorTexto);
             jlStockM.setHorizontalAlignment(SwingConstants.RIGHT);
             jlKilos = new JLabel();
-            jlKilos.setBounds(new Rectangle(10,126,120,15));
-            jlKilos.setText("Precio por Kilos?");
+            jlKilos.setBounds(new Rectangle(10,126,140,15));
+            jlKilos.setText("PRECIO POR KILOS?");
+            jlKilos.setForeground(Utils.colorTexto);
             jlKilos.setHorizontalAlignment(SwingConstants.RIGHT);
             jlStKilosA = new JLabel();
-            jlStKilosA.setBounds(new Rectangle(10,158,120,15));
-            jlStKilosA.setText("Stock Actual-Kilos");
+            jlStKilosA.setBounds(new Rectangle(10,158,140,15));
+            jlStKilosA.setText("STOCK ACTUAL KILOS");
+            jlStKilosA.setForeground(Utils.colorTexto);
             jlStKilosA.setHorizontalAlignment(SwingConstants.RIGHT);
             jlStKilosM = new JLabel();
-            jlStKilosM.setBounds(new Rectangle(250,158,150,15));
-            jlStKilosM.setText("Stock Mínimo-Kilos");
+            jlStKilosM.setBounds(new Rectangle(250,158,170,15));
+            jlStKilosM.setText("STOCK MINIMO KILOS");
+            jlStKilosM.setForeground(Utils.colorTexto);
             jlStKilosM.setHorizontalAlignment(SwingConstants.RIGHT);
             jlPrecioEntrada = new JLabel();
-            jlPrecioEntrada.setBounds(new Rectangle(10,190,120,15));
-            jlPrecioEntrada.setText("Precio Entrada (*)");
+            jlPrecioEntrada.setBounds(new Rectangle(10,190,140,15));
+            jlPrecioEntrada.setText("PRECIO ENTRADA (*)");
+            jlPrecioEntrada.setForeground(Utils.colorTexto);
             jlPrecioEntrada.setHorizontalAlignment(SwingConstants.RIGHT);
             jlTipoPrecioEntrada = new JLabel();
-            jlTipoPrecioEntrada.setBounds(new Rectangle(250,190,150,15));
-            jlTipoPrecioEntrada.setText("Tipo de Precio Entrada (*)");
+            jlTipoPrecioEntrada.setBounds(new java.awt.Rectangle(250,190,170,15));
+            jlTipoPrecioEntrada.setText("TIPO PRECIO ENTRADA (*)");
+            jlTipoPrecioEntrada.setForeground(Utils.colorTexto);
             jlTipoPrecioEntrada.setHorizontalAlignment(SwingConstants.RIGHT);
 			jlMargenGanancia = new JLabel();
-			jlMargenGanancia.setBounds(new Rectangle(10,222,120,15));
-			jlMargenGanancia.setText("Ganancia en % (*)");
+			jlMargenGanancia.setBounds(new Rectangle(10,222,140,15));
+			jlMargenGanancia.setText("GANANCIA EN % (*)");
+			jlMargenGanancia.setForeground(Utils.colorTexto);
 			jlMargenGanancia.setHorizontalAlignment(SwingConstants.RIGHT);
 			jlPrecioVentaSinIva = new JLabel();
-			jlPrecioVentaSinIva.setBounds(new Rectangle(250,254,150,15));
-			jlPrecioVentaSinIva.setText("Precio Venta Sin IVA (*)");
+			jlPrecioVentaSinIva.setBounds(new Rectangle(250,254,170,15));
+			jlPrecioVentaSinIva.setText("PRECIO VENTA SIN IVA (*)");
+			jlPrecioVentaSinIva.setForeground(Utils.colorTexto);
 			jlPrecioVentaSinIva.setHorizontalAlignment(SwingConstants.RIGHT);
 			jlPrecioVentaConIva = new JLabel();
-			jlPrecioVentaConIva.setBounds(new Rectangle(250,286,150,15));
-			jlPrecioVentaConIva.setText("Precio Venta Con IVA(*)");
+			jlPrecioVentaConIva.setBounds(new Rectangle(250,286,170,15));
+			jlPrecioVentaConIva.setText("PRECIO VENTA CON IVA(*)");
+			jlPrecioVentaConIva.setForeground(Utils.colorTexto);
 			jlPrecioVentaConIva.setHorizontalAlignment(SwingConstants.RIGHT);
             jlProveedor = new JLabel();
-            jlProveedor.setBounds(new Rectangle(10,318,120,15));
-            jlProveedor.setText("Proveedor (*)");
+            jlProveedor.setBounds(new Rectangle(10,318,140,15));
+            jlProveedor.setText("PROVEEDOR (*)");
+            jlProveedor.setForeground(Utils.colorTexto);
             jlProveedor.setHorizontalAlignment(SwingConstants.RIGHT);
-            jpDatos = new JPanel();
+            jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Datos del Producto", 
+            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DEL PRODUCTO", 
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatos.setBounds(new java.awt.Rectangle(15,15,535,355));
             jpDatos.add(jlNombre, null);
             jpDatos.add(jlCodigo, null);
@@ -199,7 +219,6 @@ public class GUIAltaModProducto extends JDialog {
                 }
                 jtfProveedor.setText(pDTO.getProveedor().getNombre());
             }
-            jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
     }
@@ -207,7 +226,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFNombre() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(140,62,370,22));
+            jtfNombre.setBounds(new Rectangle(155,62,370,22));
         }
         return jtfNombre;
     }
@@ -215,7 +234,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFCodigo() {
 		if (jtfCodigo==null){
 			jtfCodigo=new JTextField();
-			jtfCodigo.setBounds(new java.awt.Rectangle(140,30,100,22));
+			jtfCodigo.setBounds(new java.awt.Rectangle(155,30,100,22));
 			jtfCodigo.setBackground(new Color(255,255,255));
 			jtfCodigo.setDocument(new LimitadorNroMax(jtfCodigo,13));
 		}
@@ -226,7 +245,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFStockAct() {
         if (jtfStockA == null) {
         	jtfStockA = new JTextField();
-        	jtfStockA.setBounds(new Rectangle(140,94,100,22));
+        	jtfStockA.setBounds(new Rectangle(155,94,100,22));
         	jtfStockA.setDocument(new LimitadorNroGuion(jtfStockA));
         }
         return jtfStockA;
@@ -235,7 +254,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFStockMin() {
         if (jtfStockM == null) {
         	jtfStockM = new JTextField();
-        	jtfStockM.setBounds(new Rectangle(410,94,100,22));
+        	jtfStockM.setBounds(new Rectangle(425,94,100,22));
         	jtfStockM.setDocument(new LimitadorNroMax(jtfStockM));
         }
         return jtfStockM;
@@ -244,7 +263,7 @@ public class GUIAltaModProducto extends JDialog {
     public JComboBox getJCBPrecioKilos() {
         if (jcbKilos == null) {
         	jcbKilos  = new JComboBox();
-        	jcbKilos.setBounds(new java.awt.Rectangle(140,126,100,22));
+        	jcbKilos.setBounds(new java.awt.Rectangle(155,126,100,22));
         	jcbKilos.setBackground(new Color(255,255,255));
         	jcbKilos.setForeground(java.awt.Color.black);
         	jcbKilos.addItem("NO");
@@ -256,7 +275,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFStKilosAct() {
         if (jtfStKilosA == null) {
         	jtfStKilosA = new JTextField();
-        	jtfStKilosA.setBounds(new Rectangle(140,158,100,22));
+        	jtfStKilosA.setBounds(new Rectangle(155,158,100,22));
         	jtfStKilosA.setDocument(new LimitadorPrecioGuion(jtfStKilosA));
         }
         return jtfStKilosA;
@@ -265,7 +284,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFStKilosMin() {
         if (jtfStKilosM == null) {
         	jtfStKilosM = new JTextField();
-        	jtfStKilosM.setBounds(new Rectangle(410,158,100,22));
+        	jtfStKilosM.setBounds(new Rectangle(425,158,100,22));
         	jtfStKilosM.setDocument(new LimitadorPrecio(jtfStKilosM));
         }
         return jtfStKilosM;
@@ -274,7 +293,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFPrecioEntrada() {
         if (jtfPrecioEntrada == null) {
         	jtfPrecioEntrada = new JTextField();
-        	jtfPrecioEntrada.setBounds(new Rectangle(140,190,100,22));
+        	jtfPrecioEntrada.setBounds(new Rectangle(155,190,100,22));
         	jtfPrecioEntrada.setDocument(new LimitadorPrecio(jtfPrecioEntrada));
         }
         return jtfPrecioEntrada;
@@ -283,7 +302,7 @@ public class GUIAltaModProducto extends JDialog {
     public JComboBox getJCBTipoPrecioEntrada() {
         if (jcbTipoPrecioEntrada == null) {
         	jcbTipoPrecioEntrada  = new JComboBox();
-        	jcbTipoPrecioEntrada.setBounds(new java.awt.Rectangle(410,190,100,22));
+        	jcbTipoPrecioEntrada.setBounds(new java.awt.Rectangle(425,190,100,22));
         	jcbTipoPrecioEntrada.setBackground(new Color(255,255,255));
         	jcbTipoPrecioEntrada.setForeground(java.awt.Color.black);
         	jcbTipoPrecioEntrada.addItem("SIN IVA");
@@ -295,7 +314,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFMargenGanancia() {
 		if (jtfMargenGanancia == null) {
 			jtfMargenGanancia = new JTextField();
-			jtfMargenGanancia.setBounds(new Rectangle(140,222,100,22));
+			jtfMargenGanancia.setBounds(new Rectangle(155,222,100,22));
 			jtfMargenGanancia.setDocument(new LimitadorNroMax(jtfMargenGanancia,3));
 		}
 		return jtfMargenGanancia;
@@ -304,7 +323,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFPrecioVentaSinIva() {
         if (jtfPrecioVentaSinIva == null) {
         	jtfPrecioVentaSinIva = new JTextField();
-        	jtfPrecioVentaSinIva.setBounds(new Rectangle(410,254,100,22));
+        	jtfPrecioVentaSinIva.setBounds(new Rectangle(425,254,100,22));
         	jtfPrecioVentaSinIva.setDocument(new LimitadorPrecio(jtfPrecioVentaSinIva));
         }
         return jtfPrecioVentaSinIva;
@@ -313,7 +332,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFPrecioVentaConIva() {
         if (jtfPrecioVentaConIva == null) {
         	jtfPrecioVentaConIva = new JTextField();
-        	jtfPrecioVentaConIva.setBounds(new Rectangle(410,286,100,22));
+        	jtfPrecioVentaConIva.setBounds(new Rectangle(425,286,100,22));
         	jtfPrecioVentaConIva.setDocument(new LimitadorPrecio(jtfPrecioVentaConIva));
         }
         return jtfPrecioVentaConIva;
@@ -323,7 +342,7 @@ public class GUIAltaModProducto extends JDialog {
     public JTextField getJTFProveedor() {
         if (jtfProveedor == null) {
         	jtfProveedor = new JTextField();
-        	jtfProveedor.setBounds(new Rectangle(140,318,270,22));
+        	jtfProveedor.setBounds(new Rectangle(155,318,270,22));
         	jtfProveedor.setDisabledTextColor(Utils.colorTextoDisabled);
         	jtfProveedor.setEnabled(false);
         }
@@ -332,10 +351,10 @@ public class GUIAltaModProducto extends JDialog {
     
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
-            jbAceptar = new JButton();
+            jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setBounds(new java.awt.Rectangle(172,390,100,30));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbAceptar.setText("Aceptar");
+            jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
         }
         return jbAceptar;
@@ -343,10 +362,10 @@ public class GUIAltaModProducto extends JDialog {
     
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
-            jbCancelar = new JButton();
+            jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbCancelar.setBounds(new java.awt.Rectangle(302,390,100,30));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbCancelar.setText("Cancelar");
+            jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
         }
         return jbCancelar;
@@ -354,11 +373,11 @@ public class GUIAltaModProducto extends JDialog {
     
     public JButton getJBProveedor() {
         if (jbProveedor == null) {
-        	jbProveedor = new JButton();
-        	jbProveedor.setBounds(new Rectangle(420,318,80,22));
+        	jbProveedor = new GlossyButton("BUSCAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbProveedor.setBounds(new Rectangle(435,318,80,22));
         	jbProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbProveedor.setName("Buscar");
-        	jbProveedor.setText("Buscar");
+        	jbProveedor.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
         	jbProveedor.setEnabled(seleccionar);
         	jbProveedor.setInputMap(0, map);
         }

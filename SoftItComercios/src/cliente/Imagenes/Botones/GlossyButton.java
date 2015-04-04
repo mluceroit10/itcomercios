@@ -150,7 +150,6 @@ public class GlossyButton extends JButton {
 		setFocusPainted(false);
 	}
 
-	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

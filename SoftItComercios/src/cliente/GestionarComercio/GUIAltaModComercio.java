@@ -1,9 +1,11 @@
 package cliente.GestionarComercio;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -17,6 +19,12 @@ import javax.swing.SwingConstants;
 import persistencia.domain.Comercio;
 import cliente.LimitadorNroGuion;
 import cliente.LimitadorNroMax;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import com.toedter.calendar.JDateChooser;
 import common.Utils;
@@ -69,7 +77,7 @@ public class GUIAltaModComercio extends JDialog {
 
     private JPanel getPanelPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal = new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.setSize(770, 384);
             jpPpal.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, null));
@@ -86,61 +94,71 @@ public class GUIAltaModComercio extends JDialog {
 
     private JPanel getJPDatosPers() {
     	if (jpDatosComercio == null) {
-    		jpDatosComercio = new JPanel();
+    	    jpDatosComercio = new TransparentPanel();
     		jpDatosComercio.setLayout(null);
+    		jpDatosComercio.setForeground(Utils.colorTexto);
     		jpDatosComercio.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-    				"Datos Comercio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-    				javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+    				"DATOS COMERCIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+    				javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
     		jpDatosComercio.setBounds(new java.awt.Rectangle(15,15,745,300));
     		jlNombre = new JLabel();
     		jlNombre.setBounds(new java.awt.Rectangle(12,30,80,15));
-    		jlNombre.setText("Nombre (*)");
+    		jlNombre.setText("NOMBRE (*)");
+    		jlNombre.setForeground(Utils.colorTexto);
     		jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlCuit = new JLabel();
     		jlCuit.setBounds(new java.awt.Rectangle(12,62,80,15));
-    		jlCuit.setText("Cuit");
+    		jlCuit.setText("CUIT");
+    		jlCuit.setForeground(Utils.colorTexto);
     		jlCuit.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlIngBrutos = new JLabel();
-    		jlIngBrutos.setBounds(new Rectangle(225,62,80,15));
-    		jlIngBrutos.setText("Ingr. Brutos");
+    		jlIngBrutos.setBounds(new java.awt.Rectangle(219,62,88,15));
+    		jlIngBrutos.setText("INGR. BRUTOS");
+    		jlIngBrutos.setForeground(Color.WHITE);
     		jlIngBrutos.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlInicioAct = new JLabel();
-    		jlInicioAct.setBounds(new java.awt.Rectangle(425,62,120,15));
-    		jlInicioAct.setText("Inicio de Actividades");  
+    		jlInicioAct.setBounds(new java.awt.Rectangle(418,62,127,15));
+    		jlInicioAct.setText("INICIO DE ACTIV.");  
+    		jlInicioAct.setForeground(Utils.colorTexto);
     		jlInicioAct.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlTel = new JLabel();
     		jlTel.setBounds(new java.awt.Rectangle(12,126,80,15));
-    		jlTel.setText("Teléfono");
+    		jlTel.setText("TELEFONO");
+    		jlTel.setForeground(Utils.colorTexto);
     		jlTel.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlDireccion = new JLabel();
     		jlDireccion.setBounds(new java.awt.Rectangle(10,94,80,15));
-    		jlDireccion.setText("Dirección (*)");
+    		jlDireccion.setText("DIRECCION (*)");
+    		jlDireccion.setForeground(Utils.colorTexto);
     		jlDireccion.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlLocalidad = new JLabel();
-    		jlLocalidad.setBounds(new java.awt.Rectangle(430,94,76,15));
-    		jlLocalidad.setText("Localidad (*)");
+    		jlLocalidad.setBounds(new java.awt.Rectangle(424,94,82,15));
+    		jlLocalidad.setText("LOCALIDAD (*)");
+    		jlLocalidad.setForeground(Utils.colorTexto);
     		jlLocalidad.setHorizontalAlignment(SwingConstants.RIGHT);
-    		jpNrosRioIV = new JPanel();
+    		jpNrosRioIV = new TransparentPanel();
     		jpNrosRioIV.setLayout(null);
+    		jpNrosRioIV.setBounds(new java.awt.Rectangle(200,190,350,102));
+    		jpNrosRioIV.setForeground(Utils.colorTexto);
     		jpNrosRioIV.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-    				"Numeración de Comprobantes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-    				javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-    		jpNrosRioIV.setBounds(new java.awt.Rectangle(200,190,340,102));
-    		jpNrosRioIV.setBackground(Utils.colorPanel);
-    		
+    				"NUMERACION DE COMPROBANTES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+    				javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
     		jlNroFactA = new JLabel();
-    		jlNroFactA.setBounds(new java.awt.Rectangle(12,25,150,16));
-    		jlNroFactA.setText("Próximo Nro. Factura A (*)");
+    		jlNroFactA.setBounds(new java.awt.Rectangle(12,25,170,16));
+    		jlNroFactA.setText("PROXIMO NRO. FACTURA A (*)");
+    		jlNroFactA.setForeground(Utils.colorTexto);
     		jlNroFactA.setHorizontalAlignment(SwingConstants.RIGHT);
     		
     		jlNroFactB = new JLabel();
-    		jlNroFactB.setBounds(new java.awt.Rectangle(12,50,150,15));
-    		jlNroFactB.setText("Próximo Nro. Factura B (*)");
+    		jlNroFactB.setBounds(new java.awt.Rectangle(12,50,170,15));
+    		jlNroFactB.setText("PROXIMO NRO. FACTURA B (*)");
+    		jlNroFactB.setForeground(Utils.colorTexto);
     		jlNroFactB.setHorizontalAlignment(SwingConstants.RIGHT);
     		
     		jlNroRemito = new JLabel();
-    		jlNroRemito.setBounds(new java.awt.Rectangle(12,75,150,15));
-    		jlNroRemito.setText("Próximo Nro. Remito (*)");
+    		jlNroRemito.setBounds(new java.awt.Rectangle(12,75,170,15));
+    		jlNroRemito.setText("PROXIMO NRO. REMITO (*)");
+    		jlNroRemito.setForeground(Utils.colorTexto);
     		jlNroRemito.setHorizontalAlignment(SwingConstants.RIGHT);
     		
     		jpDatosComercio.add(jlCuit, null);
@@ -178,7 +196,6 @@ public class GUIAltaModComercio extends JDialog {
     			jtfNroFactB.setText(String.valueOf(comercio.getNroFactB()));
     			jtfNroRemito.setText(String.valueOf(comercio.getNroRemito()));
     		}
-    		jpDatosComercio.setBackground(Utils.colorPanel);
     	}
     	return jpDatosComercio;
     }
@@ -235,7 +252,7 @@ public class GUIAltaModComercio extends JDialog {
     public JTextField getLocalidad() {
     	if (jtfLocalidad == null) {
     		jtfLocalidad = new JTextField();
-    		jtfLocalidad.setBounds(new java.awt.Rectangle(515,94,133,22));
+    		jtfLocalidad.setBounds(new java.awt.Rectangle(515,94,125,22));
     		jtfLocalidad.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfLocalidad.setEnabled(false);
     	}
@@ -244,20 +261,20 @@ public class GUIAltaModComercio extends JDialog {
 
     public JButton getJButtonLocalidad() {
         if (jbLocalidad == null) {
-            jbLocalidad = new JButton();
-            jbLocalidad.setBounds(new java.awt.Rectangle(655,94,75,22));
+            jbLocalidad = new GlossyButton("BUSCAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbLocalidad.setBounds(new java.awt.Rectangle(650,94,80,22));
             jbLocalidad.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbLocalidad.setName("Buscar");
-            jbLocalidad.setText("Buscar");
+            jbLocalidad.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
             jbLocalidad.setInputMap(0, map);
-        }
+        }  
         return jbLocalidad;
     }
     
     public JTextField getProximoNroFactARIV() {
     	if (jtfNroFactA == null) {
     		jtfNroFactA = new JTextField();
-    		jtfNroFactA.setBounds(new Rectangle(170,25,150,20));
+    		jtfNroFactA.setBounds(new Rectangle(190,25,150,20));
     		jtfNroFactA.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfNroFactA.setEnabled(false);
     		jtfNroFactA.setDocument(new LimitadorNroMax(jtfNroFactA,12));
@@ -268,7 +285,7 @@ public class GUIAltaModComercio extends JDialog {
     public JTextField getProximoNroFactBRIV() {
     	if (jtfNroFactB == null) {
     		jtfNroFactB = new JTextField();
-    		jtfNroFactB.setBounds(new Rectangle(170,50,150,20));
+    		jtfNroFactB.setBounds(new Rectangle(190,50,150,20));
     		jtfNroFactB.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfNroFactB.setEnabled(false);
     		jtfNroFactB.setDocument(new LimitadorNroMax(jtfNroFactB,12));
@@ -279,7 +296,7 @@ public class GUIAltaModComercio extends JDialog {
     public JTextField getProximoNroRemitoRIV() {
     	if (jtfNroRemito == null) {
     		jtfNroRemito = new JTextField();
-    		jtfNroRemito.setBounds(new Rectangle(170,75,150,20));
+    		jtfNroRemito.setBounds(new Rectangle(190,75,150,20));
     		jtfNroRemito.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfNroRemito.setEnabled(false);
     		jtfNroRemito.setDocument(new LimitadorNroMax(jtfNroRemito,12));
@@ -289,11 +306,11 @@ public class GUIAltaModComercio extends JDialog {
 
     public JButton getCancelar() {
     	if (jbCancelar == null) {
-    		jbCancelar = new JButton();
+    		jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
     		jbCancelar.setBounds(new java.awt.Rectangle(405,335,100,30));
     		jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
     		jbCancelar.setName("Cancelar");
-    		jbCancelar.setText("Cancelar");
+    		jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
     		jbCancelar.setInputMap(0, map);
     	}
     	return jbCancelar;
@@ -301,11 +318,11 @@ public class GUIAltaModComercio extends JDialog {
 
     public JButton getAceptar() {
         if (jbAceptar == null) {
-            jbAceptar = new JButton();
+            jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setBounds(new java.awt.Rectangle(255,335,100,30));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setName("Aceptar");
-            jbAceptar.setText("Aceptar");
+            jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
         }
         return jbAceptar;
@@ -313,11 +330,11 @@ public class GUIAltaModComercio extends JDialog {
 
     public JButton getJButtonModificarNrosFactura() {
         if (jbModNroFacts == null) {
-        	jbModNroFacts = new JButton();
+        	jbModNroFacts = new GlossyButton("MODIFICAR NUMEROS",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbModNroFacts.setBounds(new java.awt.Rectangle(260,160,200,25));
         	jbModNroFacts.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbModNroFacts.setName("ModNroFact");
-        	jbModNroFacts.setText("Modificar Numeros");
+        	jbModNroFacts.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/edit.png")));
         	jbModNroFacts.setInputMap(0, map);
         }
         return jbModNroFacts;
@@ -325,11 +342,11 @@ public class GUIAltaModComercio extends JDialog {
     
     public JButton getJButtonImprimirTarjeta() {
         if (jbImprTarjeta == null) {
-        	jbImprTarjeta = new JButton();
-        	jbImprTarjeta.setBounds(new Rectangle(30,334,80,30));
+        	jbImprTarjeta = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbImprTarjeta.setBounds(new Rectangle(30,334,100,30));
         	jbImprTarjeta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprTarjeta.setName("Imprimir");
-        	jbImprTarjeta.setText("Imprimir");
+        	jbImprTarjeta.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprTarjeta.setInputMap(0, map);
         }
         return jbImprTarjeta;

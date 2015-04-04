@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,8 +19,17 @@ import javax.swing.SwingConstants;
 import persistencia.domain.Producto;
 import cliente.LimitadorNroMax;
 import cliente.LimitadorPrecio;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
+import javax.swing.border.TitledBorder;
+import javax.swing.BorderFactory;
+import java.awt.Font;
 
 public class GUICambiarPrecios extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -57,7 +67,7 @@ public class GUICambiarPrecios extends JDialog {
     
     private JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal = new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.setSize(new java.awt.Dimension(360,455));
             jpPpal.add(getJPDatos(),null);
@@ -70,52 +80,60 @@ public class GUICambiarPrecios extends JDialog {
         
     private JPanel getJPDatos() {
         if (jpDatos == null) {
+        	TitledBorder titledBorder = BorderFactory.createTitledBorder(Utils.b, "DATOS DEL PRODUCTO", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 14), Utils.colorTexto);
+        	titledBorder.setTitleColor(Utils.colorTexto);
         	jlCodigo = new JLabel();
             jlCodigo.setBounds(new Rectangle(10,30,100,15));
-            jlCodigo.setText("Código");
+            jlCodigo.setText("CODIGO");
+            jlCodigo.setForeground(Utils.colorTexto);
             jlCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlNombre = new JLabel("Nombre");
+            jlNombre = new JLabel("NOMBRE");
             jlNombre.setBounds(new Rectangle(10,62,100,15));
+            jlNombre.setForeground(Utils.colorTexto);
             jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
             jlProveedor = new JLabel();
             jlProveedor.setBounds(new Rectangle(10,94,100,15));
-            jlProveedor.setText("Proveedor");
+            jlProveedor.setText("PROVEEDOR");
+            jlProveedor.setForeground(Utils.colorTexto);
             jlProveedor.setHorizontalAlignment(SwingConstants.RIGHT);
             jlKilos = new JLabel();
-            jlKilos.setBounds(new Rectangle(10,126,100,15));
-            jlKilos.setText("Precio por Kilos?");
+            jlKilos.setBounds(new Rectangle(10,126,180,15));
+            jlKilos.setText("PRECIO POR KILOS?");
+            jlKilos.setForeground(Utils.colorTexto);
             jlKilos.setHorizontalAlignment(SwingConstants.RIGHT);
             jlPrecioEntrada = new JLabel();
-            jlPrecioEntrada.setBounds(new Rectangle(10,158,150,15));
-            jlPrecioEntrada.setText("Precio Entrada");
+            jlPrecioEntrada.setBounds(new Rectangle(10,158,180,15));
+            jlPrecioEntrada.setText("PRECIO ENTRADA");
+            jlPrecioEntrada.setForeground(Utils.colorTexto);
             jlPrecioEntrada.setHorizontalAlignment(SwingConstants.RIGHT);
             
             jlTipoPrecioEntrada = new JLabel();
-            jlTipoPrecioEntrada.setBounds(new Rectangle(10,190,150,15));
-            jlTipoPrecioEntrada.setText("Tipo de Precio Entrada(*)");
+            jlTipoPrecioEntrada.setBounds(new Rectangle(10,190,180,15));
+            jlTipoPrecioEntrada.setText("TIPO DE PRECIO DE ENTRADA(*)");
+            jlTipoPrecioEntrada.setForeground(Utils.colorTexto);
             jlTipoPrecioEntrada.setHorizontalAlignment(SwingConstants.RIGHT);
             
             jlMargenGanancia = new JLabel();
-			jlMargenGanancia.setBounds(new Rectangle(10,222,150,15));
-			jlMargenGanancia.setText("Ganancia en % (*)");
+			jlMargenGanancia.setBounds(new Rectangle(10,222,180,15));
+			jlMargenGanancia.setText("GANANCIA EN % (*)");
+			jlMargenGanancia.setForeground(Utils.colorTexto);
 			jlMargenGanancia.setHorizontalAlignment(SwingConstants.RIGHT);
             
             jlPrecioVentaSinIva = new JLabel();
-			jlPrecioVentaSinIva.setBounds(new Rectangle(10,286,150,15));
-			jlPrecioVentaSinIva.setText("Precio Venta Sin Iva(*)");
+			jlPrecioVentaSinIva.setBounds(new Rectangle(10,286,180,15));
+			jlPrecioVentaSinIva.setText("PRECIO VENTA SIN IVA(*)");
+			jlPrecioVentaSinIva.setForeground(Utils.colorTexto);
 			jlPrecioVentaSinIva.setHorizontalAlignment(SwingConstants.RIGHT);
 			
 			jlPrecioVentaConIva = new JLabel();
-			jlPrecioVentaConIva.setBounds(new Rectangle(10,318,150,15));
-			jlPrecioVentaConIva.setText("Precio Venta Con Iva(*)");
+			jlPrecioVentaConIva.setBounds(new Rectangle(10,318,180,15));
+			jlPrecioVentaConIva.setText("PRECIO VENTA CON IVA(*)");
+			jlPrecioVentaConIva.setForeground(Utils.colorTexto);
 			jlPrecioVentaConIva.setHorizontalAlignment(SwingConstants.RIGHT);
-			jpDatos = new JPanel();
+			jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Datos del Producto", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
             jpDatos.setBounds(new java.awt.Rectangle(15,15,320,350));
+            jpDatos.setBorder(titledBorder);
             jpDatos.add(jlNombre, null);
             jpDatos.add(jlCodigo, null);
             jpDatos.add(jlKilos, null);
@@ -155,7 +173,6 @@ public class GUICambiarPrecios extends JDialog {
                 }
                 
             }
-            jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
     }
@@ -185,7 +202,7 @@ public class GUICambiarPrecios extends JDialog {
     public JTextField getJCBPrecioKilos() {
         if (jcbKilos == null) {
         	jcbKilos  = new JTextField();
-        	jcbKilos.setBounds(new java.awt.Rectangle(120,126,100,22));
+        	jcbKilos.setBounds(new java.awt.Rectangle(200,126,100,22));
         	jcbKilos.setDisabledTextColor(Utils.colorTextoDisabled);
         	jcbKilos.setEnabled(false);
         }
@@ -195,7 +212,7 @@ public class GUICambiarPrecios extends JDialog {
     public JTextField getJTFPrecioEntrada() {
         if (jtfPrecioEntrada == null) {
         	jtfPrecioEntrada = new JTextField();
-        	jtfPrecioEntrada.setBounds(new Rectangle(170,158,100,22));
+        	jtfPrecioEntrada.setBounds(new Rectangle(200,158,100,22));
         	jtfPrecioEntrada.setDocument(new LimitadorPrecio(jtfPrecioEntrada));
         	jtfPrecioEntrada.setDisabledTextColor(Utils.colorTextoDisabled);
         	jtfPrecioEntrada.setEnabled(false);
@@ -207,7 +224,7 @@ public class GUICambiarPrecios extends JDialog {
     public JComboBox getJCBTipoPrecioEntrada() {
         if (jcbTipoPrecioEntrada == null) {
         	jcbTipoPrecioEntrada  = new JComboBox();
-        	jcbTipoPrecioEntrada.setBounds(new java.awt.Rectangle(170,190,100,22));
+        	jcbTipoPrecioEntrada.setBounds(new java.awt.Rectangle(200,190,100,22));
         	jcbTipoPrecioEntrada.setBackground(new Color(255,255,255));
         	jcbTipoPrecioEntrada.setForeground(java.awt.Color.black);
         	jcbTipoPrecioEntrada.addItem("SIN IVA");
@@ -219,7 +236,7 @@ public class GUICambiarPrecios extends JDialog {
     public JTextField getJTFMargenGanancia() {
 		if (jtfMargenGanancia == null) {
 			jtfMargenGanancia = new JTextField();
-			jtfMargenGanancia.setBounds(new Rectangle(170,222,100,22));
+			jtfMargenGanancia.setBounds(new Rectangle(200,222,100,22));
 			jtfMargenGanancia.setDocument(new LimitadorNroMax(jtfMargenGanancia,3));
 		}
 		return jtfMargenGanancia;
@@ -227,7 +244,7 @@ public class GUICambiarPrecios extends JDialog {
     
     public JButton getJBCalcular() {
         if (jbCalcular == null) {
-        	jbCalcular = new JButton();
+        	jbCalcular = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbCalcular.setBounds(new java.awt.Rectangle(20,250,280,25));
         	jbCalcular.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbCalcular.setText("CALCULAR  PRECIO  VENTA");
@@ -240,7 +257,7 @@ public class GUICambiarPrecios extends JDialog {
     public JTextField getJTFPrecioVentaSinIva() {
         if (jtfPrecioVentaSinIva == null) {
         	jtfPrecioVentaSinIva = new JTextField();
-        	jtfPrecioVentaSinIva.setBounds(new Rectangle(170,286,100,22));
+        	jtfPrecioVentaSinIva.setBounds(new Rectangle(200,286,100,22));
         	jtfPrecioVentaSinIva.setDocument(new LimitadorPrecio(jtfPrecioVentaSinIva));
         }
         return jtfPrecioVentaSinIva;
@@ -249,7 +266,7 @@ public class GUICambiarPrecios extends JDialog {
     public JTextField getJTFPrecioVentaConIva() {
         if (jtfPrecioVentaConIva == null) {
         	jtfPrecioVentaConIva = new JTextField();
-        	jtfPrecioVentaConIva.setBounds(new Rectangle(170,318,100,22));
+        	jtfPrecioVentaConIva.setBounds(new Rectangle(200,318,100,22));
         	jtfPrecioVentaConIva.setDocument(new LimitadorPrecio(jtfPrecioVentaConIva));
         }
         return jtfPrecioVentaConIva;
@@ -267,10 +284,10 @@ public class GUICambiarPrecios extends JDialog {
     
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
-            jbAceptar = new JButton();
+            jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setBounds(new java.awt.Rectangle(60,385,100,30));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbAceptar.setText("Aceptar");
+            jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setName("AceptarCP");
             jbAceptar.setInputMap(0, map);
         }
@@ -279,11 +296,11 @@ public class GUICambiarPrecios extends JDialog {
     
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
-            jbCancelar = new JButton();
+            jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbCancelar.setBounds(new java.awt.Rectangle(190,385,100,30));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbCancelar.setText("Cancelar");
             jbCancelar.setName("CancelarCP");
+            jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
         }
         return jbCancelar;

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import com.toedter.calendar.JDateChooser;
 import common.Utils;
@@ -46,7 +54,7 @@ public class GUIListarProductosFacturados extends JDialog {
 	
 	private JPanel getJPPpal() {
 		if (jpPpal == null) {
-			jpPpal = new JPanel();
+			jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
 			jpPpal.setLayout(null);
 			jpPpal.add(getJPDatos(),null);
 			jpPpal.add(getJBCancelar(), null);
@@ -60,13 +68,13 @@ public class GUIListarProductosFacturados extends JDialog {
 			jlDia = new JLabel("Ir a:");
 			jlDia.setBounds(new Rectangle(10,25,60,15));
 			jlDia.setHorizontalAlignment(SwingConstants.RIGHT);
-			jpDatos = new JPanel();
+			jpDatos = new TransparentPanel();
 			jpDatos.setLayout(null);
 			jpDatos.setSize(new java.awt.Dimension(300,130));
-			jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Calendario", 
+			jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "CALENDARIO", 
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jpDatos.setBounds(new Rectangle(15,15,310,135));
 			jlNombre = new JLabel();
 			jlNombre.setBounds(new Rectangle(10,60,60,15));
@@ -76,8 +84,6 @@ public class GUIListarProductosFacturados extends JDialog {
 			jpDatos.add(getJDateChooserIngreso(), null);
 			jpDatos.add(jlNombre, null);
 			jpDatos.add(getJBAceptar(), null);
-			jpDatos.setBackground(Utils.colorPanel);
-			
 		}
 		return jpDatos;
 	}
@@ -104,11 +110,11 @@ public class GUIListarProductosFacturados extends JDialog {
 	
 	public JButton getJBAceptar() {
 		if (jbAceptar == null) {
-			jbAceptar = new JButton();
+			jbAceptar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jbAceptar.setBounds(new java.awt.Rectangle(40,97,230,22));
 			jbAceptar.setName("Verificar Facturas");
 			jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			jbAceptar.setText("Verificar Facturas");
+			jbAceptar.setText("VERIFICAR FACTURAS");
 			jbAceptar.setInputMap(0, map);
 		}
 		return jbAceptar;
@@ -117,11 +123,11 @@ public class GUIListarProductosFacturados extends JDialog {
 	
 	public JButton getJBCancelar() {
 		if (jbCancelar == null) {
-			jbCancelar = new JButton();
+			jbCancelar = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jbCancelar.setBounds(new java.awt.Rectangle(123,170,100,30));
 			jbCancelar.setName("Salir");
 			jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			jbCancelar.setText("Salir");
+			jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbCancelar.setInputMap(0, map);
 		}
 		return jbCancelar;

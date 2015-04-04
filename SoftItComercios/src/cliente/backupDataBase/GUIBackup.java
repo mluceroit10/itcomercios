@@ -14,6 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+
 import common.RootAndIp;
 import common.Utils;
 
@@ -49,22 +55,27 @@ public class GUIBackup extends JDialog{
 			advertencia.setAlignmentX(CENTER_ALIGNMENT);
 			advertencia.setForeground(new Color(0,0,205));
 			advertencia.setBounds(new java.awt.Rectangle(30,10,670,40));
-			advertencia.setBackground(Utils.colorPanel);
-			advertencia.setDisabledTextColor(Utils.colorTextoDisabled);
+			advertencia.setDisabledTextColor(Utils.colorTexto);
+			advertencia.setForeground(Utils.colorTexto);
+			advertencia.setOpaque(false);
+			advertencia.setBorder(Utils.b);
 			advertencia.setEnabled(false);
+			
 			icono= new JLabel();
-			icono.setIcon(new ImageIcon(rip.getExtras()+"/iconos/guardar.png"));
+			icono.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/guardar.png")));
 			icono.setBounds(new java.awt.Rectangle(30,100,50,50));
 			icono.setBorder(javax.swing.BorderFactory.createLineBorder(Color.red));
 			resultado = new JTextPane();
 			resultado.setText("");
 			resultado.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
 			resultado.setForeground(new Color(0,0,205)); 
-			resultado.setDisabledTextColor(Utils.colorTextoDisabled);
+			resultado.setDisabledTextColor(Utils.colorTexto);
 			resultado.setBounds(new java.awt.Rectangle(30,220,670,40));
-			resultado.setBackground(Utils.colorPanel);
+			resultado.setForeground(Utils.colorTexto);
+			resultado.setOpaque(false);
+			resultado.setBorder(Utils.b);
 			resultado.setEnabled(false);
-			jContentPane = new JPanel();
+			jContentPane = new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
 			jContentPane.setLayout(null);
 			jContentPane.setBackground(Utils.colorFondo);
 			jContentPane.add(advertencia, null);
@@ -78,10 +89,10 @@ public class GUIBackup extends JDialog{
 
 	public JButton getJButtonSalir() {
 		if (JButtonS == null) {
-			JButtonS = new JButton();
+			JButtonS = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			JButtonS.setBounds(new java.awt.Rectangle(320,280,100,30));
 			JButtonS.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			JButtonS.setText("Salir");
+			JButtonS.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			JButtonS.setInputMap(0, map);
 		}
 		return JButtonS;

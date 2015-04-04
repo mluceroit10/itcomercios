@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
-import persistencia.domain.FacturaCliente;
 import persistencia.domain.FacturaProveedor;
 import persistencia.domain.ItemFactura;
 import persistencia.domain.MovimientoCaja;

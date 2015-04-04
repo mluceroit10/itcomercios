@@ -38,7 +38,7 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
 	
 	public MediadorGestionarCliente(JFrame guiPadre) {
     	super();
-        try{
+        try{  
         	this.controlCliente = new ControlCliente();
         }catch(Exception ex){
         	Utils.manejoErrores(ex,"Error en MediadorGestionarCliente. Constructor");

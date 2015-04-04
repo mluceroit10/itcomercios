@@ -43,8 +43,9 @@ public class Utils{
 	public static Color colorPanel = new Color(205,150,205); 
 	public static Color colorNegro = new Color(0,0,0);
 	public static Color colorTextoDisabled = new Color(0,0,205); 
+	public static Color colorTexto = new Color(255 ,255, 255  ); 
 	public static String tipoLetra = "Century Gothic";
-	public static Border b= javax.swing.BorderFactory.createLineBorder(new Color(104,34,139),2);
+	public static Border b= javax.swing.BorderFactory.createLineBorder(new Color(104,34,139),3);
 	private static Toolkit tk = Toolkit.getDefaultToolkit();   
     private static Dimension screenSize = tk.getScreenSize();
     public static int anchoMaxVent=screenSize.width;

@@ -149,7 +149,6 @@ public class GradientButton extends JButton {
 		setFocusPainted(false);
 	}
 
-	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -239,7 +238,6 @@ public class GradientButton extends JButton {
 	 * @param clipShape
 	 *            shape
 	 */
-	@SuppressWarnings("unused")
 	private void paintBorderShadow(Graphics2D g2, int shadowWidth,
 			Shape clipShape) {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

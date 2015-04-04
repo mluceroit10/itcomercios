@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,6 +27,12 @@ import javax.swing.table.TableColumn;
 import cliente.LimitadorNroMax;
 import cliente.LimitadorPrecio;
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import com.toedter.calendar.JDateChooser;
 import common.Utils;
@@ -73,7 +80,7 @@ public class GUIRemitoCliente extends JDialog {
 
     public JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPDatosProducto(), null);
             jpPpal.add(getJPDatosRemito(), null);
@@ -88,39 +95,47 @@ public class GUIRemitoCliente extends JDialog {
 
     private JPanel getJPDatosProducto() {
         if (jpDatosProd == null) {
-        	jpDatosProd = new JPanel();
+        	jpDatosProd = new TransparentPanel();
         	jpDatosProd.setLayout(null);
         	jpDatosProd.setBounds(new java.awt.Rectangle(8,365,716,130));
-        	jpDatosProd.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Ingreso de Productos",
+        	jpDatosProd.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "INGRESO DE PRODUCTOS",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-        	jpDatosProd.setBackground(Utils.colorPanel);
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	jlBusqueda = new JLabel();
-            jlBusqueda.setBounds(new Rectangle(15,30,200,22));
-            jlBusqueda.setText("Buscar Producto:");
+            jlBusqueda.setBounds(new Rectangle(10,28,120,22));
+            jlBusqueda.setText("BUSCAR PRODUCTO:");
+            jlBusqueda.setHorizontalAlignment(SwingConstants.RIGHT);
+            jlBusqueda.setForeground(Utils.colorTexto);
         	jlSelecProd = new JLabel();
-        	jlSelecProd.setBounds(new Rectangle(225,30,150,22));
-        	jlSelecProd.setText("Seleccione Producto ");
+        	jlSelecProd.setBounds(new Rectangle(225,28,150,22));
+        	jlSelecProd.setText("SELECCIONE PRODUCTO");
+        	jlSelecProd.setForeground(Utils.colorTexto);
         	jlCodigo = new JLabel();
-        	jlCodigo.setBounds(new Rectangle(15,62,200,22));
-            jlCodigo.setText("Código_Producto:");
+            jlCodigo.setBounds(new Rectangle(10,58,120,22));
+            jlCodigo.setText("PRODUCTO SELEC.:");
+            jlCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
+            jlCodigo.setForeground(Utils.colorTexto);
             jlImporte = new JLabel();
-            jlImporte.setBounds(new java.awt.Rectangle(550,62,70,22));
-            jlImporte.setText("Importe:");
+            jlImporte.setBounds(new java.awt.Rectangle(550,58,70,22));
+            jlImporte.setText("IMPORTE:");
+            jlImporte.setForeground(Utils.colorTexto);
             JLabel jlAgregar = new JLabel();
-            jlAgregar.setBounds(new java.awt.Rectangle(15,88,685,32));
+            jlAgregar.setBounds(new java.awt.Rectangle(15,84,685,32));
             jlAgregar.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jlCantidad = new JLabel();
-            jlCantidad.setBounds(new java.awt.Rectangle(30,92,100,22));
-            jlCantidad.setText("Ingrese Cantidad:");
+            jlCantidad.setBounds(new java.awt.Rectangle(30,88,120,22));
+            jlCantidad.setText("INGRESE CANTIDAD:");
+            jlCantidad.setForeground(Utils.colorTexto);
             jlKilos = new JLabel();
-            jlKilos.setBounds(new Rectangle(225,92,90,22));
-            jlKilos.setText("Ingrese Kg.:");
+            jlKilos.setBounds(new Rectangle(225,88,90,22));
+            jlKilos.setText("INGRESE KG.:");
+            jlKilos.setForeground(Utils.colorTexto);
             jlDescuento = new JLabel();
-            jlDescuento.setBounds(new Rectangle(395,92,180,22));
-            jlDescuento.setText("Ingrese Descuento:           %");
+            jlDescuento.setBounds(new Rectangle(365,88,150,22));
+            jlDescuento.setText("INGRESE DESCUENTO(%):");
+            jlDescuento.setForeground(Utils.colorTexto);
             jpDatosProd.add(jlSelecProd, null);
             jpDatosProd.add(jlCodigo, null);
             jpDatosProd.add(jlBusqueda, null);
@@ -142,27 +157,31 @@ public class GUIRemitoCliente extends JDialog {
     
     private JPanel getJPDatosRemito() {
         if (jpDatosRemito == null) {
-        	jlCuit = new JLabel();
-        	jlCuit.setBounds(new java.awt.Rectangle(490,30,70,22));
-        	jlCuit.setText("Cuit:");
-        	jpDatosRemito = new JPanel();
+        	
+        	jpDatosRemito = new TransparentPanel();
         	jpDatosRemito.setLayout(null);
-        	jpDatosRemito.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Datos Remito",
+        	jpDatosRemito.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS REMITO",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	jpDatosRemito.setBounds(new java.awt.Rectangle(8,15,716,95));
-        	jpDatosRemito.setBackground(Utils.colorPanel);
         	jlNombreC = new JLabel();
             jlNombreC.setBounds(new Rectangle(200,30,60,22));
             jlNombreC.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlNombreC.setText("Nombre:");
+            jlNombreC.setText("NOMBRE:");
+            jlNombreC.setForeground(Utils.colorTexto);
             jlFechaRemito = new JLabel();
             jlFechaRemito.setBounds(new Rectangle(200,65,60,22));
             jlFechaRemito.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlFechaRemito.setText("Fecha:");
+            jlFechaRemito.setText("FECHA:");
+            jlFechaRemito.setForeground(Utils.colorTexto);
+            jlCuit = new JLabel();
+        	jlCuit.setBounds(new java.awt.Rectangle(490,30,70,22));
+        	jlCuit.setText("CUIT:");
+        	jlCuit.setForeground(Utils.colorTexto);
             jlNroRemito = new JLabel();
             jlNroRemito.setBounds(new Rectangle(490,65,190,22));
+            jlNroRemito.setForeground(Utils.colorTexto);
             jpDatosRemito.add(jlNombreC, null);
             jpDatosRemito.add(jlCuit, null);
             jpDatosRemito.add(jlFechaRemito, null);
@@ -185,8 +204,8 @@ public class GUIRemitoCliente extends JDialog {
     
     public JButton getJBBuscarC() {
         if (jbBuscarC == null) {
-            jbBuscarC = new JButton();
-            jbBuscarC.setText("Seleccione el Cliente");
+            jbBuscarC = new GlossyButton("SELECCIONE EL CLIENTE",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbBuscarC.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
             jbBuscarC.setName("BuscarC");
             jbBuscarC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbBuscarC.setBounds(new java.awt.Rectangle(30,30,150,22));
@@ -197,10 +216,10 @@ public class GUIRemitoCliente extends JDialog {
 
     public JButton getJBAgregarProd() {
         if (jbAgregarProd == null) {
-        	jbAgregarProd = new JButton();
-        	jbAgregarProd.setText("Agregar Producto");
+        	jbAgregarProd = new GlossyButton("AGREGAR PRODUCTO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbAgregarProd.setName("AgregarProd");
-        	jbAgregarProd.setBounds(new java.awt.Rectangle(565,92,120,25));
+        	jbAgregarProd.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
+        	jbAgregarProd.setBounds(new java.awt.Rectangle(540,88,150,25));
         	jbAgregarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
@@ -210,8 +229,8 @@ public class GUIRemitoCliente extends JDialog {
     
     public JButton getJBEliminarProd() {
         if (jbEliminarProd == null) {
-        	jbEliminarProd = new JButton();
-        	jbEliminarProd.setText("Eliminar Producto de Remito");
+        	jbEliminarProd = new GlossyButton("ELIMINAR PRODUCTO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbEliminarProd.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
         	jbEliminarProd.setName("EliminarP");
         	jbEliminarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbEliminarProd.setBounds(new java.awt.Rectangle(30,175,200,22));
@@ -223,8 +242,8 @@ public class GUIRemitoCliente extends JDialog {
     
     public JButton getJBConfirmarRemito() {
         if (jbConfirmarRemito == null) {
-        	jbConfirmarRemito = new JButton();
-        	jbConfirmarRemito.setText("CONFIRMAR REMITO");
+        	jbConfirmarRemito = new GlossyButton("CONFIRMAR REMITO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbConfirmarRemito.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
         	jbConfirmarRemito.setName("ConfirmarRem");
         	jbConfirmarRemito.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbConfirmarRemito.setBounds(new java.awt.Rectangle(280,200,150,30));
@@ -237,7 +256,7 @@ public class GUIRemitoCliente extends JDialog {
     public JTextField getJTFCodigo() {
         if (jtfCodigo == null) {
         	jtfCodigo = new JTextField();
-        	jtfCodigo.setBounds(new Rectangle(120,62,400,22));
+        	jtfCodigo.setBounds(new Rectangle(130,58,400,22));
         	jtfCodigo.setDisabledTextColor(Utils.colorTextoDisabled);
            	jtfCodigo.setEnabled(false);
         }
@@ -247,7 +266,7 @@ public class GUIRemitoCliente extends JDialog {
     public JTextField getJTFBusqueda() {
         if (jtfBusqueda == null) {
         	jtfBusqueda = new JTextField();
-        	jtfBusqueda.setBounds(new Rectangle(120,30,90,22));
+        	jtfBusqueda.setBounds(new Rectangle(130,28,90,22));
         }
         return jtfBusqueda;
     }
@@ -255,7 +274,7 @@ public class GUIRemitoCliente extends JDialog {
     public JComboBox getJCBCodigo() {
         if (jcbCodigo == null) {
         	jcbCodigo = new JComboBox();
-        	jcbCodigo.setBounds(new Rectangle(350,30,350,22));
+        	jcbCodigo.setBounds(new Rectangle(370,28,330,22));
         	jcbCodigo.removeAllItems();
         	for(int i=0;i<codProd.size();i++){
 				String codPr=(String)codProd.elementAt(i);
@@ -271,7 +290,7 @@ public class GUIRemitoCliente extends JDialog {
     	jpDatosProd.remove(getJCBCodigo());
 	 	getJCBCodigo();
 	 	jcbCodigo = new JComboBox();
-	 	jcbCodigo.setBounds(new Rectangle(350,30,350,22));
+	 	jcbCodigo.setBounds(new Rectangle(370,28,330,22));
 	 	jcbCodigo.setBackground(new Color(255,255,255));
     	jcbCodigo.setForeground(java.awt.Color.black);
 		for(int i=0;i<codProd.size();i++){
@@ -314,7 +333,7 @@ public class GUIRemitoCliente extends JDialog {
     public JTextField getJTFCantidad() {
         if (jtfCantidad == null) {
         	jtfCantidad = new JTextField();
-        	jtfCantidad.setBounds(new Rectangle(135,92,60,22));
+        	jtfCantidad.setBounds(new Rectangle(145,88,50,22));
         	jtfCantidad.setDocument(new LimitadorNroMax(jtfCantidad,6));
         	jtfCantidad.setText("1");
         }
@@ -324,7 +343,7 @@ public class GUIRemitoCliente extends JDialog {
     public JTextField getJTFKilos() {
         if (jtfKilos == null) {
         	jtfKilos = new JTextField();
-        	jtfKilos.setBounds(new Rectangle(300,92,60,22));
+        	jtfKilos.setBounds(new Rectangle(300,88,50,22));
         	jtfKilos.setDocument(new LimitadorPrecio(jtfKilos));
         	jtfKilos.setText("");
         }
@@ -353,20 +372,20 @@ public class GUIRemitoCliente extends JDialog {
 	
 	private JPanel getJPDatosItems() {
 		if (jpDatosItems == null) {
-			jpDatosItems = new JPanel();
+			jpDatosItems = new TransparentPanel();
 			jpDatosItems.setLayout(null);
 			jpDatosItems.setBounds(new Rectangle(8,115,716,245));
-			jpDatosItems.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Listado de Productos Comprados",
+			jpDatosItems.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "LISTADO DE PRODUCTOS COMPRADOS",
 					javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jlITotal = new JLabel();
 			jlITotal.setBounds(new java.awt.Rectangle(490,205,100,22));
 			jlITotal.setHorizontalAlignment(SwingConstants.RIGHT);
-			jlITotal.setText("Importe Total:");
+			jlITotal.setText("IMPORTE TOTAL:");
+			jlITotal.setForeground(Utils.colorTexto);
 			jpDatosItems.add(jlITotal, null);
 			jpDatosItems.add(getJTFITotal(), null);
 			jpDatosItems.add(getJSPDatosI(), null);
-			jpDatosItems.setBackground(Utils.colorPanel);
 			jpDatosItems.add(getJBEliminarProd(), null);
 			jpDatosItems.add(getJBConfirmarRemito(), null);
 		}
@@ -423,14 +442,14 @@ public class GUIRemitoCliente extends JDialog {
 	public JTextField getJTFDescuento() {
         if (jtfDescuento == null) {
         	jtfDescuento = new JTextField();
-        	jtfDescuento.setBounds(new Rectangle(510,92,25,22));
+        	jtfDescuento.setBounds(new Rectangle(510,88,25,22));
         	jtfDescuento.setDocument(new LimitadorNroMax(jtfDescuento,2));
           }
         return jtfDescuento;
     }
 	
 	public void actualizarNroRemito(){
-		jlNroRemito.setText("Nro Remito: "+Utils.nroFact(nroRemito));
+		jlNroRemito.setText("NRO REMITO: "+Utils.nroFact(nroRemito));
 		jpDatosRemito.add(jlNroRemito, null);
 	}
 	
@@ -441,7 +460,8 @@ public class GUIRemitoCliente extends JDialog {
 			jCheckImprimir.setBounds(new Rectangle(30,65,170,17));
 			jCheckImprimir.setText("Imprimir Comprobante");
 			jCheckImprimir.setName("Imprimir");
-			jCheckImprimir.setBackground(Utils.colorPanel);
+			jCheckImprimir.setForeground(Utils.colorTexto);
+			jCheckImprimir.setOpaque(false);
 		}
 		return jCheckImprimir;
 	}

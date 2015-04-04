@@ -33,16 +33,16 @@ public class MediadorBackup implements ActionListener{
 		}
 		if(seHizo){
 			try{
-				this.guiBackup.getAdvertencia().setText("Se realizó correctamente el Backup de su Base de Datos");
-				this.guiBackup.getResultado().setText("El archivo se guardo en el directorio "+pathBackup+" \ncon el nombre BACKUP_BD_COMERCIO_"+date+ ".SQL");
+				this.guiBackup.getAdvertencia().setText("SE REALIZO  CORRECTAMENTE EL BACKUP DE SU BASE DE DATOS");
+				this.guiBackup.getResultado().setText("EL ARCHIVO SE GUARDO EN EL DIRECTORIO "+pathBackup+"\nCON EL NOMBRE BACKUP_BD_COMERCIO_"+date+ ".SQL");
 			}catch(Exception e){
 				e.printStackTrace();
 				seHizo=false;
 				JOptionPane.showMessageDialog(new JOptionPane(), "Ocurrió un error en el sistema, mientras se intentaba\nrealizar el Backup de su Base de Datos. Intente nuevamente.");
 			}
 		}else{
-			this.guiBackup.getAdvertencia().setText("Ocurrió un error mientras se intentaba realizar el Backup de su Base de Datos. Intente nuevamente.");
-			this.guiBackup.getResultado().setText("No se creó el archivo correspondiente al Backup de la Base de Datos.");
+			this.guiBackup.getAdvertencia().setText("OCURRIO UN ERROR AL REALIZAR EL BACKUP DE SU BASE DE DATOS. INTENTE NUEVAMENTE.");
+			this.guiBackup.getResultado().setText("NO SE CREO EL ARCHIVO CORRESPONDIENTE AL BACKUP.");
 		}
 		Utils.show(guiBackup);
 	}

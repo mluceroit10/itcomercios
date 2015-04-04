@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +24,12 @@ import javax.swing.table.TableColumn;
 
 import cliente.LimitadorNroMax;
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -65,7 +72,7 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 
     public JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPGestion(), null);
             jpPpal.add(getJBAceptar(), null);
@@ -78,25 +85,26 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 
     private JPanel getJPBuscador() {
     	if (jpBuscador == null) {
-            jpBuscador = new JPanel();
+            jpBuscador = new TransparentPanel();
             jlCodigo = new JLabel();
             jlCodigo.setBounds(new Rectangle(15,30,60,15));
-            jlCodigo.setText("Código:");
+            jlCodigo.setText("CODIGO:");
+            jlCodigo.setForeground(Utils.colorTexto);
             jlFecha = new JLabel();
             jlFecha.setBounds(new Rectangle(130,30,60,15));
-            jlFecha.setText("Fecha:");
+            jlFecha.setText("FECHA:");
+            jlFecha.setForeground(Utils.colorTexto);
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Buscar",
+            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpBuscador.setBounds(new java.awt.Rectangle(415,25,300,65));
             jpBuscador.add(jlCodigo, null);
             jpBuscador.add(jlFecha, null);
             jpBuscador.add(getJLFechaMov(), null);
             jpBuscador.add(getJTFBuscadorCodigo(), null);
             jpBuscador.add(getJTFBuscadorFecha(), null);
-            jpBuscador.setBackground(Utils.colorPanel);
         }
         return jpBuscador;
     }
@@ -122,44 +130,43 @@ public class GUIGestionarMovimientoCaja extends JDialog {
         if (jlFechaMov == null) {
         	jlFechaMov = new JLabel("(dd/mm/aaaa)");
         	jlFechaMov.setBounds(new java.awt.Rectangle(198,16,80,9));
+        	jlFechaMov.setForeground(Utils.colorTexto);
         }
         return jlFechaMov;
     }
     
     private JPanel getJPDatos() {
         if (jpDatos == null) {
-            jpDatos = new JPanel();
+            jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
             jpDatos.setBounds(new Rectangle(15,110,700,340));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Movimientos de Caja",
+            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "MOVIMIENTOS DE CAJA",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatos.add(getJSPDatos(), null);
             agregarPeriodoSelec();
-            jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
     }
 
     private JPanel getJPGestion() {
         if (jpGestion == null) {
-            jpGestion = new JPanel();
+            jpGestion = new TransparentPanel();
             jpGestion.setLayout(null);
             jpGestion.setBounds(new Rectangle(15,25,280,65));
             jpGestion.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-                    "Gestión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    "GESTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpGestion.add(getJBCargar(), null);
             jpGestion.add(getJBBorrar(), null);
-            jpGestion.setBackground(Utils.colorPanel);
         }
         return jpGestion;
     }
 
     public JButton getJBCargar() {
         if (jbCargar == null) {
-            jbCargar = new JButton();
-            jbCargar.setText("Ingresar");
+            jbCargar = new GlossyButton("INGRESAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbCargar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
             jbCargar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCargar.setBounds(new Rectangle(20,25,100,25));
             jbCargar.setInputMap(0, map);
@@ -169,8 +176,8 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 
     public JButton getJBBorrar() {
         if (jbBorrar == null) {
-            jbBorrar = new JButton();
-            jbBorrar.setText("Eliminar");
+            jbBorrar = new GlossyButton("ELIMINAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbBorrar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
             jbBorrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbBorrar.setBounds(new Rectangle(160,25,100,25));
             jbBorrar.setInputMap(0, map);
@@ -180,9 +187,9 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
-            jbAceptar = new JButton();
+            jbAceptar = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setBounds(new java.awt.Rectangle(315,470,100,30));
-            jbAceptar.setText("Salir");
+            jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
         }
@@ -255,9 +262,9 @@ public class GUIGestionarMovimientoCaja extends JDialog {
     
     public JButton getJBCambiarPeriodo() {
 		if (jbCambiarPeriodo == null) {
-			jbCambiarPeriodo = new JButton();
-			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(450,20,115,20));
-			jbCambiarPeriodo.setText("Cambiar Período");
+			jbCambiarPeriodo = new GlossyButton("CAMBIAR PERIODO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(450,20,140,20));
+			jbCambiarPeriodo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/calendar.png")));
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			
@@ -309,13 +316,16 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 	}
 	
 	public void agregarPeriodoSelec(){
-		jlPeriodo = new JLabel("Período:");
+		jlPeriodo = new JLabel("PERIODO:");
 		jlPeriodo.setHorizontalAlignment(JLabel.RIGHT);
 		jlPeriodo.setBounds(new Rectangle(20,20,60,20));
-		jlMes = new JLabel("Mes:");
+		jlPeriodo.setForeground(Utils.colorTexto);
+		jlMes = new JLabel("MES:");
+		jlMes.setForeground(Utils.colorTexto);
 		jlMes.setBounds(new Rectangle(200,20,50,20));
 		jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
-		jlAnio = new JLabel("Año:");
+		jlAnio = new JLabel("AÑO:");
+		jlAnio.setForeground(Utils.colorTexto);
 		jlAnio.setBounds(new Rectangle(325,20,40,20));
 		jlAnio.setHorizontalAlignment(SwingConstants.RIGHT);
 		jpDatos.add(jlPeriodo);

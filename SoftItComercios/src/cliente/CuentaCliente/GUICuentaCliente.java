@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,6 +23,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
   
@@ -64,7 +71,7 @@ public class GUICuentaCliente extends JDialog {
     
     private JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal = new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPCompromisos(),null);
             jpPpal.add(getJBImprimir(),null);
@@ -76,11 +83,11 @@ public class GUICuentaCliente extends JDialog {
     
     public JButton getJBImprimir() {
         if (jbImprimir == null) {
-        	jbImprimir = new JButton();
+        	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbImprimir.setBounds(new java.awt.Rectangle(220,365,100,30));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        	jbImprimir.setText("Imprimir");
         	jbImprimir.setName("Imprimir");
+        	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setInputMap(0, map);
         }
         return jbImprimir;
@@ -88,11 +95,11 @@ public class GUICuentaCliente extends JDialog {
     
     public JButton getJBSalir() {
         if (jbSalir == null) {
-            jbSalir = new JButton();
+            jbSalir = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbSalir.setBounds(new java.awt.Rectangle(370,365,100,30));
             jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbSalir.setText("Salir");
             jbSalir.setName("Salir");
+            jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
         }
         return jbSalir;
@@ -100,18 +107,18 @@ public class GUICuentaCliente extends JDialog {
     
     private JPanel getJPCompromisos() {
         if (jpCompromisos == null) {
-        	jpCompromisos = new JPanel();
+        	jpCompromisos = new TransparentPanel();
         	jpCompromisos.setLayout(null);
         	jpCompromisos.setBounds(new Rectangle(15,15,670,330));
-        	jpCompromisos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " Movimientos de la Cuenta ",
+        	jpCompromisos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " MOVIMIENTOS DE LA CUENTA ",
                     javax.swing.border.TitledBorder.CENTER,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,a, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	leyenda= new JLabel();
-        	leyenda.setBounds(new java.awt.Rectangle(370,301,289,20));
-        	leyenda.setText("Ante un importe negativo el cliente registra deuda");
+        	leyenda.setBounds(new java.awt.Rectangle(322,301,337,20));
+        	leyenda.setText("ANTE UN IMPORTE NEGATIVO EL CLIENTE REGISTRA DEUDA");
+        	leyenda.setForeground(Utils.colorTexto);
         	jpCompromisos.add(leyenda, null);
         	jpCompromisos.add(getJSPDatos(), null);
-        	jpCompromisos.setBackground(Utils.colorPanel);
         	jpCompromisos.add(getJCheckSelectAll(), null);
         }
         return jpCompromisos;
@@ -143,16 +150,16 @@ public class GUICuentaCliente extends JDialog {
 					if(detalle.compareTo("SALDO ACTUAL")==0){
 						float impRestante= Float.parseFloat(getValueAt(row,4).toString());
 						if(impRestante<0){
-							returnComp.setBackground(Color.WHITE);
+							returnComp.setBackground(Utils.colorTexto);
 							returnComp.setForeground(Color.RED);
 							returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 						}else{
-							returnComp.setBackground(Color.WHITE);
+							returnComp.setBackground(Utils.colorTexto);
 							returnComp.setForeground(Color.BLUE);
 							returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 						}
 					}else{
-						returnComp.setBackground(Color.WHITE);
+						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.BLACK);
 					}
 					int[] seleccion=this.getSelectedRows();
@@ -198,10 +205,11 @@ public class GUICuentaCliente extends JDialog {
 	public JCheckBox getJCheckSelectAll() {
 		if (jCheckSelectAll == null) {
 			jCheckSelectAll = new JCheckBox();
-			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,303,130,17));
-			jCheckSelectAll.setText("Seleccionar Todo");
+			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,303,154,17));
+			jCheckSelectAll.setText("SELECCIONAR TODO");
 			jCheckSelectAll.setName("SelectAll");
-			jCheckSelectAll.setBackground(Utils.colorPanel);
+			jCheckSelectAll.setOpaque(false);
+			jCheckSelectAll.setForeground(Utils.colorTexto);
 		}
 		return jCheckSelectAll;
 	}

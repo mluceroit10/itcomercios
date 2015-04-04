@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +26,12 @@ import javax.swing.table.TableColumn;
 import cliente.LimitadorNroMax;
 import cliente.LimitadorPrecio;
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import com.toedter.calendar.JDateChooser;
 import common.Utils;
@@ -41,7 +48,7 @@ public class GUIFacturarCliente extends JDialog {
     private JLabel jlNombreC=null;				private JLabel jlCuit = null;
     private JLabel jlCantidad = null;			private JLabel jlITotal = null;
     private JLabel jlKilos = null;				private JLabel jlImporteIva = null;
-    private JLabel jlIvaIncl = null;			private JLabel jlDescuento = null;
+    private JLabel jlDescuento = null;
     private JTextField jtfBusqueda = null;
     private JTextField jtfCodigo = null;     	private JTextField jtfImporte = null;
     private JTextField jtfCantidad = null;   	private JTextField jtfITotal = null;
@@ -83,7 +90,7 @@ public class GUIFacturarCliente extends JDialog {
 
     public JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPDatosProducto(), null);
             jpPpal.add(getJPDatosFactura(), null);
@@ -98,43 +105,47 @@ public class GUIFacturarCliente extends JDialog {
 
     private JPanel getJPDatosProducto() {
         if (jpDatosProd == null) {
-        	jpDatosProd = new JPanel();
+        	jpDatosProd = new TransparentPanel();
         	jpDatosProd.setLayout(null);
         	jpDatosProd.setBounds(new java.awt.Rectangle(8,371,716,124));
-        	jpDatosProd.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Ingreso de Productos",
+        	jpDatosProd.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "INGRESO DE PRODUCTOS",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
-        	jpDatosProd.setBackground(Utils.colorPanel);
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	jlBusqueda = new JLabel();
-            jlBusqueda.setBounds(new Rectangle(15,28,200,22));
-            jlBusqueda.setText("Buscar Producto:");
+            jlBusqueda.setBounds(new Rectangle(10,28,120,22));
+            jlBusqueda.setText("BUSCAR PRODUCTO:");
+            jlBusqueda.setHorizontalAlignment(SwingConstants.RIGHT);
+            jlBusqueda.setForeground(Utils.colorTexto);
         	jlSelecProd = new JLabel();
         	jlSelecProd.setBounds(new Rectangle(225,28,150,22));
-        	jlSelecProd.setText("Seleccione Producto ");
+        	jlSelecProd.setText("SELECCIONE PRODUCTO");
+        	jlSelecProd.setForeground(Utils.colorTexto);
         	jlCodigo = new JLabel();
-            jlCodigo.setBounds(new Rectangle(15,58,200,22));
-            jlCodigo.setText("Código_Producto:");
+            jlCodigo.setBounds(new Rectangle(10,58,120,22));
+            jlCodigo.setText("PRODUCTO SELEC.:");
+            jlCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
+            jlCodigo.setForeground(Utils.colorTexto);
             jlImporte = new JLabel();
             jlImporte.setBounds(new java.awt.Rectangle(550,58,70,22));
-            jlImporte.setText("Importe:");
-            jlIvaIncl = new JLabel();
-            jlIvaIncl.setBounds(new java.awt.Rectangle(620,58,70,22));
-            jlIvaIncl.setText("Iva Incluido");
+            jlImporte.setText("IMPORTE:");
+            jlImporte.setForeground(Utils.colorTexto);
             JLabel jlAgregar = new JLabel();
             jlAgregar.setBounds(new java.awt.Rectangle(15,84,685,32));
             jlAgregar.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jlCantidad = new JLabel();
-            jlCantidad.setBounds(new java.awt.Rectangle(30,88,100,22));
-            jlCantidad.setText("Ingrese Cantidad:");
+            jlCantidad.setBounds(new java.awt.Rectangle(30,88,120,22));
+            jlCantidad.setText("INGRESE CANTIDAD:");
+            jlCantidad.setForeground(Utils.colorTexto);
             jlKilos = new JLabel();
             jlKilos.setBounds(new Rectangle(225,88,90,22));
-            jlKilos.setText("Ingrese Kg.:");
+            jlKilos.setText("INGRESE KG.:");
+            jlKilos.setForeground(Utils.colorTexto);
             jlDescuento = new JLabel();
-            jlDescuento.setBounds(new Rectangle(395,88,180,22));
-            jlDescuento.setText("Ingrese Descuento:           %");
-            
+            jlDescuento.setBounds(new Rectangle(365,88,150,22));
+            jlDescuento.setText("INGRESE DESCUENTO(%):");
+            jlDescuento.setForeground(Utils.colorTexto);
             jpDatosProd.add(jlSelecProd, null);
             jpDatosProd.add(jlCodigo, null);
             jpDatosProd.add(jlBusqueda, null);
@@ -150,52 +161,57 @@ public class GUIFacturarCliente extends JDialog {
             jpDatosProd.add(getJTFKilos(), null);
             jpDatosProd.add(getJTFDescuento(), null);
             jpDatosProd.add(getJBAgregarProd(), null);
-            if(tipoF.compareTo("B")==0)
-            	jpDatosProd.add(jlIvaIncl, null);
         }
         return jpDatosProd;
     }
     
     private JPanel getJPDatosFactura() {
         if (jpDatosFactura == null) {
-        	jpDatosFactura = new JPanel();
+        	jpDatosFactura = new TransparentPanel();
         	jpDatosFactura.setLayout(null);
-        	jpDatosFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Datos de Factura Tipo "+tipoF,
+        	jpDatosFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DE FACTURA TIPO "+tipoF,
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 16), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	jpDatosFactura.setBounds(new java.awt.Rectangle(8,15,716,117));
-        	jpDatosFactura.setBackground(Utils.colorPanel);
         	jlNombreC = new JLabel();
             jlNombreC.setBounds(new Rectangle(230,28,60,22));
             jlNombreC.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlNombreC.setText("Nombre:");
+            jlNombreC.setText("NOMBRE:");
+            jlNombreC.setForeground(Utils.colorTexto);
             jlCuit = new JLabel();
         	jlCuit.setBounds(new java.awt.Rectangle(510,28,30,22));
         	jlCuit.setHorizontalAlignment(SwingConstants.RIGHT);
-        	jlCuit.setText("Cuit:");
+        	jlCuit.setText("CUIT:");
+        	jlCuit.setForeground(Utils.colorTexto);
         	jlFechaFactura = new JLabel();
             jlFechaFactura.setBounds(new Rectangle(10,86,40,22));
             jlFechaFactura.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlFechaFactura.setText("Fecha:");
+            jlFechaFactura.setText("FECHA:");
+            jlFechaFactura.setForeground(Utils.colorTexto);
             jlIva = new JLabel();
             jlIva.setBounds(new Rectangle(230,57,60,22));
             jlIva.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlIva.setText("Iva:");
+            jlIva.setText("IVA:");
+            jlIva.setForeground(Utils.colorTexto);
             jlCondVta = new JLabel();
             jlCondVta.setBounds(new Rectangle(230,86,120,22));
             jlCondVta.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlCondVta.setText("Cond de Venta:");
+            jlCondVta.setText("COND. VENTA:");
+            jlCondVta.setForeground(Utils.colorTexto);
             jlRemNro = new JLabel();
             jlRemNro.setBounds(new Rectangle(450,86,90,22));
             jlRemNro.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlRemNro.setText("Remito Nº:");
+            jlRemNro.setText("REMITO Nº:");
+            jlRemNro.setForeground(Utils.colorTexto);
             jlIngrBr = new JLabel();
             jlIngrBr.setBounds(new Rectangle(450,57,90,22));
             jlIngrBr.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlIngrBr.setText("Ing. Brutos:");
+            jlIngrBr.setText("ING. BRUTOS:");
+            jlIngrBr.setForeground(Utils.colorTexto);
             jlNroFactura = new JLabel();
-            jlNroFactura.setBounds(new Rectangle(15,60,190,22));
+            jlNroFactura.setBounds(new Rectangle(15,60,200,22));
+            jlNroFactura.setForeground(Utils.colorTexto);
             jpDatosFactura.add(jlNombreC, null);
             jpDatosFactura.add(jlCuit, null);
             jpDatosFactura.add(jlFechaFactura, null);
@@ -225,11 +241,11 @@ public class GUIFacturarCliente extends JDialog {
     
     public JButton getJBBuscarC() {
         if (jbBuscarC == null) {
-            jbBuscarC = new JButton();
-            jbBuscarC.setText("Seleccione el Cliente");
+            jbBuscarC = new GlossyButton("SELECCIONE EL CLIENTE",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbBuscarC.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
             jbBuscarC.setName("BuscarC");
             jbBuscarC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbBuscarC.setBounds(new java.awt.Rectangle(30,28,150,22));
+            jbBuscarC.setBounds(new java.awt.Rectangle(30,28,170,22));
             jbBuscarC.setInputMap(0, map);
         }
         return jbBuscarC;
@@ -237,10 +253,10 @@ public class GUIFacturarCliente extends JDialog {
 
     public JButton getJBAgregarProd() {
         if (jbAgregarProd == null) {
-        	jbAgregarProd = new JButton();
-        	jbAgregarProd.setText("Agregar Producto");
+        	jbAgregarProd = new GlossyButton("AGREGAR PRODUCTO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbAgregarProd.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
         	jbAgregarProd.setName("AgregarProd");
-        	jbAgregarProd.setBounds(new java.awt.Rectangle(565,88,120,25));
+        	jbAgregarProd.setBounds(new java.awt.Rectangle(540,88,150,25));
         	jbAgregarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
@@ -250,8 +266,8 @@ public class GUIFacturarCliente extends JDialog {
     
     public JButton getJBEliminarProd() {
         if (jbEliminarProd == null) {
-        	jbEliminarProd = new JButton();
-        	jbEliminarProd.setText("Eliminar Producto de Factura");
+        	jbEliminarProd = new GlossyButton("ELIMINAR PRODUCTO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbEliminarProd.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
         	jbEliminarProd.setName("EliminarP");
         	jbEliminarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbEliminarProd.setBounds(new java.awt.Rectangle(30,175,200,22));
@@ -263,8 +279,8 @@ public class GUIFacturarCliente extends JDialog {
     
     public JButton getJBConfirmaFact() {
         if (jbConfirmarFact == null) {
-        	jbConfirmarFact = new JButton();
-        	jbConfirmarFact.setText("CONFIRMAR FACTURA");
+        	jbConfirmarFact = new GlossyButton("CONFIRMAR FACTURA",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbConfirmarFact.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
         	jbConfirmarFact.setName("ConfirmarFact");
         	jbConfirmarFact.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbConfirmarFact.setBounds(new java.awt.Rectangle(280,183,150,30));
@@ -277,7 +293,7 @@ public class GUIFacturarCliente extends JDialog {
     public JTextField getJTFCodigo() {
         if (jtfCodigo == null) {
         	jtfCodigo = new JTextField();
-        	jtfCodigo.setBounds(new Rectangle(120,58,400,22));
+        	jtfCodigo.setBounds(new Rectangle(130,58,400,22));
         	jtfCodigo.setDisabledTextColor(Utils.colorTextoDisabled);
            	jtfCodigo.setEnabled(false);
         }
@@ -287,7 +303,7 @@ public class GUIFacturarCliente extends JDialog {
     public JTextField getJTFBusqueda() {
         if (jtfBusqueda == null) {
         	jtfBusqueda = new JTextField();
-        	jtfBusqueda.setBounds(new Rectangle(120,28,90,22));
+        	jtfBusqueda.setBounds(new Rectangle(130,28,90,22));
         }
         return jtfBusqueda;
     }
@@ -295,7 +311,7 @@ public class GUIFacturarCliente extends JDialog {
     public JComboBox getJCBCodigo() {
         if (jcbCodigo == null) {
         	jcbCodigo = new JComboBox();
-        	jcbCodigo.setBounds(new Rectangle(350,28,350,22));
+        	jcbCodigo.setBounds(new Rectangle(370,28,330,22));
         	jcbCodigo.removeAllItems();
         	for(int i=0;i<codProd.size();i++){
 				String codPr=(String)codProd.elementAt(i);
@@ -311,7 +327,7 @@ public class GUIFacturarCliente extends JDialog {
     	jpDatosProd.remove(getJCBCodigo());
 	 	getJCBCodigo();
 	 	jcbCodigo = new JComboBox();
-	 	jcbCodigo.setBounds(new Rectangle(350,28,350,22));
+	 	jcbCodigo.setBounds(new Rectangle(370,28,330,22));
 	 	jcbCodigo.setBackground(new Color(255,255,255));
     	jcbCodigo.setForeground(java.awt.Color.black);
 		for(int i=0;i<codProd.size();i++){
@@ -362,7 +378,7 @@ public class GUIFacturarCliente extends JDialog {
     public JTextField getJTFCantidad() {
         if (jtfCantidad == null) {
         	jtfCantidad = new JTextField();
-        	jtfCantidad.setBounds(new Rectangle(135,88,60,22));
+        	jtfCantidad.setBounds(new Rectangle(145,88,50,22));
         	jtfCantidad.setDocument(new LimitadorNroMax(jtfCantidad,6));
         	jtfCantidad.setText("1");
         }
@@ -372,7 +388,7 @@ public class GUIFacturarCliente extends JDialog {
     public JTextField getJTFKilos() {
         if (jtfKilos == null) {
         	jtfKilos = new JTextField();
-        	jtfKilos.setBounds(new Rectangle(300,88,60,22));
+        	jtfKilos.setBounds(new Rectangle(300,88,50,22));
         	jtfKilos.setDocument(new LimitadorPrecio(jtfKilos));
         	jtfKilos.setText("");
         }
@@ -454,16 +470,17 @@ public class GUIFacturarCliente extends JDialog {
 	
 	private JPanel getJPDatosItems() {
 		if (jpDatosItems == null) {
-			jpDatosItems = new JPanel();
+			jpDatosItems = new TransparentPanel();
 			jpDatosItems.setLayout(null);
 			jpDatosItems.setBounds(new Rectangle(8,137,716,229));
-			jpDatosItems.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Listado de Productos Comprados",
+			jpDatosItems.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "LISTADO DE PRODUCTOS COMPRADOS",
 					javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jlITotal = new JLabel();
 			jlITotal.setBounds(new java.awt.Rectangle(490,200,100,15));
 			jlITotal.setHorizontalAlignment(SwingConstants.RIGHT);
-			jlITotal.setText("Importe Total:");
+			jlITotal.setText("IMPORTE TOTAL:");
+			jlITotal.setForeground(Utils.colorTexto);
 			jlImporteIva = new JLabel();
 			jlImporteIva.setBounds(new java.awt.Rectangle(490,175,100,15));
 			jlImporteIva.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -471,11 +488,11 @@ public class GUIFacturarCliente extends JDialog {
 			jpDatosItems.add(getJTFITotal(), null);
 			jpDatosItems.add(getJSPDatosI(), null);
 			if(tipoF.compareTo("A")==0){
-				jlImporteIva.setText("% Iva:");
+				jlImporteIva.setText("% IVA:");
+				jlImporteIva.setForeground(Utils.colorTexto);
 				jpDatosItems.add(jlImporteIva, null);
 				jpDatosItems.add(getJTFImporteIva(), null);
 			}
-			jpDatosItems.setBackground(Utils.colorPanel);
 			jpDatosItems.add(getJBEliminarProd(), null);
 			jpDatosItems.add(getJBConfirmaFact(), null);
 		}
@@ -530,7 +547,7 @@ public class GUIFacturarCliente extends JDialog {
 	}
 	 
 	public void actualizarNroFactura(){
-		jlNroFactura.setText("Nro Factura: "+Utils.nroFact(nroFactura));
+		jlNroFactura.setText("NRO FACTURA: "+Utils.nroFact(nroFactura));
 		jpDatosFactura.add(jlNroFactura, null);
 		
 	}

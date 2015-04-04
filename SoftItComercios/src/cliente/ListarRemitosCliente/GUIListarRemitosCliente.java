@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,6 +26,12 @@ import javax.swing.table.TableColumn;
 
 import cliente.LimitadorNroMax;
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -87,7 +94,7 @@ public class GUIListarRemitosCliente extends JDialog {
 
     public JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJBImprimir(), null);
             jpPpal.add(getJBSalir(), null);
@@ -103,12 +110,13 @@ public class GUIListarRemitosCliente extends JDialog {
             JLabel jlForm = new JLabel();
             jlForm.setBounds(new Rectangle(80,45,80,9));
             jlForm.setText("(dd/mm/aaaa)");
-            jpBuscador = new JPanel();
+            jlForm.setForeground(Utils.colorTexto);
+            jpBuscador = new TransparentPanel();
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Buscar",
+            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpBuscador.setBounds(new Rectangle(15,10,700,60));
             jpBuscador.add(jlForm, null);
             jpBuscador.add(getJLNroP(), null);
@@ -117,34 +125,36 @@ public class GUIListarRemitosCliente extends JDialog {
             jpBuscador.add(getJLFecha(), null);
             jpBuscador.add(getJTFFecha(), null);
             jpBuscador.add(getJTFCliente(), null);
-            jpBuscador.setBackground(Utils.colorPanel);
         }
         return jpBuscador;
     }
     
     private JLabel getJLFecha() {
         if (fecha == null) {
-        	fecha = new JLabel("Fecha:");
+        	fecha = new JLabel("FECHA:");
         	fecha.setHorizontalAlignment(JLabel.RIGHT);
-        	fecha.setBounds(new java.awt.Rectangle(24,25,40,15));
+        	fecha.setBounds(new java.awt.Rectangle(25,25,45,15));
+        	fecha.setForeground(Utils.colorTexto);
         }
         return fecha;
     }
 
     private JLabel getJLNroP() {
         if (nro == null) {
-        	nro = new JLabel("Nro de Remito:");
+        	nro = new JLabel("NRO DE REMITO:");
         	nro.setHorizontalAlignment(JLabel.RIGHT);
         	nro.setBounds(new Rectangle(180,25,100,15));
+        	nro.setForeground(Utils.colorTexto);
         }
         return nro;
     }
     
     private JLabel getJLCliente() {
         if (cliente == null) {
-        	cliente = new JLabel("Nombre del Cliente:");
+        	cliente = new JLabel("NOMBRE DEL CLIENTE:");
         	cliente.setHorizontalAlignment(JLabel.RIGHT);
-        	cliente.setBounds(new Rectangle(400,25,120,15));
+        	cliente.setBounds(new Rectangle(395,25,130,15));
+        	cliente.setForeground(Utils.colorTexto);
         }
         return cliente;
     }
@@ -152,7 +162,7 @@ public class GUIListarRemitosCliente extends JDialog {
     public JTextField getJTFFecha() {
         if (jtfFecha == null) {
         	jtfFecha = new JTextField();
-        	jtfFecha.setBounds(new Rectangle(80,22,80,22));
+        	jtfFecha.setBounds(new Rectangle(75,22,80,22));
         }
         return jtfFecha;
     }
@@ -160,7 +170,7 @@ public class GUIListarRemitosCliente extends JDialog {
     public JTextField getJTFNro() {
         if (jtfNro == null) {
             jtfNro = new JTextField();
-            jtfNro.setBounds(new Rectangle(290,22,80,22));
+            jtfNro.setBounds(new Rectangle(285,22,80,22));
         }
         return jtfNro;
     }
@@ -175,25 +185,24 @@ public class GUIListarRemitosCliente extends JDialog {
     
     private JPanel getJPDatos() {
         if (jpDatos == null) {
-            jpDatos = new JPanel();
+            jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
             jpDatos.setBounds(new Rectangle(15,80,700,390));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Remitos Cliente",
+            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "REMITOS CLIENTE",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatos.add(getJSPDatos(), null);
             jpDatos.add(getJBAnularFactura(),null);
             agregarPeriodoSelec();
-            jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
     }
     
     public JButton getJBAnularFactura() {
         if (jbAnular == null) {
-        	jbAnular = new JButton();
+        	jbAnular = new GlossyButton("ANULAR REMITO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbAnular.setBounds(new java.awt.Rectangle(10,350,150,25));
-        	jbAnular.setText("Anular Remito");
+        	jbAnular.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
         	jbAnular.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAnular.setInputMap(0, map);
         }
@@ -202,9 +211,9 @@ public class GUIListarRemitosCliente extends JDialog {
     
     public JButton getJBImprimir() {
         if (jbImprimir == null) {
-        	jbImprimir = new JButton();
+        	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbImprimir.setBounds(new java.awt.Rectangle(390,490,100,30));
-        	jbImprimir.setText("Imprimir");
+        	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
         }
@@ -213,9 +222,9 @@ public class GUIListarRemitosCliente extends JDialog {
     
     public JButton getJBSalir() {
         if (jbSalir  == null) {
-        	jbSalir = new JButton();
+        	jbSalir = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbSalir.setBounds(new Rectangle(240,490,100,30));
-        	jbSalir.setText("Aceptar");
+            jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
         	jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbSalir.setInputMap(0, map);
         }
@@ -240,11 +249,11 @@ public class GUIListarRemitosCliente extends JDialog {
 					Component returnComp = super.prepareRenderer(renderer, row,column);
 					String anulada=getValueAt(row,5).toString();
 					if(anulada.compareTo("SI")==0){
-						returnComp.setBackground(Color.WHITE);
+						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.RED);
 						returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 					}else{
-						returnComp.setBackground(Color.WHITE);
+						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.BLACK);
 						returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 					}
@@ -314,9 +323,9 @@ public class GUIListarRemitosCliente extends JDialog {
 
     public JButton getJBCambiarPeriodo() {
 		if (jbCambiarPeriodo == null) {
-			jbCambiarPeriodo = new JButton();
-			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(550,20,115,20));
-			jbCambiarPeriodo.setText("Cambiar Período");
+			jbCambiarPeriodo = new GlossyButton("CAMBIAR PERIODO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(550,20,140,20));
+			jbCambiarPeriodo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/calendar.png")));
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			
@@ -412,17 +421,21 @@ public class GUIListarRemitosCliente extends JDialog {
 	}
 	
 	public void agregarPeriodoSelec(){
-		jlPeriodo = new JLabel("Período:");
+		jlPeriodo = new JLabel("PERIODO:");
 		jlPeriodo.setHorizontalAlignment(JLabel.RIGHT);
 		jlPeriodo.setBounds(new Rectangle(20,20,60,20));
-		jlDia = new JLabel("Dia:");
+		jlPeriodo.setForeground(Utils.colorTexto);
+		jlDia = new JLabel("DIA:");
+		jlDia.setForeground(Utils.colorTexto);
 		jlDia.setBounds(new Rectangle(200,20,50,20));
 		jlDia.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		jlMes = new JLabel("Mes:");
+		jlMes = new JLabel("MES:");
+		jlMes.setForeground(Utils.colorTexto);
 		jlMes.setBounds(new Rectangle(300,20,50,20));
 		jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
-		jlAnio = new JLabel("Año:");
+		jlAnio = new JLabel("AÑO:");
+		jlAnio.setForeground(Utils.colorTexto);
 		jlAnio.setBounds(new Rectangle(425,20,40,20));
 		jlAnio.setHorizontalAlignment(SwingConstants.RIGHT);
 		jpDatos.add(jlPeriodo);

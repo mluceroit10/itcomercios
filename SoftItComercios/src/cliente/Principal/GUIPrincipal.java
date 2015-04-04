@@ -29,7 +29,6 @@ import cliente.Imagenes.util.Theme;
 import cliente.Utils.JPanel_Whit_Image;
 import cliente.Utils.TransparentPanel;
 
-import common.RootAndIp;
 import common.Utils;
 
 public class GUIPrincipal extends JFrame implements Runnable {
@@ -110,7 +109,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		JLabel salir = new JLabel("SALIR");
 		salir.setBounds(new java.awt.Rectangle(675,485,44,20));
 		salir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
-		salir.setForeground(Color.WHITE);
+		salir.setForeground(Utils.colorTexto);
 		jContentPane.add(salir,null);
 		jContentPane.add(getJButtonSalir(),null);
 		setJMenuBar(getJBarraMenu());
@@ -182,21 +181,21 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosProductos.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosProductos.setBounds(new Rectangle(406, 135, 370, 120));
 			JLabel titulosoc= new JLabel("PROVEEDORES - PRODUCTOS");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosProductos.add(titulosoc, null);
 			jPanelAccesosProductos.add(getJButtonProveedores(), null);
 			JLabel gestion= new JLabel("PROVEEDORES");
-			gestion.setForeground(Color.WHITE);
+			gestion.setForeground(Utils.colorTexto);
 			gestion.setBounds(new java.awt.Rectangle(0,100,185,15));
 			gestion.setHorizontalAlignment(SwingConstants.CENTER);
 			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 			jPanelAccesosProductos.add(gestion, null);
 			jPanelAccesosProductos.add(getJButtonProductos(), null);
 			JLabel gestionPr= new JLabel("PRODUCTOS");
-			gestionPr.setForeground(Color.WHITE);
+			gestionPr.setForeground(Utils.colorTexto);
 			gestionPr.setBounds(new java.awt.Rectangle(185,100,185,12));
 			gestionPr.setHorizontalAlignment(SwingConstants.CENTER);
 			gestionPr.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -205,7 +204,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		return jPanelAccesosProductos;
 	}
 		
-	private JPanel getJPanelLibroIva(){
+	public JPanel getJPanelLibroIva(){
 		if (jPanelLibroIva==null){
 			jPanelLibroIva = new TransparentPanel();
 			jPanelLibroIva.setLayout(null);
@@ -214,7 +213,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelLibroIva.setBounds(new Rectangle(606, 260, 170, 120));
 			jPanelLibroIva.add(getJButtonLibroIva(), null);
 			JLabel stock= new JLabel("LIBRO IVA");
-			stock.setForeground(Color.WHITE);
+			stock.setForeground(Utils.colorTexto);
 			stock.setBounds(new java.awt.Rectangle(0,100,170,12));
 			stock.setHorizontalAlignment(SwingConstants.CENTER);
 			stock.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -267,7 +266,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		return jBGestionProveedores;
 	}
 	
-	private JPanel getJPanelAccesosClientes(){
+	public JPanel getJPanelAccesosClientes(){
 		if (jPanelAccesosCliente==null){
 			jPanelAccesosCliente = new TransparentPanel();
 			jPanelAccesosCliente.setLayout(null);
@@ -275,14 +274,14 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosCliente.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosCliente.setBounds(new Rectangle(406, 260, 170, 120));
 			JLabel titulosoc= new JLabel("CLIENTES");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,170,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosCliente.add(titulosoc, null);
 			jPanelAccesosCliente.add(getJButtonClientes(), null);
 			JLabel gestion= new JLabel("GESTION");
-			gestion.setForeground(Color.WHITE);
+			gestion.setForeground(Utils.colorTexto);
 			gestion.setBounds(new java.awt.Rectangle(0,100,170,15));
 			gestion.setHorizontalAlignment(SwingConstants.CENTER);
 			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -311,21 +310,21 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosContables.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosContables.setBounds(new Rectangle(18, 135, 370, 120));
 			JLabel titulosoc= new JLabel("GESTION CONTABLE");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosContables.add(titulosoc, null);
 			jPanelAccesosContables.add(getJButtonGestionarMC(), null);
 				JLabel movCaja= new JLabel("MOVIMIENTO DE CAJA");
-				movCaja.setForeground(Color.WHITE);
+				movCaja.setForeground(Utils.colorTexto);
 				movCaja.setBounds(new java.awt.Rectangle(0,100,185,15));
 				movCaja.setHorizontalAlignment(SwingConstants.CENTER);
 				movCaja.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 				jPanelAccesosContables.add(movCaja, null);
 				jPanelAccesosContables.add(getJButtonPlanillaES(), null);
 				JLabel plES= new JLabel("PLANILLA DE E/S");
-				plES.setForeground(Color.WHITE);
+				plES.setForeground(Utils.colorTexto);
 				plES.setBounds(new java.awt.Rectangle(185,100,185,15));
 				plES.setHorizontalAlignment(SwingConstants.CENTER);
 				plES.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -364,21 +363,21 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosFactProv.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosFactProv.setBounds(new Rectangle(406, 10, 370, 120));
 			JLabel titulosoc= new JLabel("FACTURACION - PROVEEDOR");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosFactProv.add(titulosoc, null);
 			jPanelAccesosFactProv.add(getJButtonFacturaProveedor(), null);
 				JLabel nFact= new JLabel("NUEVA FACTURA");
-				nFact.setForeground(Color.WHITE);
+				nFact.setForeground(Utils.colorTexto);
 				nFact.setBounds(new java.awt.Rectangle(0,100,185,15));
 				nFact.setHorizontalAlignment(SwingConstants.CENTER);
 				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 				jPanelAccesosFactProv.add(nFact, null);
 				jPanelAccesosFactProv.add(getJButtonTodasFactProveedor(), null);
 				JLabel factGen= new JLabel("FACTURAS GENERADAS");
-				factGen.setForeground(Color.WHITE);
+				factGen.setForeground(Utils.colorTexto);
 				factGen.setBounds(new java.awt.Rectangle(185,100,185,15));
 				factGen.setHorizontalAlignment(SwingConstants.CENTER);
 				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -400,7 +399,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public JButton getJButtonRemitoCliente() {
 		if (jBRemitoCliente == null) {
-			jBRemitoCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBRemitoCliente = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
 			jBRemitoCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/remito.png")));
 			jBRemitoCliente.setBounds(new java.awt.Rectangle(60,25,70,70));
 			jBRemitoCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)); 
@@ -409,7 +408,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		return jBRemitoCliente;
 	}
 	
-	private JPanel getJPanelAccesosFactCliente(){
+	public JPanel getJPanelAccesosFactCliente(){
 		if (jPanelAccesosFactCte==null){
 			jPanelAccesosFactCte = new TransparentPanel();
 			jPanelAccesosFactCte.setLayout(null);
@@ -417,21 +416,21 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosFactCte.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosFactCte.setBounds(new Rectangle(18, 260, 370, 120));
 			JLabel titulosoc= new JLabel("FACTURACION - CLIENTE");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosFactCte.add(titulosoc, null);
 			jPanelAccesosFactCte.add(getJButtonFacturaCliente(), null);
 				JLabel nFact= new JLabel("NUEVA FACTURA");
-				nFact.setForeground(Color.WHITE);
+				nFact.setForeground(Utils.colorTexto);
 				nFact.setBounds(new java.awt.Rectangle(0,100,185,15));
 				nFact.setHorizontalAlignment(SwingConstants.CENTER);
 				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 				jPanelAccesosFactCte.add(nFact, null);
 				jPanelAccesosFactCte.add(getJButtonTodasFactCliente(), null);
 				JLabel factGen= new JLabel("FACTURAS GENERADAS");
-				factGen.setForeground(Color.WHITE);
+				factGen.setForeground(Utils.colorTexto);
 				factGen.setBounds(new java.awt.Rectangle(185,100,185,15));
 				factGen.setHorizontalAlignment(SwingConstants.CENTER);
 				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -470,21 +469,21 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosRemitoCte.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
 			jPanelAccesosRemitoCte.setBounds(new Rectangle(18, 10, 370, 120));
 			JLabel titulosoc= new JLabel("REMITOS - CLIENTE");
-			titulosoc.setForeground(Color.WHITE);
+			titulosoc.setForeground(Utils.colorTexto);
 			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
 			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jPanelAccesosRemitoCte.add(titulosoc, null);
 			jPanelAccesosRemitoCte.add(getJButtonRemitoCliente(), null);
 				JLabel nRem= new JLabel("NUEVO REMITO");
-				nRem.setForeground(Color.WHITE);
+				nRem.setForeground(Utils.colorTexto);
 				nRem.setBounds(new java.awt.Rectangle(0,100,185,15));
 				nRem.setHorizontalAlignment(SwingConstants.CENTER);
 				nRem.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 				jPanelAccesosRemitoCte.add(nRem, null);
 				jPanelAccesosRemitoCte.add(getJButtonTodosRemitosCliente(), null);
 				JLabel remGen= new JLabel("REMITOS GENERADOS");
-				remGen.setForeground(Color.WHITE);
+				remGen.setForeground(Utils.colorTexto);
 				remGen.setBounds(new java.awt.Rectangle(185,100,185,15));
 				remGen.setHorizontalAlignment(SwingConstants.CENTER);
 				remGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
@@ -533,6 +532,11 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		this.jBTodosRemitosCliente.addActionListener(lis);
 		this.backupBD.addActionListener(lis);
 		this.modoAvanzado.addActionListener(lis);
+		
+		this.jBLibroIva.addActionListener(lis);
+		this.jBFacturaCliente.addActionListener(lis);
+		this.jBTodasFactCliente.addActionListener(lis);
+		this.jBGestionClientes.addActionListener(lis);
 	}
 
 	public JMenuItem getArchivoInfoComercio() {
@@ -563,36 +567,6 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		return infoProg;
 	}
 	
-	
-	public void mostrarModoAvanzado(){
-		jContentPane.add(getJPanelAccesosFactCliente(), null);
-		jContentPane.add(getJPanelLibroIva(),null);
-		jContentPane.add(getJPanelAccesosClientes(), null);
-		repaint();
-	}
-	
-	public void setActionListenersModoAvanzado(ActionListener lis) {
-		this.jBLibroIva.addActionListener(lis);
-		this.jBFacturaCliente.addActionListener(lis);
-		this.jBTodasFactCliente.addActionListener(lis);
-		this.jBGestionClientes.addActionListener(lis);
-	}
-	
-	public void mostrarModoSimple(){
-		jContentPane.remove(getJPanelAccesosFactCliente());
-		jContentPane.remove(getJPanelLibroIva());
-		jContentPane.remove(getJPanelAccesosClientes());
-		repaint();
-	}
-	
-	public void setActionListenersModoSimple(ActionListener lis) {
-		this.jBLibroIva.removeActionListener(lis);
-		this.jBFacturaCliente.removeActionListener(lis);
-		this.jBTodasFactCliente.removeActionListener(lis);
-		this.jBGestionClientes.removeActionListener(lis);
-	}
-	
-
 	private int d,m,a,hora, minutos, segundos;
 	private int dia;
 	JLabel label;
@@ -603,7 +577,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		label = new JLabel(" ");
 		label.setFont(new Font( Utils.tipoLetra, Font.BOLD, 20));
 		label.setBounds(new Rectangle(15,400,400,30));
-		label.setForeground(Color.WHITE);
+		label.setForeground(Utils.colorTexto);
 		this.jContentPane.add(label,null);
 		h1 = new Thread(this);
 		h1.start();

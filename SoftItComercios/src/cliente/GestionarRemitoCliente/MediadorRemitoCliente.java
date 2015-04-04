@@ -25,7 +25,6 @@ import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
 import server.GestionarProducto.ControlProducto;
 import cliente.GestionarCliente.MediadorGestionarCliente;
-import cliente.GestionarFacturaCliente.MediadorFacturarCliente;
 import cliente.Principal.GUIReport;
 
 import common.Utils;

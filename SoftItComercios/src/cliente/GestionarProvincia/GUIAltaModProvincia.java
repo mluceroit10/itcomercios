@@ -13,6 +13,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -23,6 +24,12 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import persistencia.domain.Provincia;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -62,7 +69,7 @@ public class GUIAltaModProvincia extends JDialog {
    
     private JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal = new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPDatos(),null);
             jpPpal.add(getJBAceptar(), null);
@@ -74,23 +81,24 @@ public class GUIAltaModProvincia extends JDialog {
         
     private JPanel getJPDatos() {
         if (jpDatos == null) {
-            jlNombre = new JLabel("Nombre  (*)    ");
-            jlNombre.setBounds(new Rectangle(10,30,100,15));
+            jlNombre = new JLabel("NOMBRE  (*)");
+            jlNombre.setBounds(new Rectangle(10,30,90,15));
             jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-            jpDatos = new JPanel();
+            jlNombre.setForeground(Utils.colorTexto);  
+            jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
             jpDatos.setSize(new java.awt.Dimension(300,70));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Datos de la Provincia", 
+            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DE LA PROVINCIA", 
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatos.setBounds(new Rectangle(15,15,300,70));
             jpDatos.add(jlNombre, null);
             jpDatos.add(getJTFNombre(), null);
             if (prov!=null) {
                 jtfNombre.setText(prov.getNombre());
             }
-            jpDatos.setBackground(Utils.colorPanel);
+          
         }
         return jpDatos;
     }
@@ -105,10 +113,10 @@ public class GUIAltaModProvincia extends JDialog {
     
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
-            jbAceptar = new JButton();
+            jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setBounds(new Rectangle(50,105,100,30));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbAceptar.setText("Aceptar");
+            jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
         }
         return jbAceptar;
@@ -116,10 +124,10 @@ public class GUIAltaModProvincia extends JDialog {
     
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
-            jbCancelar = new JButton();
+            jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbCancelar.setBounds(new Rectangle(180,105,100,30));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbCancelar.setText("Cancelar");
+            jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
         }
         return jbCancelar;

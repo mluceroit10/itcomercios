@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import common.Utils;
 
@@ -44,7 +52,7 @@ public class GUIStockProductos extends JDialog {
 	
 	private JPanel getPanelPpal() {
 		if (jpPpal == null) {
-			jpPpal = new JPanel();
+			jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
 			jpPpal.setLayout(null);
 			jpPpal.setSize(500, 380);
 			jpPpal.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, null));
@@ -54,6 +62,7 @@ public class GUIStockProductos extends JDialog {
 			jlTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 			jlTitulo.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jlTitulo.setText("CONTROL DE STOCK DE PRODUCTOS");
+			jlTitulo.setForeground(Utils.colorTexto);
 			jpPpal.add(jlTitulo, null);
 			try {
 				jpPpal.add(getJPTipoDatos(), null);
@@ -69,27 +78,26 @@ public class GUIStockProductos extends JDialog {
 	 
 	private JPanel getJPTipoDatos() throws Exception {
 		if (jpTipoDatos == null) {
-			jpTipoDatos = new JPanel();
+			jpTipoDatos = new TransparentPanel();
 			jpTipoDatos.setLayout(null);
 			jpTipoDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"Seleccione criterios de busqueda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+					"SELECCIONE CRITERIOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jpTipoDatos.setBounds(new java.awt.Rectangle(25,50,450,240));
 			jlProveedor = new JLabel();
 			jlProveedor.setBounds(new java.awt.Rectangle(30,30,390,100));
 			jlProveedor.setHorizontalAlignment(SwingConstants.LEFT);
 			jlProveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"Seleccione Proveedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, null,null));
+					"SELECCIONE PROVEEDOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jLFormaOrden = new JLabel();
 			jLFormaOrden.setBounds(new java.awt.Rectangle(30,150,220,60));
 			jLFormaOrden.setHorizontalAlignment(SwingConstants.LEFT);
 			jLFormaOrden.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"Seleccione el orden del listado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, null,null));
+					"SELECCIONE ORDEN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
 			jpTipoDatos.add(jlProveedor, null);
 			jpTipoDatos.add(jLFormaOrden, null);
-			jpTipoDatos.setBackground(Utils.colorPanel);
 			jpTipoDatos.add(getTodos(), null);
 			jpTipoDatos.add(getUnProveedor(), null);
 			jpTipoDatos.add(getJCOrdenListado(), null);
@@ -113,20 +121,23 @@ public class GUIStockProductos extends JDialog {
 
 	private JRadioButton getUnProveedor() {
 		if (unProv == null) {
-			unProv = new JRadioButton("Un Proveedor",true);
-			unProv.setBounds(new java.awt.Rectangle(60,90,110,21));
-			unProv.setBackground(Utils.colorPanel);
+			unProv = new JRadioButton("UN PROVEEDOR",true);
+			unProv.setBounds(new java.awt.Rectangle(60,90,120,21));
 			unProv.setActionCommand("unProv");
+			unProv.setForeground(Color.black);
+//			unProv.setOpaque(false);
 		}
 		return unProv;
 	}
 	
 	private JRadioButton getTodos() {
 		if (todos == null) {
-			todos = new JRadioButton("Todos",false);
+			todos = new JRadioButton("TODOS",false);
 			todos.setBounds(new java.awt.Rectangle(60,60,73,21));
-			todos.setBackground(Utils.colorPanel);
 			todos.setActionCommand("Todos");
+			todos.setForeground(Color.black);
+	//		todos.setOpaque(false);
+
 		}
 		return todos;
 	}
@@ -147,10 +158,10 @@ public class GUIStockProductos extends JDialog {
 	
 	public JButton getJBContinuar() {
 		if (jBContinuar == null) {
-			jBContinuar = new JButton();
+			jBContinuar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jBContinuar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBContinuar.setBounds(new java.awt.Rectangle(115,310,100,30));
-			jBContinuar.setText("Continuar");
+			jBContinuar.setText("CONTINUAR");
 			jBContinuar.setInputMap(0, map);
 		}
 		return jBContinuar;
@@ -158,10 +169,10 @@ public class GUIStockProductos extends JDialog {
 	
 	public JButton getJBCancelar() {
 		if (jBCancelar == null) {
-			jBCancelar = new JButton();
+			jBCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jBCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBCancelar.setBounds(new java.awt.Rectangle(265,310,100,30));
-			jBCancelar.setText("Cancelar");
+			jBCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
 			jBCancelar.setInputMap(0, map);
 		}
 		return jBCancelar;

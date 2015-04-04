@@ -3,7 +3,7 @@ package cliente.Utils;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.net.URL;
- 
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
  
@@ -48,7 +48,7 @@ private Image bgImage;
      }
  }
  
- @Override
+ 
  public void paint(Graphics g) {
  
   // Pintamos la imagen de fondo...

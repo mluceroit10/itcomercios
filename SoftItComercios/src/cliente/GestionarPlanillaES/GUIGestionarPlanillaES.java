@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +24,12 @@ import javax.swing.table.TableColumn;
 
 import cliente.LimitadorNroMax;
 import cliente.ModeloTabla;
+import cliente.Imagenes.Botones.ButtonType;
+import cliente.Imagenes.Botones.GlossyButton;
+import cliente.Imagenes.util.Theme;
+import cliente.Principal.GUIPrincipal;
+import cliente.Utils.JPanel_Whit_Image;
+import cliente.Utils.TransparentPanel;
 
 import com.toedter.calendar.JDateChooser;
 import common.Utils;
@@ -70,7 +77,7 @@ public class GUIGestionarPlanillaES extends JDialog {
 
     public JPanel getJPPpal() {
         if (jpPpal == null) {
-            jpPpal = new JPanel();
+            jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
             jpPpal.add(getJPDatos(), null);
             jpPpal.add(getJPBuscador(), null);
@@ -84,16 +91,15 @@ public class GUIGestionarPlanillaES extends JDialog {
 
     private JPanel getJPGestion() {
         if (jpGestion == null) {
-            jpGestion = new JPanel();
+            jpGestion = new TransparentPanel();
             jpGestion.setLayout(null);
             jpGestion.setBounds(new java.awt.Rectangle(15,15,320,330));
             jpGestion.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-                    "Gestión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    "GESTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpGestion.add(getJBImprimir(), null);
             jpGestion.add(getJBBorrar(), null);
             jpGestion.add(getJPDatosNuevaPlanilla(),null);
-            jpGestion.setBackground(Utils.colorPanel);
         }
         return jpGestion;
     }
@@ -101,29 +107,29 @@ public class GUIGestionarPlanillaES extends JDialog {
     private JPanel getJPDatosNuevaPlanilla() {
         if (jpDatosNP == null) {
             jlFecha = new JLabel();
-            jlFecha.setBounds(new java.awt.Rectangle(30,40,92,15));
-            jlFecha.setText("Fecha hasta (*):");
+            jlFecha.setBounds(new java.awt.Rectangle(30,40,150,15));
+            jlFecha.setText("INGRESE FECHA LIMITE (*):");
+            jlFecha.setForeground(Utils.colorTexto);
             jlFecha.setHorizontalAlignment(SwingConstants.RIGHT);
-            jpDatosNP = new JPanel();
+            jpDatosNP = new TransparentPanel();
             jpDatosNP.setLayout(null);
-            jpDatosNP.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Nueva planilla de ES - Ingrese datos", 
+            jpDatosNP.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "NUEVA PLANILLA DE ES", 
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatosNP.setBounds(new java.awt.Rectangle(25,90,260,180));
             jpDatosNP.add(jlFecha, null);
             jpDatosNP.add(getJDateChooserFecha(), null);
             jpDatosNP.add(getJBCargar(), null);
-            jpDatosNP.setBackground(Utils.colorPanel);
-        }
+         }
         return jpDatosNP;
     }
     
     public JButton getJBSalir() {
         if (jbSalir == null) {
-        	jbSalir = new JButton();
+        	jbSalir = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbSalir.setBounds(new Rectangle(325,365,100,30));
-        	jbSalir.setText("Salir");
+        	jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
         	jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbSalir.setInputMap(0, map);
         }
@@ -132,8 +138,8 @@ public class GUIGestionarPlanillaES extends JDialog {
     
     public JButton getJBCargar() {
         if (jbCargar == null) {
-            jbCargar = new JButton();
-            jbCargar.setText("Ingresar");
+            jbCargar = new GlossyButton("INGRESAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbCargar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
             jbCargar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCargar.setBounds(new java.awt.Rectangle(130,120,100,25));
             jbCargar.setInputMap(0, map);
@@ -143,8 +149,8 @@ public class GUIGestionarPlanillaES extends JDialog {
     
     public JButton getJBImprimir() {
         if (jbAceptar == null) {
-        	jbAceptar = new JButton();
-        	jbAceptar.setText("Imprimir");
+        	jbAceptar = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAceptar.setBounds(new Rectangle(180,30,100,25));
         	jbAceptar.setInputMap(0, map);
@@ -154,8 +160,8 @@ public class GUIGestionarPlanillaES extends JDialog {
 
     public JButton getJBBorrar() {
         if (jbBorrar == null) {
-            jbBorrar = new JButton();
-            jbBorrar.setText("Eliminar");
+            jbBorrar = new GlossyButton("ELIMINAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+            jbBorrar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
             jbBorrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbBorrar.setBounds(new Rectangle(30,30,100,25));
             jbBorrar.setInputMap(0, map);
@@ -165,12 +171,12 @@ public class GUIGestionarPlanillaES extends JDialog {
     
     private JPanel getJPBuscador() {
         if (jpBuscador == null) {
-            jpBuscador = new JPanel();
+            jpBuscador = new TransparentPanel();
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Buscar",
+            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.black));
+                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpBuscador.setBounds(new Rectangle(350,15,390,60));
             jpBuscador.add(getJCBDatos(), null);
             if (((String)combo.getSelectedItem()).compareTo("Nro Planilla")==0) {
@@ -183,8 +189,7 @@ public class GUIGestionarPlanillaES extends JDialog {
                 jpBuscador.add(getJLFechaFormato(), null);
                 getJTFNro();
             }
-            jpBuscador.setBackground(Utils.colorPanel);
-        }
+         }
         return jpBuscador;
     }
     
@@ -201,6 +206,7 @@ public class GUIGestionarPlanillaES extends JDialog {
         	fecha = new JLabel("Fecha:");
         	fecha.setHorizontalAlignment(JLabel.RIGHT);
         	fecha.setBounds(new Rectangle(110,30,60,15));
+        	fecha.setForeground(Utils.colorTexto);
         }
         return fecha;
     }
@@ -210,6 +216,7 @@ public class GUIGestionarPlanillaES extends JDialog {
         	nro = new JLabel("Nro de Planilla:");
         	nro.setHorizontalAlignment(JLabel.RIGHT);
         	nro.setBounds(new Rectangle(110,30,100,15));
+        	nro.setForeground(Utils.colorTexto);
         }
         return nro;
     }
@@ -243,15 +250,14 @@ public class GUIGestionarPlanillaES extends JDialog {
 
     private JPanel getJPDatos() {
         if (jpDatos == null) {
-            jpDatos = new JPanel();
+            jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
             jpDatos.setBounds(new Rectangle(350,90,390,255));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "Planillas E/S",
+            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "PLANILLAS E/S",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
             jpDatos.add(getJSPDatos(), null);
             agregarPeriodoSelec();
-            jpDatos.setBackground(Utils.colorPanel);
         }
         return jpDatos;
     }
@@ -344,9 +350,9 @@ public class GUIGestionarPlanillaES extends JDialog {
 
     public JButton getJBCambiarPeriodo() {
 		if (jbCambiarPeriodo == null) {
-			jbCambiarPeriodo = new JButton();
-			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(265,50,115,20));
-			jbCambiarPeriodo.setText("Cambiar Período");
+			jbCambiarPeriodo = new GlossyButton("CAMBIAR PERIODO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(240,50,140,20));
+			jbCambiarPeriodo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/calendar.png")));
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			
@@ -357,7 +363,7 @@ public class GUIGestionarPlanillaES extends JDialog {
     public JTextField getJTFPeriodo() {
 		if (jtfPeriodo == null) {
 			jtfPeriodo = new JTextField();
-			jtfPeriodo.setBounds(new java.awt.Rectangle(70,20,70,20));
+			jtfPeriodo.setBounds(new java.awt.Rectangle(80,20,70,20));
 			jtfPeriodo.setDisabledTextColor(Utils.colorTextoDisabled);
 			jtfPeriodo.setEnabled(false);
 		}
@@ -367,7 +373,7 @@ public class GUIGestionarPlanillaES extends JDialog {
     public JComboBox getJCBMes() {
 		if (jcbMes == null) {
 			jcbMes = new JComboBox();
-			jcbMes.setBounds(new java.awt.Rectangle(80,50,60,20));
+			jcbMes.setBounds(new java.awt.Rectangle(60,50,60,20));
 			jcbMes.setBackground(new Color(255,255,255));
 			jcbMes.setForeground(java.awt.Color.black);
 			jcbMes.addItem("01");
@@ -390,7 +396,7 @@ public class GUIGestionarPlanillaES extends JDialog {
 	public JTextField getJTFAnio() {
 		if (jtfAnio == null) {
 			jtfAnio = new JTextField();
-			jtfAnio.setBounds(new java.awt.Rectangle(190,50,60,20));
+			jtfAnio.setBounds(new java.awt.Rectangle(175,50,50,20));
 			jtfAnio.setDocument(new LimitadorNroMax(jtfAnio,4));
 			jtfAnio.setText(String.valueOf(anioLI));
 		}
@@ -398,13 +404,16 @@ public class GUIGestionarPlanillaES extends JDialog {
 	}
 	
 	public void agregarPeriodoSelec(){
-		jlPeriodo = new JLabel("Período:");
+		jlPeriodo = new JLabel("PERIODO:");
 		jlPeriodo.setBounds(new Rectangle(20,20,60,20));
-		jlMes = new JLabel("Mes:");
-		jlMes.setBounds(new Rectangle(20,50,50,20));
+		jlPeriodo.setForeground(Utils.colorTexto);
+		jlMes = new JLabel("MES:");
+		jlMes.setForeground(Utils.colorTexto);
+		jlMes.setBounds(new Rectangle(10,50,40,20));
 		jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
-		jlAnio = new JLabel("Año:");
-		jlAnio.setBounds(new Rectangle(155,50,40,20));
+		jlAnio = new JLabel("AÑO:");
+		jlAnio.setForeground(Utils.colorTexto);
+		jlAnio.setBounds(new Rectangle(140,50,35,20));
 		jpDatos.add(jlPeriodo);
 		jpDatos.add(jlMes);
 		jpDatos.add(jlAnio);

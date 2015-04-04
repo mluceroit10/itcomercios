@@ -15,7 +15,6 @@ import persistencia.domain.Localidad;
 import server.GestionarCliente.ControlCliente;
 import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
-import server.GestionarLocalidad.ControlLocalidad;
 import cliente.Principal.GUIReport;
 
 import common.Utils;

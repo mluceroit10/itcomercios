@@ -36,6 +36,9 @@ public class MediadorPrincipal implements ActionListener{
 		this.guiPrincipal = new GUIPrincipal();  
 		this.guiPrincipal.setActionListeners(this);
 		this.guiPrincipal.setVisible(true);
+		guiPrincipal.getJPanelAccesosFactCliente().setVisible(false);
+		guiPrincipal.getJPanelAccesosClientes().setVisible(false);
+		guiPrincipal.getJPanelLibroIva().setVisible(false);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -97,13 +100,6 @@ public class MediadorPrincipal implements ActionListener{
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
-    /*	}else if(this.guiPrincipal.getJButtonControlStock()==source){
-    		try{
-    			MediadorStockProductos msprod = new MediadorStockProductos(guiPrincipal);
-    			msprod.show();
-    		}catch (Exception p){
-    			p.printStackTrace();
-    		}	*/
     	}else if(this.guiPrincipal.getJButtonFacturaCliente()==source){
     		try{
     			MediadorFacturarCliente msprod = new MediadorFacturarCliente(guiPrincipal);
@@ -142,20 +138,6 @@ public class MediadorPrincipal implements ActionListener{
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
-    	/*}else if(this.guiPrincipal.getJButtonDeudasClientes()==source){
-    		try{
-    			MediadorListarDeudaClientes msprod = new MediadorListarDeudaClientes(guiPrincipal);
-    			msprod.show();
-    		}catch (Exception p){
-    			p.printStackTrace();
-    		}	
-    	}else if(this.guiPrincipal.getJButtonProductosFacts()==source){
-    		try{
-    			MediadorListarProductosFacturados msprod = new MediadorListarProductosFacturados(guiPrincipal);
-    			msprod.show();
-    		}catch (Exception p){
-    			p.printStackTrace();
-    		}		*/
     	}else if(this.guiPrincipal.getJButtonLibroIva()==source){
     		try{
     			new MediadorBuscarLibroIva(guiPrincipal);
@@ -173,13 +155,19 @@ public class MediadorPrincipal implements ActionListener{
     			if(!modoAvanzado){
     				modoAvanzado=true;
     				guiPrincipal.getModoAvanzado().setText("Modo Simple");
-    			guiPrincipal.mostrarModoAvanzado();
-    			guiPrincipal.setActionListenersModoAvanzado(this);
+    		/*	guiPrincipal.mostrarModoAvanzado();
+    			guiPrincipal.setActionListenersModoAvanzado(this);*/
+    				guiPrincipal.getJPanelAccesosFactCliente().setVisible(true);
+    				guiPrincipal.getJPanelAccesosClientes().setVisible(true);
+    				guiPrincipal.getJPanelLibroIva().setVisible(true);
     			}else{
     				modoAvanzado=false;
     				guiPrincipal.getModoAvanzado().setText("Modo Avanzado");
-    				guiPrincipal.mostrarModoSimple();
-        			guiPrincipal.setActionListenersModoSimple(this);
+    				guiPrincipal.getJPanelAccesosFactCliente().setVisible(false);
+    				guiPrincipal.getJPanelAccesosClientes().setVisible(false);
+    				guiPrincipal.getJPanelLibroIva().setVisible(false);
+    		/*		guiPrincipal.mostrarModoSimple();
+        			guiPrincipal.setActionListenersModoSimple(this);*/
     			}
     		}catch (Exception p){
     			p.printStackTrace();

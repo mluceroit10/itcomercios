@@ -24,7 +24,7 @@ public class MediadorModificarComercio implements ActionListener {
     public IControlComercio controlComercio;
     private MediadorGestionarLocalidad mgLoc = null;
     public Comercio dist=null;
-
+  
     public MediadorModificarComercio(JFrame guiPadre) {
       	try{
       		this.controlComercio = new ControlComercio();
