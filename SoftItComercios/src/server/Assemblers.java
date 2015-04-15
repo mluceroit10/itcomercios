@@ -11,12 +11,22 @@ import persistencia.domain.PlanillaES;
 import persistencia.domain.Producto;
 import persistencia.domain.Proveedor;
 import persistencia.domain.Provincia;
+import persistencia.domain.Vencimiento;
 
 public class Assemblers {
 
 	public Assemblers() {
 	}
 
+	public static Vencimiento crearVencimiento(Vencimiento objD ) {
+		Vencimiento vto = new Vencimiento();
+		vto.setId(objD.getId());
+		vto.setFechaVto(objD.getFechaVto());
+		vto.setStock(objD.getStock());
+		vto.setStockKilos(objD.getStockKilos());
+		return vto;
+	}
+	
 	public static Cliente crearCliente(Cliente objD ) {
 		Cliente cte = new Cliente();
 		cte.setId(objD.getId());
@@ -138,6 +148,7 @@ public class Assemblers {
 		mc.setPrecioEntCIva(objD.isPrecioEntCIva());
 		mc.setPrecioKilos(objD.isPrecioKilos());
 		mc.setGanancia(objD.getGanancia());
+		mc.setCtrlVto(objD.isCtrlVto());
 		return mc;
 	}
 	

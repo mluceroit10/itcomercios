@@ -72,6 +72,7 @@ public class ControlProducto implements IControlProducto{
 			producto.setStockKilosMin(modificado.getStockKilosMin());
 			producto.setGanancia(modificado.getGanancia());
 			producto.setProveedor(proveedor);
+			producto.setCtrlVto(modificado.isCtrlVto());
 			mp.commit();
 		} finally {
 			mp.rollback();

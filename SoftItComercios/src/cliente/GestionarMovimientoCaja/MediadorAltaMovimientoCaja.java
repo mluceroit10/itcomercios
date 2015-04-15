@@ -102,9 +102,9 @@ public class MediadorAltaMovimientoCaja implements ActionListener {
     	    } catch(Exception ex) {
     	    	Utils.manejoErrores(ex,"Error en MediadorAltaMovimientoCaja. ActionPerformed");
     	    }
-    	}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Cliente A")==0)) {
+    	}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Cliente-Tipo A")==0)) {
     			buscarFacturaCliente("FacturaCliente-A",Utils.getMes(hoy),Utils.getAnio(hoy));//discr tipo a
-		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Cliente B")==0)) {
+		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Factura Cliente-Tipo B")==0)) {
     		buscarFacturaCliente("FacturaCliente-B",Utils.getMes(hoy),Utils.getAnio(hoy));//discr tipo B
 		}else if ((source == guiMovimientoCaja.getJBBuscarFact()) && (tipoFactB.compareTo("Remito Cliente")==0)) {
     		buscarRemitoCliente(Utils.getDia(hoy),Utils.getMes(hoy),Utils.getAnio(hoy));  //discr tipo Remito  
@@ -130,11 +130,11 @@ public class MediadorAltaMovimientoCaja implements ActionListener {
         		}
         	}
         	if(guiMovimientoCaja.getJCTipoFact()==source){
-        		if(tipoFactB.equals("Factura Cliente A")){
+        		if(tipoFactB.equals("Factura Cliente-Tipo A")){
         			if(tipoFact!=null && !tipoFact.equals("FacturaCliente-A"))
         				guiMovimientoCaja.setFactura("");
         			guiMovimientoCaja.getJCTipoMov().setSelectedItem("ENTRADA");
-        		}else if(tipoFactB.equals("Factura Cliente B")){
+        		}else if(tipoFactB.equals("Factura Cliente-Tipo B")){
             			if(tipoFact!=null && !tipoFact.equals("FacturaCliente-B"))
             				guiMovimientoCaja.setFactura("");
             			guiMovimientoCaja.getJCTipoMov().setSelectedItem("ENTRADA");

@@ -69,7 +69,7 @@ public class MediadorAltaProducto implements ActionListener,KeyListener {
             String mGanancia = guiProducto.getJTFMargenGanancia().getText();
             String stockMinK = guiProducto.getJTFStKilosMin().getText();
             String stockActK = guiProducto.getJTFStKilosAct().getText();
-            
+            String ctrlVto=(String) guiProducto.getJCBCtrlVto().getSelectedItem();
             try {
             	if (codigo.length()==0){
             		Utils.advertenciaUsr(guiProducto,"Por favor ingrese el Código del Producto.");
@@ -91,6 +91,9 @@ public class MediadorAltaProducto implements ActionListener,KeyListener {
                         stKilosMin = Double.parseDouble(stockMinK);
                         
                     }
+                    boolean controlVto=false;
+                    if(ctrlVto.compareTo("SI")==0) controlVto=true;
+                    
                     double prEntrada = Double.parseDouble(prEntr);
                     double prVentaSinIva = Double.parseDouble(nuevoPrVtaSinIva);
                     double prVentaConIva = Double.parseDouble(nuevoPrVtaConIva);
@@ -112,6 +115,7 @@ public class MediadorAltaProducto implements ActionListener,KeyListener {
             		prod.setPrecioEntCIva(conIva);
             		prod.setPrecioVentaConIva(prVentaConIva);
             		prod.setProveedor(proveedor);
+            		prod.setCtrlVto(controlVto);
             		this.controlProducto.agregarProducto(prod);
             		if (mgProducto != null) {
             			mgProducto.cargarDatos();

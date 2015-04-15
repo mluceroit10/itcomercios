@@ -64,6 +64,7 @@ public class GUIFacturarProveedor extends JDialog {
 	private JLabel jlDescuento;
 	private JButton jbNuevoProd=null;
 	private InputMap map = new InputMap();
+	private JLabel jlVto;					 	private JDateChooser jDFechaVto = null;
     
     public GUIFacturarProveedor(JFrame guiPadre) {
     	super(guiPadre);
@@ -96,45 +97,52 @@ public class GUIFacturarProveedor extends JDialog {
         if (jpDatosProd == null) {
         	jpDatosProd = new TransparentPanel();
         	jpDatosProd.setLayout(null);
-        	jpDatosProd.setBounds(new java.awt.Rectangle(8,365,716,130));
+        	jpDatosProd.setBounds(new java.awt.Rectangle(8,365,716,140));
         	jpDatosProd.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "INGRESO DE PRODUCTOS",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
         	jlBusqueda = new JLabel();
-            jlBusqueda.setBounds(new Rectangle(10,28,120,22));
+            jlBusqueda.setBounds(new Rectangle(10,28,120,20));
             jlBusqueda.setText("BUSCAR PRODUCTO:");
             jlBusqueda.setHorizontalAlignment(SwingConstants.RIGHT);
             jlBusqueda.setForeground(Utils.colorTexto);
         	jlSelecProd = new JLabel();
-        	jlSelecProd.setBounds(new Rectangle(225,28,150,22));
+        	jlSelecProd.setBounds(new Rectangle(225,28,150,20));
         	jlSelecProd.setText("SELECCIONE PRODUCTO");
         	jlSelecProd.setForeground(Utils.colorTexto);
         	jlCodigo = new JLabel();
-            jlCodigo.setBounds(new Rectangle(10,58,120,22));
+            jlCodigo.setBounds(new Rectangle(10,58,120,20));
             jlCodigo.setText("PRODUCTO SELEC.:");
             jlCodigo.setHorizontalAlignment(SwingConstants.RIGHT);
             jlCodigo.setForeground(Utils.colorTexto);
             jlImporte = new JLabel();
-            jlImporte.setBounds(new java.awt.Rectangle(550,58,70,22));
+            jlImporte.setBounds(new java.awt.Rectangle(550,58,70,20));
             jlImporte.setText("IMPORTE:");
             jlImporte.setForeground(Utils.colorTexto);
             JLabel jlAgregar = new JLabel();
-            jlAgregar.setBounds(new java.awt.Rectangle(15,84,685,32));
-            jlAgregar.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "",
+            jlAgregar.setBounds(new java.awt.Rectangle(15,82,685,50));
+            jlAgregar.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "INGRESE",
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), Utils.colorTexto));
             jlCantidad = new JLabel();
-            jlCantidad.setBounds(new java.awt.Rectangle(30,88,120,22));
-            jlCantidad.setText("INGRESE CANTIDAD:");
+            jlCantidad.setBounds(new java.awt.Rectangle(30,100,90,20));
+            jlCantidad.setText("CANTIDAD:");
             jlCantidad.setForeground(Utils.colorTexto);
             jlKilos = new JLabel();
-            jlKilos.setBounds(new Rectangle(225,88,90,22));
-            jlKilos.setText("INGRESE KG.:");
+            jlKilos.setBounds(new Rectangle(160,100,90,20));
+            jlKilos.setText("KG.:");
             jlKilos.setForeground(Utils.colorTexto);
             jlDescuento = new JLabel();
-            jlDescuento.setBounds(new Rectangle(365,88,150,22));
-            jlDescuento.setText("INGRESE DESCUENTO(%):");
+            jlDescuento.setBounds(new Rectangle(250,100,150,20));
+            jlDescuento.setText("DESCUENTO(%):");
             jlDescuento.setForeground(Utils.colorTexto);
+            
+            jlVto = new JLabel();
+            jlVto.setBounds(new Rectangle(380,100,90,20));
+            jlVto.setText("VTO.:");
+            jlVto.setForeground(Utils.colorTexto);
+            
+            
             jpDatosProd.add(jlSelecProd, null);
             jpDatosProd.add(jlCodigo, null);
             jpDatosProd.add(jlBusqueda, null);
@@ -142,6 +150,7 @@ public class GUIFacturarProveedor extends JDialog {
             jpDatosProd.add(jlCantidad, null);
             jpDatosProd.add(jlKilos, null);
             jpDatosProd.add(jlDescuento, null);
+            jpDatosProd.add(jlVto, null);
             jpDatosProd.add(jlAgregar, null);
             jpDatosProd.add(getJTFCodigo(), null);
             jpDatosProd.add(getJTFImporte(), null);
@@ -150,6 +159,7 @@ public class GUIFacturarProveedor extends JDialog {
             jpDatosProd.add(getJTFKilos(), null);
             jpDatosProd.add(getJTFDescuento(), null);
             jpDatosProd.add(getJBAgregarProd(), null);
+            jpDatosProd.add(getJDFechaVto(), null);
         }
         return jpDatosProd;
     }
@@ -197,6 +207,8 @@ public class GUIFacturarProveedor extends JDialog {
 		return jDataCFecha;
 	}
     
+ 
+    
     public JButton getJBBuscarC() {
         if (jbBuscarC == null) {
             jbBuscarC = new GlossyButton("SELECCIONE PROVEEDOR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
@@ -214,7 +226,7 @@ public class GUIFacturarProveedor extends JDialog {
         	jbAgregarProd = new GlossyButton("AGREGAR PRODUCTO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbAgregarProd.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
         	jbAgregarProd.setName("AgregarProd");
-        	jbAgregarProd.setBounds(new java.awt.Rectangle(540,88,150,25));
+        	jbAgregarProd.setBounds(new java.awt.Rectangle(540,98,150,22));
         	jbAgregarProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
@@ -251,7 +263,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFCodigo() {
         if (jtfCodigo == null) {
         	jtfCodigo = new JTextField();
-        	jtfCodigo.setBounds(new Rectangle(130,58,400,22));
+        	jtfCodigo.setBounds(new Rectangle(130,58,400,20));
         	jtfCodigo.setDisabledTextColor(Utils.colorTextoDisabled);
            	jtfCodigo.setEnabled(false);
         }
@@ -261,7 +273,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFBusqueda() {
         if (jtfBusqueda == null) {
         	jtfBusqueda = new JTextField();
-        	jtfBusqueda.setBounds(new Rectangle(130,28,90,22));
+        	jtfBusqueda.setBounds(new Rectangle(130,28,90,20));
         }
         return jtfBusqueda;
     }
@@ -269,7 +281,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JButton getJBNuevoProducto() {
         if (jbNuevoProd == null) {
         	jbNuevoProd = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbNuevoProd.setBounds(new Rectangle(450,30,150,22));
+        	jbNuevoProd.setBounds(new Rectangle(450,30,150,20));
         	jbNuevoProd.setText("NUEVO PRODUCTO");
         	jbNuevoProd.setName("NuevoProd");
         	jbNuevoProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -327,7 +339,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFImporte() {
         if (jtfImporte == null) {
         	jtfImporte = new JTextField();
-        	jtfImporte.setBounds(new Rectangle(610,62,90,22));
+        	jtfImporte.setBounds(new Rectangle(610,58,90,20));
         	jtfImporte.setDisabledTextColor(Utils.colorTextoDisabled);
         	jtfImporte.setDocument(new LimitadorPrecio(jtfImporte));
         }
@@ -358,7 +370,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFCantidad() {
         if (jtfCantidad == null) {
         	jtfCantidad = new JTextField();
-        	jtfCantidad.setBounds(new Rectangle(145,88,50,22));
+        	jtfCantidad.setBounds(new Rectangle(95,100,50,20));
         	jtfCantidad.setDocument(new LimitadorNroMax(jtfCantidad,6));
         	jtfCantidad.setText("1");
         }
@@ -368,13 +380,31 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFKilos() {
         if (jtfKilos == null) {
         	jtfKilos = new JTextField();
-        	jtfKilos.setBounds(new Rectangle(300,88,50,22));
+        	jtfKilos.setBounds(new Rectangle(185,100,50,20));
         	jtfKilos.setDocument(new LimitadorPrecio(jtfKilos));
         	jtfKilos.setText("");
         }
         return jtfKilos;
     }
     
+
+	public JTextField getJTFDescuento() {
+        if (jtfDescuento == null) {
+        	jtfDescuento = new JTextField();
+        	jtfDescuento.setBounds(new Rectangle(345,100,25,20));
+        	jtfDescuento.setDocument(new LimitadorNroMax(jtfDescuento,2));
+        }
+        return jtfDescuento;
+    }
+    
+	public JDateChooser getJDFechaVto() {
+		if (jDFechaVto == null) {
+			jDFechaVto = new JDateChooser("dd/MM/yyyy",false);
+			jDFechaVto.setBounds(new java.awt.Rectangle(415,100,110,20));
+		}
+		return jDFechaVto;
+	}
+	
     public JTextField getJTFNombreC() {
         if (jtfNombreC == null) {
             jtfNombreC = new JTextField();
@@ -423,14 +453,6 @@ public class GUIFacturarProveedor extends JDialog {
 		return jpDatosItems;
 	}
 	
-	public JTextField getJTFDescuento() {
-        if (jtfDescuento == null) {
-        	jtfDescuento = new JTextField();
-        	jtfDescuento.setBounds(new Rectangle(510,88,25,22));
-        	jtfDescuento.setDocument(new LimitadorNroMax(jtfDescuento,2));
-        }
-        return jtfDescuento;
-    }
 	
 	private JScrollPane getJSPDatosI() {
 		if (jspDatosInsc == null) {

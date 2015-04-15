@@ -19,6 +19,7 @@ public class Producto {
 	private Proveedor proveedor= null;
 	private double stockKilosAct;
 	private double stockKilosMin;
+	private boolean ctrlVto;
 
 	public Producto(){    
 		id=OidGenerator.getNewId();	
@@ -112,5 +113,10 @@ public class Producto {
 		this.stockKilosMin = stockKilosMin;
 	}
 	
-	
+	public boolean isCtrlVto() {
+		return ctrlVto;
+	}
+	public void setCtrlVto(boolean ctrlVto) {
+		this.ctrlVto = ctrlVto;
+	}
 }

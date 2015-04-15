@@ -345,3 +345,17 @@ CREATE TABLE comercio (
 
 INSERT INTO comercio VALUES (140737488388096,'','27-30310394-0','-',196626,'2015-03-11',70368744210432,'-',1,1,1,'');
 
+
+CREATE TABLE vencimiento (
+  VENCIMIENTO_ID bigint(20) NOT NULL default '0',
+  ID bigint(20) default NULL,
+  PRODUCTO_ID bigint(20) default NULL,
+  STOCK int(11) NOT NULL default '0',
+  STOCK_KILOS double NOT NULL default '0',
+  FECHA_VTO date default NULL,
+  PRIMARY KEY  (VENCIMIENTO_ID),
+  KEY VENCIMIENTO_N1 (PRODUCTO_ID),
+  CONSTRAINT `0_3200` FOREIGN KEY (`PRODUCTO_ID`) REFERENCES `producto` (`PRODUCTO_ID`),
+) TYPE=InnoDB;
+
+INSERT INTO jdo_table VALUES (14,1,'persistencia.domain.Vencimiento','VENCIMIENTO');

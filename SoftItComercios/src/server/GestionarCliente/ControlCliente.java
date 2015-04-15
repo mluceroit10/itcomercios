@@ -339,7 +339,7 @@ public class ControlCliente implements IControlCliente{
 		Cliente a = new Cliente();
 		try {
 			mp.initPersistencia();
-			String filtro = "nombre == \"-\" && ivaCl==\"Consumidor Final\" ";
+			String filtro = "nombre == \"Cliente Generico\" && ivaCl==\"Consumidor Final\" ";
 			Collection ClienteCol= mp.getObjects(Cliente.class,filtro);
 			if (ClienteCol.size()>=1){
 				Cliente b = (Cliente)(ClienteCol.toArray())[0];

@@ -25,7 +25,7 @@
     <field name = "proveedor" persistence-modifier="persistent">
       	<extension vendor-name="triactive" key="collection-field" value="productos"/>
     </field>	
-	
+	<field name="ctrlVto" />   
       
   	
 	</class>

@@ -107,7 +107,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		jContentPane.add(getJPanelAccesosClientes(), null);
 		
 		JLabel salir = new JLabel("SALIR");
-		salir.setBounds(new java.awt.Rectangle(675,485,44,20));
+		salir.setBounds(new java.awt.Rectangle(675,485,60,20));
 		salir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 		salir.setForeground(Utils.colorTexto);
 		jContentPane.add(salir,null);

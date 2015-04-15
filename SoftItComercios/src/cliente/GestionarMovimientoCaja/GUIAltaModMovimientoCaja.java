@@ -277,8 +277,8 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 			jcbTipoFact.setBackground(new Color(255,255,255));
 			jcbTipoFact.setForeground(java.awt.Color.black);
 			jcbTipoFact.setEnabled(false);
-			jcbTipoFact.addItem("Factura Cliente A");
-			jcbTipoFact.addItem("Factura Cliente B");
+			jcbTipoFact.addItem("Factura Cliente-Tipo A");
+			jcbTipoFact.addItem("Factura Cliente-Tipo B");
 			//jcbTipoFact.addItem("Remito Cliente");
 			jcbTipoFact.addItem("Factura Proveedor");
 		}

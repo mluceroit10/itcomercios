@@ -49,6 +49,7 @@ public class GUIAltaModProducto extends JDialog {
 	private JLabel jlMargenGanancia=null;			private JTextField jtfMargenGanancia = null;
 	private JLabel jlTipoPrecioEntrada = null;		private JComboBox  jcbTipoPrecioEntrada = null;
 	private JLabel jlPrecioVentaConIva = null;		private JTextField jtfPrecioVentaConIva = null;		
+	private JLabel jlVto = null;					private JComboBox jcbVto = null;
 	public String[] titServicio ={"Nombre"};
     private Producto pDTO = null;
    	private boolean seleccionar=true;
@@ -58,7 +59,7 @@ public class GUIAltaModProducto extends JDialog {
     public GUIAltaModProducto(boolean selectprov,JDialog guiPadre) {
     	super(guiPadre);
     	seleccionar=selectprov;
-        this.setSize(new java.awt.Dimension(575,460));
+        this.setSize(new java.awt.Dimension(575,495));
         this.setTitle("Nuevo Producto");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -71,7 +72,7 @@ public class GUIAltaModProducto extends JDialog {
     public GUIAltaModProducto(Producto p,JDialog guiPadre) {
         super(guiPadre);
         this.pDTO = p;
-        this.setSize(new java.awt.Dimension(575,460));
+        this.setSize(new java.awt.Dimension(575,495));
         this.setTitle("Modificar Producto");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -85,7 +86,7 @@ public class GUIAltaModProducto extends JDialog {
         if (jpPpal == null) {
             jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
-            jpPpal.setSize(new java.awt.Dimension(575,460));
+            jpPpal.setSize(new java.awt.Dimension(575,495));
             jpPpal.add(getJPDatos(),null);
             jpPpal.add(getJBAceptar(), null);
             jpPpal.add(getJBCancelar(), null);
@@ -160,13 +161,18 @@ public class GUIAltaModProducto extends JDialog {
             jlProveedor.setText("PROVEEDOR (*)");
             jlProveedor.setForeground(Utils.colorTexto);
             jlProveedor.setHorizontalAlignment(SwingConstants.RIGHT);
+            jlVto = new JLabel();
+            jlVto.setBounds(new Rectangle(10,350,140,15));
+            jlVto.setText("VENCIMIENTO (*)");
+            jlVto.setForeground(Utils.colorTexto);
+            jlVto.setHorizontalAlignment(SwingConstants.RIGHT);
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
             jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DEL PRODUCTO", 
                     javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
                     javax.swing.border.TitledBorder.DEFAULT_POSITION, 
                     new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpDatos.setBounds(new java.awt.Rectangle(15,15,535,355));
+            jpDatos.setBounds(new java.awt.Rectangle(15,15,535,390));
             jpDatos.add(jlNombre, null);
             jpDatos.add(jlCodigo, null);
             jpDatos.add(jlStockA, null);
@@ -180,7 +186,7 @@ public class GUIAltaModProducto extends JDialog {
             jpDatos.add(jlPrecioVentaSinIva, null);
             jpDatos.add(jlPrecioVentaConIva, null);
             jpDatos.add(jlProveedor, null);
-                    
+            jpDatos.add(jlVto, null);        
             jpDatos.add(getJTFNombre(), null);
             jpDatos.add(getJTFStockAct(), null);
             jpDatos.add(getJTFStockMin(), null);
@@ -195,6 +201,7 @@ public class GUIAltaModProducto extends JDialog {
             jpDatos.add(getJCBPrecioKilos(), null);
             jpDatos.add(getJTFProveedor(), null);
             jpDatos.add(getJBProveedor(), null);
+            jpDatos.add(getJCBCtrlVto(), null);
             if (pDTO!=null) {
                 jtfNombre.setText(pDTO.getNombre());
                 jtfCodigo.setText(String.valueOf(pDTO.getCodigo()));
@@ -211,6 +218,11 @@ public class GUIAltaModProducto extends JDialog {
                 	jcbKilos.setSelectedItem("SI");
                 }else{
                 	jcbKilos.setSelectedItem("NO"); 
+                }
+                if(pDTO.isCtrlVto()){
+                	jcbVto.setSelectedItem("SI");
+                }else{
+                	jcbVto.setSelectedItem("NO"); 
                 }
                 if(pDTO.isPrecioEntCIva()){
                 	jcbTipoPrecioEntrada.setSelectedItem("CON IVA");
@@ -270,6 +282,18 @@ public class GUIAltaModProducto extends JDialog {
         	jcbKilos.addItem("SI");
         }
         return jcbKilos;
+    }
+    
+    public JComboBox getJCBCtrlVto() {
+        if (jcbVto == null) {
+        	jcbVto  = new JComboBox();
+        	jcbVto.setBounds(new java.awt.Rectangle(155,350,100,22));
+        	jcbVto.setBackground(new Color(255,255,255));
+        	jcbVto.setForeground(java.awt.Color.black);
+        	jcbVto.addItem("NO");
+        	jcbVto.addItem("SI");
+        }
+        return jcbVto;
     }
     
     public JTextField getJTFStKilosAct() {
@@ -352,7 +376,7 @@ public class GUIAltaModProducto extends JDialog {
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbAceptar.setBounds(new java.awt.Rectangle(172,390,100,30));
+            jbAceptar.setBounds(new java.awt.Rectangle(172,425,100,30));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
@@ -363,7 +387,7 @@ public class GUIAltaModProducto extends JDialog {
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbCancelar.setBounds(new java.awt.Rectangle(302,390,100,30));
+            jbCancelar.setBounds(new java.awt.Rectangle(302,425,100,30));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
