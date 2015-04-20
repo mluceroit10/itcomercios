@@ -45,6 +45,8 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
 	public Vector margenGanancia = new Vector();
 	public Vector nuevoPrecioVtaSinIva = new Vector();
 	public Vector nuevoPrecioVtaConIva = new Vector();
+	public Vector ctrlVto = new Vector();
+	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
 	private Vector todosProductos;
@@ -67,6 +69,8 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     	}else{	
     		guiFacturarProv = new GUIFacturarProveedor(guiPadre);
     		guiFacturarProv.getJTFBusqueda().setEnabled(false);
+    		guiFacturarProv.getJDFechaVto().setVisible(false);
+    		guiFacturarProv.getJLFechaVto().setVisible(false);
     		guiFacturarProv.setActionListeners(this);
     		guiFacturarProv.setKeyListeners2(this);
     		Utils.show(guiFacturarProv);
@@ -91,6 +95,13 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     				this.guiFacturarProv.getJTFCantidad().setText("1");
     				this.guiFacturarProv.getJTFKilos().setText("");
     				this.guiFacturarProv.getJTFKilos().setEnabled(false);
+    			}
+    			if(pr.isCtrlVto()){
+    				guiFacturarProv.getJDFechaVto().setVisible(true);
+    	    		guiFacturarProv.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiFacturarProv.getJDFechaVto().setVisible(false);
+    	    		guiFacturarProv.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarProv.getJBAgregarProd().setEnabled(true);
     		} catch(Exception ex) {
@@ -143,7 +154,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 		 itNew.setPrTotal(prTotIt);
                 		 items.add(itNew);
                 	 }
-                	 this.controlFactProveedor.agregarFacturaProveedorTotal(fp,items,cambioPrecio,prEntrConIva,margenGanancia,nuevoPrecioVtaSinIva,nuevoPrecioVtaConIva);
+                	 this.controlFactProveedor.agregarFacturaProveedorTotal(fp,items,cambioPrecio,prEntrConIva,margenGanancia,nuevoPrecioVtaSinIva,nuevoPrecioVtaConIva,ctrlVto,fechasVto);
                      this.guiFacturarProv.dispose();
                      new GUIReport(guiFacturarProv,6,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt, Utils.nroFact(fp.getNroFactura()),fp.getFecha(),
          				dist, proveedor,fp.getImporteAuxIva(),fp.getImporteTotal());
@@ -181,6 +192,14 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 		}else{
                 			if(precioEntrada.compareTo(String.valueOf(pr.getPrecioEntrada()))==0){   //sin cambio de precios
                 				productos.add(pr);
+                				if(pr.isCtrlVto()){
+                					ctrlVto.add("SI");
+                					java.util.Date fVto=guiFacturarProv.getJDFechaVto().getDate();
+                					fechasVto.add(fVto);
+                				}else{
+                					ctrlVto.add("NO");
+                					fechasVto.add(null);
+                				}
                 				cambioPrecio.add("NO");
                 				prEntrConIva.add(null);
                 				margenGanancia.add(null);
@@ -225,6 +244,8 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 				guiCP.setActionListenersCPrecios(this);
                 				Utils.show(guiCP);
                 			}	
+                			guiFacturarProv.getJDFechaVto().setVisible(false);
+                			guiFacturarProv.getJLFechaVto().setVisible(false);
                 		}
                 	}else
                 		Utils.advertenciaUsr(guiFacturarProv,"El Producto no existe.");
@@ -252,12 +273,14 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
+        			ctrlVto.removeElementAt(posProd);
+					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}
         	}
        }else if ((((Component)e.getSource()).getName().compareTo("AceptarCP")) == 0) {
     	   String cod_Prod = guiFacturarProv.getJTFCodigo().getText();
-    	    String cant = guiFacturarProv.getJTFCantidad().getText();
+    	   String cant = guiFacturarProv.getJTFCantidad().getText();
            String kilos = guiFacturarProv.getJTFKilos().getText();
            String desc = guiFacturarProv.getJTFDescuento().getText();
            String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
@@ -271,6 +294,14 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
      	   try {
      		   Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
      		   productos.add(pr);
+     		   if(pr.isCtrlVto()){
+     			   ctrlVto.add("SI");
+     			   java.util.Date fVto=guiFacturarProv.getJDFechaVto().getDate();
+     			   fechasVto.add(fVto);
+     		   }else{
+     			   ctrlVto.add("NO");
+     			   fechasVto.add(null);
+     		   }
      		   cambioPrecio.add("SI");
      		   prEntrConIva.add(tipoPrecioEntr);// poner q tipo de precioentr seleccionó
      		   margenGanancia.add(margenG);
@@ -438,6 +469,13 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     				this.guiFacturarProv.getJTFCantidad().setText("1");
     				this.guiFacturarProv.getJTFKilos().setText("");
     				this.guiFacturarProv.getJTFKilos().setEnabled(false);
+    			}
+    			if(pr.isCtrlVto()){
+    				guiFacturarProv.getJDFechaVto().setVisible(true);
+    	    		guiFacturarProv.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiFacturarProv.getJDFechaVto().setVisible(false);
+    	    		guiFacturarProv.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarProv.getJBAgregarProd().setEnabled(true);
     			guiFacturarProv.ocultarCombo();

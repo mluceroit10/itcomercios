@@ -20,10 +20,12 @@ import persistencia.domain.Comercio;
 import persistencia.domain.FacturaCliente;
 import persistencia.domain.ItemFactura;
 import persistencia.domain.Producto;
+import persistencia.domain.Vencimiento;
 import server.GestionarCliente.ControlCliente;
 import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
 import server.GestionarProducto.ControlProducto;
+import server.GestionarVencimiento.ControlVencimiento;
 import cliente.GestionarCliente.MediadorGestionarCliente;
 import cliente.Principal.GUIReport;
 
@@ -36,6 +38,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     private ControlComercio controlComercio;
 	private MediadorGestionarCliente medGestionarCliente;
 	private ControlCliente controlCliente;
+	private ControlVencimiento controlVencimiento;
 	public Cliente cliente;
 	public Vector productos = new Vector();
 	public Vector cantProd = new Vector();
@@ -43,6 +46,8 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 	public Vector precioUnit = new Vector();
 	public Vector precioTotalIt = new Vector();
 	public Vector descuentos = new Vector();
+	public Vector ctrlVto = new Vector();
+	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
 	private Vector todosProductos;
@@ -57,6 +62,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		controlProducto = new ControlProducto();
     		controlComercio = new ControlComercio();
     		controlCliente = new ControlCliente();
+    		controlVencimiento = new ControlVencimiento();
     	}catch(Exception ex){
     		Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. Constructor");
     	}
@@ -73,6 +79,8 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     	//	guiRemitoCte.getJTFBusqueda().setEnabled(false);
     		todosProductos = controlProducto.obtenerProductos();
     		guiRemitoCte.nroRemito=nroFacturaObt;
+    		guiRemitoCte.getJCBFechaVto().setVisible(false);
+    		guiRemitoCte.getJLFechaVto().setVisible(false);
     		guiRemitoCte.setActionListeners(this);
     		guiRemitoCte.setKeyListeners2(this); 		
     	}
@@ -107,6 +115,14 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     				this.guiRemitoCte.getJTFKilos().setText("");
     				this.guiRemitoCte.getJTFKilos().setEnabled(false);
     			}
+    			if(pr.isCtrlVto()){
+    				actualizarVencimientos(pr.getId());
+    				guiRemitoCte.getJCBFechaVto().setVisible(true);
+    				guiRemitoCte.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiRemitoCte.getJCBFechaVto().setVisible(false);
+    				guiRemitoCte.getJLFechaVto().setVisible(false);
+    			}
     			this.guiRemitoCte.getJBAgregarProd().setEnabled(true);
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. CargarProductoSeleccionado");
@@ -137,7 +153,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                      fc.setIngrBrutos("");
                      fc.setLugar(loc);
                      fc.setDiaBuscar(fecha.getDate());
-                     Set items= new HashSet();
+                     Vector items= new Vector();
                 	 for(int k=0;k<productos.size();k++){
                 		 ItemFactura itNew = new ItemFactura();
                 		 itNew.setFactura(fc);
@@ -154,8 +170,8 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 		 itNew.setPrTotal(prTotIt);
                 		 items.add(itNew);
                 	 }
-                	 fc.setItems(items);
-                	 this.controlFactCliente.agregarFacturaClienteTotal(fc,"Remito",loc,0);
+                	 //fc.setItems(items);
+                	 this.controlFactCliente.agregarFacturaClienteTotal(fc,"Remito",loc,0,items,ctrlVto,fechasVto);
                      this.guiRemitoCte.dispose();
                      if(guiRemitoCte.getJCheckImprimir().isSelected()){
                     	 new GUIReport(guiRemitoCte,4,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,Utils.nroFact(guiRemitoCte.nroRemito),fecha,
@@ -180,56 +196,72 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
                 		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+                		String fechaVto=(String) guiRemitoCte.getJCBFechaVto().getSelectedItem();
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar una Cantidad.");
-               		}else if(pr.isPrecioKilos() && kilos.length()==0){
-               			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar los Kilos.");
-               		}else if(pr.isPrecioKilos() && kilos.length()!=0 && !Utils.esDouble(kilos)){
-               			Utils.advertenciaUsr(guiRemitoCte,"El número de Kilos ingresado no es correcto.");	 
-               		}else{	
-               			productos.add(pr);
-               			int c=Integer.parseInt(cant);
-               			cantProd.add(String.valueOf(c));
-               			int d=0;
-                		if(desc.length()>0)
-                			d=Integer.parseInt(desc);
-                		descuentos.add(String.valueOf(d));
-               			double k=0;
-               			if(kilos.length()>0)
-               				k=Double.parseDouble(kilos);
-               			kilosProd.add(Utils.ordenarTresDecimales(k));
-               		//	precioUnit.add(Utils.ordenarDosDecimales(pr.getPrecioVenta()));
-               			double importeProd=pr.getPrecioVentaSinIva();
-            			double importeCIva=(importeProd*0.21)+importeProd;
-            			importeProd=Utils.redondear(importeCIva,2);
-            			precioUnit.add(Utils.ordenarDosDecimales(importeProd));
-            			double prTotal=0;
-            			if(pr.isPrecioKilos()){
-                    		prTotal = Utils.redondear(importeProd*k,2);
-                    	}else{
-                    		prTotal = Utils.redondear(importeProd*c,2);
-                    	}
-            			double pr5=((double) d)/((double)100);
-            			double importeDescontar=prTotal*pr5;
-                    	prTotal = Utils.redondear(prTotal - importeDescontar,2);
-                    	precioTotalIt.add(Utils.ordenarDosDecimales(prTotal));
-               			guiRemitoCte.getJTFCantidad().setText("1");
-               			guiRemitoCte.getJTFCodigo().setText("");
-               			guiRemitoCte.getJTFImporte().setText("");
-               			guiRemitoCte.getJTFBusqueda().setText("");
-               			guiRemitoCte.getJTFKilos().setText("");
-               			guiRemitoCte.getJTFDescuento().setText("00");
-               			cargarDatos();
-               			this.guiRemitoCte.getJBAgregarProd().setEnabled(false);
-               		}
+                		}else if(pr.isPrecioKilos() && kilos.length()==0){
+                			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar los Kilos.");
+                		}else if(pr.isPrecioKilos() && kilos.length()!=0 && !Utils.esDouble(kilos)){
+                			Utils.advertenciaUsr(guiRemitoCte,"El número de Kilos ingresado no es correcto.");	
+                		}else if(pr.isCtrlVto() && fechaVto.length()==0 ){
+                			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar la fecha de vencimiento.");	
+                		}else if(pr.isCtrlVto() && fechaVto.length()!=0 && !Utils.esFecha(fechaVto)){
+                			Utils.advertenciaUsr(guiRemitoCte,"La fecha de vencimiento ingresada no es correcta respete el formato dd/mm/aaaa.");	
+                		}else{	
+                			productos.add(pr);
+                			if(pr.isCtrlVto()){
+            					ctrlVto.add("SI");
+            					
+            					java.sql.Date fVto= Utils.strToSqlDateDB(fechaVto);
+            					fechasVto.add(fVto);
+            				}else{
+            					ctrlVto.add("NO");
+            					fechasVto.add(null);
+            				}
+                			int c=Integer.parseInt(cant);
+                			cantProd.add(String.valueOf(c));
+                			int d=0;
+                			if(desc.length()>0)
+                				d=Integer.parseInt(desc);
+                			descuentos.add(String.valueOf(d));
+                			double k=0;
+                			if(kilos.length()>0)
+                				k=Double.parseDouble(kilos);
+                			kilosProd.add(Utils.ordenarTresDecimales(k));
+                			//	precioUnit.add(Utils.ordenarDosDecimales(pr.getPrecioVenta()));
+                			double importeProd=pr.getPrecioVentaSinIva();
+                			double importeCIva=(importeProd*0.21)+importeProd;
+                			importeProd=Utils.redondear(importeCIva,2);
+                			precioUnit.add(Utils.ordenarDosDecimales(importeProd));
+                			double prTotal=0;
+                			if(pr.isPrecioKilos()){
+                				prTotal = Utils.redondear(importeProd*k,2);
+                			}else{
+                				prTotal = Utils.redondear(importeProd*c,2);
+                			}
+                			double pr5=((double) d)/((double)100);
+                			double importeDescontar=prTotal*pr5;
+                			prTotal = Utils.redondear(prTotal - importeDescontar,2);
+                			precioTotalIt.add(Utils.ordenarDosDecimales(prTotal));
+                			guiRemitoCte.getJTFCantidad().setText("1");
+                			guiRemitoCte.getJTFCodigo().setText("");
+                			guiRemitoCte.getJTFImporte().setText("");
+                			guiRemitoCte.getJTFBusqueda().setText("");
+                			guiRemitoCte.getJTFKilos().setText("");
+                			guiRemitoCte.getJTFDescuento().setText("00");
+                			cargarDatos();
+                			this.guiRemitoCte.getJBAgregarProd().setEnabled(false);
+                			guiRemitoCte.getJCBFechaVto().setVisible(false);
+                			guiRemitoCte.getJLFechaVto().setVisible(false);
+                		}
                 	}else
                 		Utils.advertenciaUsr(guiRemitoCte,"El Producto no existe.");
                 }else{
                 	Utils.advertenciaUsr(guiRemitoCte,"El Código correspondiente al Producto es erroneo.");
                 }
-             }catch(Exception ex){
-            	 Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. AgregarProducto");
-             }
+        	 }catch(Exception ex){
+        		 Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. AgregarProducto");
+        	 }
         }else if ((((Component)e.getSource()).getName().compareTo("EliminarP")) == 0) {
         	if (guiRemitoCte.tabla.getSelectedRow() == -1){
         		Utils.advertenciaUsr(guiRemitoCte,"Para poder Eliminar un Producto del Remito debe seleccionarlo previamente.");
@@ -243,6 +275,8 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
+        			ctrlVto.removeElementAt(posProd);
+					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}
         	}
@@ -251,7 +285,9 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
        }
    }
 
-   private void buscarCliente() {
+  
+
+private void buscarCliente() {
         if (medGestionarCliente== null) {
         	medGestionarCliente= new MediadorGestionarCliente(this,guiRemitoCte);
         } else {
@@ -357,6 +393,16 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     				this.guiRemitoCte.getJTFKilos().setText("");
     				this.guiRemitoCte.getJTFKilos().setEnabled(false);
     			}
+    			
+    			if(pr.isCtrlVto()){
+    				actualizarVencimientos(pr.getId());
+    				guiRemitoCte.getJCBFechaVto().setVisible(true);
+    				guiRemitoCte.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiRemitoCte.getJCBFechaVto().setVisible(false);
+    				guiRemitoCte.getJLFechaVto().setVisible(false);
+    			}
+    			
     			this.guiRemitoCte.getJBAgregarProd().setEnabled(true);
     			guiRemitoCte.ocultarCombo();
 			}else{
@@ -378,4 +424,13 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 	public void keyPressed(KeyEvent arg0) {
 	}
 
+	private void actualizarVencimientos(Long id) throws Exception {
+		Vector vencims=controlVencimiento.obtenerVencimientosDeProducto(id);
+		System.out.println("Cantidad de vtos "+vencims.size());
+		guiRemitoCte.getJCBFechaVto().removeAllItems();
+		for(int i=0;i<vencims.size();i++){
+			Vencimiento vto=(Vencimiento)vencims.elementAt(i);
+			guiRemitoCte.getJCBFechaVto().addItem(Utils.getStrUtilDate(vto.getFechaVto()));
+		}
+	}
 }

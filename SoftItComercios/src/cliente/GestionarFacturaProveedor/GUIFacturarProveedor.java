@@ -136,13 +136,6 @@ public class GUIFacturarProveedor extends JDialog {
             jlDescuento.setBounds(new Rectangle(250,100,150,20));
             jlDescuento.setText("DESCUENTO(%):");
             jlDescuento.setForeground(Utils.colorTexto);
-            
-            jlVto = new JLabel();
-            jlVto.setBounds(new Rectangle(380,100,90,20));
-            jlVto.setText("VTO.:");
-            jlVto.setForeground(Utils.colorTexto);
-            
-            
             jpDatosProd.add(jlSelecProd, null);
             jpDatosProd.add(jlCodigo, null);
             jpDatosProd.add(jlBusqueda, null);
@@ -150,7 +143,7 @@ public class GUIFacturarProveedor extends JDialog {
             jpDatosProd.add(jlCantidad, null);
             jpDatosProd.add(jlKilos, null);
             jpDatosProd.add(jlDescuento, null);
-            jpDatosProd.add(jlVto, null);
+            jpDatosProd.add(getJLFechaVto(), null);
             jpDatosProd.add(jlAgregar, null);
             jpDatosProd.add(getJTFCodigo(), null);
             jpDatosProd.add(getJTFImporte(), null);
@@ -163,6 +156,17 @@ public class GUIFacturarProveedor extends JDialog {
         }
         return jpDatosProd;
     }
+    
+    public JLabel getJLFechaVto() {
+		if (jlVto == null) {
+			jlVto = new JLabel();
+		    jlVto.setBounds(new Rectangle(380,100,90,20));
+		    jlVto.setText("VTO.:");
+		    jlVto.setForeground(Utils.colorTexto);
+		}
+		return jlVto;
+	}
+    
     
     private JPanel getJPDatosFactura() {
         if (jpDatosFactura == null) {
@@ -304,7 +308,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JComboBox getJCBCodigo() {
         if (jcbCodigo == null) {
         	jcbCodigo = new JComboBox();
-        	jcbCodigo.setBounds(new Rectangle(370,28,330,22));
+        	jcbCodigo.setBounds(new Rectangle(370,28,330,20));
         	jcbCodigo.removeAllItems();
         	for(int i=0;i<codProd.size();i++){
 				String codPr=(String)codProd.elementAt(i);
@@ -320,7 +324,7 @@ public class GUIFacturarProveedor extends JDialog {
     	jpDatosProd.remove(getJCBCodigo());
 	 	getJCBCodigo();
 		jcbCodigo = new JComboBox();
-		jcbCodigo.setBounds(new Rectangle(370,28,330,22));
+		jcbCodigo.setBounds(new Rectangle(370,28,330,20));
 	 	jcbCodigo.setBackground(new Color(255,255,255));
     	jcbCodigo.setForeground(java.awt.Color.black);
 		for(int i=0;i<codProd.size();i++){

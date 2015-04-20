@@ -17,6 +17,7 @@ import persistencia.domain.MovimientoCaja;
 import persistencia.domain.Producto;
 import persistencia.domain.Proveedor;
 import persistencia.domain.Provincia;
+import persistencia.domain.Vencimiento;
 import server.Assemblers;
 import server.ManipuladorPersistencia;
 import server.GestionarCliente.ControlCliente;
@@ -29,7 +30,7 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 		
 	public ControlFacturaCliente() throws RemoteException{   }
 	 																// A - B - Remito     //loc Rio Cuarto - Moldes	
-	public double agregarFacturaClienteTotal(FacturaCliente fc,String tipo,String loc,int nroMC)throws Exception{
+	public double agregarFacturaClienteTotal(FacturaCliente fc,String tipo,String loc,int nroMC,Vector items,Vector ctrlVto, Vector fechasVto)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlCliente cCte = new ControlCliente();
 		ControlComercio cDist=new ControlComercio();
@@ -55,14 +56,20 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 				if(cte.getFechaUF().before(fc.getFechaImpresion()))
 						cte.setFechaUF(fc.getFechaImpresion());
 			}
-			for(Iterator items=fc.getItems().iterator();items.hasNext();){
-				ItemFactura itF = (ItemFactura) items.next();
+			for(int i=0;i<items.size();i++){
+				ItemFactura itF = (ItemFactura) items.elementAt(i);
 				ItemFactura itnew= Assemblers.crearItemFactura(itF);
 				Producto pr= cProd.buscarProductoPersistentePorId(mp,itF.getProducto().getId());
 				if(rem==null){
 					// decremento de stock por cada producto de la factura cuando no estoy fact un remito
 					pr.setStockActual(pr.getStockActual()-itF.getCantidad());
 					pr.setStockKilosAct(Utils.redondear(pr.getStockKilosAct()-itF.getKilos(),2));
+//					Debo agregar el ctrl del Vto
+					if(((String)ctrlVto.elementAt(i)).compareTo("SI")==0){
+						Date feVto = (Date)fechasVto.elementAt(i);
+						actualizarStockDeVencimiento(mp,pr,feVto,itF.getCantidad(),itF.getKilos());
+					//
+					}	
 				}
 				mp.hacerPersistente(itnew);
 				itnew.setProducto(pr);
@@ -99,25 +106,7 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 				}
 			}
 			lnew.setCliente(cte);
-			if(fc.getCondVenta().compareTo("CONTADO")==0){
-			/*	MovimientoCaja mimovDTO = new MovimientoCaja();
-				mimovDTO.setCodigo(nroMC);
-				mimovDTO.setFecha(fc.getFechaImpresion());
-				mimovDTO.setImporte(fc.getImporteTotal());
-				mimovDTO.setDescripcion("pago contado");
-				mimovDTO.setFormaPago("EFECTIVO");
-				mimovDTO.setConFactura(true);
-				String tipoFactura="Factura Cliente-Tipo A";
-				if(fc.getTipoFactura().compareTo("FacturaCliente-B")==0) 
-					tipoFactura="Factura Cliente-Tipo B";
-				mimovDTO.setTipoFactura(tipoFactura);
-				mimovDTO.setTipoMovimiento(1);
-				mimovDTO.setFactura(lnew);
-				mimovDTO.setPeriodo(Utils.getMes(fc.getFechaImpresion())+"-"+Utils.getAnio(fc.getFechaImpresion()));
-				mp.hacerPersistente(mimovDTO);
-				lnew.setFechaPago(fc.getFechaImpresion());
-				lnew.setImporteAbonado(fc.getImporteTotal());*/
-			}else{
+			if(fc.getCondVenta().compareTo("CONTADO")!=0){
 				// SALDO CLIENTE CASO 1 y 2 y la omision del 5  ( + ) 
 				cte.setDeuda(Utils.redondear(cte.getDeuda() + fc.getImporteTotal(),2));
 			}
@@ -131,6 +120,44 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 		return result;
 	}
 			
+	
+	private void actualizarStockDeVencimiento(ManipuladorPersistencia mp,Producto pr, Date feVto, int stockUn, double stockKg) throws Exception {
+		try {
+			String filtro = "producto.id == "+pr.getId();
+			Vector VencimientoCol= mp.getObjects(Vencimiento.class,filtro);
+			boolean existeVencimiento=false;
+			Vencimiento venc=null;
+			if (VencimientoCol.size()>=1){
+				for(int i=0; i<VencimientoCol.size() && !existeVencimiento;i++){
+					Vencimiento b = (Vencimiento)VencimientoCol.elementAt(i);
+					if(	common.Utils.getStrUtilDate(b.getFechaVto()).compareTo(common.Utils.getStrUtilDate(feVto))==0 ){
+						existeVencimiento=true;
+						venc=b;
+					}
+				}	
+			}
+			if(existeVencimiento){
+				//solo incremento el stock
+				venc.setStock(venc.getStock()-stockUn);
+				venc.setStockKilos(Utils.redondear(venc.getStockKilos()-stockKg,2));
+			}else{
+				//debo crear el objeto Vto
+				Vencimiento vencim = new Vencimiento();
+				vencim.setStock(-stockUn);
+				vencim.setStockKilos(-stockKg);
+				vencim.setFechaVto(Utils.crearFecha(feVto));
+				mp.hacerPersistente(vencim);
+				ControlProducto cProd = new ControlProducto();
+				Producto prod = cProd.buscarProductoPersistentePorId(mp,pr.getId());
+				vencim.setProducto(prod);
+			}
+			//No analizo el stock 0
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public void anularFacturaCliente(Long idF)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlProducto cProd = new ControlProducto();

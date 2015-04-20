@@ -83,6 +83,27 @@ public class ControlVencimiento implements IControlVencimiento{
 		return Vencimientos2;
 	}
 	
+	public Vector obtenerVencimientosDeProducto(Long idProd)throws Exception{
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		Vector Vencimientos2 = new Vector();
+		try {
+			mp.initPersistencia();
+			String filtro = "producto.id=="+idProd;
+			Vector Vencimientos= mp.getObjectsOrdered(Vencimiento.class,filtro,"fechaVto ascending");
+			for(int i=0; i<Vencimientos.size();i++){
+				Vencimiento b = (Vencimiento)Vencimientos.elementAt(i);
+				Vencimiento a= Assemblers.crearVencimiento(b);
+				Producto p = Assemblers.crearProducto(b.getProducto());
+				a.setProducto(p);
+				Vencimientos2.add(a);
+			}
+			mp.commit();
+		}  finally{
+			mp.rollback();
+		}
+		return Vencimientos2;
+	}
+	
 	public Vector obtenerVencimientosFiltros(String nombre)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Vector Vencimientos2 = new Vector();

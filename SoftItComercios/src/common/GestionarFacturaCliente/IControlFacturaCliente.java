@@ -7,7 +7,7 @@ import persistencia.domain.FacturaCliente;
 
 public interface IControlFacturaCliente {
 
-	public double agregarFacturaClienteTotal(FacturaCliente fc, String tipo, String loc,int nroMC)throws Exception;
+	public double agregarFacturaClienteTotal(FacturaCliente fc, String tipo, String loc,int nroMC,Vector items,Vector ctrlVto, Vector fechasVto)throws Exception;
 	public void anularFacturaCliente(Long idF)throws Exception;
 	public boolean existenFacturasDeCliente(Long id)throws Exception;
     public Vector obtenerFacturaClientesPeriodo(boolean listarRemitosSinFact, String tipoF,int diaLI,int mesLI,int anioLI)throws Exception;

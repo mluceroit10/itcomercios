@@ -225,6 +225,32 @@ public class Utils{
 			return false;
 	}
 	
+	public static boolean esFecha(String string) {
+		int pos=0;
+		if(string.length()!=10)
+			return false;
+		while (pos<string.length()) {
+			if(pos==2 || pos==5 ){
+				if(string.charAt(pos)!='/')
+					return false;
+			}else{
+				if(string.charAt(pos)!='0' &&
+						string.charAt(pos)!='1' &&
+						string.charAt(pos)!='2' &&
+						string.charAt(pos)!='3' &&
+						string.charAt(pos)!='4' &&
+						string.charAt(pos)!='5' &&
+						string.charAt(pos)!='6' &&
+						string.charAt(pos)!='7' &&
+						string.charAt(pos)!='8' &&
+						string.charAt(pos)!='9')
+					return false;
+			}
+			pos++;
+		}
+		return true;
+	}
+	
 	
 	  private  static String CLAVE = "";
 

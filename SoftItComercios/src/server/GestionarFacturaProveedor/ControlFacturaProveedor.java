@@ -1,6 +1,7 @@
 package server.GestionarFacturaProveedor;
 
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -11,6 +12,7 @@ import persistencia.domain.ItemFactura;
 import persistencia.domain.MovimientoCaja;
 import persistencia.domain.Producto;
 import persistencia.domain.Proveedor;
+import persistencia.domain.Vencimiento;
 import server.Assemblers;
 import server.ManipuladorPersistencia;
 import server.GestionarProducto.ControlProducto;
@@ -23,7 +25,7 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 	
 	public ControlFacturaProveedor() throws RemoteException{   }
 	
-	public double agregarFacturaProveedorTotal(FacturaProveedor p,Vector items,Vector cambioPrecio,Vector prEntrConIva, Vector ganancias,Vector nuevoPrecioVtaSinIva,Vector nuevoPrecioVtaConIva)throws Exception{
+	public double agregarFacturaProveedorTotal(FacturaProveedor p,Vector items,Vector cambioPrecio,Vector prEntrConIva, Vector ganancias,Vector nuevoPrecioVtaSinIva,Vector nuevoPrecioVtaConIva,Vector ctrlVto,Vector fechasVto)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlProveedor cProv = new ControlProveedor();
 		//creo objeto y seteo datos basicos
@@ -60,6 +62,14 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 					pr.setPrecioVentaSinIva(Double.parseDouble((String)nuevoPrecioVtaSinIva.elementAt(i)));
 					pr.setPrecioVentaConIva(Double.parseDouble((String)nuevoPrecioVtaConIva.elementAt(i)));
 				}	
+				
+				//Debo agregar el ctrl del Vto
+				if(((String)ctrlVto.elementAt(i)).compareTo("SI")==0){
+					Date feVto = (Date)fechasVto.elementAt(i);
+					actualizarVencimientoDelProducto(mp,pr,feVto,itF.getCantidad(),itF.getKilos());
+				//
+				}	
+				
 				mp.hacerPersistente(itnew);
 				itnew.setProducto(pr);
 				itnew.setFactura(lnew);
@@ -73,6 +83,41 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 	}
 	
 	
+	private void actualizarVencimientoDelProducto(ManipuladorPersistencia mp,Producto pr, Date feVto, int stockUn, double stockKg) throws Exception {
+		try {
+			String filtro = "producto.id == "+pr.getId();
+			Vector VencimientoCol= mp.getObjects(Vencimiento.class,filtro);
+			boolean existeVencimiento=false;
+			Vencimiento venc=null;
+			if (VencimientoCol.size()>=1){
+				for(int i=0; i<VencimientoCol.size() && !existeVencimiento;i++){
+					Vencimiento b = (Vencimiento)VencimientoCol.elementAt(i);
+					if(	common.Utils.getStrUtilDate(b.getFechaVto()).compareTo(common.Utils.getStrUtilDate(feVto))==0 ){
+						existeVencimiento=true;
+						venc=b;
+					}
+				}	
+			}
+			if(existeVencimiento){
+				//solo incremento el stock
+				venc.setStock(venc.getStock()+stockUn);
+				venc.setStockKilos(Utils.redondear(venc.getStockKilos()+stockKg,2));
+			}else{
+				//debo crear el objeto Vto
+				Vencimiento vencim = new Vencimiento();
+				vencim.setStock(stockUn);
+				vencim.setStockKilos(stockKg);
+				vencim.setFechaVto(Utils.crearFecha(feVto));
+				mp.hacerPersistente(vencim);
+				ControlProducto cProd = new ControlProducto();
+				Producto prod = cProd.buscarProductoPersistentePorId(mp,pr.getId());
+				vencim.setProducto(prod);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void anularFacturaProveedor(Long idF)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlProducto cProd = new ControlProducto();

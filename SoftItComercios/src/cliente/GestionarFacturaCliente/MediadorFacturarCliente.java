@@ -22,10 +22,12 @@ import persistencia.domain.Comercio;
 import persistencia.domain.FacturaCliente;
 import persistencia.domain.ItemFactura;
 import persistencia.domain.Producto;
+import persistencia.domain.Vencimiento;
 import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaCliente.ControlFacturaCliente;
 import server.GestionarMovimientoCaja.ControlMovimientoCaja;
 import server.GestionarProducto.ControlProducto;
+import server.GestionarVencimiento.ControlVencimiento;
 import cliente.GestionarCliente.MediadorGestionarCliente;
 import cliente.ListarRemitosCliente.MediadorListarRemitosCliente;
 import cliente.Principal.GUIReport;
@@ -38,6 +40,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     private ControlFacturaCliente controlFactCliente;
     private ControlComercio controlComercio;
     private ControlMovimientoCaja controlMC;
+    private ControlVencimiento controlVencimiento;
 	private MediadorGestionarCliente medGestionarCliente;
 	public Cliente cliente;
 	public Vector productos = new Vector();
@@ -46,6 +49,8 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 	public Vector precioUnit = new Vector();
 	public Vector precioTotalIt = new Vector();
 	public Vector descuentos = new Vector();
+	public Vector ctrlVto = new Vector();
+	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
 	private Vector todosProductos;
@@ -62,6 +67,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     		controlProducto = new ControlProducto();
     		controlComercio = new ControlComercio();
     		controlMC = new ControlMovimientoCaja();
+    		controlVencimiento = new ControlVencimiento();
     	}catch(Exception ex){
     		Utils.manejoErrores(ex,"Error en MediadorFacturarCliente. Constructor");
     	}
@@ -89,6 +95,8 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				guiFacturarCte.getJTFBusqueda().setEnabled(false);
     				todosProductos = controlProducto.obtenerProductos();
     				guiFacturarCte.nroFactura=nroFacturaObt;
+    				guiFacturarCte.getJCBFechaVto().setVisible(false);
+    				guiFacturarCte.getJLFechaVto().setVisible(false);
     				guiFacturarCte.setActionListeners(this);
     				guiFacturarCte.setKeyListeners2(this);
     			}else{
@@ -129,6 +137,14 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				this.guiFacturarCte.getJTFCantidad().setText("1");
     				this.guiFacturarCte.getJTFKilos().setText("");
     				this.guiFacturarCte.getJTFKilos().setEnabled(false);
+    			}
+    			if(pr.isCtrlVto()){
+    				actualizarVencimientos(pr.getId());
+    				guiFacturarCte.getJCBFechaVto().setVisible(true);
+    				guiFacturarCte.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiFacturarCte.getJCBFechaVto().setVisible(false);
+    				guiFacturarCte.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarCte.getJBAgregarProd().setEnabled(true);
     		} catch(Exception ex) {
@@ -190,7 +206,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     					fc.setIngrBrutos(ingrBrutos);
     					fc.setLugar(loc);
     					fc.setDiaBuscar(fecha.getDate());
-    					Set items= new HashSet();
+    					Vector items= new Vector();
     					for(int k=0;k<productos.size();k++){
     						ItemFactura itNew = new ItemFactura();
     						itNew.setFactura(fc);
@@ -207,9 +223,9 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     						itNew.setPrTotal(prTotIt);
     						items.add(itNew);
     					}
-    					fc.setItems(items);
+    					//fc.setItems(items);
     					int nroMC =controlMC.obtenerNroMovCaja();
-    					this.controlFactCliente.agregarFacturaClienteTotal(fc,tipo,loc,nroMC);
+    					this.controlFactCliente.agregarFacturaClienteTotal(fc,tipo,loc,nroMC,items,ctrlVto,fechasVto);
     					this.guiFacturarCte.dispose();
     					new GUIReport(guiFacturarCte,5,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,"",fecha,
     							comercio, cliente,iva,condVta,remitoNro,ingrBrutos,tipo,importeTotal,ivaFact,fc.getImporteTotal());
@@ -231,14 +247,27 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
                 		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+                		String fechaVto=(String) guiFacturarCte.getJCBFechaVto().getSelectedItem();
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar una Cantidad.");
                 		}else if(pr.isPrecioKilos() && kilos.length()==0){
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar los Kilos.");
                 		}else if(pr.isPrecioKilos() && kilos.length()!=0 && !Utils.esDouble(kilos)){
                 			Utils.advertenciaUsr(guiFacturarCte,"El número de Kilos ingresado no es correcto.");	 
+                		}else if(pr.isCtrlVto() && fechaVto.length()==0 ){
+                			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar la fecha de vencimiento.");	
+                		}else if(pr.isCtrlVto() && fechaVto.length()!=0 && !Utils.esFecha(fechaVto)){
+                			Utils.advertenciaUsr(guiFacturarCte,"La fecha de vencimiento ingresada no es correcta respete el formato dd/mm/aaaa.");	
                 		}else{	
                 		productos.add(pr);
+                		if(pr.isCtrlVto()){
+        					ctrlVto.add("SI");
+        					java.sql.Date fVto= Utils.strToSqlDateDB(fechaVto);
+        					fechasVto.add(fVto);
+        				}else{
+        					ctrlVto.add("NO");
+        					fechasVto.add(null);
+        				}
                 		int c=Integer.parseInt(cant);
                 		cantProd.add(String.valueOf(c));
                 		int d=0;
@@ -274,6 +303,8 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 		guiFacturarCte.getJTFDescuento().setText("00");
                 		cargarDatos();
                 		this.guiFacturarCte.getJBAgregarProd().setEnabled(false);
+                		guiFacturarCte.getJCBFechaVto().setVisible(false);
+                		guiFacturarCte.getJLFechaVto().setVisible(false);
                 		}
                 	}else
                 		Utils.advertenciaUsr(guiFacturarCte,"El Producto no existe.");
@@ -296,6 +327,8 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
+        			ctrlVto.removeElementAt(posProd);
+					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}
         	}
@@ -485,6 +518,14 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				this.guiFacturarCte.getJTFKilos().setText("");
     				this.guiFacturarCte.getJTFKilos().setEnabled(false);
     			}
+    			if(pr.isCtrlVto()){
+    				actualizarVencimientos(pr.getId());
+    				guiFacturarCte.getJCBFechaVto().setVisible(true);
+    				guiFacturarCte.getJLFechaVto().setVisible(true);
+    			}else{
+    				guiFacturarCte.getJCBFechaVto().setVisible(false);
+    				guiFacturarCte.getJLFechaVto().setVisible(false);
+    			}
     			this.guiFacturarCte.getJBAgregarProd().setEnabled(true);
     			guiFacturarCte.ocultarCombo();
 			}else{
@@ -521,4 +562,13 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 	public void keyPressed(KeyEvent arg0) {
 	}
 
+	private void actualizarVencimientos(Long id) throws Exception {
+		Vector vencims=controlVencimiento.obtenerVencimientosDeProducto(id);
+		System.out.println("Cantidad de vtos "+vencims.size());
+		guiFacturarCte.getJCBFechaVto().removeAllItems();
+		for(int i=0;i<vencims.size();i++){
+			Vencimiento vto=(Vencimiento)vencims.elementAt(i);
+			guiFacturarCte.getJCBFechaVto().addItem(Utils.getStrUtilDate(vto.getFechaVto()));
+		}
+	}
 }
