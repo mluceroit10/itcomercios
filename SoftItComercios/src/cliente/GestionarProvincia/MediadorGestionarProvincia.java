@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -20,7 +22,7 @@ import cliente.GestionarLocalidad.MediadorModificarLocalidad;
 import common.Utils;
 import common.GestionarProvincia.IControlProvincia;
 
-public class MediadorGestionarProvincia implements ActionListener, KeyListener, ListSelectionListener {
+public class MediadorGestionarProvincia implements ActionListener, KeyListener, ListSelectionListener,MouseListener {
     
     private GUIGestionarProvincia guiProvincia = null;
     protected IControlProvincia controlProvincia;
@@ -140,6 +142,7 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
     	}
     	guiProvincia.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiProvincia.actualizarTabla();
+    	this.guiProvincia.setMouseListener(this); 
     }
     
     private void actualizarTabla() {
@@ -155,6 +158,7 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
     	}
 	    guiProvincia.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         guiProvincia.actualizarTabla();
+        this.guiProvincia.setMouseListener(this);  
     }
     
     private void modificar() {
@@ -211,6 +215,42 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
     public void keyPressed(KeyEvent e) {
     }
     public void valueChanged(ListSelectionEvent arg0) { }
+
+	public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medModLocalidad != null) {
+						medModLocalidad.prov = miProv;
+						medModLocalidad.actualizarProvincia();
+						this.guiProvincia.dispose();
+					} else if (medAltaLocalidad != null) {
+						medAltaLocalidad.prov = miProv;
+						medAltaLocalidad.actualizarProvincia();
+						this.guiProvincia.dispose();
+					} 
+				}
+			}
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
 }
 
 

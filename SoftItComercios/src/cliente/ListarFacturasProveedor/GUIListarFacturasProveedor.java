@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -21,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -62,7 +64,7 @@ public class GUIListarFacturasProveedor extends JDialog {
 	    	mesLI=mes;
 			anioLI=anio;
 			datos = new Object[0][titulos.length];
-	        this.setSize(new java.awt.Dimension(740,560));
+	        this.setSize(new java.awt.Dimension(1200,640));
 	        this.setLocationRelativeTo(guiPadre);
 	        this.setResizable(false);
 	        this.setTitle("Facturas Proveedor Existentes");
@@ -77,7 +79,7 @@ public class GUIListarFacturasProveedor extends JDialog {
     	mesLI=mes;
 		anioLI=anio;
 		datos = new Object[0][titulos.length];
-        this.setSize(new java.awt.Dimension(740,560));
+        this.setSize(new java.awt.Dimension(1200,640));
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
         this.setTitle("Facturas Proveedor Existentes");
@@ -103,16 +105,14 @@ public class GUIListarFacturasProveedor extends JDialog {
     private JPanel getJPBuscador() {
         if (jpBuscador == null) {
             JLabel jlForm = new JLabel();
-            jlForm.setBounds(new Rectangle(80,45,80,9));
+            jlForm.setBounds(new Rectangle(125,17,140,12));
             jlForm.setText("(dd/mm/aaaa)");
             jlForm.setForeground(Utils.colorTexto);
+            jlForm.setFont(Utils.FuenteBasicaMinima());
             jpBuscador = new TransparentPanel();
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpBuscador.setBounds(new Rectangle(15,10,700,60));
+            jpBuscador.setBorder(Utils.crearTituloYBorde("BUSCAR"));
+            jpBuscador.setBounds(new Rectangle(15,10,1165,70));
             jpBuscador.add(jlForm, null);
             jpBuscador.add(getJLNroP(), null);
             jpBuscador.add(getJLProveedor(), null);
@@ -128,8 +128,9 @@ public class GUIListarFacturasProveedor extends JDialog {
         if (fecha == null) {
         	fecha = new JLabel("FECHA:");
         	fecha.setHorizontalAlignment(JLabel.RIGHT);
-        	fecha.setBounds(new java.awt.Rectangle(25,25,45,15));
+        	fecha.setBounds(new java.awt.Rectangle(25,30,90,26));
         	fecha.setForeground(Utils.colorTexto);
+        	fecha.setFont(Utils.FuenteBasica());
         }
         return fecha;
     }
@@ -138,8 +139,9 @@ public class GUIListarFacturasProveedor extends JDialog {
         if (nro == null) {
         	nro = new JLabel("NRO DE FACTURA:");
         	nro.setHorizontalAlignment(JLabel.RIGHT);
-        	nro.setBounds(new Rectangle(170,25,110,15));
+        	nro.setBounds(new Rectangle(280,30,180,26));
         	nro.setForeground(Utils.colorTexto);
+        	nro.setFont(Utils.FuenteBasica());
         }
         return nro;
     }
@@ -148,8 +150,9 @@ public class GUIListarFacturasProveedor extends JDialog {
         if (cliente == null) {
         	cliente = new JLabel("NOMBRE DEL PROVEEDOR:");
         	cliente.setHorizontalAlignment(JLabel.RIGHT);
-        	cliente.setBounds(new Rectangle(370,25,155,15));
+        	cliente.setBounds(new Rectangle(675,30,260,26));
         	cliente.setForeground(Utils.colorTexto);
+        	cliente.setFont(Utils.FuenteBasica());
         }
         return cliente;
     }
@@ -157,7 +160,8 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JTextField getJTFFecha() {
         if (jtfFecha == null) {
         	jtfFecha = new JTextField();
-        	jtfFecha.setBounds(new Rectangle(75,22,80,22));
+        	jtfFecha.setBounds(new Rectangle(125,30,150,26));
+        	jtfFecha.setFont(Utils.FuenteCampos());
         }
         return jtfFecha;
     }
@@ -165,7 +169,8 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JTextField getJTFNro() {
         if (jtfNro == null) {
             jtfNro = new JTextField();
-            jtfNro.setBounds(new Rectangle(285,22,80,22));
+            jtfNro.setBounds(new Rectangle(470,30,200,26));
+            jtfNro.setFont(Utils.FuenteCampos());
         }
         return jtfNro;
     }
@@ -173,7 +178,8 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JTextField getJTFProveedor() {
         if (jtfProveedor == null) {
         	jtfProveedor = new JTextField();
-        	jtfProveedor.setBounds(new Rectangle(530,22,140,22));
+        	jtfProveedor.setBounds(new Rectangle(945,30,200,26));
+        	jtfProveedor.setFont(Utils.FuenteCampos());
         }
         return jtfProveedor;
     }
@@ -182,10 +188,8 @@ public class GUIListarFacturasProveedor extends JDialog {
         if (jpDatos == null) {
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBounds(new Rectangle(15,80,700,390));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "FACTURAS PROVEEDOR",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+            jpDatos.setBounds(new Rectangle(15,110,1165,415));
+            jpDatos.setBorder(Utils.crearTituloYBorde("FACTURAS PROVEEDOR"));
             jpDatos.add(getJSPDatos(), null);
             jpDatos.add(getJBAnularFactura(), null);
             agregarPeriodoSelec();
@@ -196,10 +200,11 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JButton getJBImprimir() {
         if (jbImprimir == null) {
         	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbImprimir.setBounds(new java.awt.Rectangle(390,490,100,30));
+        	jbImprimir.setBounds(new java.awt.Rectangle(650,560,200,40));
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
+        	jbImprimir.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbImprimir;
     }
@@ -207,20 +212,22 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JButton getJBSalir() {
         if (jbSalir  == null) {
         	jbSalir = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbSalir.setBounds(new Rectangle(240,490,100,30));
+        	jbSalir.setBounds(new Rectangle(350,560,200,40));
         	jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
         	jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbSalir.setInputMap(0, map);
+        	jbSalir.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbSalir;
     }
     public JButton getJBAnularFactura() {
         if (jbAnular == null) { 
         	jbAnular = new GlossyButton("ANULAR FACTURA",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbAnular.setBounds(new java.awt.Rectangle(10,350,150,25));
+        	jbAnular.setBounds(new java.awt.Rectangle(10,370,240,26));
         	jbAnular.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
         	jbAnular.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAnular.setInputMap(0, map);
+        	jbAnular.setFont(Utils.FuenteBotonesChicos());
         }
         return jbAnular;
     }
@@ -228,7 +235,7 @@ public class GUIListarFacturasProveedor extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(10,50,680,290));
+                jspDatos.setBounds(new Rectangle(10,60,1145,300));
                 jspDatos.setViewportView(getJTDatos());
         }
         return jspDatos;
@@ -245,11 +252,9 @@ public class GUIListarFacturasProveedor extends JDialog {
 					if(anulada.compareTo("SI")==0){
 						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.RED);
-						returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 					}else{
 						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.BLACK);
-						returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 					}
 					int[] seleccion=this.getSelectedRows();
 					for(int j=0;j<seleccion.length;j++){
@@ -261,23 +266,29 @@ public class GUIListarFacturasProveedor extends JDialog {
 					return returnComp;
 				}
 			};
+			jtDatos.setFont(Utils.FuenteTablasSimple());
+			JTableHeader titTabla = jtDatos.getTableHeader();
+			titTabla.setFont(Utils.FuenteTablasSimple());
+			
             Utils.ocultarColumnaId(jtDatos);
             TableColumn columna1 = jtDatos.getColumn("Fecha");
-            columna1.setMaxWidth(75); 
+            columna1.setPreferredWidth(100); 
+            columna1.setMaxWidth(100); 
             columna1.setCellRenderer(Utils.alinearCentro());
             TableColumn columna2 = jtDatos.getColumn("Nro de Factura");
-            columna2.setPreferredWidth(100); 
-            columna2.setMaxWidth(100);
+            columna2.setPreferredWidth(150); 
+            columna2.setMaxWidth(150);
             columna2.setCellRenderer(Utils.alinearCentro());
             TableColumn columna4 = jtDatos.getColumn("Importe Total");
-            columna4.setMaxWidth(80); 
+            columna4.setPreferredWidth(100);
             columna4.setCellRenderer(Utils.alinearDerecha());
             TableColumn columna5 = jtDatos.getColumn("Importe Abonado");
+            columna5.setPreferredWidth(100);
             columna5.setCellRenderer(Utils.alinearDerecha());
             TableColumn columna6 = jtDatos.getColumn("Anulada");
-            columna6.setPreferredWidth(50);
-            columna6.setMaxWidth(50);
-            
+            columna6.setPreferredWidth(90);
+            columna6.setMaxWidth(90);
+            columna6.setCellRenderer(Utils.alinearCentro());
         }
         return jtDatos;
     }
@@ -285,7 +296,8 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JTextField getJTFBuscador() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(10,45,110,22));
+            jtfNombre.setBounds(new Rectangle(10,45,110,26));
+            jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
     }
@@ -319,10 +331,11 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JButton getJBCambiarPeriodo() {
 		if (jbCambiarPeriodo == null) {
 			jbCambiarPeriodo = new GlossyButton("CAMBIAR PERIODO",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(450,20,140,20));
+			jbCambiarPeriodo.setBounds(new java.awt.Rectangle(650,30,280,26));
 			jbCambiarPeriodo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/calendar.png")));
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
+			jbCambiarPeriodo.setFont(Utils.FuenteBotonesChicos());
 			
 		}
 		return jbCambiarPeriodo;
@@ -331,9 +344,10 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JTextField getJTFPeriodo() {
 		if (jtfPeriodo == null) {
 			jtfPeriodo = new JTextField();
-			jtfPeriodo.setBounds(new java.awt.Rectangle(85,20,70,20));
+			jtfPeriodo.setBounds(new java.awt.Rectangle(150,30,140,26));
 			jtfPeriodo.setDisabledTextColor(Utils.colorTextoDisabled);
 			jtfPeriodo.setEnabled(false);
+			jtfPeriodo.setFont(Utils.FuenteCampos());
 		}
 		return jtfPeriodo;
 	}
@@ -341,7 +355,7 @@ public class GUIListarFacturasProveedor extends JDialog {
     public JComboBox getJCBMes() {
 		if (jcbMes == null) {
 			jcbMes = new JComboBox();
-			jcbMes.setBounds(new java.awt.Rectangle(255,20,60,20));
+			jcbMes.setBounds(new java.awt.Rectangle(380,30,60,26));
 			jcbMes.setBackground(new Color(255,255,255));
 			jcbMes.setForeground(java.awt.Color.black);
 			jcbMes.addItem("01");
@@ -357,6 +371,7 @@ public class GUIListarFacturasProveedor extends JDialog {
 			jcbMes.addItem("11");
 			jcbMes.addItem("12");
 			jcbMes.setSelectedIndex(mesLI-1);
+			jcbMes.setFont(Utils.FuenteCampos());
 		}
 		return jcbMes;
 	}
@@ -364,9 +379,10 @@ public class GUIListarFacturasProveedor extends JDialog {
 	public JTextField getJTFAnio() {
 		if (jtfAnio == null) {
 			jtfAnio = new JTextField();
-			jtfAnio.setBounds(new java.awt.Rectangle(370,20,60,20));
+			jtfAnio.setBounds(new java.awt.Rectangle(520,30,80,26));
 			jtfAnio.setDocument(new LimitadorNroMax(jtfAnio,4));
 			jtfAnio.setText(String.valueOf(anioLI));
+			jtfAnio.setFont(Utils.FuenteCampos());
 		}
 		return jtfAnio;
 	}
@@ -374,15 +390,18 @@ public class GUIListarFacturasProveedor extends JDialog {
 	public void agregarPeriodoSelec(){
 		jlPeriodo = new JLabel("PERIODO:");
 		jlPeriodo.setHorizontalAlignment(JLabel.RIGHT);
-		jlPeriodo.setBounds(new Rectangle(20,20,60,20));
+		jlPeriodo.setBounds(new Rectangle(20,30,120,26));
 		jlPeriodo.setForeground(Utils.colorTexto);
+		jlPeriodo.setFont(Utils.FuenteBasica());
 		jlMes = new JLabel("MES:");
 		jlMes.setForeground(Utils.colorTexto);
-		jlMes.setBounds(new Rectangle(200,20,50,20));
+		jlMes.setFont(Utils.FuenteBasica());
+		jlMes.setBounds(new Rectangle(320,30,50,26));
 		jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
 		jlAnio = new JLabel("AÑO:");
 		jlAnio.setForeground(Utils.colorTexto);
-		jlAnio.setBounds(new Rectangle(325,20,40,20));
+		jlAnio.setFont(Utils.FuenteBasica());
+		jlAnio.setBounds(new Rectangle(450,30,60,26));
 		jlAnio.setHorizontalAlignment(SwingConstants.RIGHT);
 		jpDatos.add(jlPeriodo);
 		jpDatos.add(jlMes);
@@ -393,6 +412,9 @@ public class GUIListarFacturasProveedor extends JDialog {
 		jpDatos.add(getJBCambiarPeriodo());
 	}
 	
+    public void setMouseListener(MouseListener lis) {
+    	jtDatos.addMouseListener(lis);
+    }
 }
 
 

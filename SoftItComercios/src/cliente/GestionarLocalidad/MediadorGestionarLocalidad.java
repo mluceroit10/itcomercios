@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -23,7 +25,7 @@ import cliente.GestionarProveedor.MediadorModificarProveedor;
 import common.Utils;
 import common.GestionarLocalidad.IControlLocalidad;
 
-public class MediadorGestionarLocalidad implements ActionListener, KeyListener, ListSelectionListener {
+public class MediadorGestionarLocalidad implements ActionListener, KeyListener, ListSelectionListener,MouseListener {
     
     private GUIGestionarLocalidad guiLocalidad = null;
     protected IControlLocalidad controlLocalidad;
@@ -91,7 +93,7 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
         this.guiLocalidad.setActionListeners(this);
         cargarDatos();
         this.guiLocalidad.setListSelectionListener(this);
-        this.guiLocalidad.setKeyListener(this);
+        this.guiLocalidad.setKeyListener(this); 
         Utils.show(guiLocalidad);
     }
     public MediadorGestionarLocalidad(MediadorModificarProveedor medModProveedor,JDialog guiPadre) {
@@ -105,7 +107,7 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
         this.guiLocalidad.setActionListeners(this);
         cargarDatos();
         this.guiLocalidad.setListSelectionListener(this);
-        this.guiLocalidad.setKeyListener(this);
+        this.guiLocalidad.setKeyListener(this); 
         Utils.show(guiLocalidad);
     }
     public MediadorGestionarLocalidad(MediadorModificarComercio medModComercio,JDialog guiPadre) {
@@ -202,6 +204,7 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
     	}
     	guiLocalidad.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiLocalidad.actualizarTabla();
+        this.guiLocalidad.setMouseListener(this);  
     }
     
     private void actualizarTabla() {
@@ -219,6 +222,7 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
     	}
 	    guiLocalidad.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         guiLocalidad.actualizarTabla();
+        this.guiLocalidad.setMouseListener(this);  
     }
     
     private void modificar() {
@@ -278,6 +282,53 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
     
     public void valueChanged(ListSelectionEvent arg0) { }
     
+    public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medModCliente != null) {
+						medModCliente.localidad = miLoc;
+						medModCliente.actualizarLocalidad();
+						this.guiLocalidad.dispose();
+					} else if (medAltaCliente != null) {
+						medAltaCliente.localidad = miLoc;
+						medAltaCliente.actualizarLocalidad();
+						this.guiLocalidad.dispose();
+					} else if (medAltaProveedor != null) {
+						medAltaProveedor.localidad = miLoc;
+						medAltaProveedor.actualizarLocalidad();
+						this.guiLocalidad.dispose();
+					} else if (medModProveedor != null) {
+						medModProveedor.localidad = miLoc;
+						medModProveedor.actualizarLocalidad();
+						this.guiLocalidad.dispose();
+					} else if (medModComercio != null) {
+						medModComercio.localidad = miLoc;
+						medModComercio.actualizarLocalidad();
+						this.guiLocalidad.dispose();
+					}
+				}
+			}
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
 }
 
 

@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -102,9 +100,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
     			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
-    			double importeProd=pr.getPrecioVentaSinIva();
-    			double importeCIva=(importeProd*0.21)+importeProd;
-    			importeProd=Utils.redondear(importeCIva,2);
+    			double importeProd=pr.getPrecioVentaConIva();
     			this.guiRemitoCte.getJTFImporte().setText(String.valueOf(importeProd));
     			if(pr.isPrecioKilos()){
     				this.guiRemitoCte.getJTFCantidad().setText("1");
@@ -124,6 +120,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     				guiRemitoCte.getJLFechaVto().setVisible(false);
     			}
     			this.guiRemitoCte.getJBAgregarProd().setEnabled(true);
+    			this.guiRemitoCte.getJBAgregarProd().requestFocus(true);
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorRemitoCliente. CargarProductoSeleccionado");
     		}
@@ -229,9 +226,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 				k=Double.parseDouble(kilos);
                 			kilosProd.add(Utils.ordenarTresDecimales(k));
                 			//	precioUnit.add(Utils.ordenarDosDecimales(pr.getPrecioVenta()));
-                			double importeProd=pr.getPrecioVentaSinIva();
-                			double importeCIva=(importeProd*0.21)+importeProd;
-                			importeProd=Utils.redondear(importeCIva,2);
+                			double importeProd=pr.getPrecioVentaConIva();
                 			precioUnit.add(Utils.ordenarDosDecimales(importeProd));
                 			double prTotal=0;
                 			if(pr.isPrecioKilos()){
@@ -296,7 +291,6 @@ private void buscarCliente() {
             }
         }
         if (cliente != null){
-        	this.guiRemitoCte.getJtCuit().setText(cliente.getCuit());
             this.guiRemitoCte.getJTFNombreC().setText(cliente.getNombre());
             this.guiRemitoCte.getJTFBusqueda().setEnabled(true);
             this.cargarCliente(cliente);
@@ -308,7 +302,6 @@ private void buscarCliente() {
     }
     
     public void actualizarCliente() {
-    	this.guiRemitoCte.getJtCuit().setText(cliente.getCuit());
         this.guiRemitoCte.getJTFNombreC().setText(cliente.getNombre());
         this.guiRemitoCte.getJTFBusqueda().setEnabled(true);
     }
@@ -379,9 +372,7 @@ private void buscarCliente() {
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
 				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
 				this.guiRemitoCte.getJTFCodigo().setText(cod_Prod);
-				double importeProd=pr.getPrecioVentaSinIva();
-    			double importeCIva=(importeProd*0.21)+importeProd;
-    			importeProd=Utils.redondear(importeCIva,2);
+				double importeProd=pr.getPrecioVentaConIva();
     			this.guiRemitoCte.getJTFImporte().setText(String.valueOf(importeProd));
     			
     			if(pr.isPrecioKilos()){
@@ -404,6 +395,7 @@ private void buscarCliente() {
     			}
     			
     			this.guiRemitoCte.getJBAgregarProd().setEnabled(true);
+    			this.guiRemitoCte.getJBAgregarProd().requestFocus(true);
     			guiRemitoCte.ocultarCombo();
 			}else{
 				guiRemitoCte.mostrarCombo();
@@ -426,7 +418,6 @@ private void buscarCliente() {
 
 	private void actualizarVencimientos(Long id) throws Exception {
 		Vector vencims=controlVencimiento.obtenerVencimientosDeProducto(id);
-		System.out.println("Cantidad de vtos "+vencims.size());
 		guiRemitoCte.getJCBFechaVto().removeAllItems();
 		for(int i=0;i<vencims.size();i++){
 			Vencimiento vto=(Vencimiento)vencims.elementAt(i);

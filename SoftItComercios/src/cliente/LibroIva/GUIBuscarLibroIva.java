@@ -42,7 +42,7 @@ public class GUIBuscarLibroIva extends JDialog {
 	
 	public GUIBuscarLibroIva(JFrame guiPadre){
 		super(guiPadre);
-		this.setSize(new java.awt.Dimension(346,205));
+		this.setSize(new java.awt.Dimension(346,245));
 		this.setTitle("Libro Iva");
 		this.setResizable(false);
 		this.setLocationRelativeTo(guiPadre);
@@ -67,20 +67,18 @@ public class GUIBuscarLibroIva extends JDialog {
 		if (jpDatos == null) {
 			jlMes = new JLabel("MES:");
 			jlMes.setForeground(Utils.colorTexto);
-			jlMes.setBounds(new Rectangle(20,25,50,22));
+			jlMes.setFont(Utils.FuenteBasica());
+			jlMes.setBounds(new Rectangle(20,40,50,26));
 			jlMes.setHorizontalAlignment(SwingConstants.RIGHT);
 			jlAnio = new JLabel("AÑO:");
 			jlAnio.setForeground(Utils.colorTexto);
-			jlAnio.setBounds(new Rectangle(155,25,40,22));
+			jlAnio.setFont(Utils.FuenteBasica());
+			jlAnio.setBounds(new Rectangle(155,40,60,26));
 			jlAnio.setHorizontalAlignment(SwingConstants.RIGHT);
 			jpDatos = new TransparentPanel();
 			jpDatos.setLayout(null);
-			jpDatos.setSize(new java.awt.Dimension(300,130));
-			jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "CALENDARIO", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-			jpDatos.setBounds(new Rectangle(15,15,310,100));
+			jpDatos.setBorder(Utils.crearTituloYBorde("CALENDARIO"));
+			jpDatos.setBounds(new Rectangle(15,15,310,115));
 			jpDatos.add(jlMes, null);
 			jpDatos.add(jlAnio, null);
 			jpDatos.add(getJCBMes(),null);
@@ -94,11 +92,12 @@ public class GUIBuscarLibroIva extends JDialog {
 	public JButton getJBAceptar() {
 		if (jbAceptar == null) {
 			jbAceptar = new GlossyButton("VERIFICAR FACTURAS",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-			jbAceptar.setBounds(new java.awt.Rectangle(40,62,230,22));
+			jbAceptar.setBounds(new java.awt.Rectangle(20,75,270,26));
 			jbAceptar.setName("Verificar Facturas");
 			jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/verificar.png")));
 			jbAceptar.setInputMap(0, map);
+			jbAceptar.setFont(Utils.FuenteBotonesChicos());
 		}
 		return jbAceptar;
 	}
@@ -106,11 +105,12 @@ public class GUIBuscarLibroIva extends JDialog {
 	public JButton getJBCancelar() {
 		if (jbCancelar == null) {
 			jbCancelar = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-			jbCancelar.setBounds(new java.awt.Rectangle(113,135,100,30));
+			jbCancelar.setBounds(new java.awt.Rectangle(73,165,200,40));
 			jbCancelar.setName("Salir");
 			jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbCancelar.setInputMap(0, map);
+			jbCancelar.setFont(Utils.FuenteBotonesGrandes());
 		}
 		return jbCancelar;
 	}
@@ -118,7 +118,7 @@ public class GUIBuscarLibroIva extends JDialog {
 	public JComboBox getJCBMes() {
 		if (jcbMes == null) {
 			jcbMes = new JComboBox();
-			jcbMes.setBounds(new java.awt.Rectangle(75,25,60,22));
+			jcbMes.setBounds(new java.awt.Rectangle(75,40,60,26));
 			jcbMes.setBackground(new Color(255,255,255));
 			jcbMes.setForeground(java.awt.Color.black);
 			jcbMes.addItem("01");
@@ -134,6 +134,7 @@ public class GUIBuscarLibroIva extends JDialog {
 			jcbMes.addItem("11");
 			jcbMes.addItem("12");
 			jcbMes.setSelectedIndex(Utils.getMes(hoy)-1);
+			jcbMes.setFont(Utils.FuenteCampos());
 		}
 		return jcbMes;
 	}
@@ -141,9 +142,10 @@ public class GUIBuscarLibroIva extends JDialog {
 	public JTextField getJTFAnio() {
 		if (jtfAnio == null) {
 			jtfAnio = new JTextField();
-			jtfAnio.setBounds(new java.awt.Rectangle(200,25,70,22));
+			jtfAnio.setBounds(new java.awt.Rectangle(220,40,70,26));
 			jtfAnio.setDocument(new LimitadorNroMax(jtfAnio,4));
 			jtfAnio.setText(String.valueOf(Utils.getAnio(hoy)));
+			jtfAnio.setFont(Utils.FuenteCampos());
 		}
 		return jtfAnio;
 	}

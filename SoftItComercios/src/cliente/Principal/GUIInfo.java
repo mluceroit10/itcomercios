@@ -17,7 +17,6 @@ import javax.swing.text.StyleConstants;
 import cliente.Utils.JPanel_Whit_Image;
 
 import common.JLinkButton;
-import common.RootAndIp;
 import common.Utils;
 
 public class GUIInfo extends JDialog{

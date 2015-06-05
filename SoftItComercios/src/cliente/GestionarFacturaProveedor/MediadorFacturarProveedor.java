@@ -104,6 +104,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     	    		guiFacturarProv.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarProv.getJBAgregarProd().setEnabled(true);
+    			this.guiFacturarProv.getJBAgregarProd().requestFocus(true);
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorFacturarProveedor. CargarProductoSeleccionado");
     		}
@@ -478,6 +479,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     	    		guiFacturarProv.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarProv.getJBAgregarProd().setEnabled(true);
+    			this.guiFacturarProv.getJBAgregarProd().requestFocus(true);
     			guiFacturarProv.ocultarCombo();
     			guiFacturarProv.ocultarBotonNuevoProducto();
 			}else{

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -29,7 +31,7 @@ import cliente.Principal.GUIReport;
 
 import common.Utils;
 
-public class MediadorListarRemitosCliente implements ActionListener, KeyListener, ListSelectionListener {
+public class MediadorListarRemitosCliente implements ActionListener, KeyListener, ListSelectionListener, MouseListener {
     
     private GUIListarRemitosCliente guiTodasFactCte = null;
     protected ControlFacturaCliente controlFactCte;
@@ -157,17 +159,6 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
 				diaLI = guiTodasFactCte.getJCBDia().getSelectedIndex()+1; //para que el numero del indice de con el dia sumo 1
 				actualizarCampos();
 			} 	
-        }else if (source == guiTodasFactCte.getJBCambiarPeriodo()){
-        	String anioB = guiTodasFactCte.getJTFAnio().getText();
-        	if(anioB.length()==0){
-				Utils.advertenciaUsr(guiTodasFactCte,"Por favor ingrese el Año.");
-			}else if(anioB.length()!=4){
-				Utils.advertenciaUsr(guiTodasFactCte,"El año debe ser un número de 4 dígitos.");
-			}else{
-				anioLI= Integer.parseInt(anioB);
-				mesLI = guiTodasFactCte.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
-	         	cargarDatos();
-			} 		         
         }else if (source == guiTodasFactCte.getJBSalir()){
         	 if(flag){
           	   this.guiTodasFactCte.dispose();
@@ -211,7 +202,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     public void cargarDatos() {
         try {
             Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodo(listarSinFact,"RemitoCliente",diaLI,mesLI,anioLI);
-            guiTodasFactCte.getJTFPeriodo().setText(mesLI+" - "+anioLI);
+            guiTodasFactCte.getJTFPeriodo().setText(diaLI+" - "+mesLI+" - "+anioLI);
             guiTodasFactCte.datos = new Object[facturas.size()][guiTodasFactCte.titulos.length];
             int i = 0;
             for (int j = 0; j < facturas.size(); j++) {
@@ -246,12 +237,14 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     	}
     	guiTodasFactCte.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiTodasFactCte.actualizarTabla();
+        this.guiTodasFactCte.setMouseListener(this);
     }
     
     public void actualizarCampos() {
     	 try {
     		 Vector facturas = this.controlFactCte.obtenerFacturaClientesPeriodoFiltros(listarSinFact,"RemitoCliente",diaLI,mesLI,anioLI, guiTodasFactCte.getJTFFecha().getText(),guiTodasFactCte.getJTFNro().getText(),guiTodasFactCte.getJTFCliente().getText());
-             guiTodasFactCte.datos = new Object[facturas.size()][guiTodasFactCte.titulos.length];
+    		 guiTodasFactCte.getJTFPeriodo().setText(diaLI+" - "+mesLI+" - "+anioLI);
+    		 guiTodasFactCte.datos = new Object[facturas.size()][guiTodasFactCte.titulos.length];
              for (int j = 0; j < facturas.size(); j++) {
             	 FacturaCliente r=(FacturaCliente)facturas.elementAt(j);
             	 String compr = "";
@@ -282,6 +275,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
      	}
      	guiTodasFactCte.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
      	guiTodasFactCte.actualizarTabla();
+        this.guiTodasFactCte.setMouseListener(this);
     }
     
     private void anularFactura() {
@@ -329,7 +323,42 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
     
     public void valueChanged(ListSelectionEvent arg0) { }
 
-  
+    public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medFecturarCliente != null) {
+						medFecturarCliente.actualizarRemito(fact);
+						this.guiTodasFactCte.dispose();
+					}
+					if (medAltaMovCaja != null) {
+						medAltaMovCaja.factura = fact;
+						medAltaMovCaja.tipoFact = fact.getTipoFactura();
+						medAltaMovCaja.actualizarFactura();
+						this.guiTodasFactCte.dispose();
+					}
+				}
+			}
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
 }
 
 

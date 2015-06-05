@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.Vector;
 
 import persistencia.domain.Producto;
+import persistencia.domain.Proveedor;
 import persistencia.domain.Vencimiento;
 import server.Assemblers;
 import server.ManipuladorPersistencia;
 import server.GestionarProducto.ControlProducto;
 
+import common.Utils;
 import common.GestionarVencimiento.IControlVencimiento;
 
 public class ControlVencimiento implements IControlVencimiento{
@@ -68,7 +70,7 @@ public class ControlVencimiento implements IControlVencimiento{
 		Vector Vencimientos2 = new Vector();
 		try {
 			mp.initPersistencia();
-			Vector Vencimientos= mp.getAllOrdered(Vencimiento.class,"nombre ascending");
+			Vector Vencimientos= mp.getAllOrdered(Vencimiento.class,"producto.nombre ascending");
 			for(int i=0; i<Vencimientos.size();i++){
 				Vencimiento b = (Vencimiento)Vencimientos.elementAt(i);
 				Vencimiento a =Assemblers.crearVencimiento(b);
@@ -104,19 +106,25 @@ public class ControlVencimiento implements IControlVencimiento{
 		return Vencimientos2;
 	}
 	
-	public Vector obtenerVencimientosFiltros(String nombre)throws Exception{
+	public Vector obtenerVencimientosFiltros(String cod,String nombre,boolean ctrlStock)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Vector Vencimientos2 = new Vector();
 		try {
 			mp.initPersistencia();
 			String filtro = "producto.nombre.toLowerCase().indexOf(\""+nombre.toLowerCase()+"\")>= 0";
-			Vector Vencimientos= mp.getObjectsOrdered(Vencimiento.class,filtro,"nombre ascending");
+			if(!ctrlStock)
+				filtro += " && ( ( producto.precioKilos == true && stockKilos>0.0) || ( producto.precioKilos == false && stock>0))";
+			Vector Vencimientos= mp.getObjectsOrdered(Vencimiento.class,filtro,"fechaVto descending");
 			for(int i=0; i<Vencimientos.size();i++){
 				Vencimiento b = (Vencimiento)Vencimientos.elementAt(i);
-				Vencimiento a= Assemblers.crearVencimiento(b);
-				Producto p = Assemblers.crearProducto(b.getProducto());
-				a.setProducto(p);
-				Vencimientos2.add(a);
+				if(Utils.comienza(String.valueOf(b.getProducto().getCodigo()),cod)){
+					Vencimiento a= Assemblers.crearVencimiento(b);
+					Producto p = Assemblers.crearProducto(b.getProducto());
+					Proveedor pr = Assemblers.crearProveedor(b.getProducto().getProveedor());
+					p.setProveedor(pr);
+					a.setProducto(p);
+					Vencimientos2.add(a);
+				}
 			}
 			mp.commit();
 		}  finally{

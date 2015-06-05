@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -61,25 +60,24 @@ public class MediadorGestionarProducto implements ActionListener, KeyListener, L
     		}catch (Exception p){
     			p.printStackTrace();
     		}	
+        }else if(source == guiProducto.getJBControlVencimiento()){
+    		try{
+    			MediadorGestionarVencimientoProducto msprod = new MediadorGestionarVencimientoProducto(guiProducto);
+    		}catch (Exception p){
+    			p.printStackTrace();
+    		}	
         } else if (source == guiProducto.getJBImprimir()) {
         	try{
         		if (this.controlProducto.obtenerProductos().isEmpty()){
         			Utils.advertenciaUsr(guiProducto,"No hay Productos guardados.");
         		} else{
         			Object[] valoresPosibles = {"Todos los Proveedores", "Por Proveedor"};
-        			String prov = (String)JOptionPane.showInputDialog(guiProducto,
-        					"Seleccione Proveedor", "Criterios de Impresión",
-        					JOptionPane. QUESTION_MESSAGE, null,
-        					valoresPosibles, valoresPosibles[0]);
+        			String prov = Utils.seleccionarOpcion(guiProducto,"Seleccione Proveedor", "Criterios de Impresión",valoresPosibles,0);
         			if(prov!=null){
         				if(prov.compareTo("Todos los Proveedores")==0){
         					productos = controlProducto.obtenerProductos();
         					Object[] valoresImpr = {"Precio Entrada y Salida con IVA","Precio Entrada y Salida sin IVA", "Precio Entrada", "Precio Salida con IVA", "Precio Salida sin IVA"};
-                			String impr = (String)JOptionPane.showInputDialog(guiProducto,
-                					"Precios a imprimir", "Criterios de Impresión",
-                					JOptionPane. QUESTION_MESSAGE, null,
-                					valoresImpr, valoresImpr[0]);
-                			
+                			String impr = Utils.seleccionarOpcion(guiProducto,"Precios a imprimir", "Criterios de Impresión",valoresImpr,0);
                 			titulo="Todos los productos";
                 			if(impr!=null){
                 				String leyenda="El precio de venta NO incluye IVA";
@@ -110,17 +108,11 @@ public class MediadorGestionarProducto implements ActionListener, KeyListener, L
         					for (int k=0;k<provs.size();k++){
         						provsPosibles[k]=((Proveedor)provs.elementAt(k)).getNombre();
         					}
-        					String unprov = (String)JOptionPane.showInputDialog(guiProducto,
-        							"Seleccione el Proveedor", "Criterios de Impresión",
-        							JOptionPane. QUESTION_MESSAGE, null,
-        							provsPosibles, provsPosibles[0]);
+        					String unprov = Utils.seleccionarOpcion(guiProducto,"Seleccione el Proveedor", "Criterios de Impresión",provsPosibles,0);
         					productos = controlProducto.obtenerProductosProveedor(unprov);
         					titulo="Todos los productos del proveedor "+unprov;
         					Object[] valoresImpr = {"Precio Entrada y Salida con IVA","Precio Entrada y Salida sin IVA", "Precio Entrada", "Precio Salida con IVA", "Precio Salida sin IVA"};
-                			String impr = (String)JOptionPane.showInputDialog(guiProducto,
-                					"Precios a imprimir", "Criterios de Impresión",
-                					JOptionPane. QUESTION_MESSAGE, null,
-                					valoresImpr, valoresImpr[0]);
+                			String impr = Utils.seleccionarOpcion(guiProducto,"Precios a imprimir", "Criterios de Impresión",valoresImpr,0);
                 			if(impr!=null){
                 				if(impr!=null){
                 					String leyenda="El precio de venta NO incluye IVA";

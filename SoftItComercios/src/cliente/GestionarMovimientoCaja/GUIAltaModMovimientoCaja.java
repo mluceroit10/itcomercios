@@ -54,7 +54,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public GUIAltaModMovimientoCaja(int nroCod,JDialog guiPadre) {
     	super(guiPadre);
     	nroAsignado=nroCod;
-        this.setSize(new java.awt.Dimension(630,300));
+        this.setSize(new java.awt.Dimension(855,390));
         this.setTitle("Nuevo Movimiento de Caja");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -67,7 +67,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public GUIAltaModMovimientoCaja(MovimientoCaja lp,JDialog guiPadre) {
         super(guiPadre);
         this.mcDTO = lp;
-        this.setSize(new java.awt.Dimension(630,300));
+        this.setSize(new java.awt.Dimension(855,390));
         this.setTitle("Modificar Movimiento de Caja");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -81,7 +81,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
         if (jpPpal == null) {
             jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
-            jpPpal.setSize(new java.awt.Dimension(630,300));
+            jpPpal.setSize(new java.awt.Dimension(855,390));
             jpPpal.add(getJPDatos(),null);
             jpPpal.add(getJBAceptar(), null);
             jpPpal.add(getJBCancelar(), null);
@@ -94,55 +94,61 @@ public class GUIAltaModMovimientoCaja extends JDialog {
         if (jpDatos == null) {
             jlNroRecibo = new JLabel("CODIGO (*)");
             jlNroRecibo.setForeground(Utils.colorTexto);
-            jlNroRecibo.setBounds(new Rectangle(10,30,130,15));
+            jlNroRecibo.setFont(Utils.FuenteBasica());
+            jlNroRecibo.setBounds(new Rectangle(10,40,220,26));
             jlNroRecibo.setHorizontalAlignment(SwingConstants.RIGHT);
             jlFecha = new JLabel();
-            jlFecha.setBounds(new java.awt.Rectangle(310,30,95,15));
-            jlFecha.setText("FECHA (*) ");
+            jlFecha.setBounds(new java.awt.Rectangle(470,40,140,26));
+            jlFecha.setText("FECHA (*)");
             jlFecha.setForeground(Utils.colorTexto);
+            jlFecha.setFont(Utils.FuenteBasica());  
             jlFecha.setHorizontalAlignment(SwingConstants.RIGHT);
             jlTipoMov = new JLabel();
-            jlTipoMov.setBounds(new java.awt.Rectangle(10,62,130,15));
-            jlTipoMov.setText("TIPO MOVIMIENTO (*) ");
+            jlTipoMov.setBounds(new java.awt.Rectangle(10,75,220,26));
+            jlTipoMov.setText("TIPO MOVIMIENTO (*)");
             jlTipoMov.setForeground(Utils.colorTexto);
+            jlTipoMov.setFont(Utils.FuenteBasica());
             jlTipoMov.setHorizontalAlignment(SwingConstants.RIGHT);
             jlFormaPago = new JLabel();
-            jlFormaPago.setBounds(new java.awt.Rectangle(10,94,130,15));
-            jlFormaPago.setText("FORMA DE PAGO (*) ");
+            jlFormaPago.setBounds(new java.awt.Rectangle(10,110,220,26));
+            jlFormaPago.setText("FORMA DE PAGO (*)");
             jlFormaPago.setForeground(Utils.colorTexto);
+            jlFormaPago.setFont(Utils.FuenteBasica());
             jlFormaPago.setHorizontalAlignment(SwingConstants.RIGHT);
             jlImporte = new JLabel();
-            jlImporte.setBounds(new java.awt.Rectangle(310,62,95,15));
-            jlImporte.setText("IMPORTE (*) ");
+            jlImporte.setBounds(new java.awt.Rectangle(470,75,140,26));
+            jlImporte.setText("IMPORTE (*)");
             jlImporte.setForeground(Utils.colorTexto);
+            jlImporte.setFont(Utils.FuenteBasica());
             jlImporte.setHorizontalAlignment(SwingConstants.RIGHT);
             jlDescr = new JLabel();
-            jlDescr.setBounds(new java.awt.Rectangle(10,126,130,15));
-            jlDescr.setText("DESCRIPCION (*) ");
+            jlDescr.setBounds(new java.awt.Rectangle(10,145,220,26));
+            jlDescr.setText("DESCRIPCION (*)");
             jlDescr.setForeground(Utils.colorTexto);
+            jlDescr.setFont(Utils.FuenteBasica());
             jlDescr.setHorizontalAlignment(SwingConstants.RIGHT);
             jLNroCheque = new JLabel();
-            jLNroCheque.setBounds(new java.awt.Rectangle(310,94,95,15));
+            jLNroCheque.setBounds(new java.awt.Rectangle(470,110,140,26));
             jLNroCheque.setText("NRO. CHEQUE");
             jLNroCheque.setForeground(Utils.colorTexto);
+            jLNroCheque.setFont(Utils.FuenteBasica());
             jLNroCheque.setHorizontalAlignment(SwingConstants.RIGHT);
             jlFactura = new JLabel();
-            jlFactura.setBounds(new java.awt.Rectangle(10,158,130,15));
+            jlFactura.setBounds(new java.awt.Rectangle(10,180,220,26));
             jlFactura.setText("FACTURA");
             jlFactura.setForeground(Utils.colorTexto);
+            jlFactura.setFont(Utils.FuenteBasica());
             jlFactura.setHorizontalAlignment(SwingConstants.RIGHT);
             jlTipoFact = new JLabel();
-            jlTipoFact.setBounds(new java.awt.Rectangle(200,158,40,15));
+            jlTipoFact.setBounds(new java.awt.Rectangle(10,215,220,26));
             jlTipoFact.setText("TIPO");
             jlTipoFact.setForeground(Utils.colorTexto);
+            jlTipoFact.setFont(Utils.FuenteBasica());
             jlTipoFact.setHorizontalAlignment(SwingConstants.RIGHT);
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DEL MOVIMIENTO DE CAJA", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpDatos.setBounds(new java.awt.Rectangle(15,15,600,195));
+            jpDatos.setBorder(Utils.crearTituloYBorde("DATOS DEL MOVIMIENTO DE CAJA"));
+            jpDatos.setBounds(new java.awt.Rectangle(15,15,820,260));
             jpDatos.add(jlNroRecibo, null);
             jpDatos.add(jlFecha, null);
             jpDatos.add(jlTipoMov, null);
@@ -193,9 +199,10 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JTextField getJTFCodigo() {
         if (jtfNroRecibo == null) {
         	jtfNroRecibo = new JTextField();
-        	jtfNroRecibo.setBounds(new java.awt.Rectangle(145,30,150,22));
+        	jtfNroRecibo.setBounds(new java.awt.Rectangle(240,40,200,26));
         	jtfNroRecibo.setDocument(new LimitadorNroMax(jtfNroRecibo,9));
         	jtfNroRecibo.setText(String.valueOf(nroAsignado));
+        	jtfNroRecibo.setFont(Utils.FuenteCampos());
         }
         return jtfNroRecibo;
     }
@@ -203,8 +210,9 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JTextField getJTFImporte() {
         if (jtfImporte == null) {
         	jtfImporte = new JTextField();
-        	jtfImporte.setBounds(new java.awt.Rectangle(415,62,170,22));
+        	jtfImporte.setBounds(new java.awt.Rectangle(620,75,180,26));
         	jtfImporte.setDocument(new LimitadorPrecio(jtfImporte));
+        	jtfImporte.setFont(Utils.FuenteCampos());
         }
         return jtfImporte;
     }
@@ -212,9 +220,10 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JTextField getJTFDescr() {
         if (jtfDescr == null) {
         	jtfDescr = new JTextField();
-        	jtfDescr.setBounds(new java.awt.Rectangle(145,126,440,22));
+        	jtfDescr.setBounds(new java.awt.Rectangle(240,145,560,26));
         	jtfDescr.setBackground(new Color(255,255,255));
         	jtfDescr.setForeground(java.awt.Color.black);
+        	jtfDescr.setFont(Utils.FuenteCampos());
         }
         return jtfDescr;
     }
@@ -222,11 +231,12 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JTextField getJTFFactura() {
         if (jtfFactura == null) {
         	jtfFactura = new JTextField();
-        	jtfFactura.setBounds(new java.awt.Rectangle(390,158,110,22));
+        	jtfFactura.setBounds(new java.awt.Rectangle(330,180,200,26));
         	jtfFactura.setBackground(new Color(255,255,255));
         	jtfFactura.setForeground(java.awt.Color.black);
         	jtfFactura.setDisabledTextColor(Utils.colorTextoDisabled);
         	jtfFactura.setEnabled(false);
+        	jtfFactura.setFont(Utils.FuenteCampos());
         	
         }
         return jtfFactura;
@@ -235,11 +245,12 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JButton getJBBuscarFact() {
         if (jbFactura == null) {
         	jbFactura = new GlossyButton("BUSCAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbFactura.setBounds(new java.awt.Rectangle(505,158,80,22));
+        	jbFactura.setBounds(new java.awt.Rectangle(570,215,150,26));
         	jbFactura.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbFactura.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
         	jbFactura.setEnabled(false);
         	jbFactura.setInputMap(0, map);
+        	jbFactura.setFont(Utils.FuenteBotonesChicos());
         }
         return jbFactura;
     }
@@ -247,12 +258,12 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JComboBox getJCTipoMov() {
 		if (jcbTipoMovim==null){
 			jcbTipoMovim=new JComboBox();
-			jcbTipoMovim.setBounds(new java.awt.Rectangle(145,62,150,22));
+			jcbTipoMovim.setBounds(new java.awt.Rectangle(240,75,200,26));
 			jcbTipoMovim.setBackground(new Color(255,255,255));
 			jcbTipoMovim.setForeground(java.awt.Color.black);
 			jcbTipoMovim.addItem("ENTRADA");
 			jcbTipoMovim.addItem("SALIDA");
-			
+			jcbTipoMovim.setFont(Utils.FuenteCampos());
 		}
 		return jcbTipoMovim;
 	}
@@ -260,12 +271,12 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JComboBox getJCConFact() {
 		if (jcbConFact==null){
 			jcbConFact=new JComboBox();
-			jcbConFact.setBounds(new java.awt.Rectangle(145,158,50,22));
+			jcbConFact.setBounds(new java.awt.Rectangle(240,180,70,26));
 			jcbConFact.setBackground(new Color(255,255,255));
 			jcbConFact.setForeground(java.awt.Color.black);
 			jcbConFact.addItem("NO");
 			jcbConFact.addItem("SI");
-			
+			jcbConFact.setFont(Utils.FuenteCampos());
 		}
 		return jcbConFact;
 	}
@@ -273,7 +284,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JComboBox getJCTipoFact() {
 		if (jcbTipoFact==null){
 			jcbTipoFact=new JComboBox();
-			jcbTipoFact.setBounds(new java.awt.Rectangle(243,158,130,22));
+			jcbTipoFact.setBounds(new java.awt.Rectangle(240,215,310,26));
 			jcbTipoFact.setBackground(new Color(255,255,255));
 			jcbTipoFact.setForeground(java.awt.Color.black);
 			jcbTipoFact.setEnabled(false);
@@ -281,6 +292,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 			jcbTipoFact.addItem("Factura Cliente-Tipo B");
 			//jcbTipoFact.addItem("Remito Cliente");
 			jcbTipoFact.addItem("Factura Proveedor");
+			jcbTipoFact.setFont(Utils.FuenteCampos());
 		}
 		return jcbTipoFact;
 	}
@@ -288,7 +300,8 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JDateChooser getJDateChooserFecha() {
 		if (jDateChooserFecha == null) {
 			jDateChooserFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDateChooserFecha.setBounds(new java.awt.Rectangle(415,30,170,22));
+			jDateChooserFecha.setBounds(new java.awt.Rectangle(620,40,180,26));
+			jDateChooserFecha.setFont(Utils.FuenteCampos());
 		}
 		return jDateChooserFecha;
 	}
@@ -296,10 +309,11 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbAceptar.setBounds(new java.awt.Rectangle(180,230,100,30));
+            jbAceptar.setBounds(new java.awt.Rectangle(177,310,200,40));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
+            jbAceptar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbAceptar;
     }
@@ -307,10 +321,11 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbCancelar.setBounds(new java.awt.Rectangle(330,230,100,30));
+            jbCancelar.setBounds(new java.awt.Rectangle(477,310,200,40));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
+            jbCancelar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbCancelar;
     }
@@ -327,10 +342,11 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 	public JTextField getJTFNroCheque() {
 		if (jTFNroCheque == null) {
 			jTFNroCheque = new JTextField();
-			jTFNroCheque.setBounds(new java.awt.Rectangle(415,94,170,22));
+			jTFNroCheque.setBounds(new java.awt.Rectangle(620,110,180,26));
 			jTFNroCheque.setDocument(new LimitadorNroMax(jTFNroCheque,10));
 			jTFNroCheque.setDisabledTextColor(Utils.colorTextoDisabled);
 			jTFNroCheque.setEnabled(false);
+			jTFNroCheque.setFont(Utils.FuenteCampos());
 		}
 		return jTFNroCheque;
 	}
@@ -338,12 +354,13 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 	public JComboBox getJCBFormaPago() {
 		if (jCBFormaPago == null) {
 			jCBFormaPago  = new JComboBox();
-			jCBFormaPago.setBounds(new java.awt.Rectangle(145,94,150,22));
+			jCBFormaPago.setBounds(new java.awt.Rectangle(240,110,200,26));
 			jCBFormaPago.setBackground(new Color(255,255,255));
 			jCBFormaPago.setForeground(java.awt.Color.black);
 			jCBFormaPago.addItem("EFECTIVO");
 			jCBFormaPago.addItem("TICKET");
 			jCBFormaPago.addItem("CHEQUE");
+			jCBFormaPago.setFont(Utils.FuenteCampos());
 		}
 		return jCBFormaPago;
 	}

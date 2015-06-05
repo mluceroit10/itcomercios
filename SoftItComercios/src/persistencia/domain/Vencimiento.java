@@ -2,6 +2,8 @@ package persistencia.domain;
 
 import java.sql.Date;
 
+import persistencia.OidGenerator;
+
 public class Vencimiento {    
     private Long id;
 	private Producto producto = null;
@@ -9,6 +11,10 @@ public class Vencimiento {
 	private double stockKilos;
 	private Date fechaVto;
 
+	public Vencimiento() {
+		id=OidGenerator.getNewId();
+	}
+	 
 	public Long getId() {
 		return id;
 	}

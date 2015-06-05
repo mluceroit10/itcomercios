@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -46,7 +47,7 @@ public class GUIListarDeudaClientes extends JDialog {
 	
 	public GUIListarDeudaClientes(JDialog guiPadre) {
 		super(guiPadre);
-		this.setSize(new java.awt.Dimension(700,525));
+		this.setSize(new java.awt.Dimension(1000,600));
 		this.setTitle("Deudas Pendientes");
 		this.setLocationRelativeTo(guiPadre);
 		this.setResizable(false);
@@ -60,6 +61,7 @@ public class GUIListarDeudaClientes extends JDialog {
 		if (jpPpal == null) {
 			jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
 			jpPpal.setLayout(null);
+			jpPpal.setSize(new java.awt.Dimension(1000,600));
 			jpPpal.add(getJPDeudas(),null);
 			jpPpal.add(getJBImprimir(),null);
 			jpPpal.add(getJBSalir(),null);
@@ -71,11 +73,12 @@ public class GUIListarDeudaClientes extends JDialog {
 	public JButton getJBImprimir() {
 		if (jbImprimir == null) {
 			jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-			jbImprimir.setBounds(new java.awt.Rectangle(220,455,100,30));
+			jbImprimir.setBounds(new java.awt.Rectangle(250,520,200,40));
 			jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbImprimir.setName("Imprimir");
 			jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
 			jbImprimir.setInputMap(0, map);
+			jbImprimir.setFont(Utils.FuenteBotonesGrandes());
 		}
 		return jbImprimir;
 	}
@@ -83,11 +86,12 @@ public class GUIListarDeudaClientes extends JDialog {
 	public JButton getJBSalir() {
 		if (jbSalir == null) {
 			jbSalir = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-			jbSalir.setBounds(new java.awt.Rectangle(370,455,100,30));
+			jbSalir.setBounds(new java.awt.Rectangle(550,520,200,40));
 			jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbSalir.setName("Salir");
 			jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbSalir.setInputMap(0, map);
+			jbSalir.setFont(Utils.FuenteBotonesGrandes());
 		}
 		return jbSalir;
 	}
@@ -96,10 +100,8 @@ public class GUIListarDeudaClientes extends JDialog {
 		if (jpDeudas == null) {
 			jpDeudas = new TransparentPanel();
 			jpDeudas.setLayout(null);
-			jpDeudas.setBounds(new Rectangle(15,15,670,420));
-			jpDeudas.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " ESTADO DE CUENTA DE LOS CLIENTES ",
-					javax.swing.border.TitledBorder.CENTER,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+			jpDeudas.setBounds(new Rectangle(15,15,970,470));
+			jpDeudas.setBorder(Utils.crearTituloYBorde(" ESTADO DE CUENTA DE LOS CLIENTES "));
 			jpDeudas.add(getJSPDatos(), null);
 			jpDeudas.add(getJCheckSelectAll(), null);
 		}
@@ -109,7 +111,7 @@ public class GUIListarDeudaClientes extends JDialog {
 	private JScrollPane getJSPDatos() {
 		if (jspDatos == null) {
 			jspDatos = new JScrollPane();
-			jspDatos.setBounds(new Rectangle(10,30,650,350));
+			jspDatos.setBounds(new Rectangle(10,30,950,400));
 			jspDatos.setViewportView(getJTDatos());
 		}
 		return jspDatos;
@@ -129,7 +131,6 @@ public class GUIListarDeudaClientes extends JDialog {
 						if(impRestante>0){
 							returnComp.setBackground(Utils.colorTexto);
 							returnComp.setForeground(Color.RED);
-							returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 						}
 					}else{
 						if(favor.compareTo("")!=0){
@@ -137,7 +138,6 @@ public class GUIListarDeudaClientes extends JDialog {
 							if(impRestante>0){
 								returnComp.setBackground(Utils.colorTexto);
 								returnComp.setForeground(Color.BLUE);
-								returnComp.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
 							}else{
 								returnComp.setBackground(Utils.colorTexto);
 								returnComp.setForeground(Color.BLACK);
@@ -158,18 +158,21 @@ public class GUIListarDeudaClientes extends JDialog {
 				}
 			}; 
 			
+			jtDatos.setFont(Utils.FuenteTablasSimple());
+			JTableHeader titTabla = jtDatos.getTableHeader();
+			titTabla.setFont(Utils.FuenteTablasSimple());
 			
 			TableColumn columna3 = jtDatos.getColumn("Fecha Ultima Facturación");
-			columna3.setMaxWidth(150); 
-			columna3.setPreferredWidth(150);
+			columna3.setMaxWidth(250); 
+			columna3.setPreferredWidth(250);
 			columna3.setCellRenderer(Utils.alinearCentro());
 			TableColumn columna4 = jtDatos.getColumn("Saldo a Favor");
 			columna4.setMaxWidth(150); 
 			columna4.setPreferredWidth(150);
 			columna4.setCellRenderer(Utils.alinearDerecha());	
 			TableColumn columna5 = jtDatos.getColumn("Adeudado");
-			columna5.setPreferredWidth(100);
-			columna5.setMaxWidth(100);
+			columna5.setPreferredWidth(150);
+			columna5.setMaxWidth(150);
 			columna5.setCellRenderer(Utils.alinearDerecha());	
 		}
 		return jtDatos;
@@ -188,10 +191,11 @@ public class GUIListarDeudaClientes extends JDialog {
 	public JCheckBox getJCheckSelectAll() {
 		if (jCheckSelectAll == null) {
 			jCheckSelectAll = new JCheckBox();
-			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,393,130,17));
+			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,443,228,17));
 			jCheckSelectAll.setText("Seleccionar Todo");
 			jCheckSelectAll.setName("SelectAll");
 			jCheckSelectAll.setForeground(Utils.colorTexto);
+			jCheckSelectAll.setFont(Utils.FuenteBasica());
 			jCheckSelectAll.setOpaque(false);
 		}
 		return jCheckSelectAll;

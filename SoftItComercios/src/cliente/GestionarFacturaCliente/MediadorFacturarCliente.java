@@ -6,13 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -76,8 +73,9 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     	if(comercio==null){ 
     		Utils.advertenciaUsr(guiFacturarCte,"Debe completar los datos del Comercio para Facturar.");
     	}else{	
-    		Object seleccion = JOptionPane.showInputDialog(guiPadreCtrl,"Seleccione el Tipo de Factura", "Selector Tipo de Factura",
-    				   JOptionPane.QUESTION_MESSAGE, null, new Object[] { "Factura A", "Factura B","Factura de Remito"}, "Factura A");
+    		Object[] valores={ "Factura A", "Factura B","Factura de Remito"};
+    		Object seleccion = Utils.seleccionarOpcion(guiPadreCtrl,"Seleccione el Tipo de Factura", "Selector Tipo de Factura",valores,0);
+
     		if(seleccion!=null){
     			String sel=seleccion.toString();
     			if(sel.compareTo("Factura de Remito")!=0){ 
@@ -125,8 +123,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
     			double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
-    				double importeCIva=(importeProd*0.21)+importeProd;
-    				importeProd=Utils.redondear(importeCIva,2);
+    				importeProd=pr.getPrecioVentaConIva();
     			}
     			this.guiFacturarCte.getJTFImporte().setText(String.valueOf(importeProd));
     			if(pr.isPrecioKilos()){
@@ -146,7 +143,9 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				guiFacturarCte.getJCBFechaVto().setVisible(false);
     				guiFacturarCte.getJLFechaVto().setVisible(false);
     			}
+    			
     			this.guiFacturarCte.getJBAgregarProd().setEnabled(true);
+    			this.guiFacturarCte.getJBAgregarProd().requestFocus(true);
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorFacturarCliente. BuscarProductoSeleccionado");
     		}
@@ -280,8 +279,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 		kilosProd.add(Utils.ordenarTresDecimales(k));
                 		double importeProd=pr.getPrecioVentaSinIva();
             			if(tipo.compareTo("B")==0){
-            				double importeCIva=(importeProd*0.21)+importeProd;
-            				importeProd=Utils.redondear(importeCIva,2);
+            				importeProd=pr.getPrecioVentaConIva();
             			}
             			precioUnit.add(Utils.ordenarDosDecimales(importeProd));
             			
@@ -505,8 +503,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 				this.guiFacturarCte.getJTFCodigo().setText(cod_Prod);
 				double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
-    				double importeCIva=(importeProd*0.21)+importeProd;
-    				importeProd=Utils.redondear(importeCIva,2);
+    				importeProd=pr.getPrecioVentaConIva();
     			}
     			this.guiFacturarCte.getJTFImporte().setText(String.valueOf(importeProd));
     			if(pr.isPrecioKilos()){
@@ -527,6 +524,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				guiFacturarCte.getJLFechaVto().setVisible(false);
     			}
     			this.guiFacturarCte.getJBAgregarProd().setEnabled(true);
+    			this.guiFacturarCte.getJBAgregarProd().requestFocus(true);
     			guiFacturarCte.ocultarCombo();
 			}else{
 				guiFacturarCte.mostrarCombo();
@@ -564,7 +562,6 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 
 	private void actualizarVencimientos(Long id) throws Exception {
 		Vector vencims=controlVencimiento.obtenerVencimientosDeProducto(id);
-		System.out.println("Cantidad de vtos "+vencims.size());
 		guiFacturarCte.getJCBFechaVto().removeAllItems();
 		for(int i=0;i<vencims.size();i++){
 			Vencimiento vto=(Vencimiento)vencims.elementAt(i);

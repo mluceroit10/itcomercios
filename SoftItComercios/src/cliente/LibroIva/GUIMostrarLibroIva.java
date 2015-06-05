@@ -17,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import cliente.ModeloTabla;
@@ -51,7 +52,7 @@ public class GUIMostrarLibroIva extends JDialog {
     	super(guiPadre);
     	mesLI=mes;
 		anioLI=anio;
-    	this.setSize(new java.awt.Dimension(750,530));
+    	this.setSize(new java.awt.Dimension(1200,640));
         this.setTitle("Libro Iva Ventas");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -65,6 +66,7 @@ public class GUIMostrarLibroIva extends JDialog {
         if (jpPpal == null) {
             jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
+            jpPpal.setSize(new java.awt.Dimension(1200,640));
             jpPpal.add(getJPFacturado(),null);
             jpPpal.add(getJBImprimir(),null);
             jpPpal.add(getJBSalir(),null);
@@ -76,11 +78,12 @@ public class GUIMostrarLibroIva extends JDialog {
     public JButton getJBImprimir() {
         if (jbImprimir == null) {
         	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbImprimir.setBounds(new java.awt.Rectangle(245,460,100,30));
+        	jbImprimir.setBounds(new java.awt.Rectangle(350,560,200,40));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setName("Imprimir");
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setInputMap(0, map);
+        	jbImprimir.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbImprimir;
     }
@@ -88,11 +91,12 @@ public class GUIMostrarLibroIva extends JDialog {
     public JButton getJBSalir() {
         if (jbSalir == null) {
             jbSalir = new GlossyButton("SALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbSalir.setBounds(new java.awt.Rectangle(395,460,100,30));
+            jbSalir.setBounds(new java.awt.Rectangle(650,560,200,40));
             jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbSalir.setName("Salir");
             jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
+            jbSalir.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbSalir;
     }
@@ -101,25 +105,27 @@ public class GUIMostrarLibroIva extends JDialog {
         if (jpFacturado == null) {
         	jpFacturado = new TransparentPanel();
         	jpFacturado.setLayout(null);
-        	jpFacturado.setBounds(new Rectangle(15,15,720,425));
-        	jpFacturado.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " FACTURAS DEL MES "+mesLI+"/"+anioLI,
-                    javax.swing.border.TitledBorder.CENTER,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+        	jpFacturado.setBounds(new Rectangle(15,15,1170,510));
+        	jpFacturado.setBorder(Utils.crearTituloYBorde(" FACTURAS DEL MES "+mesLI+"/"+anioLI));
         	JLabel totales= new JLabel("TOTALES");
         	totales.setForeground(Utils.colorTexto);
-        	totales.setBounds(new Rectangle(150,400,70,22));
+        	totales.setFont(Utils.FuenteBasica());
+        	totales.setBounds(new Rectangle(250,475,100,26));
         	totales.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel neto= new JLabel("NETO:");
         	neto.setForeground(Utils.colorTexto);
-        	neto.setBounds(new Rectangle(250,400,50,22));
+        	neto.setFont(Utils.FuenteBasica());
+        	neto.setBounds(new Rectangle(360,475,100,26));
         	neto.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel iva= new JLabel("IVA:");
         	iva.setForeground(Utils.colorTexto);
-        	iva.setBounds(new Rectangle(400,400,50,22));
+        	iva.setFont(Utils.FuenteBasica());
+        	iva.setBounds(new Rectangle(630,475,100,26));
         	iva.setHorizontalAlignment(SwingConstants.RIGHT);
         	JLabel total= new JLabel("TOTAL:");
         	total.setForeground(Utils.colorTexto);
-        	total.setBounds(new Rectangle(560,400,50,22));
+        	total.setFont(Utils.FuenteBasica());
+        	total.setBounds(new Rectangle(900,475,100,26));
         	total.setHorizontalAlignment(SwingConstants.RIGHT);
         	jpFacturado.add(totales,null);
         	jpFacturado.add(neto,null);
@@ -136,9 +142,11 @@ public class GUIMostrarLibroIva extends JDialog {
     public JTextField getJTFNeto() {
     	if (jtfNeto == null) {
     		jtfNeto = new JTextField();
-    		jtfNeto.setBounds(new Rectangle(305,398,90,20));
+    		jtfNeto.setBounds(new Rectangle(470,475,150,26));
     		jtfNeto.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfNeto.setEnabled(false);
+    		jtfNeto.setHorizontalAlignment(SwingConstants.RIGHT);
+    		jtfNeto.setFont(Utils.FuenteCampos());
     	}
     	return jtfNeto;
     }
@@ -146,9 +154,11 @@ public class GUIMostrarLibroIva extends JDialog {
     public JTextField getJTFIva() {
     	if (jtfIva == null) {
     		jtfIva = new JTextField();
-    		jtfIva.setBounds(new Rectangle(455,398,90,20));
+    		jtfIva.setBounds(new Rectangle(740,475,150,26));
     		jtfIva.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfIva.setEnabled(false);
+    		jtfIva.setHorizontalAlignment(SwingConstants.RIGHT);
+    		jtfIva.setFont(Utils.FuenteCampos());
     	}
     	return jtfIva;
     }
@@ -156,9 +166,11 @@ public class GUIMostrarLibroIva extends JDialog {
     public JTextField getJTFTotal() {
     	if (jtfTotal == null) {
     		jtfTotal = new JTextField();
-    		jtfTotal.setBounds(new Rectangle(615,398,90,20));
+    		jtfTotal.setBounds(new Rectangle(1010,475,150,26));
     		jtfTotal.setDisabledTextColor(Utils.colorTextoDisabled);
     		jtfTotal.setEnabled(false);
+    		jtfTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+    		jtfTotal.setFont(Utils.FuenteCampos());
     	}
     	return jtfTotal;
     }
@@ -167,7 +179,7 @@ public class GUIMostrarLibroIva extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(10,30,700,360));
+                jspDatos.setBounds(new Rectangle(10,30,1150,430));
                 jspDatos.setViewportView(getJTDatos());
         }
         return jspDatos;
@@ -177,29 +189,32 @@ public class GUIMostrarLibroIva extends JDialog {
         if (jtDatos == null) {
         	modTabla = new ModeloTabla(titulos, datos);
         	jtDatos = new JTable(modTabla); 
+        	jtDatos.setFont(Utils.FuenteTablasSimple());
+ 			JTableHeader titTabla = jtDatos.getTableHeader();
+ 			titTabla.setFont(Utils.FuenteTablasSimple());
         	TableColumn columna0 = jtDatos.getColumn("Fecha");
-            columna0.setPreferredWidth(72);
-			columna0.setMaxWidth(72);
+            columna0.setPreferredWidth(100);
+			columna0.setMaxWidth(100);
 			columna0.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna1 = jtDatos.getColumn("Tipo");
-            columna1.setPreferredWidth(40);
-			columna1.setMaxWidth(40);
+            columna1.setPreferredWidth(60);
+			columna1.setMaxWidth(60);
 			columna1.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna2 = jtDatos.getColumn("L");
-            columna2.setPreferredWidth(20);
-			columna2.setMaxWidth(20);
+            columna2.setPreferredWidth(30);
+			columna2.setMaxWidth(30);
 			columna2.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna3 = jtDatos.getColumn("PV");
-            columna3.setPreferredWidth(40);
-			columna3.setMaxWidth(40);
+            columna3.setPreferredWidth(60);
+			columna3.setMaxWidth(60);
 			columna3.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna4 = jtDatos.getColumn("Nº");
-            columna4.setPreferredWidth(62);
-			columna4.setMaxWidth(62);
+            columna4.setPreferredWidth(100);
+			columna4.setMaxWidth(100);
 			columna4.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna7 = jtDatos.getColumn("CUIT");
-            columna7.setPreferredWidth(90);
-			columna7.setMaxWidth(90);
+            columna7.setPreferredWidth(130);
+			columna7.setMaxWidth(130);
 			columna7.setCellRenderer( Utils.alinearCentro());
 			TableColumn columna8 = jtDatos.getColumn("Neto");
             columna8.setCellRenderer( Utils.alinearDerecha());

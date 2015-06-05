@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.JTableHeader;
 
 import cliente.ModeloTabla;
 import cliente.Imagenes.Botones.ButtonType;
@@ -46,7 +48,7 @@ public class GUIGestionarProvincia extends JDialog {
     public GUIGestionarProvincia(JFrame guiPadre) {
     	super(guiPadre);
     	datos = new Object[0][titulos.length];
-        this.setSize(new java.awt.Dimension(580,395));
+        this.setSize(new java.awt.Dimension(700,430));
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
         this.setTitle("Gestión de Provincias");
@@ -59,7 +61,7 @@ public class GUIGestionarProvincia extends JDialog {
     public GUIGestionarProvincia(JDialog guiPadre) {
     	super(guiPadre);
     	datos = new Object[0][titulos.length];
-        this.setSize(new java.awt.Dimension(580,395));
+        this.setSize(new java.awt.Dimension(700,430));
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
         this.setTitle("Gestión de Provincias");
@@ -73,6 +75,7 @@ public class GUIGestionarProvincia extends JDialog {
         if (jpPpal == null) {
             jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
             jpPpal.setLayout(null);
+            jpPpal.setSize(new java.awt.Dimension(700,430));
             jpPpal.add(getJPGestion(), null);
             jpPpal.add(getJBAceptar(), null);
             jpPpal.add(getJBCancelar(), null);
@@ -86,16 +89,14 @@ public class GUIGestionarProvincia extends JDialog {
     private JPanel getJPBuscador() {
         if (jpBuscador == null) {
             jlNombre = new JLabel();
-            jlNombre.setBounds(new Rectangle(10,30,60,15));
+            jlNombre.setBounds(new Rectangle(10,30,100,26));
             jlNombre.setForeground(java.awt.Color.white);
             jlNombre.setText("NOMBRE:");
+            jlNombre.setFont(Utils.FuenteBasica());
             jpBuscador = new TransparentPanel();
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpBuscador.setBounds(new Rectangle(10,215,140,90));
+            jpBuscador.setBorder(Utils.crearTituloYBorde("BUSCAR"));
+            jpBuscador.setBounds(new Rectangle(10,215,200,100));
 
             jpBuscador.add(jlNombre, null);
             jpBuscador.add(getJTFBuscador(), null);
@@ -107,10 +108,8 @@ public class GUIGestionarProvincia extends JDialog {
         if (jpDatos == null) {
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBounds(new Rectangle(160,15,400,290));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "PROVINCIA",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+            jpDatos.setBounds(new Rectangle(230,15,450,300));
+            jpDatos.setBorder(Utils.crearTituloYBorde("PROVINCIA"));
             jpDatos.add(getJSPDatos(), null);
         }
         return jpDatos;
@@ -120,10 +119,8 @@ public class GUIGestionarProvincia extends JDialog {
         if (jpGestion == null) {
             jpGestion = new TransparentPanel();
             jpGestion.setLayout(null);
-            jpGestion.setBounds(new Rectangle(10,15,140,175));
-            jpGestion.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-                    "GESTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+            jpGestion.setBounds(new Rectangle(10,15,200,175));
+            jpGestion.setBorder(Utils.crearTituloYBorde("GESTION"));
             jpGestion.add(getJBCargar(), null);
             jpGestion.add(getJBMod(), null);
             jpGestion.add(getJBBorrar(), null);
@@ -136,8 +133,9 @@ public class GUIGestionarProvincia extends JDialog {
             jbCargar = new GlossyButton("INGRESAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbCargar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
             jbCargar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbCargar.setBounds(new Rectangle(20,25,100,25));
+            jbCargar.setBounds(new Rectangle(20,30,160,26));
             jbCargar.setInputMap(0, map);
+            jbCargar.setFont(Utils.FuenteBotonesChicos());
         }
         return jbCargar;
     }
@@ -147,8 +145,9 @@ public class GUIGestionarProvincia extends JDialog {
             jbModif = new GlossyButton("MODIFICAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbModif.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/edit.png")));
             jbModif.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbModif.setBounds(new Rectangle(20,75,100,25));
+            jbModif.setBounds(new Rectangle(20,75,160,26));
             jbModif.setInputMap(0, map);
+            jbModif.setFont(Utils.FuenteBotonesChicos());
         }
         return jbModif;
     }
@@ -158,8 +157,9 @@ public class GUIGestionarProvincia extends JDialog {
             jbBorrar = new GlossyButton("ELIMINAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbBorrar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
             jbBorrar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            jbBorrar.setBounds(new Rectangle(20,125,100,25));
+            jbBorrar.setBounds(new Rectangle(20,125,160,26));
             jbBorrar.setInputMap(0, map);
+            jbBorrar.setFont(Utils.FuenteBotonesChicos());
         }
         return jbBorrar;
     }
@@ -167,10 +167,11 @@ public class GUIGestionarProvincia extends JDialog {
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbAceptar.setBounds(new Rectangle(155,325,100,30));
+            jbAceptar.setBounds(new Rectangle(100,350,200,40));
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
+            jbAceptar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbAceptar;
     }
@@ -178,10 +179,11 @@ public class GUIGestionarProvincia extends JDialog {
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbCancelar.setBounds(new Rectangle(305,325,100,30));
+            jbCancelar.setBounds(new Rectangle(400,350,200,40));
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setInputMap(0, map);
+            jbCancelar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbCancelar;
     }
@@ -189,7 +191,7 @@ public class GUIGestionarProvincia extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(5,20,390,265));
+                jspDatos.setBounds(new Rectangle(10,30,430,260));
                 jspDatos.setViewportView(getJTDatos());
         }
         return jspDatos;
@@ -199,6 +201,9 @@ public class GUIGestionarProvincia extends JDialog {
         if (jtDatos == null) {
             modTabla = new ModeloTabla(titulos, datos);
             jtDatos = new JTable(modTabla);
+            jtDatos.setFont(Utils.FuenteTablasSimple());
+			JTableHeader titTabla = jtDatos.getTableHeader();
+			titTabla.setFont(Utils.FuenteTablasSimple());
             Utils.ocultarColumnaId(jtDatos);
         }
         return jtDatos;
@@ -207,7 +212,8 @@ public class GUIGestionarProvincia extends JDialog {
     public JTextField getJTFBuscador() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(10,50,110,22));
+            jtfNombre.setBounds(new Rectangle(10,60,170,26));
+            jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
     }
@@ -235,5 +241,9 @@ public class GUIGestionarProvincia extends JDialog {
         modTabla = null;
         jspDatos = null;
         jpPpal.add(getJPDatos(), null);
+    }
+    
+    public void setMouseListener(MouseListener lis) {
+    	jtDatos.addMouseListener(lis);
     }
 }    

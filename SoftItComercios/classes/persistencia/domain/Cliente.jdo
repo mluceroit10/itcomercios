@@ -34,6 +34,8 @@
 		<extension vendor-name="triactive" key="length" value="max 255"/> 
 	</field>	
 	 
+	 <field name="deuda" /> 
+   	<field name="fechaUF" />
      </class>
     </package>
 </jdo>	

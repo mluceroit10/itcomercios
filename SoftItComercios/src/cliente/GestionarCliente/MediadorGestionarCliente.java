@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -25,7 +27,7 @@ import cliente.Principal.GUIReport;
 import common.Utils;
 import common.GestionarCliente.IControlCliente;
 
-public class MediadorGestionarCliente implements ActionListener, ListSelectionListener, KeyListener {
+public class MediadorGestionarCliente implements ActionListener, ListSelectionListener, KeyListener,MouseListener {
 
     private GUIGestionarCliente guiCliente = null;
     protected IControlCliente controlCliente;
@@ -105,6 +107,7 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
     	}
     	guiCliente.tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiCliente.actualizarTabla();
+        this.guiCliente.setMouseListener(this);  
     }
     
 	public void actionPerformed(ActionEvent e) {
@@ -265,6 +268,7 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
 		}
 		guiCliente.tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		guiCliente.actualizarTabla();
+        this.guiCliente.setMouseListener(this);  
 	}
 	
 	public GUIGestionarCliente getGUI() {
@@ -299,4 +303,39 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
     	}
     }
    
+	public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medFecturarCliente != null) {
+						medFecturarCliente.cliente = miClienteDto;
+						medFecturarCliente.actualizarCliente();
+						this.guiCliente.dispose();
+					}else if (medRealizRemito != null) {
+						medRealizRemito.cliente = miClienteDto;
+						medRealizRemito.actualizarCliente();
+						this.guiCliente.dispose();
+					}
+				}
+			}
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
 }

@@ -78,7 +78,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	
 	public GUIPrincipal() throws Exception{
 		super();
-		setSize(new java.awt.Dimension(800,570));
+		setSize(new java.awt.Dimension(1350,670));
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle("Sistema Informático ''itComercios''");
@@ -107,8 +107,8 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		jContentPane.add(getJPanelAccesosClientes(), null);
 		
 		JLabel salir = new JLabel("SALIR");
-		salir.setBounds(new java.awt.Rectangle(675,485,60,20));
-		salir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+		salir.setBounds(new java.awt.Rectangle(1115,560,100,35));
+		salir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 		salir.setForeground(Utils.colorTexto);
 		jContentPane.add(salir,null);
 		jContentPane.add(getJButtonSalir(),null);
@@ -122,46 +122,46 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			archivo = new JMenu("Información        ");
 			archivo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/informacion.png")));
 			archivo.setForeground(colorFuenteMenu);
-			archivo.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+			archivo.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
 			gestionar = new JMenu("Gestionar             ");
 			gestionar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/reclamo.png")));
 	        gestionar.setForeground(colorFuenteMenu);
-	        gestionar.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        gestionar.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
 	        baseDatos = new JMenu("Datos         ");
 	        baseDatos.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/data.png")));
 	        baseDatos.setForeground(colorFuenteMenu);
-	        baseDatos.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        baseDatos.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
 	        menuPrinc.add(archivo);
 	        menuPrinc.add(gestionar);
 	        menuPrinc.add(baseDatos);
 	        infoComercio= new JMenuItem("Del Comercio");
 	        infoComercio.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/about_comerce.png")));
 	        infoComercio.setForeground(colorFuenteMenu);
-	        infoComercio.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        infoComercio.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        infoProg = new JMenuItem("Del Programa        ");
 	        infoProg.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/about_program.png")));
 			infoProg.setForeground(colorFuenteMenu);
-			infoProg.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+			infoProg.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        archivoSalir= new JMenuItem("Salir        ");
 	        archivoSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/exit.png")));
 	        archivoSalir.setForeground(colorFuenteMenu);
-	        archivoSalir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        archivoSalir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        gestionarProvincia= new JMenuItem("Provincia");
 	        gestionarProvincia.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/province.png")));
 	        gestionarProvincia.setForeground(colorFuenteMenu);
-	        gestionarProvincia.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        gestionarProvincia.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        gestionarLocalidad= new JMenuItem("Localidad");
 	        gestionarLocalidad.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/city.png")));
 	        gestionarLocalidad.setForeground(colorFuenteMenu);
-	        gestionarLocalidad.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        gestionarLocalidad.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        backupBD= new JMenuItem("BackUP de Base de Datos");
 	        backupBD.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/database.png")));
 	        backupBD.setForeground(colorFuenteMenu);
-	        backupBD.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        backupBD.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        modoAvanzado= new JMenuItem("Modo Avanzado");
 	        modoAvanzado.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/edit_notificaciones.png")));
 	        modoAvanzado.setForeground(colorFuenteMenu);
-	        modoAvanzado.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 14));
+	        modoAvanzado.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26));
 	        archivo.add(infoComercio);
 	        archivo.add(infoProg);
 	        archivo.add(archivoSalir);
@@ -178,27 +178,27 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosProductos = new TransparentPanel();
 			jPanelAccesosProductos.setLayout(null);
 			jPanelAccesosProductos.setBackground(Utils.colorPanel);
-			jPanelAccesosProductos.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosProductos.setBounds(new Rectangle(406, 135, 370, 120));
+			jPanelAccesosProductos.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosProductos.setBounds(new Rectangle(700, 160, 600, 140));
 			JLabel titulosoc= new JLabel("PROVEEDORES - PRODUCTOS");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,600,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosProductos.add(titulosoc, null);
 			jPanelAccesosProductos.add(getJButtonProveedores(), null);
 			JLabel gestion= new JLabel("PROVEEDORES");
 			gestion.setForeground(Utils.colorTexto);
-			gestion.setBounds(new java.awt.Rectangle(0,100,185,15));
+			gestion.setBounds(new java.awt.Rectangle(0,110,300,25));
 			gestion.setHorizontalAlignment(SwingConstants.CENTER);
-			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 			jPanelAccesosProductos.add(gestion, null);
 			jPanelAccesosProductos.add(getJButtonProductos(), null);
 			JLabel gestionPr= new JLabel("PRODUCTOS");
 			gestionPr.setForeground(Utils.colorTexto);
-			gestionPr.setBounds(new java.awt.Rectangle(185,100,185,12));
+			gestionPr.setBounds(new java.awt.Rectangle(300,110,300,25));
 			gestionPr.setHorizontalAlignment(SwingConstants.CENTER);
-			gestionPr.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+			gestionPr.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 			jPanelAccesosProductos.add(gestionPr, null);
 		}
 		return jPanelAccesosProductos;
@@ -209,14 +209,14 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelLibroIva = new TransparentPanel();
 			jPanelLibroIva.setLayout(null);
 			jPanelLibroIva.setBackground(Utils.colorPanel);
-			jPanelLibroIva.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelLibroIva.setBounds(new Rectangle(606, 260, 170, 120));
+			jPanelLibroIva.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelLibroIva.setBounds(new Rectangle(1025, 310, 275, 140));
 			jPanelLibroIva.add(getJButtonLibroIva(), null);
 			JLabel stock= new JLabel("LIBRO IVA");
 			stock.setForeground(Utils.colorTexto);
-			stock.setBounds(new java.awt.Rectangle(0,100,170,12));
+			stock.setBounds(new java.awt.Rectangle(0,110,275,25));
 			stock.setHorizontalAlignment(SwingConstants.CENTER);
-			stock.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+			stock.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD,24));
 			jPanelLibroIva.add(stock, null);
 		}
 		return jPanelLibroIva;
@@ -225,7 +225,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonLibroIva() {
 		if (jBLibroIva == null) {
 			jBLibroIva= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBLibroIva.setBounds(new java.awt.Rectangle(52,25,70,70));
+			jBLibroIva.setBounds(new java.awt.Rectangle(100,40,70,70));
 			jBLibroIva.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/libroIva.png")));
 			jBLibroIva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBLibroIva.setInputMap(0, map);
@@ -236,7 +236,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonProductos() {
 		if (jBProductos == null) {
 			jBProductos= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBProductos.setBounds(new java.awt.Rectangle(245,25,70,70));
+			jBProductos.setBounds(new java.awt.Rectangle(415,40,70,70));
 			jBProductos.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productos.png")));
 			jBProductos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBProductos.setInputMap(0, map);
@@ -247,7 +247,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonSalir() {
 		if (jButtonSalir == null) {
 			jButtonSalir = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jButtonSalir.setBounds(new java.awt.Rectangle(650,385,100,100));
+			jButtonSalir.setBounds(new java.awt.Rectangle(1110,463,100,100));
 			jButtonSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salir.png")));
 			jButtonSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jButtonSalir.setInputMap(0, map);
@@ -258,7 +258,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonProveedores() {
 		if (jBGestionProveedores == null) {
 			jBGestionProveedores= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionProveedores.setBounds(new java.awt.Rectangle(60,25,70,70));  
+			jBGestionProveedores.setBounds(new java.awt.Rectangle(115,40,70,70));  
 			jBGestionProveedores.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/proveedores.png")));
 			jBGestionProveedores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionProveedores.setInputMap(0, map);
@@ -271,20 +271,20 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosCliente = new TransparentPanel();
 			jPanelAccesosCliente.setLayout(null);
 			jPanelAccesosCliente.setBackground(Utils.colorPanel);
-			jPanelAccesosCliente.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosCliente.setBounds(new Rectangle(406, 260, 170, 120));
+			jPanelAccesosCliente.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosCliente.setBounds(new Rectangle(700, 310, 275, 140));
 			JLabel titulosoc= new JLabel("CLIENTES");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,170,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,275,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosCliente.add(titulosoc, null);
 			jPanelAccesosCliente.add(getJButtonClientes(), null);
 			JLabel gestion= new JLabel("GESTION");
 			gestion.setForeground(Utils.colorTexto);
-			gestion.setBounds(new java.awt.Rectangle(0,100,170,15));
+			gestion.setBounds(new java.awt.Rectangle(0,110,275,25));
 			gestion.setHorizontalAlignment(SwingConstants.CENTER);
-			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+			gestion.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 			jPanelAccesosCliente.add(gestion, null);
 		}
 		return jPanelAccesosCliente;
@@ -293,7 +293,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonClientes() {
 		if (jBGestionClientes == null) {
 			jBGestionClientes= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionClientes.setBounds(new java.awt.Rectangle(53,25,70,70));
+			jBGestionClientes.setBounds(new java.awt.Rectangle(100,40,70,70));
 			jBGestionClientes.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/socios.png")));
 			jBGestionClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionClientes.setInputMap(0, map);
@@ -307,27 +307,27 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosContables.setForeground(new Color(106, 90, 205));
 			jPanelAccesosContables.setLayout(null);
 			jPanelAccesosContables.setBackground(Utils.colorPanel);
-			jPanelAccesosContables.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosContables.setBounds(new Rectangle(18, 135, 370, 120));
+			jPanelAccesosContables.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosContables.setBounds(new Rectangle(40, 160, 600, 140));
 			JLabel titulosoc= new JLabel("GESTION CONTABLE");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,600,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosContables.add(titulosoc, null);
 			jPanelAccesosContables.add(getJButtonGestionarMC(), null);
 				JLabel movCaja= new JLabel("MOVIMIENTO DE CAJA");
 				movCaja.setForeground(Utils.colorTexto);
-				movCaja.setBounds(new java.awt.Rectangle(0,100,185,15));
+				movCaja.setBounds(new java.awt.Rectangle(0,110,300,25));
 				movCaja.setHorizontalAlignment(SwingConstants.CENTER);
-				movCaja.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				movCaja.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosContables.add(movCaja, null);
 				jPanelAccesosContables.add(getJButtonPlanillaES(), null);
 				JLabel plES= new JLabel("PLANILLA DE E/S");
 				plES.setForeground(Utils.colorTexto);
-				plES.setBounds(new java.awt.Rectangle(185,100,185,15));
+				plES.setBounds(new java.awt.Rectangle(300,110,300,25));
 				plES.setHorizontalAlignment(SwingConstants.CENTER);
-				plES.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				plES.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosContables.add(plES, null);
 		}
 		return jPanelAccesosContables;
@@ -336,7 +336,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonGestionarMC() {
 		if (jBGestionarMC == null) {
 			jBGestionarMC= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionarMC.setBounds(new java.awt.Rectangle(60,25,70,70));
+			jBGestionarMC.setBounds(new java.awt.Rectangle(115,40,70,70));
 			jBGestionarMC.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/movCaja.png")));
 			jBGestionarMC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionarMC.setInputMap(0, map);
@@ -347,7 +347,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonPlanillaES() {
 		if (jBPlanillaES == null) {
 			jBPlanillaES= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBPlanillaES.setBounds(new java.awt.Rectangle(245,25,70,70));
+			jBPlanillaES.setBounds(new java.awt.Rectangle(415,40,70,70));
 			jBPlanillaES.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/planillaES.png")));
 			jBPlanillaES.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBPlanillaES.setInputMap(0, map);
@@ -360,27 +360,27 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosFactProv = new TransparentPanel();
 			jPanelAccesosFactProv.setLayout(null);
 			jPanelAccesosFactProv.setBackground(Utils.colorPanel);
-			jPanelAccesosFactProv.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosFactProv.setBounds(new Rectangle(406, 10, 370, 120));
+			jPanelAccesosFactProv.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosFactProv.setBounds(new Rectangle(700, 10, 600, 140));
 			JLabel titulosoc= new JLabel("FACTURACION - PROVEEDOR");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,600,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosFactProv.add(titulosoc, null);
 			jPanelAccesosFactProv.add(getJButtonFacturaProveedor(), null);
 				JLabel nFact= new JLabel("NUEVA FACTURA");
 				nFact.setForeground(Utils.colorTexto);
-				nFact.setBounds(new java.awt.Rectangle(0,100,185,15));
+				nFact.setBounds(new java.awt.Rectangle(0,110,300,25));
 				nFact.setHorizontalAlignment(SwingConstants.CENTER);
-				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosFactProv.add(nFact, null);
 				jPanelAccesosFactProv.add(getJButtonTodasFactProveedor(), null);
 				JLabel factGen= new JLabel("FACTURAS GENERADAS");
 				factGen.setForeground(Utils.colorTexto);
-				factGen.setBounds(new java.awt.Rectangle(185,100,185,15));
+				factGen.setBounds(new java.awt.Rectangle(300,110,300,25));
 				factGen.setHorizontalAlignment(SwingConstants.CENTER);
-				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosFactProv.add(factGen, null);
 		}
 		return jPanelAccesosFactProv;
@@ -389,7 +389,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonFacturaCliente() {
 		if (jBFacturaCliente == null) {
 			jBFacturaCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBFacturaCliente.setBounds(new java.awt.Rectangle(60,25,70,70));
+			jBFacturaCliente.setBounds(new java.awt.Rectangle(115,40,70,70));
 			jBFacturaCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/facturaC.png")));
 			jBFacturaCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBFacturaCliente.setInputMap(0, map);
@@ -401,7 +401,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		if (jBRemitoCliente == null) {
 			jBRemitoCliente = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
 			jBRemitoCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/remito.png")));
-			jBRemitoCliente.setBounds(new java.awt.Rectangle(60,25,70,70));
+			jBRemitoCliente.setBounds(new java.awt.Rectangle(115,40,70,70));
 			jBRemitoCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)); 
 			jBRemitoCliente.setInputMap(0, map);
 		}
@@ -413,27 +413,27 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosFactCte = new TransparentPanel();
 			jPanelAccesosFactCte.setLayout(null);
 			jPanelAccesosFactCte.setBackground(Utils.colorPanel);
-			jPanelAccesosFactCte.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosFactCte.setBounds(new Rectangle(18, 260, 370, 120));
+			jPanelAccesosFactCte.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosFactCte.setBounds(new Rectangle(40, 310, 600, 140));
 			JLabel titulosoc= new JLabel("FACTURACION - CLIENTE");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,600,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosFactCte.add(titulosoc, null);
 			jPanelAccesosFactCte.add(getJButtonFacturaCliente(), null);
 				JLabel nFact= new JLabel("NUEVA FACTURA");
 				nFact.setForeground(Utils.colorTexto);
-				nFact.setBounds(new java.awt.Rectangle(0,100,185,15));
+				nFact.setBounds(new java.awt.Rectangle(0,110,300,25));
 				nFact.setHorizontalAlignment(SwingConstants.CENTER);
-				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				nFact.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosFactCte.add(nFact, null);
 				jPanelAccesosFactCte.add(getJButtonTodasFactCliente(), null);
 				JLabel factGen= new JLabel("FACTURAS GENERADAS");
 				factGen.setForeground(Utils.colorTexto);
-				factGen.setBounds(new java.awt.Rectangle(185,100,185,15));
+				factGen.setBounds(new java.awt.Rectangle(300,110,300,25));
 				factGen.setHorizontalAlignment(SwingConstants.CENTER);
-				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				factGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosFactCte.add(factGen, null);
 		}
 		return jPanelAccesosFactCte;
@@ -442,7 +442,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonFacturaProveedor() {
 		if (jBFacturaProveedor== null) {
 			jBFacturaProveedor= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBFacturaProveedor.setBounds(new java.awt.Rectangle(60,25,70,70));
+			jBFacturaProveedor.setBounds(new java.awt.Rectangle(115,40,70,70));
 			jBFacturaProveedor.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/facturaP.png")));
 			jBFacturaProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBFacturaProveedor.setInputMap(0, map);
@@ -453,7 +453,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonTodasFactCliente() {
 		if (jBTodasFactCliente == null) {
 			jBTodasFactCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodasFactCliente.setBounds(new java.awt.Rectangle(245,25,70,70));
+			jBTodasFactCliente.setBounds(new java.awt.Rectangle(415,40,70,70));
 			jBTodasFactCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tFactCte.png")));
 			jBTodasFactCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodasFactCliente.setInputMap(0, map);
@@ -466,27 +466,27 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			jPanelAccesosRemitoCte = new TransparentPanel();
 			jPanelAccesosRemitoCte.setLayout(null);
 			jPanelAccesosRemitoCte.setBackground(Utils.colorPanel);
-			jPanelAccesosRemitoCte.setBorder(new LineBorder(new Color(104, 34, 139), 4, true));
-			jPanelAccesosRemitoCte.setBounds(new Rectangle(18, 10, 370, 120));
+			jPanelAccesosRemitoCte.setBorder(new LineBorder(new Color(104, 34, 139), 5, true));
+			jPanelAccesosRemitoCte.setBounds(new Rectangle(40, 10, 600, 140));
 			JLabel titulosoc= new JLabel("REMITOS - CLIENTE");
 			titulosoc.setForeground(Utils.colorTexto);
-			titulosoc.setBounds(new java.awt.Rectangle(0,5,370,20));
+			titulosoc.setBounds(new java.awt.Rectangle(0,5,600,35));
 			titulosoc.setHorizontalAlignment(SwingConstants.CENTER);
-			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
+			titulosoc.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
 			jPanelAccesosRemitoCte.add(titulosoc, null);
 			jPanelAccesosRemitoCte.add(getJButtonRemitoCliente(), null);
 				JLabel nRem= new JLabel("NUEVO REMITO");
 				nRem.setForeground(Utils.colorTexto);
-				nRem.setBounds(new java.awt.Rectangle(0,100,185,15));
+				nRem.setBounds(new java.awt.Rectangle(0,110,300,25));
 				nRem.setHorizontalAlignment(SwingConstants.CENTER);
-				nRem.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				nRem.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosRemitoCte.add(nRem, null);
 				jPanelAccesosRemitoCte.add(getJButtonTodosRemitosCliente(), null);
 				JLabel remGen= new JLabel("REMITOS GENERADOS");
 				remGen.setForeground(Utils.colorTexto);
-				remGen.setBounds(new java.awt.Rectangle(185,100,185,15));
+				remGen.setBounds(new java.awt.Rectangle(300,110,300,25));
 				remGen.setHorizontalAlignment(SwingConstants.CENTER);
-				remGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12));
+				remGen.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 24));
 				jPanelAccesosRemitoCte.add(remGen, null);
 		}
 		return jPanelAccesosRemitoCte;
@@ -495,7 +495,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonTodasFactProveedor() {
 		if (jBTodasFactProv== null) {
 			jBTodasFactProv= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodasFactProv.setBounds(new java.awt.Rectangle(245,25,70,70));
+			jBTodasFactProv.setBounds(new java.awt.Rectangle(415,40,70,70));
 			jBTodasFactProv.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tFactProv.png")));
 			jBTodasFactProv.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodasFactProv.setInputMap(0, map);
@@ -506,7 +506,7 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	public JButton getJButtonTodosRemitosCliente() {
 		if (jBTodosRemitosCliente == null) {
 			jBTodosRemitosCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodosRemitosCliente.setBounds(new java.awt.Rectangle(245,25,70,70));
+			jBTodosRemitosCliente.setBounds(new java.awt.Rectangle(415,40,70,70));
 			jBTodosRemitosCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tRemitosCte.png")));
 			jBTodosRemitosCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodosRemitosCliente.setInputMap(0, map);
@@ -575,8 +575,8 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public void init() {
 		label = new JLabel(" ");
-		label.setFont(new Font( Utils.tipoLetra, Font.BOLD, 20));
-		label.setBounds(new Rectangle(15,400,400,30));
+		label.setFont(new Font( Utils.tipoLetra, Font.BOLD, 40));
+		label.setBounds(new Rectangle(15,500,900,40));
 		label.setForeground(Utils.colorTexto);
 		this.jContentPane.add(label,null);
 		h1 = new Thread(this);

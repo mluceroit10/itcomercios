@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -25,7 +27,7 @@ import cliente.Principal.GUIReport;
 import common.Utils;
 import common.GestionarProveedor.IControlProveedor;
 
-public class MediadorGestionarProveedor implements ActionListener, ListSelectionListener, KeyListener {
+public class MediadorGestionarProveedor implements ActionListener, ListSelectionListener, KeyListener,MouseListener {
 
     private GUIGestionarProveedor guiProveedor = null;
     protected IControlProveedor controlProveedor;
@@ -117,6 +119,7 @@ public class MediadorGestionarProveedor implements ActionListener, ListSelection
     	}
     	guiProveedor.tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiProveedor.actualizarTabla();
+        this.guiProveedor.setMouseListener(this);
     }
     
 	public void actionPerformed(ActionEvent e) {
@@ -276,10 +279,50 @@ public class MediadorGestionarProveedor implements ActionListener, ListSelection
 		}
 		guiProveedor.tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		guiProveedor.actualizarTabla();
+        this.guiProveedor.setMouseListener(this);
 	}
 	
 	public GUIGestionarProveedor getGUI() {
         return guiProveedor;
     }
 	
+	public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medModProducto != null) {
+						medModProducto.proveedor = miProveedorDto;
+						medModProducto.actualizarProveedor();
+						this.guiProveedor.dispose();
+					}else if (medAltaProducto != null) {
+						medAltaProducto.proveedor = miProveedorDto;
+						medAltaProducto.actualizarProveedor();
+						this.guiProveedor.dispose();
+					}else if (medFactProv != null) {
+						medFactProv.proveedor = miProveedorDto;
+						medFactProv.actualizarProveedor();
+						this.guiProveedor.dispose();
+					}
+				}
+			}
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
   }

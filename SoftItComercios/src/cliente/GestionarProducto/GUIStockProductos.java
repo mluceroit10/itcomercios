@@ -40,7 +40,7 @@ public class GUIStockProductos extends JDialog {
     
 	public GUIStockProductos(JDialog guiPadre) {
 		super(guiPadre);
-		this.setSize(500,380);
+		this.setSize(600,435);
 		this.setLocationRelativeTo(guiPadre);
 		this.setResizable(false);
 		this.setTitle("Control de Stock");
@@ -54,15 +54,15 @@ public class GUIStockProductos extends JDialog {
 		if (jpPpal == null) {
 			jpPpal= new JPanel_Whit_Image("/cliente/Imagenes/Imagenes/background.jpg");
 			jpPpal.setLayout(null);
-			jpPpal.setSize(500, 380);
+			jpPpal.setSize(600, 435);
 			jpPpal.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, null));
 			jpPpal.setName("Control de Stock");
 			jlTitulo = new JLabel();
-			jlTitulo.setBounds(new java.awt.Rectangle(113,12,280,25));
+			jlTitulo.setBounds(new java.awt.Rectangle(10,12,580,25));
 			jlTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-			jlTitulo.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16));
 			jlTitulo.setText("CONTROL DE STOCK DE PRODUCTOS");
 			jlTitulo.setForeground(Utils.colorTexto);
+			jlTitulo.setFont(Utils.FuenteCampos());
 			jpPpal.add(jlTitulo, null);
 			try {
 				jpPpal.add(getJPTipoDatos(), null);
@@ -80,22 +80,16 @@ public class GUIStockProductos extends JDialog {
 		if (jpTipoDatos == null) {
 			jpTipoDatos = new TransparentPanel();
 			jpTipoDatos.setLayout(null);
-			jpTipoDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"SELECCIONE CRITERIOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-			jpTipoDatos.setBounds(new java.awt.Rectangle(25,50,450,240));
+			jpTipoDatos.setBorder(Utils.crearTituloYBorde("SELECCIONE CRITERIOS"));
+			jpTipoDatos.setBounds(new java.awt.Rectangle(25,60,540,260));
 			jlProveedor = new JLabel();
-			jlProveedor.setBounds(new java.awt.Rectangle(30,30,390,100));
+			jlProveedor.setBounds(new java.awt.Rectangle(30,40,480,100));
 			jlProveedor.setHorizontalAlignment(SwingConstants.LEFT);
-			jlProveedor.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"SELECCIONE PROVEEDOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+			jlProveedor.setBorder(Utils.crearTituloYBorde("SELECCIONE PROVEEDOR"));
 			jLFormaOrden = new JLabel();
-			jLFormaOrden.setBounds(new java.awt.Rectangle(30,150,220,60));
+			jLFormaOrden.setBounds(new java.awt.Rectangle(30,170,480,70));
 			jLFormaOrden.setHorizontalAlignment(SwingConstants.LEFT);
-			jLFormaOrden.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b,
-					"SELECCIONE ORDEN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-					javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+			jLFormaOrden.setBorder(Utils.crearTituloYBorde("SELECCIONE ORDEN"));
 			jpTipoDatos.add(jlProveedor, null);
 			jpTipoDatos.add(jLFormaOrden, null);
 			jpTipoDatos.add(getTodos(), null);
@@ -122,9 +116,10 @@ public class GUIStockProductos extends JDialog {
 	private JRadioButton getUnProveedor() {
 		if (unProv == null) {
 			unProv = new JRadioButton("UN PROVEEDOR",true);
-			unProv.setBounds(new java.awt.Rectangle(60,90,120,21));
+			unProv.setBounds(new java.awt.Rectangle(60,100,179,26));
 			unProv.setActionCommand("unProv");
 			unProv.setForeground(Color.black);
+			unProv.setFont(Utils.FuenteBasica());
 //			unProv.setOpaque(false);
 		}
 		return unProv;
@@ -133,9 +128,10 @@ public class GUIStockProductos extends JDialog {
 	private JRadioButton getTodos() {
 		if (todos == null) {
 			todos = new JRadioButton("TODOS",false);
-			todos.setBounds(new java.awt.Rectangle(60,60,73,21));
+			todos.setBounds(new java.awt.Rectangle(60,70,97,26));
 			todos.setActionCommand("Todos");
 			todos.setForeground(Color.black);
+			todos.setFont(Utils.FuenteBasica());
 	//		todos.setOpaque(false);
 
 		}
@@ -151,7 +147,8 @@ public class GUIStockProductos extends JDialog {
 			}
 			JCProveedores.setBackground(new Color(255,255,255));
 			JCProveedores.setForeground(java.awt.Color.black);
-			JCProveedores.setBounds(new java.awt.Rectangle(200,90,140,20));
+			JCProveedores.setBounds(new java.awt.Rectangle(250,100,240,26));
+			JCProveedores.setFont(Utils.FuenteCampos());
 		}
 		return JCProveedores;
 	}
@@ -160,9 +157,10 @@ public class GUIStockProductos extends JDialog {
 		if (jBContinuar == null) {
 			jBContinuar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jBContinuar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			jBContinuar.setBounds(new java.awt.Rectangle(115,310,100,30));
+			jBContinuar.setBounds(new java.awt.Rectangle(50,355,200,40));
 			jBContinuar.setText("CONTINUAR");
 			jBContinuar.setInputMap(0, map);
+			jBContinuar.setFont(Utils.FuenteBotonesGrandes());
 		}
 		return jBContinuar;
 	}
@@ -171,9 +169,10 @@ public class GUIStockProductos extends JDialog {
 		if (jBCancelar == null) {
 			jBCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jBCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			jBCancelar.setBounds(new java.awt.Rectangle(265,310,100,30));
+			jBCancelar.setBounds(new java.awt.Rectangle(350,355,200,40));
 			jBCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
 			jBCancelar.setInputMap(0, map);
+			jBCancelar.setFont(Utils.FuenteBotonesGrandes());
 		}
 		return jBCancelar;
 	}
@@ -186,11 +185,12 @@ public class GUIStockProductos extends JDialog {
 	public JComboBox getJCOrdenListado() {
 		if (jCOrdenListado == null) {
 			jCOrdenListado = new JComboBox();
-			jCOrdenListado.setBounds(new java.awt.Rectangle(60,180,170,20));
+			jCOrdenListado.setBounds(new java.awt.Rectangle(60,200,300,26));
 			jCOrdenListado.setBackground(new Color(255,255,255));
 			jCOrdenListado.setForeground(java.awt.Color.black);
 			jCOrdenListado.addItem("Codigo del Producto");
 			jCOrdenListado.addItem("Nombre del Producto");
+			jCOrdenListado.setFont(Utils.FuenteCampos());
 		}
 		return jCOrdenListado;
 	}

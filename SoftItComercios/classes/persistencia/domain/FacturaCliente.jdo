@@ -24,6 +24,11 @@
     <field name = "cliente" persistence-modifier="persistent">
       	<extension vendor-name="triactive" key="collection-field"/>
     </field>
+    
+    <field name = "planilla" persistence-modifier="persistent">
+      	<extension vendor-name="triactive" key="collection-field" value="facturas"/>
+    </field>
+    
     </class>
     </package>
 </jdo>

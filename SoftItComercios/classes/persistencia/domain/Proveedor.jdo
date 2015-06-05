@@ -29,6 +29,10 @@
       		<extension vendor-name= "triactive" key ="owner-field" value="proveedor"/>
       	</collection>
      </field>
+     
+     <field name="deuda" /> 
+   	<field name="fechaUF" />
+   	
      </class>
     </package>
 </jdo>	

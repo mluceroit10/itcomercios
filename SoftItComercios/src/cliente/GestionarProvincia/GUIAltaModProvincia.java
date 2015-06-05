@@ -44,7 +44,7 @@ public class GUIAltaModProvincia extends JDialog {
         
     public GUIAltaModProvincia(JDialog guiPadre) {
     	super(guiPadre);
-    	this.setSize(new java.awt.Dimension(340,175));
+    	this.setSize(new java.awt.Dimension(540,180));
         this.setTitle("Nueva Provincia");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -57,7 +57,7 @@ public class GUIAltaModProvincia extends JDialog {
     public GUIAltaModProvincia(Provincia p,JDialog guiPadre) {
         super(guiPadre);
         this.prov = p;
-        this.setSize(new java.awt.Dimension(340,175));
+        this.setSize(new java.awt.Dimension(540,180));
         this.setTitle("Modificar Provincia");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -82,17 +82,14 @@ public class GUIAltaModProvincia extends JDialog {
     private JPanel getJPDatos() {
         if (jpDatos == null) {
             jlNombre = new JLabel("NOMBRE  (*)");
-            jlNombre.setBounds(new Rectangle(10,30,90,15));
+            jlNombre.setBounds(new Rectangle(10,40,140,26));
             jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
-            jlNombre.setForeground(Utils.colorTexto);  
+            jlNombre.setForeground(Utils.colorTexto);
+            jlNombre.setFont(Utils.FuenteBasica());
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setSize(new java.awt.Dimension(300,70));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DE LA PROVINCIA", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpDatos.setBounds(new Rectangle(15,15,300,70));
+            jpDatos.setBorder(Utils.crearTituloYBorde("DATOS DE LA PROVINCIA"));
+            jpDatos.setBounds(new Rectangle(15,15,500,80));
             jpDatos.add(jlNombre, null);
             jpDatos.add(getJTFNombre(), null);
             if (prov!=null) {
@@ -106,7 +103,8 @@ public class GUIAltaModProvincia extends JDialog {
     public JTextField getJTFNombre() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(107,30,180,22));
+            jtfNombre.setBounds(new Rectangle(160,40,320,26));
+            jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
     }
@@ -114,10 +112,11 @@ public class GUIAltaModProvincia extends JDialog {
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbAceptar.setBounds(new Rectangle(50,105,100,30));
+            jbAceptar.setBounds(new Rectangle(35,105,200,40));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
+            jbAceptar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbAceptar;
     }
@@ -125,10 +124,11 @@ public class GUIAltaModProvincia extends JDialog {
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbCancelar.setBounds(new Rectangle(180,105,100,30));
+            jbCancelar.setBounds(new Rectangle(305,105,200,40));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
+            jbCancelar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbCancelar;
     }

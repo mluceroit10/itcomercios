@@ -18,7 +18,7 @@ public class Main {
         common.RootAndIp.setConf(conf);
         final JPasswordField jpf = new JPasswordField();
         
-		JLabel titulo = new JLabel ("Ingrese su contraseña");
+		JLabel titulo = new JLabel ("<html><p style=\"font-size:18px\">Ingrese su contraseña</p></html>");
 		JOptionPane.showConfirmDialog (null, new Object[]{titulo, jpf}, "Inicio de sesión", JOptionPane.OK_CANCEL_OPTION);
 		char p[] = jpf.getPassword();
 		String pass = new String(p);

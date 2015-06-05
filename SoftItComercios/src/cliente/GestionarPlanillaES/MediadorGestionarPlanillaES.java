@@ -24,6 +24,7 @@ import persistencia.domain.MovimientoCaja;
 import persistencia.domain.PlanillaES;
 import server.GestionarMovimientoCaja.ControlMovimientoCaja;
 import server.RealizarPlanillaES.ControlRealizarPlanillaES;
+import cliente.Principal.GUIPrincipal;
 import cliente.Principal.GUIReport;
 
 import common.RootAndIp;
@@ -92,9 +93,9 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     					}
     				}
     				double ingR=this.totalIngresosRemitos(remitos);
-             //   	new GUIReport(guiImprimirPlanillaES,7,entr,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
                 	new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
-        			int prueba = JOptionPane.showConfirmDialog(guiImprimirPlanillaES,"Desea obtener el detalle de stock","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/productosFacturados.png"));
+                	
+        		 	int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
             		if( prueba==0 ){
             	 		this.organizarProductos(remitos,fact);
             			new GUIReport(guiImprimirPlanillaES,19,miPESDto.getNroPlanilla(),cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,miPESDto.getFecha());
@@ -125,7 +126,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     			Vector entr = this.entradas(mov);
     			Vector sal = this.salidas(mov);
     			new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,ultima.getNroPlanilla()+1,fecha,ultima.getSaldo(),miplDTO.getSaldo());
-    			int prueba = JOptionPane.showConfirmDialog(guiImprimirPlanillaES,"Desea obtener el detalle de stock","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/productosFacturados.png"));
+    			int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
         		if( prueba==0 ){
         	 		this.organizarProductos(remitos,fact);
         			new GUIReport(guiImprimirPlanillaES,19,ultima.getNroPlanilla()+1,cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,fecha);

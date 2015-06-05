@@ -55,7 +55,7 @@ public class MediadorPrincipal implements ActionListener{
     			new MediadorInfo(this, guiPrincipal);
     		} catch (Exception p){}	
     	}else if(this.guiPrincipal.getArchivoSalir()==source){
-    		int prueba = JOptionPane.showConfirmDialog(guiPrincipal,"Esta seguro que desea Salir","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/deseaSalir.gif"));
+    		int prueba = Utils.aceptarCancelarAccion(guiPrincipal,"Esta seguro que desea Salir",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/deseaSalir.gif")));
     		if( prueba==0 )
     			System.exit(0);
     	}else if (this.guiPrincipal.getJButtonProductos()== source) {
@@ -174,7 +174,7 @@ public class MediadorPrincipal implements ActionListener{
     		}
     	}else
     		if(this.guiPrincipal.getJButtonSalir()== source){
-    		int prueba = JOptionPane.showConfirmDialog(guiPrincipal,"Esta seguro que desea Salir","ATENCION!!!", 0,3,new ImageIcon(RootAndIp.getExtras()+"/iconos/deseaSalir.gif"));
+    			int prueba = Utils.aceptarCancelarAccion(guiPrincipal,"Esta seguro que desea Salir",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/deseaSalir.gif")));
     		if( prueba==0 ){
     			System.exit(0);
     		}    

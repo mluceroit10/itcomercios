@@ -22,7 +22,7 @@ public class GUIReport extends JDialog{
 	
 	public GUIReport(JDialog parent,int codRep, Vector datos, String titulo,String dato1,String leyenda) throws Exception{
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -56,7 +56,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep,Vector datos,String titulo) throws Exception{
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -86,7 +86,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep,String nombre,String cuit,String ingBrutos,String tel,String direccion,String nLoc) throws Exception{
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -107,7 +107,7 @@ public class GUIReport extends JDialog{
 	public GUIReport(JDialog parent,int codRep,Vector productos, Vector cantProd, Vector kilosProd, Vector prUnit,Vector descuentos, Vector prTotal,
 			String nroFact, Date fecha, Comercio distrib,Proveedor proveedor,double importeAux, double importeTotal) throws Exception{
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -128,7 +128,7 @@ public class GUIReport extends JDialog{
 	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,String nroComprob, Date fechaFact,
 			Comercio dist, Cliente cte, String iva, String condVta,String remitoNro,String ingrBrutos,String tipoFact,double subtotl,String impIva,double iTotal){
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -150,7 +150,7 @@ public class GUIReport extends JDialog{
 	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,FacturaCliente factura,String nroComprob, Date fechaFact,
 			Comercio dist, Cliente cte, double iTotal){
 			super(parent,true);
-			this.setSize(new java.awt.Dimension(700,570));
+			this.setSize(new java.awt.Dimension(700,640));
 			this.setResizable(false);
 			this.setLocationRelativeTo(parent);
 			this.setTitle("Vista Previa de Impresión");
@@ -169,7 +169,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep,Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPlanilla, Date fecha, double saldoAnt, double saldoActual) throws Exception {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -189,7 +189,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep,Comercio dist, String titulo, Vector detalleItImpr,	Vector fecha, Vector debe, Vector haber,Vector saldo,String leyenda) {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -213,7 +213,7 @@ public class GUIReport extends JDialog{
 	
 	public GUIReport(JDialog parent,int codRep,Comercio dist, String titulo, Vector clientes,Vector fechas,Vector saldoFavor,Vector adeudado) {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -237,7 +237,7 @@ public class GUIReport extends JDialog{
 	
 	public GUIReport(JDialog parent,int codRep,Comercio dist, String titulo, String periodo, Object[][] datos,	String neto, String iva, String total) {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(900,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -261,7 +261,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep, Comercio dist, String titulo, int elems, int[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos) {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");
@@ -285,7 +285,7 @@ public class GUIReport extends JDialog{
 
 	public GUIReport(JDialog parent,int codRep, int nroPlanilla,int cantProdEncontrados,Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, Date fecha) {
 		super(parent,true);
-		this.setSize(new java.awt.Dimension(700,570));
+		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
 		this.setLocationRelativeTo(parent);
 		this.setTitle("Vista Previa de Impresión");

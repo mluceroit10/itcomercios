@@ -3,7 +3,7 @@ package common.GestionarVencimiento;
 import java.sql.Date;
 import java.util.Vector;
 
-import persistencia.domain.Vencimiento; 
+import persistencia.domain.Vencimiento;
 import server.ManipuladorPersistencia;
 
 public interface IControlVencimiento {
@@ -13,6 +13,7 @@ public interface IControlVencimiento {
 	public void modificarVencimiento(Long id,Vencimiento modificado)throws Exception;
 	public Vector obtenerVencimientos()throws Exception;
 	public Vector obtenerVencimientosDeProducto(Long idProd)throws Exception;
+	public Vector obtenerVencimientosFiltros(String cod,String nombre,boolean ctrlStock)throws Exception;
 	public Vencimiento buscarVencimiento(Long id) throws Exception;
 	public Vencimiento buscarVencimientoProdFecha(Long idProd,Date fechaVto) throws Exception;
 	public Vencimiento buscarVencimientoPersistentePorId(ManipuladorPersistencia mp,Long id) throws Exception;

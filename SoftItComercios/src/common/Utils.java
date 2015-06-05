@@ -3,6 +3,7 @@ package common;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.io.ByteArrayOutputStream;
 import java.security.Key;
@@ -14,6 +15,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -51,6 +54,63 @@ public class Utils{
     public static int anchoMaxVent=screenSize.width;
     public static int largoMaxVent=screenSize.height-100;
     
+    public static Font FuenteBasica(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 20);
+    }
+    
+    public static Font FuenteBasicaMini(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 16);
+    }
+    
+    public static Font FuenteBasicaMinima(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 12);
+    }
+    
+    public static Font FuenteCampos(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26);
+    }
+    
+    public static Font FuenteBotonesChicos(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 22);
+    }
+    
+    
+    public static Font FuenteBotonesGrandes(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26);
+    }
+    
+    public static Font FuenteTablasSimple(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 18);
+    }
+    
+    public static Font FuenteTablasNegrita(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 20);
+    }
+    
+	public static TitledBorder crearTituloYBordeMini(String titulo){
+		return javax.swing.BorderFactory.createTitledBorder(Utils.b,titulo, 
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 18), colorTexto);
+	}
+	
+	public static TitledBorder crearTituloYBorde(String titulo){
+		return javax.swing.BorderFactory.createTitledBorder(Utils.b,titulo, 
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 22), colorTexto);
+	}
+	
+	public static TitledBorder crearTituloYBorde16(String titulo){
+		return javax.swing.BorderFactory.createTitledBorder(Utils.b,titulo, 
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 22), colorTexto);
+	}
+	
+	public static TitledBorder crearTituloYBordeDestacado(String titulo){
+		return javax.swing.BorderFactory.createTitledBorder(Utils.b,titulo, 
+				javax.swing.border.TitledBorder.CENTER,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,new Font(Utils.tipoLetra,Font.BOLD,24),colorTexto);
+	}
+	
 	/**
 	 * Toma un String con formato  dd/mm/yyyy y lo convierte al formato yyyy-dd-mm
 	 */
@@ -452,11 +512,24 @@ public class Utils{
 	}
 	
 	public static void advertenciaUsr(Component componentePadre,String texto){
-		JOptionPane.showMessageDialog(componentePadre,texto,"ATENCION!!!",JOptionPane.WARNING_MESSAGE);
+		String textoCambiado="<html><p style=\"font-size:18px\">"+texto+"</p></html>";
+		JOptionPane.showMessageDialog(componentePadre,textoCambiado,"ATENCION!!!",JOptionPane.WARNING_MESSAGE);
 	}
 
 	public static int aceptarCancelarAccion(Component componentePadre,String texto){
-		return JOptionPane.showConfirmDialog(componentePadre,texto,"ATENCION!!!",JOptionPane.WARNING_MESSAGE);
+		String textoCambiado="<html><p style=\"font-size:18px\">"+texto+"</p></html>";
+		return JOptionPane.showConfirmDialog(componentePadre,textoCambiado,"ATENCION!!!",JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public static int aceptarCancelarAccion(Component componentePadre,String texto,ImageIcon img){
+		String textoCambiado="<html><p style=\"font-size:18px\">"+texto+"</p></html>";
+		return JOptionPane.showConfirmDialog(componentePadre,textoCambiado,"ATENCION!!!",0,3,img);
+	}
+	
+	public static String seleccionarOpcion(Component componentePadre,String texto,String titulo,Object[] valoresPosibles,int selDef){
+		String textoCambiado="<html><p style=\"font-size:18px\">"+texto+"</p></html>";
+		return (String) JOptionPane.showInputDialog(componentePadre,textoCambiado, titulo,
+			JOptionPane. QUESTION_MESSAGE, null,valoresPosibles, valoresPosibles[selDef]);
 	}
 	
 	public static void alineacion(int tipoAlineacion,JTextPane texto){

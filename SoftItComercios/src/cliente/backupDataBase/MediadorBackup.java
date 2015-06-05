@@ -1,5 +1,6 @@
 package cliente.backupDataBase;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
@@ -38,7 +39,7 @@ public class MediadorBackup implements ActionListener{
 			}catch(Exception e){
 				e.printStackTrace();
 				seHizo=false;
-				JOptionPane.showMessageDialog(new JOptionPane(), "Ocurrió un error en el sistema, mientras se intentaba\nrealizar el Backup de su Base de Datos. Intente nuevamente.");
+				Utils.advertenciaUsr(null, "Ocurrió un error en el sistema, mientras se intentaba\nrealizar el Backup de su Base de Datos. Intente nuevamente.");
 			}
 		}else{
 			this.guiBackup.getAdvertencia().setText("OCURRIO UN ERROR AL REALIZAR EL BACKUP DE SU BASE DE DATOS. INTENTE NUEVAMENTE.");

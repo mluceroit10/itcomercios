@@ -66,18 +66,15 @@ public class GUIListarProductosFacturados extends JDialog {
 	private JPanel getJPDatos() {
 		if (jpDatos == null) {
 			jlDia = new JLabel("Ir a:");
-			jlDia.setBounds(new Rectangle(10,25,60,15));
+			jlDia.setBounds(new Rectangle(10,25,60,26));
 			jlDia.setHorizontalAlignment(SwingConstants.RIGHT);
 			jpDatos = new TransparentPanel();
 			jpDatos.setLayout(null);
 			jpDatos.setSize(new java.awt.Dimension(300,130));
-			jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "CALENDARIO", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+			jpDatos.setBorder(Utils.crearTituloYBorde("CALENDARIO"));
 			jpDatos.setBounds(new Rectangle(15,15,310,135));
 			jlNombre = new JLabel();
-			jlNombre.setBounds(new Rectangle(10,60,60,15));
+			jlNombre.setBounds(new Rectangle(10,60,60,26));
 			jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
 			jlNombre.setText("Localidad:");
 			jpDatos.add(jlDia, null);

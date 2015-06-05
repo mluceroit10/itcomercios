@@ -39,7 +39,7 @@ public class GUIAltaModLocalidad extends JDialog {
         
     public GUIAltaModLocalidad(JDialog guiPadre) {
     	super(guiPadre);
-        this.setSize(new java.awt.Dimension(340,235));
+        this.setSize(new java.awt.Dimension(540,280));
         this.setTitle("Nueva Localidad");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -52,7 +52,7 @@ public class GUIAltaModLocalidad extends JDialog {
     public GUIAltaModLocalidad(Localidad p,JDialog guiPadre) {
         super(guiPadre);
         this.loc = p;
-        this.setSize(new java.awt.Dimension(340,235));
+        this.setSize(new java.awt.Dimension(540,280));
         this.setTitle("Modificar Localidad");
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
@@ -77,25 +77,24 @@ public class GUIAltaModLocalidad extends JDialog {
     private JPanel getJPDatos() {
         if (jpDatos == null) {
             jlNombre = new JLabel("NOMBRE  (*)");
-            jlNombre.setBounds(new Rectangle(10,30,90,15));
+            jlNombre.setBounds(new Rectangle(10,40,150,26));
             jlNombre.setHorizontalAlignment(SwingConstants.RIGHT);
             jlNombre.setForeground(Utils.colorTexto);
+            jlNombre.setFont(Utils.FuenteBasica());
             jlCodPostal = new JLabel("COD. POSTAL");
             jlCodPostal.setForeground(Utils.colorTexto);
-            jlCodPostal.setBounds(new Rectangle(10,62,90,15));
+            jlCodPostal.setFont(Utils.FuenteBasica());
+            jlCodPostal.setBounds(new Rectangle(10,75,150,26));
             jlCodPostal.setHorizontalAlignment(SwingConstants.RIGHT);
             jlProvincia = new JLabel("PROVINCIA (*)");
             jlProvincia.setForeground(Utils.colorTexto);
-            jlProvincia.setBounds(new Rectangle(10,94,90,15));
+            jlProvincia.setFont(Utils.FuenteBasica());
+            jlProvincia.setBounds(new Rectangle(10,110,150,26));
             jlProvincia.setHorizontalAlignment(SwingConstants.RIGHT);
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setSize(new java.awt.Dimension(300,130));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "DATOS DE LA LOCALIDAD", 
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpDatos.setBounds(new Rectangle(15,15,300,130));
+            jpDatos.setBorder(Utils.crearTituloYBorde("DATOS DE LA LOCALIDAD"));
+            jpDatos.setBounds(new Rectangle(15,15,500,150));
             jpDatos.add(jlNombre, null);
             jpDatos.add(jlCodPostal, null);
             jpDatos.add(jlProvincia, null);
@@ -115,7 +114,8 @@ public class GUIAltaModLocalidad extends JDialog {
     public JTextField getJTFNombre() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(107,30,180,22));
+            jtfNombre.setBounds(new Rectangle(170,40,310,26));
+            jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
     }
@@ -123,8 +123,9 @@ public class GUIAltaModLocalidad extends JDialog {
     public JTextField getJTFCodPostal() {
         if (jtfCodPostal == null) {
             jtfCodPostal = new JTextField();
-            jtfCodPostal.setBounds(new Rectangle(107,62,180,22));
+            jtfCodPostal.setBounds(new Rectangle(170,75,310,26));
             jtfCodPostal.setDocument(new LimitadorNroMax(jtfCodPostal,6));
+            jtfCodPostal.setFont(Utils.FuenteCampos());
         }
         return jtfCodPostal;
     }
@@ -132,9 +133,10 @@ public class GUIAltaModLocalidad extends JDialog {
     public JTextField getJTFProvincia() {
         if (jtfProvincia == null) {
         	jtfProvincia = new JTextField();
-        	jtfProvincia.setBounds(new java.awt.Rectangle(107,94,95,22));
+        	jtfProvincia.setBounds(new java.awt.Rectangle(170,110,150,26));
         	jtfProvincia.setDisabledTextColor(Utils.colorTextoDisabled);
         	jtfProvincia.setEnabled(false);
+        	jtfProvincia.setFont(Utils.FuenteCampos());
         }
         return jtfProvincia;
     }
@@ -142,11 +144,12 @@ public class GUIAltaModLocalidad extends JDialog {
     public JButton getJBProvincia() {
         if (jbProvincia == null) {
         	jbProvincia = new GlossyButton("BUSCAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbProvincia.setBounds(new Rectangle(210,94,80,22));
+        	jbProvincia.setBounds(new Rectangle(330,110,150,26));
         	jbProvincia.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbProvincia.setName("Buscar");
         	jbProvincia.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
         	jbProvincia.setInputMap(0, map);
+        	jbProvincia.setFont(Utils.FuenteBotonesChicos());
         }
         return jbProvincia;
     }
@@ -154,10 +157,11 @@ public class GUIAltaModLocalidad extends JDialog {
     public JButton getJBAceptar() {
         if (jbAceptar == null) {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbAceptar.setBounds(new Rectangle(50,165,100,30));
+            jbAceptar.setBounds(new Rectangle(35,200,200,40));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
+            jbAceptar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbAceptar;
     }
@@ -165,10 +169,11 @@ public class GUIAltaModLocalidad extends JDialog {
     public JButton getJBCancelar() {
         if (jbCancelar == null) {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-            jbCancelar.setBounds(new Rectangle(180,165,100,30));
+            jbCancelar.setBounds(new Rectangle(305,200,200,40));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
+            jbCancelar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbCancelar;
     }

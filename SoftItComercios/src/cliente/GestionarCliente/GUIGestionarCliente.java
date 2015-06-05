@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -17,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import cliente.ModeloTabla;
@@ -50,7 +52,7 @@ public class GUIGestionarCliente extends JDialog {
     public GUIGestionarCliente(JFrame guiPadre) {
         super(guiPadre);
         datos = new Object[0][titulos.length];
-        this.setSize(740,540);
+        this.setSize(1200,640);
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
         this.setTitle("Gestión de Clientes");
@@ -64,7 +66,7 @@ public class GUIGestionarCliente extends JDialog {
     public GUIGestionarCliente(JDialog guiPadre) {
         super(guiPadre);
         datos = new Object[0][titulos.length];
-        this.setSize(740,540);
+        this.setSize(1200,640);
         this.setLocationRelativeTo(guiPadre);
         this.setResizable(false);
         this.setTitle("Gestión de Clientes");
@@ -93,15 +95,13 @@ public class GUIGestionarCliente extends JDialog {
         if (jpBuscador == null) {
             jpBuscador = new TransparentPanel();
             jlNombre = new JLabel();
-            jlNombre.setBounds(new Rectangle(10,30,60,15));
+            jlNombre.setBounds(new Rectangle(10,35,100,26));
             jlNombre.setText("NOMBRE:");
             jlNombre.setForeground(Utils.colorTexto);
+            jlNombre.setFont(Utils.FuenteBasica());
             jpBuscador.setLayout(null);
-            jpBuscador.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "BUSCAR",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                    new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
-            jpBuscador.setBounds(new java.awt.Rectangle(535,25,180,65));
+            jpBuscador.setBorder(Utils.crearTituloYBorde("BUSCAR"));
+            jpBuscador.setBounds(new java.awt.Rectangle(920,25,260,70));
             jpBuscador.add(jlNombre, null);
             jpBuscador.add(getJTFBuscador(), null);
         }
@@ -112,8 +112,8 @@ public class GUIGestionarCliente extends JDialog {
         if (jpGestion == null) {
             jpGestion = new TransparentPanel();
             jpGestion.setLayout(null);
-            jpGestion.setBounds(new java.awt.Rectangle(15,25,510,65));
-            jpGestion.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "GESTION", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+            jpGestion.setBounds(new java.awt.Rectangle(15,25,900,70));
+            jpGestion.setBorder(Utils.crearTituloYBorde("GESTION"));
             jpGestion.add(getJBIngresar(), null);
             jpGestion.add(getJBModificar(), null);
             jpGestion.add(getJBEliminar(), null);
@@ -127,10 +127,8 @@ public class GUIGestionarCliente extends JDialog {
         if (jpDatos == null) {
             jpDatos = new TransparentPanel();
             jpDatos.setLayout(null);
-            jpDatos.setBounds(new Rectangle(15,110,700,340));
-            jpDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, "LISTADO DE CLIENTES",
-                    javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+            jpDatos.setBounds(new Rectangle(15,110,1165,415));
+            jpDatos.setBorder(Utils.crearTituloYBorde("LISTADO DE CLIENTES"));
             jpDatos.add(getJSPDatos(), null);
             jpDatos.add(getJBDeudas(), null);
        }
@@ -140,7 +138,7 @@ public class GUIGestionarCliente extends JDialog {
     private JScrollPane getJSPDatos() {
         if (jspDatos == null) {
                 jspDatos = new JScrollPane();
-                jspDatos.setBounds(new Rectangle(10,20,680,280));
+                jspDatos.setBounds(new Rectangle(10,30,1145,340));
                 jspDatos.setViewportView(getJTDatos());
         }
         return jspDatos;
@@ -150,13 +148,17 @@ public class GUIGestionarCliente extends JDialog {
         if (tabla == null) {
             modTabla = new ModeloTabla(titulos, datos);
             tabla = new JTable(modTabla);
+            tabla.setFont(Utils.FuenteTablasSimple());
+			JTableHeader titTabla = tabla.getTableHeader();
+			titTabla.setFont(Utils.FuenteTablasSimple());
             Utils.ocultarColumnaId(tabla);
             TableColumn columna0 = tabla.getColumn("Cuit");
-            columna0.setPreferredWidth(100);
-			columna0.setMaxWidth(100);
+            columna0.setPreferredWidth(140);
+			columna0.setMaxWidth(140);
+			columna0.setCellRenderer(Utils.alinearCentro());
 			TableColumn columna1 = tabla.getColumn("Iva");
-            columna1.setPreferredWidth(60);
-			columna1.setMaxWidth(60);
+            columna1.setPreferredWidth(100);
+			columna1.setMaxWidth(100);
         }
         return tabla;
     }
@@ -166,9 +168,10 @@ public class GUIGestionarCliente extends JDialog {
             jbIngresar = new GlossyButton("INGRESAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbIngresar.setName("Alta");
         	jbIngresar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/add.png")));
-            jbIngresar.setBounds(new java.awt.Rectangle(10,25,90,25));
+            jbIngresar.setBounds(new java.awt.Rectangle(10,30,160,26));
             jbIngresar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbIngresar.setInputMap(0, map);
+            jbIngresar.setFont(Utils.FuenteBotonesChicos());
         }
         return jbIngresar;
     }
@@ -178,9 +181,10 @@ public class GUIGestionarCliente extends JDialog {
             jbModif = new GlossyButton("MODIFICAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbModif.setName("Modificar");
             jbModif.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/edit.png")));
-            jbModif.setBounds(new java.awt.Rectangle(110,25,90,25));
+            jbModif.setBounds(new java.awt.Rectangle(190,30,160,26));
             jbModif.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbModif.setInputMap(0, map);
+            jbModif.setFont(Utils.FuenteBotonesChicos());
         }
         return jbModif;
     }
@@ -188,7 +192,8 @@ public class GUIGestionarCliente extends JDialog {
     public JTextField getJTFBuscador() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new Rectangle(67,30,100,22));
+            jtfNombre.setBounds(new Rectangle(110,35,120,26));
+            jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
     }
@@ -198,9 +203,10 @@ public class GUIGestionarCliente extends JDialog {
         	jbEliminar = new GlossyButton("ELIMINAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbEliminar.setName("Baja");
         	jbEliminar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/delete.png")));
-        	jbEliminar.setBounds(new java.awt.Rectangle(210,25,90,25));
+        	jbEliminar.setBounds(new java.awt.Rectangle(370,30,160,26));
             jbEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbEliminar.setInputMap(0, map);
+            jbEliminar.setFont(Utils.FuenteBotonesChicos());
         }
         return jbEliminar;
     }
@@ -210,9 +216,10 @@ public class GUIGestionarCliente extends JDialog {
         	jbImprimir = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbImprimir.setName("Imprimir");
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
-        	jbImprimir.setBounds(new java.awt.Rectangle(310,25,90,25));
+        	jbImprimir.setBounds(new java.awt.Rectangle(550,30,160,26));
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
+        	jbImprimir.setFont(Utils.FuenteBotonesChicos());
         }
         return jbImprimir;
     }
@@ -222,9 +229,10 @@ public class GUIGestionarCliente extends JDialog {
         	jbECuenta = new GlossyButton("E. CUENTA",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbECuenta.setName("Cuenta");
         	jbECuenta.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/deudor.png")));
-        	jbECuenta.setBounds(new java.awt.Rectangle(410,25,90,25));
+        	jbECuenta.setBounds(new java.awt.Rectangle(730,30,160,25));
         	jbECuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbECuenta.setInputMap(0, map);
+        	jbECuenta.setFont(Utils.FuenteBotonesChicos());
         }
         return jbECuenta;
     }
@@ -234,9 +242,10 @@ public class GUIGestionarCliente extends JDialog {
         	jbDeudas = new GlossyButton("DEUDAS",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbDeudas.setName("Deudas");
         	jbDeudas.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cuentas.png")));
-        	jbDeudas.setBounds(new java.awt.Rectangle(590,305,100,25));
+        	jbDeudas.setBounds(new java.awt.Rectangle(995,380,160,26));
         	jbDeudas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbDeudas.setInputMap(0, map);
+        	jbDeudas.setFont(Utils.FuenteBotonesChicos());
         }
         return jbDeudas;
     }
@@ -246,9 +255,10 @@ public class GUIGestionarCliente extends JDialog {
             jbAceptar = new GlossyButton("ACEPTAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbAceptar.setName("Aceptar");
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
-            jbAceptar.setBounds(new Rectangle(240,470,100,30));
+            jbAceptar.setBounds(new Rectangle(350,560,200,40));
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
+            jbAceptar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbAceptar;
     }
@@ -258,9 +268,10 @@ public class GUIGestionarCliente extends JDialog {
             jbCancelar = new GlossyButton("CANCELAR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
             jbCancelar.setName("Cancelar");
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
-            jbCancelar.setBounds(new Rectangle(390,470,100,30));
+            jbCancelar.setBounds(new Rectangle(650,560,200,40));
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setInputMap(0, map);
+            jbCancelar.setFont(Utils.FuenteBotonesGrandes());
         }
         return jbCancelar;
     }
@@ -295,5 +306,9 @@ public class GUIGestionarCliente extends JDialog {
         modTabla = null;
         jspDatos = null;
         jpPpal.add(getJPDatos(), null);
+    }
+    
+    public void setMouseListener(MouseListener lis) {
+    	tabla.addMouseListener(lis);
     }
 }

@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -70,10 +69,7 @@ public class MediadorCuentaProveedor implements ActionListener,ListSelectionList
     			if(cargarFilasSeleccionadas()){
     				String titulo="Estado de Cuenta con el Proveedor:"+proveedor.getNombre();
     				Object[] valoresPosibles = {"Saldo por Factura", "Saldo Total con el Proveedor"};
-        			String prov = (String)JOptionPane.showInputDialog(guiCuentaProveedor,
-        					"Seleccione Tipo de SAldo", "Criterios de Impresión",
-        					JOptionPane. QUESTION_MESSAGE, null,
-        					valoresPosibles, valoresPosibles[0]);
+    				String prov = Utils.seleccionarOpcion(guiCuentaProveedor,"Seleccione Tipo de Saldo", "Criterios de Impresión",valoresPosibles,0);
         			if(prov!=null){
         				Vector saldoImpr=null;
         				if(prov.compareTo("Saldo por Factura")==0)

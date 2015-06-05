@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
@@ -25,7 +27,7 @@ import cliente.Principal.GUIReport;
 
 import common.Utils;
   
-public class MediadorListarFacturasProveedor implements ActionListener, KeyListener, ListSelectionListener {
+public class MediadorListarFacturasProveedor implements ActionListener, KeyListener, ListSelectionListener, MouseListener {
     
     private GUIListarFacturasProveedor guiTodasFactProv = null;
     protected ControlFacturaProveedor controlFactProv;
@@ -187,6 +189,7 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
     	}
     	guiTodasFactProv.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     	guiTodasFactProv.actualizarTabla();
+        this.guiTodasFactProv.setMouseListener(this);
     }
     
     public void actualizarCampos() {
@@ -216,6 +219,7 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
      	}
      	guiTodasFactProv.jtDatos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
      	guiTodasFactProv.actualizarTabla();
+        this.guiTodasFactProv.setMouseListener(this);
     }
     
     public GUIListarFacturasProveedor getGUI() {
@@ -257,6 +261,40 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
         	Utils.manejoErrores(ex,"Error en MediadorListarFacturasCliente. anularFactura");
         }
     }
+    
+    public void mouseClicked(MouseEvent arg0) {
+		//System.out.println("mouse clicked");
+	}
+
+	public void mousePressed(MouseEvent arg0) {
+		//System.out.println("mouse pressed");
+	}
+
+	public void mouseReleased(MouseEvent arg0) {
+		//System.out.println("mouse Released");
+		if (arg0.getClickCount() == 2){
+			//System.out.println("dobleclick");
+			if(!flag){
+				if (cargarFilaSeleccionada()) {
+					if (medAltaMovCaja != null) {
+						medAltaMovCaja.factura = fact;
+						medAltaMovCaja.tipoFact = fact.getTipoFactura();
+						medAltaMovCaja.codProv = fact.getProveedor().getCodigo();
+						medAltaMovCaja.actualizarFactura();
+						this.guiTodasFactProv.dispose();
+					}
+				}
+			}	
+		}
+	}
+
+	public void mouseEntered(MouseEvent arg0) {
+		//System.out.println("mouse entered");
+	}
+
+	public void mouseExited(MouseEvent arg0) {
+		//System.out.println("mouse exited");
+	}
 }
 
 

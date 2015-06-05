@@ -97,9 +97,7 @@ public class GUIVistaFacturasGeneradas extends JDialog {
         	jpDeudas = new TransparentPanel();
         	jpDeudas.setLayout(null);
         	jpDeudas.setBounds(new Rectangle(15,15,670,420));
-        	jpDeudas.setBorder(javax.swing.BorderFactory.createTitledBorder(Utils.b, " FACTURAS DE "+nombreLoc.toUpperCase()+" DIA "+fecha,
-                    javax.swing.border.TitledBorder.CENTER,
-                    javax.swing.border.TitledBorder.DEFAULT_POSITION,new java.awt.Font("Dialog", java.awt.Font.BOLD, 14), Utils.colorTexto));
+        	jpDeudas.setBorder(Utils.crearTituloYBorde(" FACTURAS DE "+nombreLoc.toUpperCase()+" DIA "+fecha));
         	jpDeudas.add(getJSPDatos(), null);
         	jpDeudas.add(getJCheckSelectAll(), null);
         	leyenda=new JLabel("Las \"Facturas de Remito\" no serán mostradas.");
