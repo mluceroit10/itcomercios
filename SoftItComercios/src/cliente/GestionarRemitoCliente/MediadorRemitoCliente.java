@@ -44,7 +44,6 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 	public Vector precioUnit = new Vector();
 	public Vector precioTotalIt = new Vector();
 	public Vector descuentos = new Vector();
-	public Vector ctrlVto = new Vector();
 	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
@@ -80,14 +79,16 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		guiRemitoCte.getJCBFechaVto().setVisible(false);
     		guiRemitoCte.getJLFechaVto().setVisible(false);
     		guiRemitoCte.setActionListeners(this);
-    		guiRemitoCte.setKeyListeners2(this); 		
+    		guiRemitoCte.setKeyListeners2(this); 	
     	}
     }
   
     public void show() {
     	if(dist!=null && mostrar){
-    	guiRemitoCte.actualizarNroRemito();
-    	Utils.show(guiRemitoCte);
+    		guiRemitoCte.actualizarNroRemito();
+    		
+    		Utils.show(guiRemitoCte);
+    		
     	}
     }
 
@@ -165,10 +166,12 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 		 itNew.setPrUnit(Double.parseDouble((String)precioUnit.elementAt(k)));
                 		 double prTotIt=Double.parseDouble((String)precioTotalIt.elementAt(k));
                 		 itNew.setPrTotal(prTotIt);
+                		 if(fechasVto.elementAt(k)!=null)
+                			 itNew.setFechaVto((java.sql.Date)fechasVto.elementAt(k));
                 		 items.add(itNew);
                 	 }
                 	 //fc.setItems(items);
-                	 this.controlFactCliente.agregarFacturaClienteTotal(fc,"Remito",loc,0,items,ctrlVto,fechasVto);
+                	 this.controlFactCliente.agregarFacturaClienteTotal(fc,"Remito",loc,0,items);
                      this.guiRemitoCte.dispose();
                      if(guiRemitoCte.getJCheckImprimir().isSelected()){
                     	 new GUIReport(guiRemitoCte,4,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,Utils.nroFact(guiRemitoCte.nroRemito),fecha,
@@ -200,19 +203,16 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar los Kilos.");
                 		}else if(pr.isPrecioKilos() && kilos.length()!=0 && !Utils.esDouble(kilos)){
                 			Utils.advertenciaUsr(guiRemitoCte,"El número de Kilos ingresado no es correcto.");	
-                		}else if(pr.isCtrlVto() && fechaVto.length()==0 ){
+                		}else if(pr.isCtrlVto() && fechaVto==null ){
                 			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar la fecha de vencimiento.");	
                 		}else if(pr.isCtrlVto() && fechaVto.length()!=0 && !Utils.esFecha(fechaVto)){
                 			Utils.advertenciaUsr(guiRemitoCte,"La fecha de vencimiento ingresada no es correcta respete el formato dd/mm/aaaa.");	
                 		}else{	
                 			productos.add(pr);
                 			if(pr.isCtrlVto()){
-            					ctrlVto.add("SI");
-            					
             					java.sql.Date fVto= Utils.strToSqlDateDB(fechaVto);
             					fechasVto.add(fVto);
             				}else{
-            					ctrlVto.add("NO");
             					fechasVto.add(null);
             				}
                 			int c=Integer.parseInt(cant);
@@ -248,6 +248,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 			this.guiRemitoCte.getJBAgregarProd().setEnabled(false);
                 			guiRemitoCte.getJCBFechaVto().setVisible(false);
                 			guiRemitoCte.getJLFechaVto().setVisible(false);
+                			guiRemitoCte.getJTFBusqueda().requestFocus(true);
                 		}
                 	}else
                 		Utils.advertenciaUsr(guiRemitoCte,"El Producto no existe.");
@@ -270,7 +271,6 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
-        			ctrlVto.removeElementAt(posProd);
 					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}

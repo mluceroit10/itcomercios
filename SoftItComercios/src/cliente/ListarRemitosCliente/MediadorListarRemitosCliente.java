@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
@@ -210,12 +209,8 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
             	String compr = "";
             	Set movs = p.getComprobantesPago();
 				
-				String impAbonado=Utils.ordenarDosDecimales(p.getImporteAbonado());
-				Date fpago=p.getFechaPago();
 				if(controlFactCte.existeFacturaDeRemito(String.valueOf(p.getNroFactura()))){
 					FacturaCliente fcteRem=controlFactCte.buscarFacturaDeRemito(String.valueOf(p.getNroFactura()));
-					fpago=fcteRem.getFechaPago();
-					impAbonado=Utils.ordenarDosDecimales(fcteRem.getImporteAbonado());
 					movs = fcteRem.getComprobantesPago();
 				}
 				
@@ -249,12 +244,8 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
             	 FacturaCliente r=(FacturaCliente)facturas.elementAt(j);
             	 String compr = "";
             	 Set movs = r.getComprobantesPago();
-            	 String impAbonado=Utils.ordenarDosDecimales(r.getImporteAbonado());
-            	 Date fpago=r.getFechaPago();
             	 if(controlFactCte.existeFacturaDeRemito(String.valueOf(r.getNroFactura()))){
             		 FacturaCliente fcteRem=controlFactCte.buscarFacturaDeRemito(String.valueOf(r.getNroFactura()));
-            		 fpago=fcteRem.getFechaPago();
-            		 impAbonado=Utils.ordenarDosDecimales(fcteRem.getImporteAbonado());
             		 movs = fcteRem.getComprobantesPago();
             	 }
             	 
@@ -292,7 +283,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
                     }else if(controlFactCte.existeFacturaDeRemito(nroFacturaB)){
                     	Utils.advertenciaUsr(guiTodasFactCte,"El Remito no puede ser borrado porque se ha efectuado su factura correspondiente.");
                     }else{
-                    	int prueba = Utils.aceptarCancelarAccion(guiTodasFactCte,"Esta seguro que desea Anular el Remito Nro: \n"+ nroFactura);
+                    	int prueba = Utils.aceptarCancelarAccion(guiTodasFactCte,"Esta seguro que desea Anular el Remito Nro: "+ nroFactura);
                     	if (prueba == 0){
                     		this.controlFactCte.anularFacturaCliente(id);
                     		cargarDatos();

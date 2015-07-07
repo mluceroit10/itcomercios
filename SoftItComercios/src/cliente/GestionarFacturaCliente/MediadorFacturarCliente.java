@@ -46,7 +46,6 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 	public Vector precioUnit = new Vector();
 	public Vector precioTotalIt = new Vector();
 	public Vector descuentos = new Vector();
-	public Vector ctrlVto = new Vector();
 	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
@@ -220,11 +219,13 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     						itNew.setPrUnit(Double.parseDouble((String)precioUnit.elementAt(k)));
     						double prTotIt=Double.parseDouble((String)precioTotalIt.elementAt(k));
     						itNew.setPrTotal(prTotIt);
+    						if(fechasVto.elementAt(k)!=null)
+    	                		 itNew.setFechaVto((java.sql.Date)fechasVto.elementAt(k));
     						items.add(itNew);
     					}
     					//fc.setItems(items);
     					int nroMC =controlMC.obtenerNroMovCaja();
-    					this.controlFactCliente.agregarFacturaClienteTotal(fc,tipo,loc,nroMC,items,ctrlVto,fechasVto);
+    					this.controlFactCliente.agregarFacturaClienteTotal(fc,tipo,loc,nroMC,items);
     					this.guiFacturarCte.dispose();
     					new GUIReport(guiFacturarCte,5,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt,"",fecha,
     							comercio, cliente,iva,condVta,remitoNro,ingrBrutos,tipo,importeTotal,ivaFact,fc.getImporteTotal());
@@ -253,18 +254,16 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar los Kilos.");
                 		}else if(pr.isPrecioKilos() && kilos.length()!=0 && !Utils.esDouble(kilos)){
                 			Utils.advertenciaUsr(guiFacturarCte,"El número de Kilos ingresado no es correcto.");	 
-                		}else if(pr.isCtrlVto() && fechaVto.length()==0 ){
+                		}else if(pr.isCtrlVto() && fechaVto==null ){
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar la fecha de vencimiento.");	
                 		}else if(pr.isCtrlVto() && fechaVto.length()!=0 && !Utils.esFecha(fechaVto)){
                 			Utils.advertenciaUsr(guiFacturarCte,"La fecha de vencimiento ingresada no es correcta respete el formato dd/mm/aaaa.");	
                 		}else{	
                 		productos.add(pr);
                 		if(pr.isCtrlVto()){
-        					ctrlVto.add("SI");
         					java.sql.Date fVto= Utils.strToSqlDateDB(fechaVto);
         					fechasVto.add(fVto);
         				}else{
-        					ctrlVto.add("NO");
         					fechasVto.add(null);
         				}
                 		int c=Integer.parseInt(cant);
@@ -303,6 +302,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 		this.guiFacturarCte.getJBAgregarProd().setEnabled(false);
                 		guiFacturarCte.getJCBFechaVto().setVisible(false);
                 		guiFacturarCte.getJLFechaVto().setVisible(false);
+                		guiFacturarCte.getJTFBusqueda().requestFocus(true);
                 		}
                 	}else
                 		Utils.advertenciaUsr(guiFacturarCte,"El Producto no existe.");
@@ -325,7 +325,6 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
-        			ctrlVto.removeElementAt(posProd);
 					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}
@@ -350,6 +349,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
             this.guiFacturarCte.getJCTipoIva().setText(cliente.getIvaCl());
             this.guiFacturarCte.getJTFBusqueda().setEnabled(true);
             this.cargarCliente(cliente);
+            guiFacturarCte.getJTFBusqueda().requestFocus(true);
         }
     }
     
@@ -363,6 +363,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
         this.guiFacturarCte.getJTFIngrBrutos().setText(cliente.getIngBrutosCl());
         this.guiFacturarCte.getJCTipoIva().setText(cliente.getIvaCl());
         this.guiFacturarCte.getJTFBusqueda().setEnabled(true);
+        guiFacturarCte.getJTFBusqueda().requestFocus(true);
     }
     
     public void actualizarRemito(FacturaCliente rem) {

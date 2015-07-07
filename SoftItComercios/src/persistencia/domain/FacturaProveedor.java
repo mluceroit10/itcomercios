@@ -6,6 +6,7 @@ public class FacturaProveedor extends Factura{
 	
 	private Date fecha;
 	private Proveedor proveedor=null;
+	private boolean cargaParcial;
 	
 	public Proveedor getProveedor() {
 		return proveedor;
@@ -21,6 +22,14 @@ public class FacturaProveedor extends Factura{
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public boolean isCargaParcial() {
+		return cargaParcial;
+	}
+
+	public void setCargaParcial(boolean cargaParcial) {
+		this.cargaParcial = cargaParcial;
 	}
 	
 	

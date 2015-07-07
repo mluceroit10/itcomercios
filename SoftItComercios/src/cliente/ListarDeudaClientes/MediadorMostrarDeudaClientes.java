@@ -103,7 +103,6 @@ public class MediadorMostrarDeudaClientes implements ActionListener,ListSelectio
     		Vector clientesDeuda = new Vector();
     		clientesDeuda = this.controlCliente.obtenerClientesDeuda();
     		guiDeudaCtes.datos = new Object[clientesDeuda.size()][guiDeudaCtes.titulos.length];
-    		int i = 0;
     		for (int j = 0; j < clientesDeuda.size(); j++) {
     			Cliente cte = (Cliente) clientesDeuda.elementAt(j);
     			String fecha = Utils.getStrUtilDate(cte.getFechaUF());

@@ -47,7 +47,7 @@ public class MediadorCuentaProveedor implements ActionListener,ListSelectionList
 	
 	public MediadorCuentaProveedor(MediadorGestionarProveedor mgp, Proveedor prov,JDialog guiPadre) throws Exception {
        try{
-    	   controlProveedor = new ControlProveedor();
+    	    controlProveedor = new ControlProveedor();
     		controlComercio = new ControlComercio();
     		controlFactCte = new ControlFacturaCliente();
     		proveedor = prov;
@@ -129,7 +129,10 @@ public class MediadorCuentaProveedor implements ActionListener,ListSelectionList
     public void organizarDatosMostrar() throws Exception{
     	for(int i=0;i<todasFacturasCte.size();i++){
     		FacturaProveedor fc = (FacturaProveedor) todasFacturasCte.elementAt(i);
-    		detalleIt.add(fc.getTipoFactura()+" Nro:"+Utils.nroFact(fc.getNroFactura()));
+    		String verifCargaParcial="";
+    		if(fc.isCargaParcial())
+    			verifCargaParcial="(C. Parcial) ";
+    		detalleIt.add(verifCargaParcial+"Fact. Nro:"+Utils.nroFact(fc.getNroFactura()));
     		fecha.add(Utils.getStrUtilDate(fc.getFecha()));
     		saldoI =Utils.redondear(saldoI-fc.getImporteTotal(),2);
     		debe.add(Utils.ordenarDosDecimales(fc.getImporteTotal()));

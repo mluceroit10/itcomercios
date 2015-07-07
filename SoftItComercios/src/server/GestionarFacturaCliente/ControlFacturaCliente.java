@@ -30,7 +30,7 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 		
 	public ControlFacturaCliente() throws RemoteException{   }
 	 																// A - B - Remito     //loc Rio Cuarto - Moldes	
-	public double agregarFacturaClienteTotal(FacturaCliente fc,String tipo,String loc,int nroMC,Vector items,Vector ctrlVto, Vector fechasVto)throws Exception{
+	public double agregarFacturaClienteTotal(FacturaCliente fc,String tipo,String loc,int nroMC,Vector items)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlCliente cCte = new ControlCliente();
 		ControlComercio cDist=new ControlComercio();
@@ -65,10 +65,8 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 					pr.setStockActual(pr.getStockActual()-itF.getCantidad());
 					pr.setStockKilosAct(Utils.redondear(pr.getStockKilosAct()-itF.getKilos(),2));
 //					Debo agregar el ctrl del Vto
-					if(((String)ctrlVto.elementAt(i)).compareTo("SI")==0){
-						Date feVto = (Date)fechasVto.elementAt(i);
-						actualizarStockDeVencimiento(mp,pr,feVto,itF.getCantidad(),itF.getKilos());
-					//
+					if(itF.getFechaVto()!=null){
+						actualizarStockDeVencimiento(mp,pr,itF.getFechaVto(),itF.getCantidad(),itF.getKilos());
 					}	
 				}
 				mp.hacerPersistente(itnew);

@@ -6,10 +6,10 @@ public class Oid   {
   public Oid() {                                                         
   }                                                  
   public Long getOid()  {                                               
-    return oid;                                                                      
-  }                
+    return oid;                                                                        
+  }                  
   public void setOid(Long oid) {                       
     this.oid = oid;            
   }                            
                                   
-}                            
+}                                

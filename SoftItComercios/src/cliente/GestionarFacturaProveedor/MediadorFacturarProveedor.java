@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -23,6 +25,7 @@ import server.GestionarFacturaProveedor.ControlFacturaProveedor;
 import server.GestionarProducto.ControlProducto;
 import cliente.GestionarProducto.MediadorAltaProducto;
 import cliente.GestionarProveedor.MediadorGestionarProveedor;
+import cliente.ListarFacturasProveedor.MediadorListarFacturasProveedor;
 import cliente.Principal.GUIReport;
 
 import common.Utils;
@@ -45,7 +48,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
 	public Vector margenGanancia = new Vector();
 	public Vector nuevoPrecioVtaSinIva = new Vector();
 	public Vector nuevoPrecioVtaConIva = new Vector();
-	public Vector ctrlVto = new Vector();
+	//public Vector ctrlVto = new Vector();
 	public Vector fechasVto = new Vector();
 	private ControlProducto controlProducto;
 	private double importeTotal=0; 
@@ -55,6 +58,9 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
 	private GUICambiarPrecios guiCP=null;
 	private boolean actionl3=false;
 	
+	private Long idFactGuardada=null;
+	 private MediadorListarFacturasProveedor mgFactProv=null;
+	 
     public MediadorFacturarProveedor(JFrame guiPadre) throws Exception {
     	try{
     		controlFactProveedor = new ControlFacturaProveedor();
@@ -77,6 +83,64 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     	}
     }
   
+    public MediadorFacturarProveedor(MediadorListarFacturasProveedor oldMGFP,JDialog guiPadre,Long idFactura) throws Exception {
+    	try{
+    		controlFactProveedor = new ControlFacturaProveedor();
+    		controlProducto = new ControlProducto();
+    		controlComercio = new ControlComercio();
+    	}catch(Exception ex){
+    		Utils.manejoErrores(ex,"Error en MediadorFacturarProveedor. Constructor");
+    	}
+    	mgFactProv=oldMGFP;
+    	dist=controlComercio.obtenerComercio();
+    	if(dist==null){ 
+    		Utils.advertenciaUsr(guiFacturarProv,"Debe completar los datos del Comercio para Facturar.");
+    	}else{	
+    		idFactGuardada = idFactura;
+    		FacturaProveedor fp = controlFactProveedor.buscarFacturaProveedor(idFactura);
+    		guiFacturarProv = new GUIFacturarProveedor(guiPadre);
+
+    		this.guiFacturarProv.getJTFBusqueda().setEnabled(true);
+            this.guiFacturarProv.getJTFImpAuxiliar().setEnabled(true);
+            try {
+         	   todosProductos = controlProducto.obtenerProductosProveedor(fp.getProveedor().getNombre());
+            } catch (Exception e) {
+         	   e.printStackTrace();
+            }
+            this.cargarProveedor(fp.getProveedor());
+            guiFacturarProv.getJBGuardar().setEnabled(true);
+            
+            this.guiFacturarProv.getJTFNombreC().setText(fp.getProveedor().getNombre());
+            this.guiFacturarProv.getJtNroFactura().setText(fp.getNroFactura().toString());
+            this.guiFacturarProv.getJDateChooserFecha().setDate(fp.getFecha());
+            impAuxiliar=fp.getImporteAuxIva();
+            java.util.Set items=fp.getItems();
+    		for(Iterator j=items.iterator();j.hasNext();){
+    			ItemFactura pr= (ItemFactura) j.next();
+    			productos.add(pr.getProducto());
+    			cantProd.add(String.valueOf(pr.getCantidad()));
+    			kilosProd.add(Utils.ordenarTresDecimales(pr.getKilos()));
+    			precioUnit.add(Utils.ordenarDosDecimales(pr.getPrUnit()));
+    			descuentos.add(String.valueOf(pr.getDescuento()));
+    			precioTotalIt.add(Utils.ordenarDosDecimales(pr.getPrTotal()));
+    			fechasVto.add(pr.getFechaVto());
+    			cambioPrecio.add("NO");
+				prEntrConIva.add(null);
+				margenGanancia.add(null);
+				nuevoPrecioVtaSinIva.add(null);
+				nuevoPrecioVtaConIva.add(null);
+    		}	
+    		cargarDatos();
+    		guiFacturarProv.getJDFechaVto().setVisible(false);
+    		guiFacturarProv.getJLFechaVto().setVisible(false);
+    		guiFacturarProv.setActionListeners(this);
+    		guiFacturarProv.setKeyListeners2(this);
+    		guiFacturarProv.getJTFBusqueda().requestFocus(true);
+    		Utils.show(guiFacturarProv);
+    	}
+    	
+    }
+    
     public void actionPerformed(ActionEvent e) {
     	Object source = e.getSource();
     	if (source == this.guiFacturarProv.getJCBCodigo()) {
@@ -108,8 +172,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     		} catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorFacturarProveedor. CargarProductoSeleccionado");
     		}
-    	}else
-    	if ((((Component)e.getSource()).getName().compareTo("ConfirmarFact")) == 0) {
+    	}else if ((((Component)e.getSource()).getName().compareTo("ConfirmarFact")) == 0) {
     		try {
     			java.util.Date fu=guiFacturarProv.getJDateChooserFecha().getDate();
     			String nroFact=guiFacturarProv.getJtNroFactura().getText();
@@ -121,7 +184,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 	 Utils.advertenciaUsr(guiFacturarProv,"Debe seleccionar el Proveedor.");
                  }else if(nroFact.length()==0){
                 	 Utils.advertenciaUsr(guiFacturarProv,"Debe agregar el Número de Factura.");
-                 } else if(controlFactProveedor.existeFacturaProveedorNroTipo(new Long(nroFact),"FacturaProveedor",proveedor.getCodigo())){
+                 } else if(controlFactProveedor.existeFacturaProveedorNroTipo(new Long(nroFact),"FacturaProveedor",proveedor.getCodigo(),idFactGuardada)){
                 	 Utils.advertenciaUsr(guiFacturarProv,"Para este Proveedor ya existe una Factura con dicho número.");
                  }else if(impAux.length()==0){
                 	 Utils.advertenciaUsr(guiFacturarProv,"Debe ingresar un importe auxiliar.");
@@ -130,6 +193,9 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                  } else {
                 	 impAuxiliar=Double.parseDouble(impAux);
                 	 FacturaProveedor fp= new FacturaProveedor();
+                	 if(idFactGuardada!=null)
+                		 fp.setId(idFactGuardada);
+                	 fp.setCargaParcial(false);
                 	 fp.setAnulada(false);
                 	 fp.setProveedor(proveedor);
                 	 fp.setFecha(fecha);
@@ -153,12 +219,77 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 		 itNew.setPrUnit(Double.parseDouble((String)precioUnit.elementAt(k)));
                 		 double prTotIt=Double.parseDouble((String)precioTotalIt.elementAt(k));
                 		 itNew.setPrTotal(prTotIt);
+                		 if(fechasVto.elementAt(k)!=null)
+                    		 itNew.setFechaVto(Utils.crearFecha((java.util.Date)fechasVto.elementAt(k)));
                 		 items.add(itNew);
                 	 }
-                	 this.controlFactProveedor.agregarFacturaProveedorTotal(fp,items,cambioPrecio,prEntrConIva,margenGanancia,nuevoPrecioVtaSinIva,nuevoPrecioVtaConIva,ctrlVto,fechasVto);
+                	 this.controlFactProveedor.agregarFacturaProveedorTotal(fp,items,cambioPrecio,prEntrConIva,margenGanancia,nuevoPrecioVtaSinIva,nuevoPrecioVtaConIva,idFactGuardada);//,ctrlVto,fechasVto);
                      this.guiFacturarProv.dispose();
                      new GUIReport(guiFacturarProv,6,productos,cantProd,kilosProd,precioUnit,descuentos,precioTotalIt, Utils.nroFact(fp.getNroFactura()),fp.getFecha(),
          				dist, proveedor,fp.getImporteAuxIva(),fp.getImporteTotal());
+                     if(mgFactProv!=null)
+                    	 mgFactProv.cargarDatos();
+                 }
+    	    } catch(Exception ex) {
+    	    	Utils.manejoErrores(ex,"Error en MediadorFacturarProveedor. ConfirmarFactura");
+             }
+    	    
+    	}else if ((((Component)e.getSource()).getName().compareTo("GuardarParcial")) == 0) {
+    		try {
+    			java.util.Date fu=guiFacturarProv.getJDateChooserFecha().getDate();
+    			String nroFact=guiFacturarProv.getJtNroFactura().getText();
+    			Date fecha= Utils.crearFecha(fu);
+    			String impAux=guiFacturarProv.getJTFImpAuxiliar().getText();
+    			  if (this.productos.size()==0){
+    				  Utils.advertenciaUsr(guiFacturarProv,"Debe agregar algún Producto para poder generar la Factura.");
+                 }else if(guiFacturarProv.getJTFNombreC().getText().length()==0 ){
+                	 Utils.advertenciaUsr(guiFacturarProv,"Debe seleccionar el Proveedor.");
+                 }else if(nroFact.length()==0){
+                	 Utils.advertenciaUsr(guiFacturarProv,"Debe agregar el Número de Factura.");
+                 } else if(controlFactProveedor.existeFacturaProveedorNroTipo(new Long(nroFact),"FacturaProveedor",proveedor.getCodigo(),idFactGuardada)){
+                	 Utils.advertenciaUsr(guiFacturarProv,"Para este Proveedor ya existe una Factura con dicho número.");
+                 } else {
+                     if(impAux.length()==0) impAuxiliar=0;
+                     else if(!Utils.esDouble(impAux)) impAuxiliar=0;
+                     else impAuxiliar=Double.parseDouble(impAux);
+                	 FacturaProveedor fp= new FacturaProveedor();
+                	 if(idFactGuardada!=null)
+                		 fp.setId(idFactGuardada);
+                	 fp.setCargaParcial(true);
+                	 fp.setAnulada(false);
+                	 fp.setProveedor(proveedor);
+                	 fp.setFecha(fecha);
+                	 fp.setImporteTotal(Utils.redondear(importeTotal+impAuxiliar,2));
+                	 fp.setImporteAuxIva(impAuxiliar);
+                	 fp.setNroFactura(new Long(nroFact));
+                     fp.setTipoFactura("FacturaProveedor");
+                     fp.setDiaBuscar(fecha.getDate());
+                     Vector items = new Vector();
+
+                	 for(int k=0;k<productos.size();k++){
+                		 ItemFactura itNew = new ItemFactura();
+                		 itNew.setFactura(fp);
+                		 int cantpr=Integer.parseInt((String)cantProd.elementAt(k));
+                		 itNew.setCantidad(cantpr);
+                		 double kgpr=Double.parseDouble((String)kilosProd.elementAt(k));
+                		 itNew.setKilos(kgpr);
+                		 int descpr=Integer.parseInt((String)descuentos.elementAt(k));
+                		 itNew.setDescuento(descpr);
+                		 Producto pr=(Producto)productos.elementAt(k);
+                		 itNew.setProducto(pr);
+                		 itNew.setPrUnit(Double.parseDouble((String)precioUnit.elementAt(k)));
+                		 double prTotIt=Double.parseDouble((String)precioTotalIt.elementAt(k));
+                		 itNew.setPrTotal(prTotIt);
+                		 if(fechasVto.elementAt(k)!=null)
+                		 itNew.setFechaVto(Utils.crearFecha((java.util.Date)fechasVto.elementAt(k)));
+                		 else
+                			 itNew.setFechaVto(null);
+                		 items.add(itNew);
+                	 }
+                	 this.controlFactProveedor.guardarFacturaProveedor(fp,items,cambioPrecio,prEntrConIva,margenGanancia,nuevoPrecioVtaSinIva,nuevoPrecioVtaConIva,idFactGuardada);//,ctrlVto,fechasVto);
+                     this.guiFacturarProv.dispose();
+                     if(mgFactProv!=null)
+                    	 mgFactProv.cargarDatos();
                  }
     	    } catch(Exception ex) {
     	    	Utils.manejoErrores(ex,"Error en MediadorFacturarProveedor. ConfirmarFactura");
@@ -194,11 +325,11 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 			if(precioEntrada.compareTo(String.valueOf(pr.getPrecioEntrada()))==0){   //sin cambio de precios
                 				productos.add(pr);
                 				if(pr.isCtrlVto()){
-                					ctrlVto.add("SI");
+                				//	ctrlVto.add("SI");
                 					java.util.Date fVto=guiFacturarProv.getJDFechaVto().getDate();
                 					fechasVto.add(fVto);
                 				}else{
-                					ctrlVto.add("NO");
+                				//	ctrlVto.add("NO");
                 					fechasVto.add(null);
                 				}
                 				cambioPrecio.add("NO");
@@ -247,6 +378,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
                 			}	
                 			guiFacturarProv.getJDFechaVto().setVisible(false);
                 			guiFacturarProv.getJLFechaVto().setVisible(false);
+                			guiFacturarProv.getJTFBusqueda().requestFocus(true);
                 		}
                 	}else
                 		Utils.advertenciaUsr(guiFacturarProv,"El Producto no existe.");
@@ -274,7 +406,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
         			precioUnit.removeElementAt(posProd);
         			descuentos.removeElementAt(posProd);
         			precioTotalIt.removeElementAt(posProd);
-        			ctrlVto.removeElementAt(posProd);
+        		//	ctrlVto.removeElementAt(posProd);
 					fechasVto.removeElementAt(posProd);
         			cargarDatos();
         		}
@@ -296,11 +428,11 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
      		   Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
      		   productos.add(pr);
      		   if(pr.isCtrlVto()){
-     			   ctrlVto.add("SI");
+     			//   ctrlVto.add("SI");
      			   java.util.Date fVto=guiFacturarProv.getJDFechaVto().getDate();
      			   fechasVto.add(fVto);
      		   }else{
-     			   ctrlVto.add("NO");
+     			//   ctrlVto.add("NO");
      			   fechasVto.add(null);
      		   }
      		   cambioPrecio.add("SI");
@@ -379,6 +511,8 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
         	   e.printStackTrace();
            }
            this.cargarProveedor(proveedor);
+           guiFacturarProv.getJTFBusqueda().requestFocus(true);
+           guiFacturarProv.getJBGuardar().setEnabled(true);
         }
     }
     
@@ -390,6 +524,8 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
     	  this.guiFacturarProv.getJTFNombreC().setText(proveedor.getNombre());
     	  this.guiFacturarProv.getJTFBusqueda().setEnabled(true);
     	  this.guiFacturarProv.getJTFImpAuxiliar().setEnabled(true);
+    	  guiFacturarProv.getJTFBusqueda().requestFocus(true);
+    	  guiFacturarProv.getJBGuardar().setEnabled(true);
     	  try {
        	   todosProductos = controlProducto.obtenerProductosProveedor(proveedor.getNombre());
           } catch (Exception e) {
@@ -497,10 +633,7 @@ public class MediadorFacturarProveedor implements ActionListener,ListSelectionLi
 					this.guiFacturarProv.getJTFImporte().setText("");
 					this.guiFacturarProv.getJTFCantidad().setText("");
 					this.guiFacturarProv.getJBAgregarProd().setEnabled(false);
-					//if(!actionl2){
 					guiFacturarProv.setActionListeners2(this);
-					//actionl2=true;
-					//}
 				}
 			}
 		} catch(Exception ex) {

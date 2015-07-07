@@ -1,0 +1,16 @@
+		tablaPedidos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if (e.getClickCount() == 2)
+					modificar();
+			    else{
+			    	e.consume();
+			    }   
+			}
+		});
+
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});

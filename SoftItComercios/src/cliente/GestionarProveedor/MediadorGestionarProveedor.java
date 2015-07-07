@@ -204,7 +204,7 @@ public class MediadorGestionarProveedor implements ActionListener, ListSelection
         			if (controlProveedor.proveedorAsociado(id)) {
                     	Utils.advertenciaUsr(guiProveedor,"El Proveedor no puede ser borrado.");
                     }else{
-                    	int prueba = Utils.aceptarCancelarAccion(guiProveedor,"Esta seguro que desea Eliminar el Proveedor \n"+ nombre);
+                    	int prueba = Utils.aceptarCancelarAccion(guiProveedor,"Esta seguro que desea Eliminar el Proveedor "+ nombre);
                     	if (prueba == 0)
                     			this.controlProveedor.eliminarProveedor(id);
                     }

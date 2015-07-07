@@ -254,7 +254,7 @@ public class MediadorGestionarLocalidad implements ActionListener, KeyListener, 
                     if (controlLocalidad.localidadAsociada(id)) {
                     	Utils.advertenciaUsr(guiLocalidad,"La Localidad no puede ser borrada.");
                         }else{
-                            int prueba = Utils.aceptarCancelarAccion(guiLocalidad,"Esta seguro que desea Eliminar la Localidad \n"+ nombre);
+                            int prueba = Utils.aceptarCancelarAccion(guiLocalidad,"Esta seguro que desea Eliminar la Localidad "+ nombre);
                             if (prueba == 0)
                                 this.controlLocalidad.eliminarLocalidad(id);
                         }     

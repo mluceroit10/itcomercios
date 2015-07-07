@@ -191,7 +191,7 @@ public class MediadorGestionarCliente implements ActionListener, ListSelectionLi
                 	if (controlCliente.clienteAsociado(id)) {
                 		Utils.advertenciaUsr(guiCliente,"El Cliente no puede ser borrado.");
                 	}else{
-                		int prueba = Utils.aceptarCancelarAccion(guiCliente,"Esta seguro que desea Eliminar el Cliente \n"+ nombre);
+                		int prueba = Utils.aceptarCancelarAccion(guiCliente,"Esta seguro que desea Eliminar el Cliente "+ nombre);
                 		if (prueba == 0)
                 			this.controlCliente.eliminarCliente(id);
                 	}     

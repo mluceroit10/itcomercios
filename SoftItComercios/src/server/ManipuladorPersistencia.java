@@ -1,6 +1,8 @@
 package server;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.jdo.Extent;
@@ -62,6 +64,13 @@ public class ManipuladorPersistencia {
             throw e;
     	}
     }
+    
+    public void borrarTodos(Set set){
+        for (Iterator i = set.iterator(); i.hasNext(); ) {
+          Object item = i.next();
+          pm.deletePersistent(item);
+        }
+      }
     
     public Vector getAll(Class clase)throws Exception{
     	Vector objetos=new Vector();

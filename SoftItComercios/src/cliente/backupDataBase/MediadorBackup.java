@@ -1,13 +1,11 @@
 package cliente.backupDataBase;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
 import java.util.Date;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import common.Utils;
 

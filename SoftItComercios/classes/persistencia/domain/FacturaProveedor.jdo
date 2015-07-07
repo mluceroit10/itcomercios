@@ -10,6 +10,7 @@
     <field name = "proveedor" persistence-modifier="persistent">
       	<extension vendor-name="triactive" key="collection-field"/>
     </field>
+    <field name="cargaParcial" />
     </class>
     </package>
 </jdo>

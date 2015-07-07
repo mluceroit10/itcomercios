@@ -190,7 +190,7 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
                     if (controlProvincia.provinciaAsociada(id)) {
                     	Utils.advertenciaUsr(guiProvincia,"La Provincia no puede ser borrada.");
                         }else{
-                            int prueba = Utils.aceptarCancelarAccion(guiProvincia,"Esta seguro que desea Eliminar la Provincia \n"+ nombre);
+                            int prueba = Utils.aceptarCancelarAccion(guiProvincia,"Esta seguro que desea Eliminar la Provincia "+ nombre);
                             if (prueba == 0)
                                 this.controlProvincia.eliminarProvincia(id);
                         }     

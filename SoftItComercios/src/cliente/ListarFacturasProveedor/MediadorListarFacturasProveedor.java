@@ -22,6 +22,7 @@ import persistencia.domain.ItemFactura;
 import persistencia.domain.MovimientoCaja;
 import server.GestionarComercio.ControlComercio;
 import server.GestionarFacturaProveedor.ControlFacturaProveedor;
+import cliente.GestionarFacturaProveedor.MediadorFacturarProveedor;
 import cliente.GestionarMovimientoCaja.MediadorAltaMovimientoCaja;
 import cliente.Principal.GUIReport;
 
@@ -123,7 +124,9 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 			} 	
         }else if (source == guiTodasFactProv.getJBSalir()){
 	           if(flag){
-	        	   this.guiTodasFactProv.dispose();
+	        	   if (cargarFilaSeleccionada()) {
+	        		   this.guiTodasFactProv.dispose();
+	        	   }
 	           }
 	           else{
 	        	   if (cargarFilaSeleccionada()) {
@@ -149,8 +152,14 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
                 result = false;
     		}else{
     			Long id = (Long)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][0];
-    			fact = this.controlFactProv.buscarFacturaProveedor(id);
-    			result = true;
+    			String estado = (String)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][7];
+    			if(estado.compareTo("Parcial")==0){
+    				new MediadorFacturarProveedor(this,guiTodasFactProv,id);
+    				return false;
+    			}else{	
+    				fact = this.controlFactProv.buscarFacturaProveedor(id);
+    				result = true;
+    			}
     		}
     	} catch (Exception ex){
     		Utils.manejoErrores(ex,"Error en MediadorListarFacturasProveedor. CargarFilaSeleccionada");
@@ -178,7 +187,9 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 					compr=compr.substring(0,compr.length()-1);
 				String anulada="";
 				if(p.isAnulada())
-					anulada="SI";
+					anulada="Anulada";
+				else if(p.isCargaParcial())
+					anulada="Parcial";
 				Object[] temp = {p.getId(),common.Utils.getStrUtilDate(p.getFecha()),Utils.nroFact(p.getNroFactura()),p.getProveedor().getNombre(),Utils.ordenarDosDecimales(p.getImporteTotal()),Utils.ordenarDosDecimales(abonado),compr,anulada};
 				
             	guiTodasFactProv.datos[i] = temp;
@@ -209,8 +220,10 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
             	 if(compr.length()>1)
             		 compr=compr.substring(0,compr.length()-1);
             	 String anulada="";
- 				if(r.isAnulada())
- 					anulada="SI";
+            	 if(r.isAnulada())
+            		 anulada="Anulada";
+            	 else if(r.isCargaParcial())
+            		 anulada="Parcial";
             	 Object[] temp = {r.getId(),common.Utils.getStrUtilDate(r.getFecha()),Utils.nroFact(r.getNroFactura()),r.getProveedor().getNombre(),String.valueOf(r.getImporteTotal()),Utils.ordenarDosDecimales(abonado),compr,anulada};
             	 guiTodasFactProv.datos[j] = temp;
              }
@@ -241,22 +254,26 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 
     private void anularFactura() {
         try{
-                if (guiTodasFactProv.jtDatos.getSelectedRow() == -1){
-                	Utils.advertenciaUsr(guiTodasFactProv,"Para poder anular una Factura debe seleccionarla previamente.");
-                } else {
-                	Long id = (Long)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][0];
-                	String nroFactura = (String)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][2];
-                	if (controlFactProv.facturaAsociada(id)) {
-                    	Utils.advertenciaUsr(guiTodasFactProv,"La Factura no puede ser borrada porque registra pagos.");
-                    }else{
-                    	int prueba = Utils.aceptarCancelarAccion(guiTodasFactProv,"Esta seguro que desea Anular la Factura Nro: \n"+ nroFactura);
-                    	if (prueba == 0){
-                    		this.controlFactProv.anularFacturaProveedor(id);
-                    		cargarDatos();
-                    	}    
-                    }
-                }
-           
+        	if (guiTodasFactProv.jtDatos.getSelectedRow() == -1){
+        		Utils.advertenciaUsr(guiTodasFactProv,"Para poder anular una Factura debe seleccionarla previamente.");
+        	} else {
+        		Long id = (Long)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][0];
+        		String nroFactura = (String)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][2];
+        		if (controlFactProv.facturaAsociada(id)) {
+        			Utils.advertenciaUsr(guiTodasFactProv,"La Factura no puede ser borrada porque registra pagos.");
+        		}else{
+        			String estado = (String)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][7];
+        			if(estado.compareTo("Parcial")==0){
+        				Utils.advertenciaUsr(guiTodasFactProv,"Una Factura de carga Parcial no puede ser borrada, confirme la factura.");
+        			}else{
+        				int prueba = Utils.aceptarCancelarAccion(guiTodasFactProv,"Esta seguro que desea Anular la Factura Nro: "+ nroFactura);
+        				if (prueba == 0){
+        					this.controlFactProv.anularFacturaProveedor(id);
+        					cargarDatos();
+        				} 
+        			}
+        		}
+        	}
         }catch(Exception ex){
         	Utils.manejoErrores(ex,"Error en MediadorListarFacturasCliente. anularFactura");
         }
@@ -283,6 +300,10 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 						medAltaMovCaja.actualizarFactura();
 						this.guiTodasFactProv.dispose();
 					}
+				}
+			}else{
+				if (cargarFilaSeleccionada()) {
+					this.guiTodasFactProv.dispose();
 				}
 			}	
 		}

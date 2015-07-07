@@ -1,6 +1,7 @@
 package server.GestionarFacturaProveedor;
 
 import java.rmi.RemoteException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,7 +26,7 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 	
 	public ControlFacturaProveedor() throws RemoteException{   }
 	
-	public double agregarFacturaProveedorTotal(FacturaProveedor p,Vector items,Vector cambioPrecio,Vector prEntrConIva, Vector ganancias,Vector nuevoPrecioVtaSinIva,Vector nuevoPrecioVtaConIva,Vector ctrlVto,Vector fechasVto)throws Exception{
+	public double agregarFacturaProveedorTotal(FacturaProveedor p,Vector items,Vector cambioPrecio,Vector prEntrConIva, Vector ganancias,Vector nuevoPrecioVtaSinIva,Vector nuevoPrecioVtaConIva,Long idFGuardada)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		ControlProveedor cProv = new ControlProveedor();
 		//creo objeto y seteo datos basicos
@@ -34,6 +35,12 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 		double result=0;
 		try{
 			mp.initPersistencia();
+			if(idFGuardada!=null){
+				FacturaProveedor felim=buscarFProveedorPersistentePorId(mp,idFGuardada);
+				mp.borrarTodos(felim.getItems());
+				mp.borrar(felim);
+			}	
+			
 			Proveedor prov = cProv.buscarProveedorPersistentePorId(mp,p.getProveedor().getId());
 			mp.hacerPersistente(lnew);
 			lnew.setPeriodo(Utils.getMes(p.getFecha())+"-"+Utils.getAnio(p.getFecha()));
@@ -64,9 +71,8 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 				}	
 				
 				//Debo agregar el ctrl del Vto
-				if(((String)ctrlVto.elementAt(i)).compareTo("SI")==0){
-					Date feVto = (Date)fechasVto.elementAt(i);
-					actualizarVencimientoDelProducto(mp,pr,feVto,itF.getCantidad(),itF.getKilos());
+				if(itF.getFechaVto()!=null){
+					actualizarVencimientoDelProducto(mp,pr,itF.getFechaVto(),itF.getCantidad(),itF.getKilos());
 				//
 				}	
 				
@@ -235,15 +241,20 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 		return FacturaProveedors2;
 	}
 		
-	public boolean existeFacturaProveedorNroTipo(Long nroF, String tipoF, int cod)throws Exception{
+	public boolean existeFacturaProveedorNroTipo(Long nroF, String tipoF, int cod, Long idFPGuardada)throws Exception{
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		boolean existe = false;
 		try {
 			mp.initPersistencia();
 			String filtro = "nroFactura == "+nroF+" && tipoFactura==\""+tipoF+"\" && proveedor.codigo=="+cod;
 			Vector FacturaProveedorCol= mp.getObjects(FacturaProveedor.class,filtro);
-			if (FacturaProveedorCol.size()==1)
-				existe=true;
+			if (FacturaProveedorCol.size()==1){
+			    FacturaProveedor fp=(FacturaProveedor)FacturaProveedorCol.elementAt(0);
+			    if(fp.getId().equals(idFPGuardada))
+			    	existe=false;
+			    else existe=true;	
+			}
+				
 			mp.commit();
 		} finally {
 			mp.rollback();
@@ -301,4 +312,69 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 		}
 		return estaAsoc;
     }
+	
+	public FacturaProveedor buscarFProveedorPersistentePorId(ManipuladorPersistencia mp,Long id) throws Exception {
+		FacturaProveedor obj = new FacturaProveedor();
+		String filtro = "id == "+id;
+		Collection col= mp.getObjects(FacturaProveedor.class,filtro);
+		if (col.size()>=1){
+			obj = (FacturaProveedor)(col.toArray())[0];
+		}
+		return obj;
+	}
+	
+	public double guardarFacturaProveedor(FacturaProveedor p,Vector items,Vector cambioPrecio,Vector prEntrConIva, Vector ganancias,Vector nuevoPrecioVtaSinIva,Vector nuevoPrecioVtaConIva,Long idFGuardada)throws Exception{
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		ControlProveedor cProv = new ControlProveedor();
+		//creo objeto y seteo datos basicos
+		FacturaProveedor lnew =Assemblers.crearFacturaProveedor(p);
+		ControlProducto cProd = new ControlProducto();
+		double result=0;
+		try{
+			mp.initPersistencia();
+			
+			System.out.println("ID GUARDADA "+idFGuardada);
+			
+			if(idFGuardada!=null){
+				FacturaProveedor felim=buscarFProveedorPersistentePorId(mp,idFGuardada);
+				mp.borrarTodos(felim.getItems());
+				mp.borrar(felim);
+			}	
+			System.out.println("ID FACT "+lnew.getId());
+			
+			Proveedor prov = cProv.buscarProveedorPersistentePorId(mp,p.getProveedor().getId());
+			if(idFGuardada==null)
+				mp.hacerPersistente(lnew);
+			lnew.setPeriodo(Utils.getMes(p.getFecha())+"-"+Utils.getAnio(p.getFecha()));
+
+			// No guardo la fecha de UF ni el saldo enla deuda del proveedor
+
+			for(int i=0;i<items.size();i++){
+				ItemFactura itF = (ItemFactura) items.elementAt(i);
+				ItemFactura itnew= Assemblers.crearItemFactura(itF);
+				Producto pr= cProd.buscarProductoPersistentePorId(mp,itF.getProducto().getId());
+				
+				// No guardo decrementos de stock por cada producto de la factura
+
+				if(((String)cambioPrecio.elementAt(i)).compareTo("SI")==0){
+					pr.setGanancia(Integer.parseInt((String)ganancias.elementAt(i)));
+					pr.setPrecioEntrada(itF.getPrUnit());					
+					pr.setPrecioEntCIva(true);
+					pr.setPrecioVentaSinIva(Double.parseDouble((String)nuevoPrecioVtaSinIva.elementAt(i)));
+					pr.setPrecioVentaConIva(Double.parseDouble((String)nuevoPrecioVtaConIva.elementAt(i)));
+				}	
+				
+				// No guardo el ctrl del Vto
+								
+				mp.hacerPersistente(itnew);
+				itnew.setProducto(pr);
+				itnew.setFactura(lnew);
+			}
+			lnew.setProveedor(prov);
+			mp.commit();
+		} finally {
+			mp.rollback();
+		}
+		return result;
+	}
 }

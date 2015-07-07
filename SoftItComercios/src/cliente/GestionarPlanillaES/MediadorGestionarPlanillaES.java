@@ -13,7 +13,6 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -27,7 +26,6 @@ import server.RealizarPlanillaES.ControlRealizarPlanillaES;
 import cliente.Principal.GUIPrincipal;
 import cliente.Principal.GUIReport;
 
-import common.RootAndIp;
 import common.Utils;
 import common.GestionarMovimientoCaja.IControlMovimientoCaja;
 import common.RealizarPlanillaES.IControlRealizarPlanillaES;
@@ -148,7 +146,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
                 		 if(sel==(guiImprimirPlanillaES.datos.length -1)){
                 			 Long id = (Long)guiImprimirPlanillaES.datos[guiImprimirPlanillaES.jtDatos.getSelectedRow()][0];
                 			 String numero = (String)guiImprimirPlanillaES.datos[guiImprimirPlanillaES.jtDatos.getSelectedRow()][1];
-                			 int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Esta seguro que desea Eliminar la Planilla Nro: \n" + numero);
+                			 int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Esta seguro que desea Eliminar la Planilla Nro: " + numero);
                 			 if (prueba == 0){
                 				 this.controlRealizarPlanillaES.eliminarPlanillaES(id);
                 			 }

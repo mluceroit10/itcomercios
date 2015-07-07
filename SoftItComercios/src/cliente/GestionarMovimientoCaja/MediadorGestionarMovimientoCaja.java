@@ -134,7 +134,7 @@ public class MediadorGestionarMovimientoCaja implements ActionListener, KeyListe
                     if (controlMovimientoCaja.movimientoCajaAsociado(id)) {
                     	Utils.advertenciaUsr(guiMovimientoCaja,"El Movimiento de Caja no puede ser borrado.");
                     }else{
-                    	int prueba = Utils.aceptarCancelarAccion(guiMovimientoCaja,"Esta seguro que desea Eliminar el Movimiento de Caja \n"+ cod);
+                    	int prueba = Utils.aceptarCancelarAccion(guiMovimientoCaja,"Esta seguro que desea Eliminar el Movimiento de Caja "+ cod);
                     	if (prueba == 0){
                     		this.controlMovimientoCaja.eliminarMovimientoCaja(id);
                     	}    

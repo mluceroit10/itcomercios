@@ -96,7 +96,7 @@ public class MediadorGestionarVencimientoProducto implements ActionListener, Key
                 } else {
                 	String nombre = (String)guiVencimiento.datos[guiVencimiento.jtDatos.getSelectedRow()][2];
                 	Long id = (Long)guiVencimiento.datos[guiVencimiento.jtDatos.getSelectedRow()][0];
-                	int prueba = Utils.aceptarCancelarAccion(guiVencimiento,"Esta seguro que desea Eliminar el Producto \n"+ nombre);
+                	int prueba = Utils.aceptarCancelarAccion(guiVencimiento,"Esta seguro que desea Eliminar el Producto "+ nombre);
                 	if (prueba == 0)
                 		this.controlVencimiento.eliminarVencimiento(id);
                 	actualizarTabla();

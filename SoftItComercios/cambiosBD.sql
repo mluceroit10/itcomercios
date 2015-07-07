@@ -3,7 +3,7 @@ use softcomerciodb;
      /*
 Deuda y fecha de ultima Facturacion al cliente y al proveedor
 factura dia_buscar  */
-alter table FACTURA
+/*alter table FACTURA
 add column DIA_BUSCAR  int(11) NOT NULL default '0';
 
 alter table FACTURA_CLIENTE
@@ -17,4 +17,10 @@ add column FECHA_UF date default NULL;
 
 alter table PROVEEDOR
 add column DEUDA  double NOT NULL default '0',
-add column FECHA_UF date default NULL;
+add column FECHA_UF date default NULL;*/
+
+alter table FACTURA_PROVEEDOR
+add column CARGA_PARCIAL tinyint(1) NOT NULL default 0;
+
+alter table ITEM_FACTURA
+add column FECHA_VTO date default NULL;

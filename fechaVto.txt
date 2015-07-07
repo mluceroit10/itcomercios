@@ -1,0 +1,8 @@
+como hacerlo.
+
+Si se factura al proveedor se agrega el producto.
+si el producto y la fecha de vto no estan se agrega.
+si el producto esta, pero con otra fecha de vto se agrega.
+si el producto y fecha de vto estan, se actualiza el stock.
+
+con la venta se descuenta del stock de acuerdo a la fecha de vto.

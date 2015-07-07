@@ -239,7 +239,7 @@ public class MediadorGestionarProducto implements ActionListener, KeyListener, L
                 	if (controlProducto.productoAsociado(id)) {
                 		Utils.advertenciaUsr(guiProducto,"El Producto no puede ser borrado.");
                 	}else{
-                		int prueba = Utils.aceptarCancelarAccion(guiProducto,"Esta seguro que desea Eliminar el Producto \n"+ nombre);
+                		int prueba = Utils.aceptarCancelarAccion(guiProducto,"Esta seguro que desea Eliminar el Producto "+ nombre);
                 		if (prueba == 0)
                 			this.controlProducto.eliminarProducto(id);
                 	}    

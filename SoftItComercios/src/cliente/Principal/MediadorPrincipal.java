@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 import cliente.GestionarCliente.MediadorGestionarCliente;
 import cliente.GestionarComercio.MediadorModificarComercio;
@@ -24,7 +23,6 @@ import cliente.ListarFacturasProveedor.MediadorListarFacturasProveedor;
 import cliente.ListarRemitosCliente.MediadorListarRemitosCliente;
 import cliente.backupDataBase.MediadorBackup;
 
-import common.RootAndIp;
 import common.Utils;
       
 public class MediadorPrincipal implements ActionListener{

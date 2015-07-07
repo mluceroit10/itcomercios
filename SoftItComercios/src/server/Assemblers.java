@@ -87,6 +87,7 @@ public class Assemblers {
 		fp.setAnulada(objD.isAnulada());
 		fp.setFecha(objD.getFecha());
 		fp.setDiaBuscar(objD.getDiaBuscar());
+		fp.setCargaParcial(objD.isCargaParcial());
 		return fp;
 	}
 	
@@ -98,6 +99,7 @@ public class Assemblers {
 		itF.setPrUnit(objD.getPrUnit());
 		itF.setDescuento(objD.getDescuento());
 		itF.setPrTotal(objD.getPrTotal());
+		itF.setFechaVto(objD.getFechaVto());
 		return itF;
 	}
 	

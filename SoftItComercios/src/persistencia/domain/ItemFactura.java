@@ -1,5 +1,7 @@
 package persistencia.domain;
   
+import java.sql.Date;
+
 import persistencia.OidGenerator;
 
 public class ItemFactura {
@@ -12,6 +14,7 @@ public class ItemFactura {
 	private double prUnit;
 	private int descuento;//es en porcentaje
 	private double prTotal;
+	private Date fechaVto;
 	
 	public ItemFactura(){
 		id=OidGenerator.getNewId();	
@@ -79,6 +82,14 @@ public class ItemFactura {
 
 	public void setPrTotal(double prTotal) {
 		this.prTotal = prTotal;
+	}
+
+	public Date getFechaVto() {
+		return fechaVto;
+	}
+
+	public void setFechaVto(Date fechaVto) {
+		this.fechaVto = fechaVto;
 	}
 
 	

@@ -48,7 +48,7 @@ public class GUIListarFacturasProveedor extends JDialog {
     private JTextField jtfNombre = null;		private JTextField jtfProveedor = null;
     public JScrollPane jspDatos = null;
     public JTable jtDatos = null;				private ModeloTabla modTabla = null;
-    public String[] titulos = {"ID","Fecha","Nro de Factura","Proveedor","Importe Total","Importe Abonado","Cod. Movs. Caja","Anulada"};
+    public String[] titulos = {"ID","Fecha","Nro de Factura","Proveedor","Importe Total","Importe Abonado","Cod. Movs. Caja","Estado"};
     public Object[][] datos;
 	private JButton jbAnular;
 	private int mesLI;
@@ -248,10 +248,13 @@ public class GUIListarFacturasProveedor extends JDialog {
 				private static final long serialVersionUID = 1L;
 				public Component prepareRenderer(TableCellRenderer renderer, int row, int column){
 					Component returnComp = super.prepareRenderer(renderer, row,column);
-					String anulada=getValueAt(row,7).toString();
-					if(anulada.compareTo("SI")==0){
+					String estado=getValueAt(row,7).toString();
+					if(estado.compareTo("Anulada")==0){
 						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.RED);
+					}else if(estado.compareTo("Parcial")==0){
+						returnComp.setBackground(Utils.colorTexto);
+						returnComp.setForeground(Color.GRAY);
 					}else{
 						returnComp.setBackground(Utils.colorTexto);
 						returnComp.setForeground(Color.BLACK);
@@ -285,7 +288,7 @@ public class GUIListarFacturasProveedor extends JDialog {
             TableColumn columna5 = jtDatos.getColumn("Importe Abonado");
             columna5.setPreferredWidth(100);
             columna5.setCellRenderer(Utils.alinearDerecha());
-            TableColumn columna6 = jtDatos.getColumn("Anulada");
+            TableColumn columna6 = jtDatos.getColumn("Estado");
             columna6.setPreferredWidth(90);
             columna6.setMaxWidth(90);
             columna6.setCellRenderer(Utils.alinearCentro());

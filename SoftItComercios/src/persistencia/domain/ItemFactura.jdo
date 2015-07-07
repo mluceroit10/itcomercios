@@ -17,7 +17,8 @@
     </field>
     <field name="prUnit" /> 
 	<field name="descuento" />
-    <field name="prTotal" /> 	
+    <field name="prTotal" /> 
+   	<field name="fechaVto" /> 
      </class>
     </package>
 </jdo>	

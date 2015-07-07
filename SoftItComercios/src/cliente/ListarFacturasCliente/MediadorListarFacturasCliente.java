@@ -274,7 +274,7 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
                     }else if(nroFactura.indexOf("-",5)!= -1){
                     	Utils.advertenciaUsr(guiTodasFactCte,"La Factura no puede ser borrada por ser una Factura de Remito.");
                     }else{
-                    	int prueba = Utils.aceptarCancelarAccion(guiTodasFactCte,"Esta seguro que desea Anular la Factura Nro: \n"+ nroFactura);
+                    	int prueba = Utils.aceptarCancelarAccion(guiTodasFactCte,"Esta seguro que desea Anular la Factura Nro: "+ nroFactura);
                     	if (prueba == 0){
                     		this.controlFactCte.anularFacturaCliente(id);
                     		cargarDatos();

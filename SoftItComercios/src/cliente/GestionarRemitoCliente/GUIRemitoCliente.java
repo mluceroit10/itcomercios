@@ -274,6 +274,7 @@ public class GUIRemitoCliente extends JDialog {
         	jtfBusqueda = new JTextField();
         	jtfBusqueda.setBounds(new Rectangle(230,30,150,26));
         	jtfBusqueda.setFont(Utils.FuenteCampos());
+        	
         }
         return jtfBusqueda;
     }
