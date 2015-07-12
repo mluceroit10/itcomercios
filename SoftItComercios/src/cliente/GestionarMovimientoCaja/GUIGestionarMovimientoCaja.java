@@ -170,6 +170,7 @@ public class GUIGestionarMovimientoCaja extends JDialog {
             jbCargar.setBounds(new Rectangle(10,30,160,26));
             jbCargar.setInputMap(0, map);
             jbCargar.setFont(Utils.FuenteBotonesChicos());
+            jbCargar.setMnemonic('I');
         }
         return jbCargar;
     }
@@ -182,6 +183,7 @@ public class GUIGestionarMovimientoCaja extends JDialog {
             jbBorrar.setBounds(new Rectangle(190,30,160,26));
             jbBorrar.setInputMap(0, map);
             jbBorrar.setFont(Utils.FuenteBotonesChicos());
+            jbBorrar.setMnemonic('E');
         }
         return jbBorrar;
     }
@@ -194,6 +196,7 @@ public class GUIGestionarMovimientoCaja extends JDialog {
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('S');
         }
         return jbAceptar;
     }
@@ -273,6 +276,7 @@ public class GUIGestionarMovimientoCaja extends JDialog {
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			jbCambiarPeriodo.setFont(Utils.FuenteBotonesChicos());
+			jbCambiarPeriodo.setMnemonic('C');
 			
 		}
 		return jbCambiarPeriodo;

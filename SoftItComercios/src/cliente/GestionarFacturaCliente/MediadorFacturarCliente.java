@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -173,7 +174,8 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     				if(tipo.compareTo("A")==0){
     					ivaFact = guiFacturarCte.getJTFImporteIva().getText();
     				}
-    				Date fecha= Utils.crearFecha(fu);
+    				Timestamp fecha= Utils.crearFechaHora(fu);
+    				Date fechaPago= Utils.crearFecha(fu);
     				if (this.productos.size()==0){
     					Utils.advertenciaUsr(guiFacturarCte,"Debe agregar algún Producto para poder generar la Factura.");
     				} else if(guiFacturarCte.getJTFNombreC().getText().length()==0 ){
@@ -196,7 +198,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     					fc.setTipoFactura("FacturaCliente-"+tipo);
     					fc.setCondVenta(condVta);
     					if(condVta.compareTo("CONTADO")==0){
-    						fc.setFechaPago(fecha);
+    						fc.setFechaPago(fechaPago);
     	                    fc.setImporteAbonado(importeTotal);
     					}
     					fc.setIva(iva);

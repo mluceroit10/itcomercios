@@ -200,7 +200,7 @@ public class GUIFacturarProveedor extends JDialog {
             jlNombreC.setForeground(Utils.colorTexto);
             jlNombreC.setFont(Utils.FuenteBasica());
             jlFechaFactura = new JLabel();
-            jlFechaFactura.setBounds(new Rectangle(770,65,120,26));
+            jlFechaFactura.setBounds(new Rectangle(750,65,120,26));
             jlFechaFactura.setHorizontalAlignment(SwingConstants.RIGHT);
             jlFechaFactura.setText("FECHA:");
             jlFechaFactura.setForeground(Utils.colorTexto);
@@ -226,7 +226,8 @@ public class GUIFacturarProveedor extends JDialog {
     public JDateChooser getJDateChooserFecha() {
 		if (jDataCFecha == null) {
 			jDataCFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDataCFecha.setBounds(new java.awt.Rectangle(900,62,190,26));
+			jDataCFecha.setBounds(new java.awt.Rectangle(880,62,300,26));
+			jDataCFecha.getSpinner().setFont(Utils.FuenteFechas());
 		}
 		return jDataCFecha;
 	}
@@ -242,6 +243,7 @@ public class GUIFacturarProveedor extends JDialog {
             jbBuscarC.setBounds(new java.awt.Rectangle(25,30,300,26));
             jbBuscarC.setInputMap(0, map);
             jbBuscarC.setFont(Utils.FuenteBotonesChicos());
+            jbBuscarC.setMnemonic('S');
         }
         return jbBuscarC;
     }
@@ -256,6 +258,7 @@ public class GUIFacturarProveedor extends JDialog {
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
         	jbAgregarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbAgregarProd.setMnemonic('A');
         }
         return jbAgregarProd;
     }
@@ -270,6 +273,7 @@ public class GUIFacturarProveedor extends JDialog {
         	jbEliminarProd.setEnabled(false);
         	jbEliminarProd.setInputMap(0, map);
         	jbEliminarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbEliminarProd.setMnemonic('E');
         }
         return jbEliminarProd;
     }
@@ -284,19 +288,21 @@ public class GUIFacturarProveedor extends JDialog {
         	jbConfirmarFact.setEnabled(false);
         	jbConfirmarFact.setInputMap(0, map);
         	jbConfirmarFact.setFont(Utils.FuenteBotonesGrandes());
+        	jbConfirmarFact.setMnemonic('F');
         }
         return jbConfirmarFact;
     }
     
     public JButton getJBGuardar() {
         if (jbGuardar == null) {
-        	jbGuardar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
-        	jbGuardar.setBounds(new java.awt.Rectangle(1200,30,50,50));
+        	jbGuardar = new GlossyButton("G",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbGuardar.setBounds(new java.awt.Rectangle(1190,30,70,50));
         	jbGuardar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/guardar.png")));
         	jbGuardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbGuardar.setEnabled(false);
         	jbGuardar.setInputMap(0, map);
         	jbGuardar.setName("GuardarParcial");
+        	jbGuardar.setMnemonic('G');
         }
         return jbGuardar;
     }
@@ -330,6 +336,7 @@ public class GUIFacturarProveedor extends JDialog {
         	jbNuevoProd.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbNuevoProd.setInputMap(0, map);
         	jbNuevoProd.setFont(Utils.FuenteBotonesChicos());
+        	jbNuevoProd.setMnemonic('N');
 	   }
         return jbNuevoProd;
     }
@@ -456,6 +463,7 @@ public class GUIFacturarProveedor extends JDialog {
 		if (jDFechaVto == null) {
 			jDFechaVto = new JDateChooser("dd/MM/yyyy",false);
 			jDFechaVto.setBounds(new java.awt.Rectangle(785,115,180,26));
+			jDFechaVto.getSpinner().setFont(Utils.FuenteFechas());
 		}
 		return jDFechaVto;
 	}
@@ -463,7 +471,7 @@ public class GUIFacturarProveedor extends JDialog {
     public JTextField getJTFNombreC() {
         if (jtfNombreC == null) {
             jtfNombreC = new JTextField();
-            jtfNombreC.setBounds(new Rectangle(500,30,300,26));
+            jtfNombreC.setBounds(new Rectangle(500,30,280,26));
             jtfNombreC.setDisabledTextColor(Utils.colorTextoDisabled);
             jtfNombreC.setEnabled(false);
             jtfNombreC.setFont(Utils.FuenteCampos());
@@ -474,7 +482,7 @@ public class GUIFacturarProveedor extends JDialog {
 	public JTextField getJtNroFactura() {
 		if (jtNroFactura == null) {
 			jtNroFactura = new JTextField();
-			jtNroFactura.setBounds(new java.awt.Rectangle(500,65,300,26));
+			jtNroFactura.setBounds(new java.awt.Rectangle(500,65,280,26));
 			jtNroFactura.setDocument(new LimitadorNroMax(jtNroFactura,12));
 			jtNroFactura.setFont(Utils.FuenteCampos());
 		}

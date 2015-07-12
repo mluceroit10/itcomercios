@@ -50,8 +50,8 @@ public class MediadorGestionarProveedor implements ActionListener, ListSelection
         cargarDatos();
         this.guiProveedor.setListSelectionListener(this);
         this.guiProveedor.setKeyListener(this);
-        Utils.show(guiProveedor);
         this.flag=true;
+        Utils.show(guiProveedor);
     }
     
 	public MediadorGestionarProveedor(MediadorAltaProducto medAP,JDialog guiPadre) {
@@ -146,8 +146,7 @@ public class MediadorGestionarProveedor implements ActionListener, ListSelection
        }else if ((((Component)e.getSource()).getName().compareTo("Aceptar")) == 0){
            if(flag){
         	   this.guiProveedor.dispose();
-           }
-           else{
+           }else{
         	   if (cargarFilaSeleccionada()) {
         		   if (medModProducto != null) {
         			   medModProducto.proveedor = miProveedorDto;

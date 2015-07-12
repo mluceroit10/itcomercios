@@ -407,6 +407,7 @@ public class GUIAltaModProducto extends JDialog {
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -419,6 +420,7 @@ public class GUIAltaModProducto extends JDialog {
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('C');
         }
         return jbCancelar;
     }
@@ -433,6 +435,7 @@ public class GUIAltaModProducto extends JDialog {
         	jbProveedor.setEnabled(seleccionar);
         	jbProveedor.setInputMap(0, map);
         	jbProveedor.setFont(Utils.FuenteBotonesChicos());
+        	jbProveedor.setMnemonic('B');
         }
         return jbProveedor;
     }

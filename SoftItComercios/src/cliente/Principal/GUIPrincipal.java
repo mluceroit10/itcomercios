@@ -105,12 +105,6 @@ public class GUIPrincipal extends JFrame implements Runnable {
 		jContentPane.add(getJPanelAccesosFactCliente(), null);
 		jContentPane.add(getJPanelLibroIva(),null);
 		jContentPane.add(getJPanelAccesosClientes(), null);
-		
-		JLabel salir = new JLabel("SALIR");
-		salir.setBounds(new java.awt.Rectangle(1115,560,100,35));
-		salir.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 32));
-		salir.setForeground(Utils.colorTexto);
-		jContentPane.add(salir,null);
 		jContentPane.add(getJButtonSalir(),null);
 		setJMenuBar(getJBarraMenu());
 		return jContentPane;
@@ -123,14 +117,17 @@ public class GUIPrincipal extends JFrame implements Runnable {
 			archivo.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/informacion.png")));
 			archivo.setForeground(colorFuenteMenu);
 			archivo.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
+			archivo.setMnemonic('I');
 			gestionar = new JMenu("Gestionar             ");
 			gestionar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/reclamo.png")));
 	        gestionar.setForeground(colorFuenteMenu);
 	        gestionar.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
+	        gestionar.setMnemonic('G');
 	        baseDatos = new JMenu("Datos         ");
 	        baseDatos.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/data.png")));
 	        baseDatos.setForeground(colorFuenteMenu);
 	        baseDatos.setFont(new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 28));
+	        baseDatos.setMnemonic('D');
 	        menuPrinc.add(archivo);
 	        menuPrinc.add(gestionar);
 	        menuPrinc.add(baseDatos);
@@ -224,44 +221,52 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	
 	public JButton getJButtonLibroIva() {
 		if (jBLibroIva == null) {
-			jBLibroIva= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBLibroIva.setBounds(new java.awt.Rectangle(100,40,70,70));
+			jBLibroIva= new GlossyButton("L",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBLibroIva.setBounds(new java.awt.Rectangle(90,40,90,70));
 			jBLibroIva.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/libroIva.png")));
 			jBLibroIva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBLibroIva.setInputMap(0, map);
+			jBLibroIva.setMnemonic('L');
+			jBLibroIva.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBLibroIva;
 	}
 		
 	public JButton getJButtonProductos() {
 		if (jBProductos == null) {
-			jBProductos= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBProductos.setBounds(new java.awt.Rectangle(415,40,70,70));
+			jBProductos= new GlossyButton("8",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBProductos.setBounds(new java.awt.Rectangle(405,40,90,70));
 			jBProductos.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productos.png")));
 			jBProductos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBProductos.setInputMap(0, map);
+			jBProductos.setMnemonic('8');
+			jBProductos.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBProductos;
 	}
 	
 	public JButton getJButtonSalir() {
 		if (jButtonSalir == null) {
-			jButtonSalir = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jButtonSalir.setBounds(new java.awt.Rectangle(1110,463,100,100));
+			jButtonSalir = new GlossyButton("\nSALIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_BLACK_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jButtonSalir.setBounds(new java.awt.Rectangle(1110,463,170,100));
 			jButtonSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salir.png")));
 			jButtonSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jButtonSalir.setInputMap(0, map);
+			jButtonSalir.setFont(Utils.FuenteTablasSimple());
+			jButtonSalir.setMnemonic('S');
 		}
 		return jButtonSalir;
 	}
 
 	public JButton getJButtonProveedores() {
 		if (jBGestionProveedores == null) {
-			jBGestionProveedores= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionProveedores.setBounds(new java.awt.Rectangle(115,40,70,70));  
+			jBGestionProveedores= new GlossyButton("7",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBGestionProveedores.setBounds(new java.awt.Rectangle(105,40,90,70));  
 			jBGestionProveedores.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/proveedores.png")));
 			jBGestionProveedores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionProveedores.setInputMap(0, map);
+			jBGestionProveedores.setMnemonic('7');
+			jBGestionProveedores.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBGestionProveedores;
 	}
@@ -292,11 +297,13 @@ public class GUIPrincipal extends JFrame implements Runnable {
 	
 	public JButton getJButtonClientes() {
 		if (jBGestionClientes == null) {
-			jBGestionClientes= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionClientes.setBounds(new java.awt.Rectangle(100,40,70,70));
+			jBGestionClientes= new GlossyButton("C",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBGestionClientes.setBounds(new java.awt.Rectangle(90,40,90,70));
 			jBGestionClientes.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/socios.png")));
 			jBGestionClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionClientes.setInputMap(0, map);
+			jBGestionClientes.setMnemonic('C');
+			jBGestionClientes.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBGestionClientes;
 	}
@@ -335,22 +342,26 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public JButton getJButtonGestionarMC() {
 		if (jBGestionarMC == null) {
-			jBGestionarMC= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBGestionarMC.setBounds(new java.awt.Rectangle(115,40,70,70));
+			jBGestionarMC= new GlossyButton("5",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBGestionarMC.setBounds(new java.awt.Rectangle(105,40,90,70));
 			jBGestionarMC.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/movCaja.png")));
 			jBGestionarMC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBGestionarMC.setInputMap(0, map);
+			jBGestionarMC.setFont(Utils.FuenteTablasSimple());
+			jBGestionarMC.setMnemonic('5');
 		}
 		return jBGestionarMC;
 	}
 
 	public JButton getJButtonPlanillaES() {
 		if (jBPlanillaES == null) {
-			jBPlanillaES= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBPlanillaES.setBounds(new java.awt.Rectangle(415,40,70,70));
+			jBPlanillaES= new GlossyButton("6",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBPlanillaES.setBounds(new java.awt.Rectangle(405,40,90,70));
 			jBPlanillaES.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/planillaES.png")));
 			jBPlanillaES.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBPlanillaES.setInputMap(0, map);
+			jBPlanillaES.setFont(Utils.FuenteTablasSimple());
+			jBPlanillaES.setMnemonic('6');
 		}
 		return jBPlanillaES;
 	}
@@ -388,22 +399,26 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public JButton getJButtonFacturaCliente() {
 		if (jBFacturaCliente == null) {
-			jBFacturaCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBFacturaCliente.setBounds(new java.awt.Rectangle(115,40,70,70));
+			jBFacturaCliente= new GlossyButton("F",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBFacturaCliente.setBounds(new java.awt.Rectangle(105,40,90,70));
 			jBFacturaCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/facturaC.png")));
 			jBFacturaCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBFacturaCliente.setInputMap(0, map);
+			jBFacturaCliente.setFont(Utils.FuenteTablasSimple());
+			jBFacturaCliente.setMnemonic('F');
 		}
 		return jBFacturaCliente;
 	}
 
 	public JButton getJButtonRemitoCliente() {
 		if (jBRemitoCliente == null) {
-			jBRemitoCliente = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBRemitoCliente = new GlossyButton("1",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
 			jBRemitoCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/remito.png")));
-			jBRemitoCliente.setBounds(new java.awt.Rectangle(115,40,70,70));
+			jBRemitoCliente.setBounds(new java.awt.Rectangle(105,40,90,70));
 			jBRemitoCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED)); 
 			jBRemitoCliente.setInputMap(0, map);
+			jBRemitoCliente.setFont(Utils.FuenteTablasSimple());
+			jBRemitoCliente.setMnemonic('1');
 		}
 		return jBRemitoCliente;
 	}
@@ -441,22 +456,26 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public JButton getJButtonFacturaProveedor() {
 		if (jBFacturaProveedor== null) {
-			jBFacturaProveedor= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBFacturaProveedor.setBounds(new java.awt.Rectangle(115,40,70,70));
+			jBFacturaProveedor= new GlossyButton("3",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBFacturaProveedor.setBounds(new java.awt.Rectangle(105,40,90,70));
 			jBFacturaProveedor.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/facturaP.png")));
 			jBFacturaProveedor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBFacturaProveedor.setInputMap(0, map);
+			jBFacturaProveedor.setFont(Utils.FuenteTablasSimple());
+			jBFacturaProveedor.setMnemonic('3');
 		}
 		return jBFacturaProveedor;
 	}
 
 	public JButton getJButtonTodasFactCliente() {
 		if (jBTodasFactCliente == null) {
-			jBTodasFactCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodasFactCliente.setBounds(new java.awt.Rectangle(415,40,70,70));
+			jBTodasFactCliente= new GlossyButton("T",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBTodasFactCliente.setBounds(new java.awt.Rectangle(405,40,90,70));
 			jBTodasFactCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tFactCte.png")));
 			jBTodasFactCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodasFactCliente.setInputMap(0, map);
+			jBTodasFactCliente.setMnemonic('T');
+			jBTodasFactCliente.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBTodasFactCliente;
 	}
@@ -494,22 +513,26 @@ public class GUIPrincipal extends JFrame implements Runnable {
 
 	public JButton getJButtonTodasFactProveedor() {
 		if (jBTodasFactProv== null) {
-			jBTodasFactProv= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodasFactProv.setBounds(new java.awt.Rectangle(415,40,70,70));
+			jBTodasFactProv= new GlossyButton("4",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBTodasFactProv.setBounds(new java.awt.Rectangle(405,40,90,70));
 			jBTodasFactProv.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tFactProv.png")));
 			jBTodasFactProv.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodasFactProv.setInputMap(0, map);
+			jBTodasFactProv.setMnemonic('4');
+			jBTodasFactProv.setFont(Utils.FuenteTablasSimple());
 		}
 		return jBTodasFactProv;
 	}
 
 	public JButton getJButtonTodosRemitosCliente() {
 		if (jBTodosRemitosCliente == null) {
-			jBTodosRemitosCliente= new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
-			jBTodosRemitosCliente.setBounds(new java.awt.Rectangle(415,40,70,70));
+			jBTodosRemitosCliente= new GlossyButton("2",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);
+			jBTodosRemitosCliente.setBounds(new java.awt.Rectangle(405,40,90,70));
 			jBTodosRemitosCliente.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/tRemitosCte.png")));
 			jBTodosRemitosCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBTodosRemitosCliente.setInputMap(0, map);
+			jBTodosRemitosCliente.setFont(Utils.FuenteTablasSimple());
+			jBTodosRemitosCliente.setMnemonic('2');
 		}
 		return jBTodosRemitosCliente;
 	}

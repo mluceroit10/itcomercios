@@ -258,8 +258,9 @@ public class GUIFacturarCliente extends JDialog {
     
     public JDateChooser getJDateChooserFecha() {
 		if (jDataCFecha == null) {
-			jDataCFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDataCFecha.setBounds(new java.awt.Rectangle(100,100,170,26));
+			jDataCFecha = new JDateChooser("dd - MMM - yyyy",false);
+			jDataCFecha.getSpinner().setFont(Utils.FuenteFechas());
+			jDataCFecha.setBounds(new java.awt.Rectangle(100,100,210,26));
 		}
 		return jDataCFecha;
 	}
@@ -273,6 +274,7 @@ public class GUIFacturarCliente extends JDialog {
             jbBuscarC.setBounds(new java.awt.Rectangle(25,30,300,26));
             jbBuscarC.setInputMap(0, map);
             jbBuscarC.setFont(Utils.FuenteBotonesChicos());
+            jbBuscarC.setMnemonic('S');
         }
         return jbBuscarC;
     }
@@ -287,6 +289,7 @@ public class GUIFacturarCliente extends JDialog {
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
         	jbAgregarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbAgregarProd.setMnemonic('A');
         }
         return jbAgregarProd;
     }
@@ -301,6 +304,7 @@ public class GUIFacturarCliente extends JDialog {
         	jbEliminarProd.setEnabled(false);
         	jbEliminarProd.setInputMap(0, map);
         	jbEliminarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbEliminarProd.setMnemonic('E');
         }
         return jbEliminarProd;
     }
@@ -315,6 +319,7 @@ public class GUIFacturarCliente extends JDialog {
         	jbConfirmarFact.setEnabled(false);
         	jbConfirmarFact.setInputMap(0, map);
         	jbConfirmarFact.setFont(Utils.FuenteBotonesGrandes());
+        	jbConfirmarFact.setMnemonic('F');
         }
         return jbConfirmarFact;
     }

@@ -4,7 +4,7 @@ public class Oid   {
                       
   private Long oid;                                             
   public Oid() {                                                         
-  }                                                  
+  }                                                    
   public Long getOid()  {                                               
     return oid;                                                                        
   }                  

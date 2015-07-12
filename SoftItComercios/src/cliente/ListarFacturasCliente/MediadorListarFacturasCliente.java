@@ -203,7 +203,7 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
 				String anulada="";
 				if(p.isAnulada())
 					anulada="SI";
-			 	Object[] temp = {p.getId(),common.Utils.getStrUtilDate(p.getFechaImpresion()),tipoF,Utils.nroFact(p.getNroFactura())+remNro,p.getCliente().getNombre(),Utils.ordenarDosDecimales(p.getImporteTotal()),Utils.ordenarDosDecimales(p.getImporteAbonado()),common.Utils.getStrUtilDate(p.getFechaPago()),compr,anulada};
+			 	Object[] temp = {p.getId(),common.Utils.getStrUtilTimestamp(p.getFechaImpresion()),tipoF,Utils.nroFact(p.getNroFactura())+remNro,p.getCliente().getNombre(),Utils.ordenarDosDecimales(p.getImporteTotal()),Utils.ordenarDosDecimales(p.getImporteAbonado()),common.Utils.getStrUtilDate(p.getFechaPago()),compr,anulada};
             	guiTodasFactCte.datos[i] = temp;
             	i++;
             }
@@ -251,7 +251,7 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
             	 String anulada="";
             	 if(r.isAnulada())
             		 anulada="SI";
-            	 Object[] temp = {r.getId(),common.Utils.getStrUtilDate(r.getFechaImpresion()),tipoF,Utils.nroFact(r.getNroFactura())+remNro,r.getCliente().getNombre(),String.valueOf(r.getImporteTotal()),String.valueOf(r.getImporteAbonado()),common.Utils.getStrUtilDate(r.getFechaPago()),compr,anulada};
+            	 Object[] temp = {r.getId(),common.Utils.getStrUtilTimestamp(r.getFechaImpresion()),tipoF,Utils.nroFact(r.getNroFactura())+remNro,r.getCliente().getNombre(),String.valueOf(r.getImporteTotal()),String.valueOf(r.getImporteAbonado()),common.Utils.getStrUtilDate(r.getFechaPago()),compr,anulada};
             	 guiTodasFactCte.datos[j] = temp;
              }
      	}catch(Exception ex){

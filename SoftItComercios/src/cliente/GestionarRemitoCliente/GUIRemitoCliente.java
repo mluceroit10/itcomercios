@@ -193,7 +193,7 @@ public class GUIRemitoCliente extends JDialog {
             jlFechaRemito.setForeground(Utils.colorTexto);
             jlFechaRemito.setFont(Utils.FuenteBasica());
             jlNroRemito = new JLabel();
-            jlNroRemito.setBounds(new Rectangle(700,65,380,26));
+            jlNroRemito.setBounds(new Rectangle(800,65,380,26));
             jlNroRemito.setForeground(Utils.colorTexto);
             jlNroRemito.setFont(Utils.FuenteBasica());
             jpDatosRemito.add(jlNombreC, null);
@@ -209,9 +209,8 @@ public class GUIRemitoCliente extends JDialog {
     public JDateChooser getJDateChooserFecha() {
 		if (jDataCFecha == null) {
 			jDataCFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDataCFecha.setFont(Utils.FuenteCampos());
-			jDataCFecha.updateUI();
-			jDataCFecha.setBounds(new java.awt.Rectangle(430,65,190,26));
+			jDataCFecha.getSpinner().setFont(Utils.FuenteFechas());
+			jDataCFecha.setBounds(new java.awt.Rectangle(430,65,300,26));
 		}
 		return jDataCFecha;
 	}
@@ -226,6 +225,7 @@ public class GUIRemitoCliente extends JDialog {
         	jbAgregarProd.setEnabled(false);
         	jbAgregarProd.setInputMap(0, map);
         	jbAgregarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbAgregarProd.setMnemonic('A');
         }
         return jbAgregarProd;
     }
@@ -240,6 +240,7 @@ public class GUIRemitoCliente extends JDialog {
         	jbEliminarProd.setEnabled(false);
         	jbEliminarProd.setInputMap(0, map);
         	jbEliminarProd.setFont(Utils.FuenteBotonesChicos());
+        	jbEliminarProd.setMnemonic('E');
         }
         return jbEliminarProd;
     }
@@ -254,6 +255,7 @@ public class GUIRemitoCliente extends JDialog {
         	jbConfirmarRemito.setEnabled(false);
         	jbConfirmarRemito.setInputMap(0, map);
         	jbConfirmarRemito.setFont(Utils.FuenteBotonesGrandes());
+        	jbConfirmarRemito.setMnemonic('R');
         }
         return jbConfirmarRemito;
     }

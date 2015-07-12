@@ -136,6 +136,7 @@ public class GUIGestionarLocalidad extends JDialog {
             jbCargar.setBounds(new Rectangle(20,30,160,26));
             jbCargar.setInputMap(0, map);
             jbCargar.setFont(Utils.FuenteBotonesChicos());
+            jbCargar.setMnemonic('I');
         }
         return jbCargar;
     }
@@ -148,6 +149,7 @@ public class GUIGestionarLocalidad extends JDialog {
             jbModif.setBounds(new Rectangle(20,75,160,26));
             jbModif.setInputMap(0, map);
             jbModif.setFont(Utils.FuenteBotonesChicos());
+            jbModif.setMnemonic('M');
         }
         return jbModif;
     }
@@ -160,6 +162,7 @@ public class GUIGestionarLocalidad extends JDialog {
             jbBorrar.setBounds(new Rectangle(20,125,160,26));
             jbBorrar.setInputMap(0, map);
             jbBorrar.setFont(Utils.FuenteBotonesChicos());
+            jbBorrar.setMnemonic('E');
         }
         return jbBorrar;
     }
@@ -172,6 +175,7 @@ public class GUIGestionarLocalidad extends JDialog {
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -184,6 +188,7 @@ public class GUIGestionarLocalidad extends JDialog {
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('C');
         }
         return jbCancelar;
     }

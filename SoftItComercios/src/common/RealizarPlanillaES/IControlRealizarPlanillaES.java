@@ -1,6 +1,6 @@
 package common.RealizarPlanillaES;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import persistencia.domain.PlanillaES;
@@ -19,8 +19,8 @@ public interface IControlRealizarPlanillaES {
 	public PlanillaES buscarPlanillaESPersistentePorId(ManipuladorPersistencia mp,Long id) throws Exception;
 	public PlanillaES buscarPlanillaESNroPlanillaPersistencia(int numero) throws Exception;
 	public PlanillaES obtenerUltimaPlanilla()throws Exception;
-	public Vector obtenerMovimientosCajaParaPlanilla(Date fechaH)throws Exception;
-	public Vector obtenerFacturasClienteParaPlanilla(Date fechaH)throws Exception;
-	public Vector obtenerRemitosClienteParaPlanilla(Date fechaH)throws Exception;
+	public Vector obtenerMovimientosCajaParaPlanilla(Timestamp fechaH)throws Exception;
+	public Vector obtenerFacturasClienteParaPlanilla(Timestamp fechaH)throws Exception;
+	public Vector obtenerRemitosClienteParaPlanilla(Timestamp fechaH)throws Exception;
 	
 }

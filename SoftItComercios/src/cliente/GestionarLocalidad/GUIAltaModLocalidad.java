@@ -150,6 +150,7 @@ public class GUIAltaModLocalidad extends JDialog {
         	jbProvincia.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
         	jbProvincia.setInputMap(0, map);
         	jbProvincia.setFont(Utils.FuenteBotonesChicos());
+        	jbProvincia.setMnemonic('B');
         }
         return jbProvincia;
     }
@@ -162,6 +163,7 @@ public class GUIAltaModLocalidad extends JDialog {
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -174,6 +176,7 @@ public class GUIAltaModLocalidad extends JDialog {
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('C');
         }
         return jbCancelar;
     }

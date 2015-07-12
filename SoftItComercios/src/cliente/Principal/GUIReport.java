@@ -1,6 +1,7 @@
 package cliente.Principal;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -125,7 +126,7 @@ public class GUIReport extends JDialog{
 		}	
 	}
 
-	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,String nroComprob, Date fechaFact,
+	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,String nroComprob, Timestamp fechaFact,
 			Comercio dist, Cliente cte, String iva, String condVta,String remitoNro,String ingrBrutos,String tipoFact,double subtotl,String impIva,double iTotal){
 		super(parent,true);
 		this.setSize(new java.awt.Dimension(700,640));
@@ -147,7 +148,7 @@ public class GUIReport extends JDialog{
 			Utils.show(this);
 	}
 	
-	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,FacturaCliente factura,String nroComprob, Date fechaFact,
+	public GUIReport(JDialog parent,int codRep,Vector productos,Vector cantProd,Vector kilosProd, Vector prUnit,Vector descuentos,Vector prTotal,FacturaCliente factura,String nroComprob, Timestamp fechaFact,
 			Comercio dist, Cliente cte, double iTotal){
 			super(parent,true);
 			this.setSize(new java.awt.Dimension(700,640));
@@ -167,7 +168,7 @@ public class GUIReport extends JDialog{
 				Utils.show(this);
 		}
 
-	public GUIReport(JDialog parent,int codRep,Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPlanilla, Date fecha, double saldoAnt, double saldoActual) throws Exception {
+	public GUIReport(JDialog parent,int codRep,Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPlanilla, Timestamp fecha, double saldoAnt, double saldoActual) throws Exception {
 		super(parent,true);
 		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);
@@ -283,7 +284,7 @@ public class GUIReport extends JDialog{
 		}
 	}
 
-	public GUIReport(JDialog parent,int codRep, int nroPlanilla,int cantProdEncontrados,Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, Date fecha) {
+	public GUIReport(JDialog parent,int codRep, int nroPlanilla,int cantProdEncontrados,Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, Timestamp fecha) {
 		super(parent,true);
 		this.setSize(new java.awt.Dimension(700,640));
 		this.setResizable(false);

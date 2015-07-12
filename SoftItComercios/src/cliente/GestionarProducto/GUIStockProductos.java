@@ -155,12 +155,12 @@ public class GUIStockProductos extends JDialog {
 	
 	public JButton getJBContinuar() {
 		if (jBContinuar == null) {
-			jBContinuar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+			jBContinuar = new GlossyButton("IMPRIMIR",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jBContinuar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jBContinuar.setBounds(new java.awt.Rectangle(50,355,200,40));
-			jBContinuar.setText("CONTINUAR");
 			jBContinuar.setInputMap(0, map);
 			jBContinuar.setFont(Utils.FuenteBotonesGrandes());
+			jBContinuar.setMnemonic('P');
 		}
 		return jBContinuar;
 	}
@@ -173,6 +173,7 @@ public class GUIStockProductos extends JDialog {
 			jBCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
 			jBCancelar.setInputMap(0, map);
 			jBCancelar.setFont(Utils.FuenteBotonesGrandes());
+			jBCancelar.setMnemonic('C');
 		}
 		return jBCancelar;
 	}

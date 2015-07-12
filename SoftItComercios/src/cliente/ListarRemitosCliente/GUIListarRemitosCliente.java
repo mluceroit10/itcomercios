@@ -210,6 +210,7 @@ public class GUIListarRemitosCliente extends JDialog {
         	jbAnular.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbAnular.setInputMap(0, map);
         	jbAnular.setFont(Utils.FuenteBotonesChicos());
+        	jbAnular.setMnemonic('N');
         }
         return jbAnular;
     }
@@ -222,6 +223,7 @@ public class GUIListarRemitosCliente extends JDialog {
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
         	jbImprimir.setFont(Utils.FuenteBotonesGrandes());
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -234,6 +236,7 @@ public class GUIListarRemitosCliente extends JDialog {
         	jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbSalir.setInputMap(0, map);
         	jbSalir.setFont(Utils.FuenteBotonesGrandes());
+        	jbSalir.setMnemonic('A');
         }
         return jbSalir;
     }
@@ -278,8 +281,8 @@ public class GUIListarRemitosCliente extends JDialog {
 			
 			Utils.ocultarColumnaId(jtDatos);
             TableColumn columna1 = jtDatos.getColumn("Fecha");
-            columna1.setPreferredWidth(100); 
-            columna1.setMaxWidth(100); 
+            columna1.setPreferredWidth(180); 
+            columna1.setMaxWidth(180); 
             columna1.setCellRenderer(Utils.alinearCentro());	
             TableColumn columna2 = jtDatos.getColumn("Nro de Remito");
             columna2.setPreferredWidth(150); 
@@ -339,7 +342,7 @@ public class GUIListarRemitosCliente extends JDialog {
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			jbCambiarPeriodo.setFont(Utils.FuenteBotonesChicos());
-			
+			jbCambiarPeriodo.setMnemonic('C');
 		}
 		return jbCambiarPeriodo;
 	}

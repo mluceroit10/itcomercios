@@ -70,8 +70,12 @@ public class Utils{
     	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 26);
     }
     
+    public static Font FuenteFechas(){
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 23);
+    }
+    
     public static Font FuenteBotonesChicos(){
-    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 22);
+    	return new java.awt.Font(Utils.tipoLetra, java.awt.Font.BOLD, 20);
     }
     
     
@@ -169,6 +173,35 @@ public class Utils{
 		else
 			strDate+="/"+getMes(date);
 		strDate+="/"+getAnio(date);
+		return strDate;
+	}
+	
+	public static String getStrUtilTimestamp(java.sql.Timestamp date){
+		if(date==null)
+			return fechaNula();
+		String strDate="";
+		
+		if(getDia(date)<10)
+			strDate+="0"+getDia(date);
+		else
+			strDate+=getDia(date);
+		if(getMes(date)<10)
+			strDate+="/"+"0"+getMes(date);
+		else
+			strDate+="/"+getMes(date);
+		strDate+="/"+getAnio(date);
+		if(getHora(date)<10)
+			strDate+=" 0"+getHora(date);
+		else
+			strDate+=" "+getHora(date);
+		if(getMinutos(date)<10)
+			strDate+=":"+"0"+(getMinutos(date));
+		else
+			strDate+=":"+getMinutos(date);
+		if(getSegundos(date)<10)
+			strDate+=":"+"0"+(getSegundos(date));
+		else
+			strDate+=":"+getSegundos(date);
 		return strDate;
 	}
 	
@@ -565,6 +598,11 @@ public class Utils{
 	
 	public static java.sql.Date crearFecha(java.util.Date dia){
 		java.sql.Date diaHr=new java.sql.Date(dia.getYear(),dia.getMonth(),dia.getDate());
+		return diaHr;
+	}
+	
+	public static java.sql.Timestamp crearFechaHora(java.util.Date dia){
+		java.sql.Timestamp diaHr=new java.sql.Timestamp(dia.getYear(),dia.getMonth(),dia.getDate(),dia.getHours(),dia.getMinutes(),dia.getSeconds(),0);
 		return diaHr;
 	}
 	

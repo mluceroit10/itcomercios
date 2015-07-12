@@ -19,8 +19,14 @@ alter table PROVEEDOR
 add column DEUDA  double NOT NULL default '0',
 add column FECHA_UF date default NULL;*/
 
-alter table FACTURA_PROVEEDOR
+/*alter table FACTURA_PROVEEDOR
 add column CARGA_PARCIAL tinyint(1) NOT NULL default 0;
 
 alter table ITEM_FACTURA
-add column FECHA_VTO date default NULL;
+add column FECHA_VTO date default NULL;     */
+
+alter table FACTURA_CLIENTE
+MODIFY FECHA_IMPRESION datetime default NULL;
+
+alter table PLANILLA_ES
+MODIFY FECHA_P datetime default NULL;

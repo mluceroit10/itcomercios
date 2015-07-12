@@ -92,6 +92,7 @@ public class GUICuentaCliente extends JDialog {
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setInputMap(0, map);
         	jbImprimir.setFont(Utils.FuenteBotonesGrandes());
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -105,6 +106,7 @@ public class GUICuentaCliente extends JDialog {
             jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
             jbSalir.setFont(Utils.FuenteBotonesGrandes());
+            jbSalir.setMnemonic('S');
         }
         return jbSalir;
     }
@@ -209,12 +211,13 @@ public class GUICuentaCliente extends JDialog {
 	public JCheckBox getJCheckSelectAll() {
 		if (jCheckSelectAll == null) {
 			jCheckSelectAll = new JCheckBox();
-			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,443,228,17));
+			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,436,228,25));
 			jCheckSelectAll.setText("SELECCIONAR TODO");
 			jCheckSelectAll.setName("SelectAll");
 			jCheckSelectAll.setOpaque(false);
 			jCheckSelectAll.setForeground(Utils.colorTexto);
 			jCheckSelectAll.setFont(Utils.FuenteBasica());
+			jCheckSelectAll.setMnemonic('T');
 		}
 		return jCheckSelectAll;
 	}

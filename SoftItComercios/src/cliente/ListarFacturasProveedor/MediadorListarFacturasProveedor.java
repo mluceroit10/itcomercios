@@ -148,8 +148,10 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 		boolean result=false;
     	try{
     		if (guiTodasFactProv.jtDatos.getSelectedRow() == -1) {
+    			if(!flag){
     			Utils.advertenciaUsr(guiTodasFactProv,"Debe seleccionar una Factura.");
                 result = false;
+    			}else result = true;
     		}else{
     			Long id = (Long)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][0];
     			String estado = (String)guiTodasFactProv.datos[guiTodasFactProv.jtDatos.getSelectedRow()][7];

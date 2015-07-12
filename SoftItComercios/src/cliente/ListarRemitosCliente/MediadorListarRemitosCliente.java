@@ -223,7 +223,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
 				String anulada="";
 				if(p.isAnulada())
 					anulada="SI";
-            	Object[] temp = {p.getId(),common.Utils.getStrUtilDate(p.getFechaImpresion()),Utils.nroFact(p.getNroFactura()),p.getCliente().getNombre(),Utils.ordenarDosDecimales(p.getImporteTotal()),anulada};
+            	Object[] temp = {p.getId(),common.Utils.getStrUtilTimestamp(p.getFechaImpresion()),Utils.nroFact(p.getNroFactura()),p.getCliente().getNombre(),Utils.ordenarDosDecimales(p.getImporteTotal()),anulada};
             	guiTodasFactCte.datos[i] = temp;
             	i++;
             }
@@ -258,7 +258,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
             	 String anulada="";
             	 if(r.isAnulada())
             		 anulada="SI";
-            	 Object[] temp = {r.getId(),common.Utils.getStrUtilDate(r.getFechaImpresion()),Utils.nroFact(r.getNroFactura()),r.getCliente().getNombre(),String.valueOf(r.getImporteTotal()),anulada};
+            	 Object[] temp = {r.getId(),common.Utils.getStrUtilTimestamp(r.getFechaImpresion()),Utils.nroFact(r.getNroFactura()),r.getCliente().getNombre(),String.valueOf(r.getImporteTotal()),anulada};
             	 guiTodasFactCte.datos[j] = temp;
              }
      	}catch(Exception ex){

@@ -76,6 +76,7 @@ public class GUIVistaFacturasGeneradas extends JDialog {
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setName("Imprimir");
         	jbImprimir.setInputMap(0, map);
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -88,6 +89,7 @@ public class GUIVistaFacturasGeneradas extends JDialog {
             jbSalir.setName("Salir");
             jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
+            jbSalir.setMnemonic('S');
         }
         return jbSalir;
     }

@@ -114,7 +114,7 @@ public class GUIGestionarPlanillaES extends JDialog {
             jpDatosNP = new TransparentPanel();
             jpDatosNP.setLayout(null);
             jpDatosNP.setBorder(Utils.crearTituloYBorde("NUEVA PLANILLA DE ES"));
-            jpDatosNP.setBounds(new java.awt.Rectangle(25,90,310,180));
+            jpDatosNP.setBounds(new java.awt.Rectangle(15,90,330,180));
             jpDatosNP.add(jlFecha, null);
             jpDatosNP.add(getJDateChooserFecha(), null);
             jpDatosNP.add(getJBCargar(), null);
@@ -130,6 +130,7 @@ public class GUIGestionarPlanillaES extends JDialog {
         	jbSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbSalir.setInputMap(0, map);
         	jbSalir.setFont(Utils.FuenteBotonesGrandes());
+        	jbSalir.setMnemonic('S');
         }
         return jbSalir;
     }
@@ -142,6 +143,7 @@ public class GUIGestionarPlanillaES extends JDialog {
             jbCargar.setBounds(new java.awt.Rectangle(75,130,160,26));
             jbCargar.setInputMap(0, map);
             jbCargar.setFont(Utils.FuenteBotonesChicos());
+            jbCargar.setMnemonic('I');
         }
         return jbCargar;
     }
@@ -154,6 +156,7 @@ public class GUIGestionarPlanillaES extends JDialog {
         	jbAceptar.setBounds(new Rectangle(190,30,160,26));
         	jbAceptar.setInputMap(0, map);
         	jbAceptar.setFont(Utils.FuenteBotonesChicos());
+        	jbAceptar.setMnemonic('P');
         }
         return jbAceptar;
     }
@@ -166,7 +169,7 @@ public class GUIGestionarPlanillaES extends JDialog {
             jbBorrar.setBounds(new Rectangle(10,30,160,26));
             jbBorrar.setInputMap(0, map);
             jbBorrar.setFont(Utils.FuenteBotonesChicos());
-            
+            jbBorrar.setMnemonic('E');
         }
         return jbBorrar;
     }
@@ -323,8 +326,9 @@ public class GUIGestionarPlanillaES extends JDialog {
     
     public JDateChooser getJDateChooserFecha() {
 		if (jDateChooserFecha == null) {
-			jDateChooserFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDateChooserFecha.setBounds(new java.awt.Rectangle(30,90,200,26));
+			jDateChooserFecha = new JDateChooser("dd - MMMMM - yyyy HH:mm:ss",false);
+			jDateChooserFecha.getSpinner().setFont(Utils.FuenteFechas());
+			jDateChooserFecha.setBounds(new java.awt.Rectangle(10,90,300,26));
 		}
 		return jDateChooserFecha;
 	}
@@ -364,7 +368,7 @@ public class GUIGestionarPlanillaES extends JDialog {
 			jbCambiarPeriodo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCambiarPeriodo.setInputMap(0, map);
 			jbCambiarPeriodo.setFont(Utils.FuenteBotonesChicos());
-			
+			jbCambiarPeriodo.setMnemonic('C');
 		}
 		return jbCambiarPeriodo;
 	}

@@ -84,6 +84,7 @@ public class GUIMostrarLibroIva extends JDialog {
         	jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprimir.setInputMap(0, map);
         	jbImprimir.setFont(Utils.FuenteBotonesGrandes());
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -97,6 +98,7 @@ public class GUIMostrarLibroIva extends JDialog {
             jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
             jbSalir.setInputMap(0, map);
             jbSalir.setFont(Utils.FuenteBotonesGrandes());
+            jbSalir.setMnemonic('S');
         }
         return jbSalir;
     }

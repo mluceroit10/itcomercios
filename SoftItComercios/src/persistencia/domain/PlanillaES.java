@@ -1,6 +1,6 @@
 package persistencia.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +10,7 @@ public class PlanillaES {
 	
 	private Long id;
 	private int nroPlanilla;
-	private Date fechaP;
+	private Timestamp fechaP;
 	private double saldo;
 	private Set movimientosCaja = new HashSet();
 	private Set facturas = new HashSet();
@@ -28,11 +28,11 @@ public class PlanillaES {
 		this.id = id;
 	}
 	
-	public Date getFecha() {
+	public Timestamp getFecha() {
 		return fechaP;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(Timestamp fecha) {
 		this.fechaP = fecha;
 	}
 

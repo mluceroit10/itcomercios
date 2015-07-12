@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
@@ -105,7 +106,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     		}
         }else if (source == guiImprimirPlanillaES.getJBCargar()) {
     		java.util.Date fe = guiImprimirPlanillaES.getJDateChooserFecha().getDate();
-    		Date fecha = Utils.crearFecha(fe);//new Date(fe.getYear(),fe.getMonth(),fe.getDate());
+    		Timestamp fecha = Utils.crearFechaHora(fe);//new Date(fe.getYear(),fe.getMonth(),fe.getDate());
     		try {
     			PlanillaES ultima=controlRealizarPlanillaES.obtenerUltimaPlanilla();
     			PlanillaES miplDTO = new PlanillaES();
@@ -234,7 +235,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
             int i = 0;
             for (int j = 0; j < planillas.size(); j++) {
             	PlanillaES p=(PlanillaES)planillas.elementAt(j);
-            	Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilDate(p.getFecha())};
+            	Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilTimestamp(p.getFecha())};
             	guiImprimirPlanillaES.datos[i] = temp;
             	i++;
             }
@@ -251,7 +252,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
              guiImprimirPlanillaES.datos = new Object[planillas.size()][guiImprimirPlanillaES.titulos.length];
              for (int j = 0; j < planillas.size(); j++) {
             	 PlanillaES p=(PlanillaES)planillas.elementAt(j);
-            	 Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilDate(p.getFecha())};
+            	 Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilTimestamp(p.getFecha())};
             	 guiImprimirPlanillaES.datos[j] = temp;
              }
      	}catch(Exception ex){
@@ -267,7 +268,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
             guiImprimirPlanillaES.datos = new Object[planillas.size()][guiImprimirPlanillaES.titulos.length];
             for (int j = 0; j < planillas.size(); j++) {
             	PlanillaES p=(PlanillaES)planillas.elementAt(j);
-            	Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilDate(p.getFecha())};
+            	Object[] temp = {p.getId(),String.valueOf(p.getNroPlanilla()),common.Utils.getStrUtilTimestamp(p.getFecha())};
             	guiImprimirPlanillaES.datos[j] = temp;
             }
     	}catch(Exception ex){

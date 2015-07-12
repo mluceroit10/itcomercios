@@ -107,12 +107,12 @@ public class GUIListarProductosFacturados extends JDialog {
 	
 	public JButton getJBAceptar() {
 		if (jbAceptar == null) {
-			jbAceptar = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+			jbAceptar = new GlossyButton("VERIFICAR FACTURAS",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
 			jbAceptar.setBounds(new java.awt.Rectangle(40,97,230,22));
 			jbAceptar.setName("Verificar Facturas");
 			jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-			jbAceptar.setText("VERIFICAR FACTURAS");
 			jbAceptar.setInputMap(0, map);
+			jbAceptar.setMnemonic('V');
 		}
 		return jbAceptar;
 	}
@@ -126,6 +126,7 @@ public class GUIListarProductosFacturados extends JDialog {
 			jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbCancelar.setInputMap(0, map);
+			jbCancelar.setMnemonic('S');
 		}
 		return jbCancelar;
 	}
@@ -134,6 +135,7 @@ public class GUIListarProductosFacturados extends JDialog {
 		if (jDateChooserIngreso == null) {
 			jDateChooserIngreso = new JDateChooser("dd - MMMMM - yyyy",false);
 			jDateChooserIngreso.setBounds(new java.awt.Rectangle(80,25,200,22));
+			jDateChooserIngreso.getSpinner().setFont(Utils.FuenteFechas());
 		}
 		return jDateChooserIngreso;
 	}

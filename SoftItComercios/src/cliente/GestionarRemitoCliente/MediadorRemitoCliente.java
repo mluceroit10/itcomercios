@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -130,7 +131,8 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     	if ((((Component)e.getSource()).getName().compareTo("ConfirmarRem")) == 0) {
     		try {
     			java.util.Date fu=guiRemitoCte.getJDateChooserFecha().getDate();
-    			Date fecha= Utils.crearFecha(fu);
+    			Timestamp fecha= Utils.crearFechaHora(fu);
+    			Date fechaPago= Utils.crearFecha(fu);
     			if (this.productos.size()==0){
     				Utils.advertenciaUsr(guiRemitoCte,"Debe agregar algún Producto para poder generar el Remito.");
     			} else if(guiRemitoCte.getJTFNombreC().getText().length()==0 ){
@@ -140,7 +142,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 	 fc.setAnulada(false);
                      fc.setCliente(cliente);
                      fc.setFechaImpresion(fecha);
-                     fc.setFechaPago(fecha);
+                     fc.setFechaPago(fechaPago);
                      fc.setImporteTotal(importeTotal);
                      fc.setImporteAbonado(importeTotal);
                      fc.setNroFactura(guiRemitoCte.nroRemito);

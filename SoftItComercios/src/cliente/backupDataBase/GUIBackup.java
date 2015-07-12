@@ -94,6 +94,7 @@ public class GUIBackup extends JDialog{
 			JButtonS.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			JButtonS.setInputMap(0, map);
 			JButtonS.setFont(Utils.FuenteBotonesGrandes());
+			JButtonS.setMnemonic('S');
 		}
 		return JButtonS;
 	}

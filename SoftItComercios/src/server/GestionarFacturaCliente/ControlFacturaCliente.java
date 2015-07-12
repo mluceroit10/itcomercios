@@ -51,10 +51,13 @@ public class ControlFacturaCliente implements IControlFacturaCliente{
 			mp.hacerPersistente(lnew);
 			lnew.setPeriodo(Utils.getMes(fc.getFechaImpresion())+"-"+Utils.getAnio(fc.getFechaImpresion()));
 			if(cte.getFechaUF()==null){
-				cte.setFechaUF(fc.getFechaImpresion());
+				Date fecha=Utils.crearFecha(fc.getFechaImpresion());
+				cte.setFechaUF(fecha);
 			}else{
-				if(cte.getFechaUF().before(fc.getFechaImpresion()))
-						cte.setFechaUF(fc.getFechaImpresion());
+				if(cte.getFechaUF().before(fc.getFechaImpresion())){
+					Date fecha=Utils.crearFecha(fc.getFechaImpresion());
+					cte.setFechaUF(fecha);
+				}
 			}
 			for(int i=0;i<items.size();i++){
 				ItemFactura itF = (ItemFactura) items.elementAt(i);

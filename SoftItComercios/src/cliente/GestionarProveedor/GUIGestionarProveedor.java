@@ -174,6 +174,7 @@ public class GUIGestionarProveedor extends JDialog {
             jbIngresar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbIngresar.setInputMap(0, map);
             jbIngresar.setFont(Utils.FuenteBotonesChicos());
+            jbIngresar.setMnemonic('I');
         }
         return jbIngresar;
     }
@@ -187,6 +188,7 @@ public class GUIGestionarProveedor extends JDialog {
             jbModif.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbModif.setInputMap(0, map);
             jbModif.setFont(Utils.FuenteBotonesChicos());
+            jbModif.setMnemonic('M');
         }
         return jbModif;
     }
@@ -219,6 +221,7 @@ public class GUIGestionarProveedor extends JDialog {
         	jbEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbEliminar.setInputMap(0, map);
         	jbEliminar.setFont(Utils.FuenteBotonesChicos());
+        	jbEliminar.setMnemonic('E');
         }
         return jbEliminar;
     }
@@ -232,6 +235,7 @@ public class GUIGestionarProveedor extends JDialog {
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
         	jbImprimir.setFont(Utils.FuenteBotonesChicos());
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -245,6 +249,7 @@ public class GUIGestionarProveedor extends JDialog {
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -258,6 +263,7 @@ public class GUIGestionarProveedor extends JDialog {
             jbCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('C');
         }
         return jbCancelar;
     }
@@ -273,14 +279,14 @@ public class GUIGestionarProveedor extends JDialog {
 
     public JButton getJBECuenta() {
         if (jbECuenta == null) {
-        	jbECuenta = new GlossyButton("",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbECuenta = new GlossyButton("E. CUENTA",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
         	jbECuenta.setName("Cuenta");
-        	jbECuenta.setText("E. CUENTA");
         	jbECuenta.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/deudor.png")));
         	jbECuenta.setBounds(new java.awt.Rectangle(10,380,160,26));
         	jbECuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbECuenta.setInputMap(0, map);
         	jbECuenta.setFont(Utils.FuenteBotonesChicos());
+        	jbECuenta.setMnemonic('T');
         }
         return jbECuenta;
     }

@@ -1,4 +1,5 @@
 package reports;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
@@ -98,7 +99,7 @@ public class JasperReports{
 		}
 	}	
 	
-	public static JasperPrint detallarCompraFactCliente(Vector productos,Vector cantidades, Vector kilos, Vector precioUnit,Vector descuentos,Vector prTotIt,FacturaCliente factura, String nroFact,Date fechaFact,
+	public static JasperPrint detallarCompraFactCliente(Vector productos,Vector cantidades, Vector kilos, Vector precioUnit,Vector descuentos,Vector prTotIt,FacturaCliente factura, String nroFact,Timestamp fechaFact,
 			Comercio dist, Cliente cte,double iTotal){ //3
 		JasperPrint jasperPrint;
 		try{
@@ -163,7 +164,7 @@ public class JasperReports{
 		}
 	}
 	
-	public static JasperPrint remitoCliente(Vector productos,Vector cantidades, Vector kilos,Vector precioUnit,Vector descuentos,Vector prTotIt, String nroRemito,Date fechaFact,
+	public static JasperPrint remitoCliente(Vector productos,Vector cantidades, Vector kilos,Vector precioUnit,Vector descuentos,Vector prTotIt, String nroRemito,Timestamp fechaFact,
 			Comercio dist, Cliente cte,double iTotal){ //4
 		JasperPrint jasperPrint;
 		try{
@@ -208,7 +209,7 @@ public class JasperReports{
 		}
 	}
 	
-	public static JasperPrint facturarCliente(Vector productos,Vector cantidades,Vector kilos, Vector precioUnit,Vector descuentos,Vector prTotIt, Date fechaFact,
+	public static JasperPrint facturarCliente(Vector productos,Vector cantidades,Vector kilos, Vector precioUnit,Vector descuentos,Vector prTotIt, Timestamp fechaFact,
 			Comercio dist, Cliente cte, String iva, String condVta,String remitoNro,String ingrBrutos,String tipoFact,double subtotl,String impIva,double iTotal){//5
 		JasperPrint jasperPrint;
 		try{
@@ -307,7 +308,7 @@ public class JasperReports{
 		}
 	}
 	
-	public static JasperPrint generarBalance(Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPl,Date fecha,double saldoAnt,double saldoNuevo) throws Exception{//7
+	public static JasperPrint generarBalance(Vector movEntrada, Vector facts, double ingR,Vector movSalidas,int nroPl,Timestamp fecha,double saldoAnt,double saldoNuevo) throws Exception{//7
 		JasperPrint jasperPrint;
 		try{
 			double totalE=ingR;
@@ -385,16 +386,18 @@ public class JasperReports{
 			
 			String[] fieldXml = { "Descripcion","Monto"};
 			double suma1=saldoAnt+totalE;
-			String fe = Utils.getStrUtilDate(fecha);
+			String fe = Utils.getStrUtilTimestamp(fecha);
 			String dia=fe.substring(0,2);
 			String mes=fe.substring(3,5);
 			String anio=fe.substring(6,10);
+			String hora=fe.substring(11,19);
 			Object[][] param = { {"NroPlanilla",String.valueOf(nroPl)},
-					{"Dia",dia},{"Mes",mes},{"Anio",anio},
+					{"Dia",dia},{"Mes",mes},{"Anio",anio},{"Hora",hora},
+					
 					{"TotalI" ,Utils.ordenarDosDecimales(totalE)},{"TotalE",Utils.ordenarDosDecimales(totalS)},
 					{"SaldoAnt",Utils.ordenarDosDecimales(saldoAnt)},{"Suma1",Utils.ordenarDosDecimales(suma1)},
 					{"Suma2",Utils.ordenarDosDecimales(saldoNuevo)},{"Institucion",Utils.Institucion()}};
-			jasperPrint=generarReporte("PlanillaDeCaja", param, fieldXml, values);
+			jasperPrint=generarReporteFechado("PlanillaDeCaja", param, fieldXml, values,fecha);
 			return jasperPrint;
 		}catch (Exception ex){
 			Utils.manejoErrores(ex,"Error en JasperReports. PlanillaDeCaja.");
@@ -744,16 +747,47 @@ public class JasperReports{
 		}
 	}
 	
+	private static JasperPrint generarReporteFechado(String report, Object[][] param, String[] fieldXml, Object[][] values,Timestamp fecha){
+		JasperReport jasperReport;
+		JasperPrint jasperPrint; 
+		try {
+			java.util.HashMap parameters = new java.util.HashMap();
+			for (int i = 0; i < param.length; i++) {
+				parameters.put(param[i][0], param[i][1]);
+			}
+			java.util.Hashtable ht = new java.util.Hashtable();
+			for (int i = 0; i < fieldXml.length; i++) {
+				ht.put(fieldXml[i], new Integer(i));
+			}
+			DataSourceJasper data = new DataSourceJasper(values, ht);
+			String fileXML = PATH_REPORT_XML + report + ".xml";
+			String fe=Utils.getStrUtilTimestamp(fecha).replaceAll("/","-");
+			fe=fe.replaceAll(" ","_");
+			fe=fe.replaceAll(":","-");
+			fe=fe+"_";
+			String fileJRPRINT = PATH_REPORT_PDF +fe+report + ".pdf";
+			// 1-Compilamos el archivo XML y lo cargamos en memoria			
+			jasperReport = JasperCompileManager.compileReport(fileXML);
+			// 2-Llenamos el reporte con la información y parámetros necesarios 
+			jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,data);
+			JasperExportManager.exportReportToPdfFile(jasperPrint,fileJRPRINT);
+			return jasperPrint;
+		} catch (JRException ex) {
+			Utils.manejoErrores(ex,"Error en JasperReports. generarReporte.");
+			return null;
+		}
+	}
+	
 	public static void main(String[] args){
 		;
 	}
 
-	public static JasperPrint listarProductosFacturados(int nroPlanilla,int cantProdEncontrados, Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, java.sql.Date fecha) {
+	public static JasperPrint listarProductosFacturados(int nroPlanilla,int cantProdEncontrados, Long[] codigos, String[] productos, String[] proveedores, int[] cantidades, double[] kilos, int[] stUnid, double[] stKilo, Timestamp fecha) {
 			JasperPrint jasperPrint;
 			try{
 				//estado de cuenta neg deuda - pos a favor
 				System.setProperty("org.xml.sax.driver","org.apache.xerces.parsers.SAXParser");
-				Object[][] param = { {"Institucion",Utils.Institucion()},{"Titulo","Detalle de Stock Cierre de caja Nº "+nroPlanilla+" - "+Utils.getStrUtilDate(fecha)},{"Fecha",Utils.getStrUtilDate(fecha)}};  //dist.getNombre()
+				Object[][] param = { {"Institucion",Utils.Institucion()},{"Titulo","Detalle de Stock Cierre de caja Nº "+nroPlanilla+" - "+Utils.getStrUtilTimestamp(fecha)},{"Fecha",Utils.getStrUtilDate(fecha)}};  //dist.getNombre()
 				Object[][] values = new Object[cantProdEncontrados][5];
 				for (int i = 0; i < cantProdEncontrados; i++) {
 					String comprado=String.valueOf(cantidades[i])+" Un.";
@@ -766,7 +800,7 @@ public class JasperReports{
 					values[i] = temp;
 				}
 				String[] fieldXml = {"Codigo","Prod_Kilos","Proveedor","Cantidad","Kilos"};
-				jasperPrint=generarReporte("ListadoProductosFacturados", param, fieldXml, values);
+				jasperPrint=generarReporteFechado("ListadoProductosFacturados", param, fieldXml, values,fecha);
 				return jasperPrint;
 			}catch (Exception ex){
 				Utils.manejoErrores(ex,"Error en JasperReports. ListadoProductosFacturados.");

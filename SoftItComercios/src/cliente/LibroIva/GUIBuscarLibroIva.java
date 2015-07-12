@@ -98,6 +98,7 @@ public class GUIBuscarLibroIva extends JDialog {
 			jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/verificar.png")));
 			jbAceptar.setInputMap(0, map);
 			jbAceptar.setFont(Utils.FuenteBotonesChicos());
+			jbAceptar.setMnemonic('V');
 		}
 		return jbAceptar;
 	}
@@ -111,6 +112,7 @@ public class GUIBuscarLibroIva extends JDialog {
 			jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbCancelar.setInputMap(0, map);
 			jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+			jbCancelar.setMnemonic('S');
 		}
 		return jbCancelar;
 	}

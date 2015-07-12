@@ -131,6 +131,7 @@ public class GUIGestionarVencimientoProducto extends JDialog {
             jbBorrar.setBounds(new Rectangle(10,30,160,26));
             jbBorrar.setInputMap(0, map);
             jbBorrar.setFont(Utils.FuenteBotonesChicos());
+            jbBorrar.setMnemonic('E');
         }
         return jbBorrar;
     }
@@ -144,6 +145,7 @@ public class GUIGestionarVencimientoProducto extends JDialog {
         	jbImprimir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	jbImprimir.setInputMap(0, map);
         	jbImprimir.setFont(Utils.FuenteBotonesChicos());
+        	jbImprimir.setMnemonic('P');
         }
         return jbImprimir;
     }
@@ -157,6 +159,7 @@ public class GUIGestionarVencimientoProducto extends JDialog {
         	jbControlStock.setOpaque(false);
         	jbControlStock.setForeground(Utils.colorTexto);
         	jbControlStock.setFont(Utils.FuenteBasica());
+        	jbControlStock.setMnemonic('V');
         }
         return jbControlStock;
     }
@@ -170,6 +173,7 @@ public class GUIGestionarVencimientoProducto extends JDialog {
             jbAceptar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('S');
         }
         return jbAceptar;
     }

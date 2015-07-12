@@ -1,6 +1,7 @@
 package server.RealizarPlanillaES;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -139,7 +140,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 			if(planillas.size()==0){
 				p.setNroPlanilla(Utils.NROPLANILLAANTERIOR);
 				p.setSaldo(Utils.SALDOANTERIOR);
-				p.setFecha(new Date(0,0,0));
+				p.setFecha(new Timestamp(0,0,0,0,0,0,0));
 			}
 			else{
 				 PlanillaES b = (PlanillaES)planillas.elementAt(0);
@@ -155,7 +156,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		}
 	}
 	
-	public Vector obtenerMovimientosCajaParaPlanilla(Date fechaH)throws Exception{
+	public Vector obtenerMovimientosCajaParaPlanilla(Timestamp fechaH)throws Exception{
 		Vector movimientos = new Vector();
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
@@ -188,7 +189,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 	}
 	
 
-	public Vector obtenerFacturasClienteParaPlanilla(Date fechaH)throws Exception{
+	public Vector obtenerFacturasClienteParaPlanilla(Timestamp fechaH)throws Exception{
 		Vector facturas = new Vector();
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {
@@ -224,7 +225,7 @@ public class ControlRealizarPlanillaES implements IControlRealizarPlanillaES{
 		return facturas;
 	}
 	
-	public Vector obtenerRemitosClienteParaPlanilla(Date fechaH)throws Exception{
+	public Vector obtenerRemitosClienteParaPlanilla(Timestamp fechaH)throws Exception{
 		Vector facturas = new Vector();
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		try {

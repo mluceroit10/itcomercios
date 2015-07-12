@@ -79,6 +79,7 @@ public class GUIListarDeudaClientes extends JDialog {
 			jbImprimir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
 			jbImprimir.setInputMap(0, map);
 			jbImprimir.setFont(Utils.FuenteBotonesGrandes());
+			jbImprimir.setMnemonic('P');
 		}
 		return jbImprimir;
 	}
@@ -92,6 +93,7 @@ public class GUIListarDeudaClientes extends JDialog {
 			jbSalir.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/salirv.png")));
 			jbSalir.setInputMap(0, map);
 			jbSalir.setFont(Utils.FuenteBotonesGrandes());
+			jbSalir.setMnemonic('S');
 		}
 		return jbSalir;
 	}
@@ -191,12 +193,13 @@ public class GUIListarDeudaClientes extends JDialog {
 	public JCheckBox getJCheckSelectAll() {
 		if (jCheckSelectAll == null) {
 			jCheckSelectAll = new JCheckBox();
-			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,443,228,17));
-			jCheckSelectAll.setText("Seleccionar Todo");
+			jCheckSelectAll.setBounds(new java.awt.Rectangle(10,436,228,25));
+			jCheckSelectAll.setText("SELECCIONAR TODO");
 			jCheckSelectAll.setName("SelectAll");
 			jCheckSelectAll.setForeground(Utils.colorTexto);
 			jCheckSelectAll.setFont(Utils.FuenteBasica());
 			jCheckSelectAll.setOpaque(false);
+			jCheckSelectAll.setMnemonic('T');
 		}
 		return jCheckSelectAll;
 	}

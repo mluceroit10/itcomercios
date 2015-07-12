@@ -98,7 +98,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
             jlNroRecibo.setBounds(new Rectangle(10,40,220,26));
             jlNroRecibo.setHorizontalAlignment(SwingConstants.RIGHT);
             jlFecha = new JLabel();
-            jlFecha.setBounds(new java.awt.Rectangle(470,40,140,26));
+            jlFecha.setBounds(new java.awt.Rectangle(440,40,140,26));
             jlFecha.setText("FECHA (*)");
             jlFecha.setForeground(Utils.colorTexto);
             jlFecha.setFont(Utils.FuenteBasica());  
@@ -116,7 +116,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
             jlFormaPago.setFont(Utils.FuenteBasica());
             jlFormaPago.setHorizontalAlignment(SwingConstants.RIGHT);
             jlImporte = new JLabel();
-            jlImporte.setBounds(new java.awt.Rectangle(470,75,140,26));
+            jlImporte.setBounds(new java.awt.Rectangle(440,75,140,26));
             jlImporte.setText("IMPORTE (*)");
             jlImporte.setForeground(Utils.colorTexto);
             jlImporte.setFont(Utils.FuenteBasica());
@@ -128,7 +128,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
             jlDescr.setFont(Utils.FuenteBasica());
             jlDescr.setHorizontalAlignment(SwingConstants.RIGHT);
             jLNroCheque = new JLabel();
-            jLNroCheque.setBounds(new java.awt.Rectangle(470,110,140,26));
+            jLNroCheque.setBounds(new java.awt.Rectangle(440,110,140,26));
             jLNroCheque.setText("NRO. CHEQUE");
             jLNroCheque.setForeground(Utils.colorTexto);
             jLNroCheque.setFont(Utils.FuenteBasica());
@@ -210,7 +210,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     public JTextField getJTFImporte() {
         if (jtfImporte == null) {
         	jtfImporte = new JTextField();
-        	jtfImporte.setBounds(new java.awt.Rectangle(620,75,180,26));
+        	jtfImporte.setBounds(new java.awt.Rectangle(590,75,210,26));
         	jtfImporte.setDocument(new LimitadorPrecio(jtfImporte));
         	jtfImporte.setFont(Utils.FuenteCampos());
         }
@@ -251,6 +251,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
         	jbFactura.setEnabled(false);
         	jbFactura.setInputMap(0, map);
         	jbFactura.setFont(Utils.FuenteBotonesChicos());
+        	jbFactura.setMnemonic('B');
         }
         return jbFactura;
     }
@@ -299,9 +300,9 @@ public class GUIAltaModMovimientoCaja extends JDialog {
     
     public JDateChooser getJDateChooserFecha() {
 		if (jDateChooserFecha == null) {
-			jDateChooserFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDateChooserFecha.setBounds(new java.awt.Rectangle(620,40,180,26));
-			jDateChooserFecha.setFont(Utils.FuenteCampos());
+			jDateChooserFecha = new JDateChooser("dd - MMM - yyyy",false);
+			jDateChooserFecha.setBounds(new java.awt.Rectangle(590,40,210,26));
+			jDateChooserFecha.getSpinner().setFont(Utils.FuenteFechas());
 		}
 		return jDateChooserFecha;
 	}
@@ -314,6 +315,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -326,6 +328,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('N');
         }
         return jbCancelar;
     }
@@ -342,7 +345,7 @@ public class GUIAltaModMovimientoCaja extends JDialog {
 	public JTextField getJTFNroCheque() {
 		if (jTFNroCheque == null) {
 			jTFNroCheque = new JTextField();
-			jTFNroCheque.setBounds(new java.awt.Rectangle(620,110,180,26));
+			jTFNroCheque.setBounds(new java.awt.Rectangle(590,110,210,26));
 			jTFNroCheque.setDocument(new LimitadorNroMax(jTFNroCheque,10));
 			jTFNroCheque.setDisabledTextColor(Utils.colorTextoDisabled);
 			jTFNroCheque.setEnabled(false);

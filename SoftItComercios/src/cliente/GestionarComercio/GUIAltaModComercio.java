@@ -118,7 +118,7 @@ public class GUIAltaModComercio extends JDialog {
     		jlIngBrutos.setFont(Utils.FuenteBasica());
     		jlIngBrutos.setHorizontalAlignment(SwingConstants.RIGHT);
     		jlInicioAct = new JLabel();
-    		jlInicioAct.setBounds(new java.awt.Rectangle(670,75,180,26));
+    		jlInicioAct.setBounds(new java.awt.Rectangle(660,75,180,26));
     		jlInicioAct.setText("INICIO DE ACTIV.");  
     		jlInicioAct.setForeground(Utils.colorTexto);
     		jlInicioAct.setFont(Utils.FuenteBasica());
@@ -218,9 +218,9 @@ public class GUIAltaModComercio extends JDialog {
     
     public JDateChooser getJDateChooserFecha() {
 		if (jDataCFecha == null) {
-			jDataCFecha = new JDateChooser("dd - MMMMM - yyyy",false);
-			jDataCFecha.setBounds(new java.awt.Rectangle(860,75,180,26));
-			jDataCFecha.setFont(Utils.FuenteCampos());
+			jDataCFecha = new JDateChooser("dd - MMM - yyyy",false);
+			jDataCFecha.getSpinner().setFont(Utils.FuenteFechas());
+			jDataCFecha.setBounds(new java.awt.Rectangle(840,75,210,26));
 		}
 		return jDataCFecha;
 	}
@@ -238,7 +238,7 @@ public class GUIAltaModComercio extends JDialog {
     public JTextField getIngrBrutos() {
     	if (jtfIngBrutos == null) {
     		jtfIngBrutos = new JTextField();
-    		jtfIngBrutos.setBounds(new java.awt.Rectangle(545,75,120,26));
+    		jtfIngBrutos.setBounds(new java.awt.Rectangle(535,75,120,26));
     		jtfIngBrutos.setFont(Utils.FuenteCampos());
     	}
     	return jtfIngBrutos;
@@ -247,7 +247,7 @@ public class GUIAltaModComercio extends JDialog {
     public JTextField getNombre() {
         if (jtfNombre == null) {
             jtfNombre = new JTextField();
-            jtfNombre.setBounds(new java.awt.Rectangle(170,40,870,26));
+            jtfNombre.setBounds(new java.awt.Rectangle(170,40,880,26));
             jtfNombre.setFont(Utils.FuenteCampos());
         }
         return jtfNombre;
@@ -282,6 +282,7 @@ public class GUIAltaModComercio extends JDialog {
             jbLocalidad.setFont(Utils.FuenteBotonesChicos());
             jbLocalidad.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/find.png")));
             jbLocalidad.setInputMap(0, map);
+            jbLocalidad.setMnemonic('B');
         }  
         return jbLocalidad;
     }
@@ -331,6 +332,7 @@ public class GUIAltaModComercio extends JDialog {
     		jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
     		jbCancelar.setInputMap(0, map);
     		jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+    		jbCancelar.setMnemonic('N');
     	}
     	return jbCancelar;
     }
@@ -344,6 +346,7 @@ public class GUIAltaModComercio extends JDialog {
             jbAceptar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/check.png")));
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -357,6 +360,7 @@ public class GUIAltaModComercio extends JDialog {
         	jbModNroFacts.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/edit.png")));
         	jbModNroFacts.setInputMap(0, map);
         	jbModNroFacts.setFont(Utils.FuenteBotonesChicos());
+        	jbModNroFacts.setMnemonic('M');
         }
         return jbModNroFacts;
     }
@@ -370,6 +374,7 @@ public class GUIAltaModComercio extends JDialog {
         	jbImprTarjeta.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/printer.png")));
         	jbImprTarjeta.setInputMap(0, map);
         	jbImprTarjeta.setFont(Utils.FuenteBotonesGrandes());
+        	jbImprTarjeta.setMnemonic('P');
         }
         return jbImprTarjeta;
     }

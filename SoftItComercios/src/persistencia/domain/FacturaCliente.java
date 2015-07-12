@@ -1,10 +1,11 @@
 package persistencia.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class FacturaCliente extends Factura{
 	
-	private Date fechaImpresion;
+	private Timestamp fechaImpresion;
 	private Date fechaPago;
 	private double importeAbonado; 
 	private String condVenta;
@@ -20,10 +21,10 @@ public class FacturaCliente extends Factura{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Date getFechaImpresion() {
+	public Timestamp getFechaImpresion() {
 		return fechaImpresion;
 	}
-	public void setFechaImpresion(Date fechaImpresion) {
+	public void setFechaImpresion(Timestamp fechaImpresion) {
 		this.fechaImpresion = fechaImpresion;
 	}
 	public Date getFechaPago() {

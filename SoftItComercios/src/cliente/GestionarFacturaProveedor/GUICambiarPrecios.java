@@ -262,6 +262,7 @@ public class GUICambiarPrecios extends JDialog {
         	jbCalcular.setName("CalcularPV");
         	jbCalcular.setInputMap(0, map);
         	jbCalcular.setFont(Utils.FuenteBotonesChicos());
+        	jbCalcular.setMnemonic('P');
         }
         return jbCalcular;
     }
@@ -306,6 +307,7 @@ public class GUICambiarPrecios extends JDialog {
             jbAceptar.setName("AceptarCP");
             jbAceptar.setInputMap(0, map);
             jbAceptar.setFont(Utils.FuenteBotonesGrandes());
+            jbAceptar.setMnemonic('A');
         }
         return jbAceptar;
     }
@@ -319,6 +321,7 @@ public class GUICambiarPrecios extends JDialog {
             jbCancelar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/cancel.png")));
             jbCancelar.setInputMap(0, map);
             jbCancelar.setFont(Utils.FuenteBotonesGrandes());
+            jbCancelar.setMnemonic('C');
         }
         return jbCancelar;
     }
