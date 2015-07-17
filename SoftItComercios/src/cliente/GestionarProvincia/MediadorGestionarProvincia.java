@@ -217,17 +217,13 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
     public void valueChanged(ListSelectionEvent arg0) { }
 
 	public void mouseClicked(MouseEvent arg0) {
-		//System.out.println("mouse clicked");
 	}
 
 	public void mousePressed(MouseEvent arg0) {
-		//System.out.println("mouse pressed");
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		//System.out.println("mouse Released");
 		if (arg0.getClickCount() == 2){
-			//System.out.println("dobleclick");
 			if(!flag){
 				if (cargarFilaSeleccionada()) {
 					if (medModLocalidad != null) {
@@ -245,11 +241,9 @@ public class MediadorGestionarProvincia implements ActionListener, KeyListener, 
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		//System.out.println("mouse entered");
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		//System.out.println("mouse exited");
 	}
 }
 

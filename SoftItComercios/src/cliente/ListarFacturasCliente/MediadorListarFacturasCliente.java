@@ -147,6 +147,7 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
 				mesLI = guiTodasFactCte.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
 	         	cargarDatos();
 			} 	
+        	guiTodasFactCte.getJTFFecha().requestFocus(true);
         }else if (source == guiTodasFactCte.getJBSalir()){
     	           if(flag){
     	        	   this.guiTodasFactCte.dispose();
@@ -305,17 +306,13 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
     public void valueChanged(ListSelectionEvent arg0) { }
 
     public void mouseClicked(MouseEvent arg0) {
-		//System.out.println("mouse clicked");
 	}
 
 	public void mousePressed(MouseEvent arg0) {
-		//System.out.println("mouse pressed");
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		//System.out.println("mouse Released");
 		if (arg0.getClickCount() == 2){
-			//System.out.println("dobleclick");
 			if(!flag){
 				if (cargarFilaSeleccionada()) {
 					if (medAltaMovCaja != null) {
@@ -330,11 +327,9 @@ public class MediadorListarFacturasCliente implements ActionListener, KeyListene
 	}
 
 	public void mouseEntered(MouseEvent arg0) {
-		//System.out.println("mouse entered");
 	}
 
 	public void mouseExited(MouseEvent arg0) {
-		//System.out.println("mouse exited");
 	}
 }
 

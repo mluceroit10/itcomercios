@@ -5,12 +5,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -27,6 +43,7 @@ import server.RealizarPlanillaES.ControlRealizarPlanillaES;
 import cliente.Principal.GUIPrincipal;
 import cliente.Principal.GUIReport;
 
+import common.RootAndIp;
 import common.Utils;
 import common.GestionarMovimientoCaja.IControlMovimientoCaja;
 import common.RealizarPlanillaES.IControlRealizarPlanillaES;
@@ -93,12 +110,11 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     				}
     				double ingR=this.totalIngresosRemitos(remitos);
                 	new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,miPESDto.getNroPlanilla(),miPESDto.getFecha(),anterior.getSaldo(),miPESDto.getSaldo());
-                	
-        		 	int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
-            		if( prueba==0 ){
+                //	int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
+            	//	if( prueba==0 ){
             	 		this.organizarProductos(remitos,fact);
             			new GUIReport(guiImprimirPlanillaES,19,miPESDto.getNroPlanilla(),cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,miPESDto.getFecha());
-            		}    
+            	//	}    
             		
                 }
     		} catch(Exception ex) {
@@ -125,12 +141,20 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     			Vector entr = this.entradas(mov);
     			Vector sal = this.salidas(mov);
     			new GUIReport(guiImprimirPlanillaES,7,entr,fact,ingR,sal,ultima.getNroPlanilla()+1,fecha,ultima.getSaldo(),miplDTO.getSaldo());
-    			int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
-        		if( prueba==0 ){
-        	 		this.organizarProductos(remitos,fact);
+    			String fe1=Utils.getStrUtilTimestamp(fecha).replaceAll("/","-");
+    			fe1=fe1.replaceAll(" ","_");
+    			fe1=fe1.replaceAll(":","-");
+            	//int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Desea obtener el detalle de stock",new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/productosFacturados.png")));
+        		//if( prueba==0 ){
+        	 		int cantProd=this.organizarProductos(remitos,fact);
         			new GUIReport(guiImprimirPlanillaES,19,ultima.getNroPlanilla()+1,cantProdEncontrados,codigos, productos, proveedores, cantidades, kilos, stUnid, stKilo,fecha);
-        		}    
-    			guiImprimirPlanillaES.dispose();
+        		//}    
+        		boolean resultado=enviarMail(fe1,(cantProd==0));
+            	if(resultado)
+            		Utils.advertenciaUsr(guiImprimirPlanillaES,"Mail enviado con exito.");
+            	else
+            		Utils.advertenciaUsr(guiImprimirPlanillaES,"El Mail no ha sido enviado.");
+            	cargarDatos();
     		}
     		catch(Exception ex) {
     			Utils.manejoErrores(ex,"Error en MediadorGestionarPlanillaES. ActionPerformed");
@@ -160,6 +184,49 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
              }catch(Exception ex){
             	 Utils.manejoErrores(ex,"Error en MediadorGestionarPlanillaES. Eliminar");
              }
+        }else if (source == guiImprimirPlanillaES.getJBReenviar()) {
+       	 try{
+                if ( this.controlRealizarPlanillaES.obtenerPlanillasES(mesLI,anioLI).isEmpty()){
+               	 Utils.advertenciaUsr(guiImprimirPlanillaES,"No hay Planillas guardadas.");
+                } else {
+               	 if (guiImprimirPlanillaES.jtDatos.getSelectedRow() == -1){
+               		 Utils.advertenciaUsr(guiImprimirPlanillaES,"Para poder Reenviar el mail de una Planilla debe seleccionarla previamente.");
+               	 } else {
+               			 String numero = (String)guiImprimirPlanillaES.datos[guiImprimirPlanillaES.jtDatos.getSelectedRow()][1];
+               			 String fecha = (String)guiImprimirPlanillaES.datos[guiImprimirPlanillaES.jtDatos.getSelectedRow()][2];
+               			 int prueba = Utils.aceptarCancelarAccion(guiImprimirPlanillaES,"Esta seguro que desea Reenviar la Planilla Nro: " + numero);
+               			 if (prueba == 0){
+               				String archivoFecha=fecha.replaceAll("/","-");
+               				archivoFecha=archivoFecha.replaceAll(" ","_");
+                 			archivoFecha=archivoFecha.replaceAll(":","-");
+                 			
+               				String nombreArchPpal=RootAndIp.getArchivos()+archivoFecha+"_PlanillaDeCaja.pdf";
+               				File f = new File(nombreArchPpal);
+               				boolean existeReporte=false;
+               				if( f.exists() ){
+               					existeReporte=true;
+               				}
+               				if(existeReporte){
+               					String nombreArchPpal2=RootAndIp.getArchivos()+archivoFecha+"_ListadoProductosFacturados.pdf";
+               					File f2 = new File(nombreArchPpal2);
+               					boolean conArchivo2=false;
+               					if( f2.exists() ){
+               						conArchivo2=true;
+               					}
+               					boolean resultado=enviarMail(archivoFecha,!conArchivo2);
+               	            	if(resultado)
+               	            		Utils.advertenciaUsr(guiImprimirPlanillaES,"Mail enviado con exito.");
+               	            	else
+               	            		Utils.advertenciaUsr(guiImprimirPlanillaES,"El Mail no ha sido enviado.");
+               				}else{
+               					Utils.advertenciaUsr(guiImprimirPlanillaES,"Los archivos de la planilla Nro: "+numero+" han sido eliminados, para volverlos a generar haga click en Imprimir.");
+               				}
+               			 }
+               	 }
+                }
+            }catch(Exception ex){
+           	 Utils.manejoErrores(ex,"Error en MediadorGestionarPlanillaES. Eliminar");
+            }
         } else if (source == guiImprimirPlanillaES.getJBSalir()) {
         	guiImprimirPlanillaES.dispose();	
         }else if (source == guiImprimirPlanillaES.getJBCambiarPeriodo()){
@@ -173,6 +240,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
 				mesLI = guiImprimirPlanillaES.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
 	         	cargarDatos();
 			}	
+        	guiImprimirPlanillaES.getJTFFecha().requestFocus(true);
     	} else if ((((Component)e.getSource()).getName().compareTo("combo")) == 0){
     		if (((String)(((JComboBox)e.getSource()).getSelectedItem())).compareTo("Fecha")==0) {
     			guiImprimirPlanillaES.mostrarJTFFecha();
@@ -185,7 +253,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
     	}
     }
     
-    private void organizarProductos(Vector remitos, Vector fact) {
+    private int organizarProductos(Vector remitos, Vector fact) {
     	Vector facturaClienteCol=remitos;
 		facturaClienteCol.addAll(fact);
     	codigos= new Long [20*facturaClienteCol.size()];
@@ -225,6 +293,7 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
 				}
 			}
 		}
+		return cantProdEncontrados;
 	}
 
 	public void cargarDatos() {
@@ -401,7 +470,76 @@ public class MediadorGestionarPlanillaES implements ActionListener, KeyListener,
 		}
 		return total;
 	}
+	
+	public boolean enviarMail (String archivoFecha, boolean sinProductos){
+        /* Se obtienen las propiedades del Sistema */
+		final String username = RootAndIp.getMailComercio();
+		final String password = RootAndIp.getPassComercio();
+        Properties props = new Properties();
+        props.put("mail.smtp.user", username);
+        props.put("mail.smtp.password", password);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        /*Se Obtiene una seesion con las propiedades anteririor mente definidas*/
+        Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() { 
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+        
+        try {
+            /* Se crea el mensaje vacio */
+            MimeMessage mensaje = new MimeMessage(session);
+            mensaje.setFrom(new InternetAddress("from-email@gmail.com"));
+			mensaje.addRecipients(Message.RecipientType.TO, RootAndIp.getMail());
+			mensaje.setSubject("Cierre Caja del Comercio 640 "+archivoFecha);
 
+			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			MimeBodyPart messageBodyPart2 = new MimeBodyPart();
+			
+			String sinArchivos=" y el listado de productos facturados.";
+			if(sinProductos)
+				sinArchivos="\nNo se efectuaron ventas para poder listar los productos.";
+			messageBodyPart.setText("Se adjunta la planilla de caja de fecha "+archivoFecha+sinArchivos);
+			
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(messageBodyPart);
+
+			//Se adjuntan los archivos al correo
+			messageBodyPart = new MimeBodyPart();
+			messageBodyPart2 = new MimeBodyPart();
+			String nombreArchPpal=RootAndIp.getArchivos()+archivoFecha+"_PlanillaDeCaja.pdf";
+			File f = new File(nombreArchPpal);
+			if( f.exists() ){
+				DataSource source = new FileDataSource( nombreArchPpal );
+				messageBodyPart.setDataHandler( new DataHandler(source) );
+				messageBodyPart.setFileName( f.getName() );
+				multipart.addBodyPart(messageBodyPart);
+			}
+			if(!sinProductos){
+				String nombreArchPpal2=RootAndIp.getArchivos()+archivoFecha+"_ListadoProductosFacturados.pdf";
+				File f2 = new File(nombreArchPpal2);
+				if( f2.exists() ){
+					DataSource source = new FileDataSource( nombreArchPpal2 );
+					messageBodyPart2.setDataHandler( new DataHandler(source) );
+					messageBodyPart2.setFileName( f2.getName() );
+					multipart.addBodyPart(messageBodyPart2);
+				}
+			}
+			mensaje.setContent(multipart);
+			Transport.send(mensaje);
+            return true;
+        } catch (MessagingException e){
+        	e.printStackTrace();
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+	
+	
 }
 
 

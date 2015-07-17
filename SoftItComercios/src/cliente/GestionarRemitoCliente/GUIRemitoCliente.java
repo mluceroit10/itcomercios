@@ -1,10 +1,16 @@
 package cliente.GestionarRemitoCliente;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -20,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SortingFocusTraversalPolicy;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
@@ -76,8 +83,41 @@ public class GUIRemitoCliente extends JDialog {
         this.setTitle("Remitos Cliente");
         this.setContentPane(getJPPpal());
         this.setModal(true);
+        
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), "pressed");
 		map.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, true), "released");
+
+		FocusTraversalPolicy policy = new FocusTraversalPolicy() {
+			
+			public Component getLastComponent(Container aContainer) {
+				// TODO Auto-generated method stub
+				return getJTFBusqueda();
+			}
+			
+			public Component getFirstComponent(Container aContainer) {
+				// TODO Auto-generated method stub
+				return getJTFBusqueda();
+			}
+			
+			public Component getDefaultComponent(Container aContainer) {
+				// TODO Auto-generated method stub
+				return getJTFBusqueda();
+			}
+
+			public Component getComponentBefore(Container aContainer,
+					Component aComponent) {
+				// TODO Auto-generated method stub
+				return getJTFBusqueda();
+			}
+			
+			public Component getComponentAfter(Container aContainer,
+					Component aComponent) {
+				// TODO Auto-generated method stub
+				return getJTFBusqueda();
+			}
+		};
+		setFocusTraversalPolicy(policy);
+        jtfBusqueda.requestFocusInWindow();
     }
 
     public JPanel getJPPpal() {
@@ -276,7 +316,6 @@ public class GUIRemitoCliente extends JDialog {
         	jtfBusqueda = new JTextField();
         	jtfBusqueda.setBounds(new Rectangle(230,30,150,26));
         	jtfBusqueda.setFont(Utils.FuenteCampos());
-        	
         }
         return jtfBusqueda;
     }

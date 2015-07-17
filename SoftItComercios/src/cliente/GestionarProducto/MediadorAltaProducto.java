@@ -73,14 +73,14 @@ public class MediadorAltaProducto implements ActionListener,KeyListener {
             try {
             	if (codigo.length()==0){
             		Utils.advertenciaUsr(guiProducto,"Por favor ingrese el Código del Producto.");
-            	}else if (this.controlProducto.existeProductoCodigo(new Long(codigo))){
-            		Utils.advertenciaUsr(guiProducto,"El Producto ingresado ya existe.");
             	}else if (codigo.length()==0 || nombre.length()==0 || stockM.length()==0 || stockA.length()==0 || prEntr.length()==0 || nuevoPrVtaSinIva.length()==0 || nuevoPrVtaConIva.length()==0 || prov.length()==0 ){
             		Utils.advertenciaUsr(guiProducto,"Alguno de los campos obligatorios esta vacio.");
             	}else if (prKilos.compareTo("SI")==0 && (stockMinK.length()==0 || stockActK.length()==0)){
             		Utils.advertenciaUsr(guiProducto,"Ingrese el stock en kilos.");
             	}else if (!Utils.esDouble(stockMinK) || !Utils.esDouble(stockActK)){
             		Utils.advertenciaUsr(guiProducto,"Ingrese correctamente el stock en kilos.");
+            	}else if (this.controlProducto.existeProductoCodigoProveedor(new Long(codigo),proveedor.getId())){
+            		Utils.advertenciaUsr(guiProducto,"El Producto ingresado ya existe.");            		
             	}else {
             		boolean kilosD=false;
             		double stKilosAct = 0;

@@ -120,7 +120,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
     		this.guiFacturarCte.getJTFCodigo().setText(cod_Prod);
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
-    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null); //selecciona del combo
     			double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
     				importeProd=pr.getPrecioVentaConIva();
@@ -248,7 +248,7 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
                 if(cod.length()>0){
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
-                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null); //agregar prod
                 		String fechaVto=(String) guiFacturarCte.getJCBFechaVto().getSelectedItem();
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiFacturarCte,"Debe ingresar una Cantidad.");
@@ -492,18 +492,31 @@ public class MediadorFacturarCliente implements ActionListener,ListSelectionList
 			String texto = guiFacturarCte.getJTFBusqueda().getText();
 			int j;
 			guiFacturarCte.codProd.removeAllElements();
+			String mostrados[]=new String[todosProductos.size()];
+			int limMostro=0;
 			for (j = 0; j< todosProductos.size(); j++) {
 				Producto cte = (Producto) todosProductos.elementAt(j);
 				if(Utils.comienza(String.valueOf(cte.getCodigo()), texto) || Utils.comienza(cte.getNombre(), texto)) {
 					Producto p=(Producto) todosProductos.elementAt(j);
-					guiFacturarCte.codProd.add(String.valueOf(p.getCodigo()+" _ "+p.getNombre()+" - "+p.getProveedor().getNombre()));
+					boolean mostrado=false;
+					
+					for(int i=0;i<limMostro && !mostrado;i++){
+						if(mostrados[i].compareTo(p.getCodigo().toString())==0){
+							mostrado=true;
+						}
+					}
+					if(!mostrado){
+						mostrados[limMostro]=p.getCodigo().toString();
+						limMostro++;
+						guiFacturarCte.codProd.add(String.valueOf(p.getCodigo()+" _ "+p.getNombre()+" - "+p.getProveedor().getNombre()));
+					}
 				}
 			}
 			if(guiFacturarCte.codProd.size()==1){
 				String cod_Prod =(String) guiFacturarCte.codProd.elementAt(0);
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
-				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
-				this.guiFacturarCte.getJTFCodigo().setText(cod_Prod);
+				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null);//busqueda q se actualiza derecho
+				this.guiFacturarCte.getJTFCodigo().setText(String.valueOf(pr.getCodigo()+" _ "+pr.getNombre()+" - "+pr.getProveedor().getNombre()));
 				double importeProd=pr.getPrecioVentaSinIva();
     			if(tipo.compareTo("B")==0){
     				importeProd=pr.getPrecioVentaConIva();

@@ -72,6 +72,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
     		guiPpalPadre=guiPadre;
     		Long nroFacturaObt=dist.getNroRemito();
     		guiRemitoCte = new GUIRemitoCliente(guiPadre);
+    		
     		cliente=controlCliente.obtenerClienteDefecto();
     		this.actualizarCliente();
     	//	guiRemitoCte.getJTFBusqueda().setEnabled(false);
@@ -95,13 +96,13 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
 
     public void actionPerformed(ActionEvent e) {
     	Object source = e.getSource();
-    	if (source == this.guiRemitoCte.getJCBCodigo()) {
+    	if (source == this.guiRemitoCte.getJCBCodigo()) { 
     		String cod_Prod = (String)this.guiRemitoCte.getJCBCodigo().getSelectedItem();
     		guiRemitoCte.ocultarCombo();
     		this.guiRemitoCte.getJTFCodigo().setText(cod_Prod);
     		String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
     		try{
-    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+    			Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null);//selecciono un prod del combo
     			double importeProd=pr.getPrecioVentaConIva();
     			this.guiRemitoCte.getJTFImporte().setText(String.valueOf(importeProd));
     			if(pr.isPrecioKilos()){
@@ -197,7 +198,7 @@ public class MediadorRemitoCliente implements ActionListener,ListSelectionListen
                 if(cod.length()>0){
                 	boolean existe =  this.controlProducto.existeProductoCodigo(new Long(cod));
                 	if(existe){
-                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
+                		Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null); //agregar producto
                 		String fechaVto=(String) guiRemitoCte.getJCBFechaVto().getSelectedItem();
                 		if(cant.length()==0){
                 			Utils.advertenciaUsr(guiRemitoCte,"Debe ingresar una Cantidad.");
@@ -362,18 +363,31 @@ private void buscarCliente() {
 			String texto = guiRemitoCte.getJTFBusqueda().getText();
 			int j;
 			guiRemitoCte.codProd.removeAllElements();
+			String mostrados[]=new String[todosProductos.size()];
+			int limMostro=0;
 			for (j = 0; j< todosProductos.size(); j++) {
 				Producto cte = (Producto) todosProductos.elementAt(j);
 				if(Utils.comienza(String.valueOf(cte.getCodigo()), texto) || Utils.comienza(cte.getNombre(), texto)) {
 					Producto p=(Producto) todosProductos.elementAt(j);
-					guiRemitoCte.codProd.add(String.valueOf(p.getCodigo()+" _ "+p.getNombre()+" - "+p.getProveedor().getNombre()));
+					boolean mostrado=false;
+					
+					for(int i=0;i<limMostro && !mostrado;i++){
+						if(mostrados[i].compareTo(p.getCodigo().toString())==0){
+							mostrado=true;
+						}
+					}
+					if(!mostrado){
+						mostrados[limMostro]=p.getCodigo().toString();
+						limMostro++;
+						guiRemitoCte.codProd.add(String.valueOf(p.getCodigo()+" _ "+p.getNombre()+" - "+p.getProveedor().getNombre()));
+					}
 				}
 			}
 			if(guiRemitoCte.codProd.size()==1){
 				String cod_Prod =(String) guiRemitoCte.codProd.elementAt(0);
 				String cod=cod_Prod.substring(0,(cod_Prod.indexOf("_")-1));
-				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod));
-				this.guiRemitoCte.getJTFCodigo().setText(cod_Prod);
+				Producto pr= (Producto) this.controlProducto.buscarProductoCodigo(new Long(cod),null); //actualiza dsde la busq derecho
+				this.guiRemitoCte.getJTFCodigo().setText(String.valueOf(pr.getCodigo()+" _ "+pr.getNombre()+" - "+pr.getProveedor().getNombre()));
 				double importeProd=pr.getPrecioVentaConIva();
     			this.guiRemitoCte.getJTFImporte().setText(String.valueOf(importeProd));
     			

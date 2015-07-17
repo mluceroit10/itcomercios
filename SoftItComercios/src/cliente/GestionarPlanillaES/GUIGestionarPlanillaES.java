@@ -42,6 +42,7 @@ public class GUIGestionarPlanillaES extends JDialog {
     private JPanel jpGestion = null;
     private JButton jbBorrar = null;			private JButton jbCargar = null;
 	private JButton jbSalir = null;				private JButton jbAceptar = null;	
+	private JButton jbReenviar = null;	
 	private JLabel fecha = null;				private JLabel nro = null;
     private JLabel jlFecha = null;
     private JTextField jtfFecha = null;			private JTextField jtfNro= null;
@@ -94,10 +95,11 @@ public class GUIGestionarPlanillaES extends JDialog {
         if (jpGestion == null) {
             jpGestion = new TransparentPanel();
             jpGestion.setLayout(null);
-            jpGestion.setBounds(new java.awt.Rectangle(15,15,360,310));
+            jpGestion.setBounds(new java.awt.Rectangle(15,15,360,382));
             jpGestion.setBorder(Utils.crearTituloYBorde("GESTION"));
             jpGestion.add(getJBImprimir(), null);
             jpGestion.add(getJBBorrar(), null);
+            jpGestion.add(getJBReenviar(), null);
             jpGestion.add(getJPDatosNuevaPlanilla(),null);
         }
         return jpGestion;
@@ -114,7 +116,7 @@ public class GUIGestionarPlanillaES extends JDialog {
             jpDatosNP = new TransparentPanel();
             jpDatosNP.setLayout(null);
             jpDatosNP.setBorder(Utils.crearTituloYBorde("NUEVA PLANILLA DE ES"));
-            jpDatosNP.setBounds(new java.awt.Rectangle(15,90,330,180));
+            jpDatosNP.setBounds(new java.awt.Rectangle(16,168,330,180));
             jpDatosNP.add(jlFecha, null);
             jpDatosNP.add(getJDateChooserFecha(), null);
             jpDatosNP.add(getJBCargar(), null);
@@ -172,6 +174,19 @@ public class GUIGestionarPlanillaES extends JDialog {
             jbBorrar.setMnemonic('E');
         }
         return jbBorrar;
+    }
+    
+    public JButton getJBReenviar() {
+        if (jbReenviar == null) {
+        	jbReenviar = new GlossyButton("REENVIAR MAIL",ButtonType.BUTTON_ROUNDED_RECTANGLUR,Theme.GLOSSY_METALLICGRAY_THEME,Theme.GLOSSY_ORANGE_THEME,Theme.GLOSSY_BLACK_THEME);;
+        	jbReenviar.setIcon(new ImageIcon(GUIPrincipal.class.getResource("/cliente/Imagenes/Iconos/mensaje_nuevo.gif")));
+        	jbReenviar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        	jbReenviar.setBounds(new Rectangle(10,70,200,26));
+        	jbReenviar.setInputMap(0, map);
+        	jbReenviar.setFont(Utils.FuenteBotonesChicos());
+        	jbReenviar.setMnemonic('M');
+        }
+        return jbReenviar;
     }
     
     private JPanel getJPBuscador() {
@@ -340,6 +355,7 @@ public class GUIGestionarPlanillaES extends JDialog {
         jbSalir.addActionListener(lis);
         combo.addActionListener(lis);
         jbCambiarPeriodo.addActionListener(lis);
+        jbReenviar.addActionListener(lis);
     }
 
     public void setKeyListener(KeyListener lis) {

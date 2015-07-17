@@ -158,6 +158,7 @@ public class MediadorListarRemitosCliente implements ActionListener, KeyListener
 				diaLI = guiTodasFactCte.getJCBDia().getSelectedIndex()+1; //para que el numero del indice de con el dia sumo 1
 				actualizarCampos();
 			} 	
+			guiTodasFactCte.getJTFFecha().requestFocus(true);
         }else if (source == guiTodasFactCte.getJBSalir()){
         	 if(flag){
           	   this.guiTodasFactCte.dispose();

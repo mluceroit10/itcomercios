@@ -61,6 +61,7 @@ public class MediadorGestionarMovimientoCaja implements ActionListener, KeyListe
 				mesLI = guiMovimientoCaja.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
 	         	cargarDatos();
 			} 	
+        	guiMovimientoCaja.getJTFBuscadorCodigo().requestFocus(true);
         } else if (source == guiMovimientoCaja.getJBAceptar()) {
         	guiMovimientoCaja.dispose();
         }	

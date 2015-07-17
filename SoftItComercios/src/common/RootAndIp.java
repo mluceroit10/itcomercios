@@ -10,6 +10,9 @@ public class RootAndIp {
 	private static String username = "root";
 	private static String password = "";
 	private static String archivos = "";
+	private static String mail = "";
+	private static String mailComercio="";
+	private static String passComercio="";
 	
 	public static String getArchivos() {
 		return archivos;
@@ -38,6 +41,18 @@ public class RootAndIp {
 		return extras;
 	}
 	
+	public static String getMail() {
+		return mail;
+	}
+
+	public static String getMailComercio() {
+		return mailComercio;
+	}
+	
+	public static String getPassComercio() {
+		return passComercio;
+	}
+	
 	public static void setConf(String nameFile) {
 		if ((nameFile == null)||(nameFile.trim().length() == 0)){
 			nameFile = "conf.ini";
@@ -50,6 +65,9 @@ public class RootAndIp {
 		username = ini.getParameters("username");
 		password = ini.getParameters("password");
 		archivos = ini.getParameters("pathArchivos");
+		mail = ini.getParameters("mail");
+		mailComercio=ini.getParameters("mailComercio");
+		passComercio=ini.getParameters("passComercio");
 		System.out.println("base: "+ base);
 		System.out.println("extras: "+ extras);
 		System.out.println("host: "+ ip);
@@ -57,6 +75,9 @@ public class RootAndIp {
 		System.out.println("username:" + username);
 		System.out.println("password:"+ password);
 		System.out.println("archivos:"+ archivos);
+		System.out.println("mail:"+ mail);
+		System.out.println("mailComercio:"+ mailComercio);
+		System.out.println("passComercio:"+ passComercio);
 	}
 }
 

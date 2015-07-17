@@ -24,7 +24,7 @@ public class ControlProducto implements IControlProducto{
 		ControlProveedor cProv = new ControlProveedor();
 		//creo objeto y seteo datos basicos
 		Producto lnew= Assemblers.crearProducto(p);		
-		if (this.existeProductoCodigo(p.getCodigo()))
+		if (this.existeProductoCodigoProveedor(p.getCodigo(),p.getProveedor().getId()))
 			return false;
 		else{
 			try{
@@ -129,6 +129,22 @@ public class ControlProducto implements IControlProducto{
 			mp.initPersistencia();
 			String filtro = "codigo == "+codigo;
 			Collection productoCol= mp.getObjects(Producto.class,filtro);
+			if (productoCol.size()>=1)
+				existe=true;
+			mp.commit();
+		} finally {
+			mp.rollback();
+		}
+		return existe;
+	}
+	
+	public boolean existeProductoCodigoProveedor(Long codigo,Long idProv)throws Exception{
+		ManipuladorPersistencia mp=new ManipuladorPersistencia();
+		boolean existe = false;
+		try {
+			mp.initPersistencia();
+			String filtro = "codigo == "+codigo+" && proveedor.id=="+idProv;
+			Collection productoCol= mp.getObjects(Producto.class,filtro);
 			if (productoCol.size()==1)
 				existe=true;
 			mp.commit();
@@ -158,15 +174,28 @@ public class ControlProducto implements IControlProducto{
 		return a;
 	}
 	
-	public Producto buscarProductoCodigo(Long codigo) throws Exception {
+	public Producto buscarProductoCodigo(Long codigo,Long idProv) throws Exception {
 		ManipuladorPersistencia mp=new ManipuladorPersistencia();
 		Producto a = new Producto();
 		try {
 			mp.initPersistencia();
 			String filtro = "codigo == "+codigo;
+			if(idProv!=null)
+				filtro += " && proveedor.id=="+idProv;
 			Vector productoCol= mp.getObjects(Producto.class,filtro);
-			if (productoCol.size()>=1){
+			if (productoCol.size()==1){  //Del lado proveedor deberia entrar siempre aqui;
 				Producto b = (Producto)productoCol.elementAt(0);
+				a=Assemblers.crearProducto(b);
+				Proveedor p = Assemblers.crearProveedor(b.getProveedor());
+				a.setProveedor(p);
+			}else if (productoCol.size()>1){
+				Producto b = null;
+				boolean existe=false;
+				for(int i=0;i<productoCol.size() && !existe;i++){
+					b = (Producto)productoCol.elementAt(i);
+					if(b.isPrecioKilos())existe=(b.getStockKilosAct()>0);
+					else				 existe=(b.getStockActual()>0);
+				}
 				a=Assemblers.crearProducto(b);
 				Proveedor p = Assemblers.crearProveedor(b.getProveedor());
 				a.setProveedor(p);
@@ -191,9 +220,17 @@ public class ControlProducto implements IControlProducto{
 	public boolean puedoEditar(Producto dto,Producto modificado)throws Exception{
 		try{
 			if (dto.getCodigo().equals(modificado.getCodigo())){
-				return true;
+				if(dto.getProveedor().getId().equals(modificado.getProveedor().getId()))
+					return true;
+				else{
+					if(!this.existeProductoCodigoProveedor(modificado.getCodigo(),modificado.getProveedor().getId()))
+						return true;
+					else
+						return false;
+				}
+					
 			} else {
-				if(!this.existeProductoCodigo(modificado.getCodigo()))
+				if(!this.existeProductoCodigoProveedor(modificado.getCodigo(),modificado.getProveedor().getId()))
 					return true;
 				else
 					return false;

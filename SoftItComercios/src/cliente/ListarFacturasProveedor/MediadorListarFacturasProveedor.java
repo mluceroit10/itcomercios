@@ -122,6 +122,7 @@ public class MediadorListarFacturasProveedor implements ActionListener, KeyListe
 				mesLI = guiTodasFactProv.getJCBMes().getSelectedIndex()+1; //para que el numero del indice de con el mes sumo 1
 	         	cargarDatos();
 			} 	
+        	guiTodasFactProv.getJTFFecha().requestFocus(true);
         }else if (source == guiTodasFactProv.getJBSalir()){
 	           if(flag){
 	        	   if (cargarFilaSeleccionada()) {
