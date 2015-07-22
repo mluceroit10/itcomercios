@@ -332,15 +332,11 @@ public class ControlFacturaProveedor implements IControlFacturaProveedor{
 		double result=0;
 		try{
 			mp.initPersistencia();
-			
-			System.out.println("ID GUARDADA "+idFGuardada);
-			
 			if(idFGuardada!=null){
 				FacturaProveedor felim=buscarFProveedorPersistentePorId(mp,idFGuardada);
 				mp.borrarTodos(felim.getItems());
 				mp.borrar(felim);
 			}	
-			System.out.println("ID FACT "+lnew.getId());
 			
 			Proveedor prov = cProv.buscarProveedorPersistentePorId(mp,p.getProveedor().getId());
 			if(idFGuardada==null)

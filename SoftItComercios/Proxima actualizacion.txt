@@ -1,0 +1,8 @@
+es necesario crear nuevos campos en BD. 
+no hay cambios de reportes.
+ni carga de datos auxiliar.
+
+cambiar el .jar
+el .exe ooo .bat
+al .ini agregarle las 3 ultimas lineas de envio de mail, poner el mail de envio correcto
+agregar la libreria javax.mail.lib

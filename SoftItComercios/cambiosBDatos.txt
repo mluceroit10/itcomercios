@@ -1,2 +1,0 @@
-alter table producto
-add column CTRL_VTO tinyint(1) NOT NULL default '0';
